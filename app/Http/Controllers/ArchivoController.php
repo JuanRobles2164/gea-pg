@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\archivo;
+use App\Models\Archivo;
 use App\Http\Requests\StorearchivoRequest;
 use App\Http\Requests\UpdatearchivoRequest;
+use App\Repositories\Archivo\ArchivoRepository;
+use Illuminate\Http\Request;
 
 class ArchivoController extends Controller
 {
+    private $repo = null;
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +19,14 @@ class ArchivoController extends Controller
     public function index()
     {
         //
+    }
+
+    public function listar(Request $request){
+        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
+        $this->repo = ArchivoRepository::GetInstance();
+        $lista = $this->repo->getAll($num_rows);
+        $this->repo = null;
+        return json_encode($lista);
     }
 
     /**
@@ -36,7 +47,12 @@ class ArchivoController extends Controller
      */
     public function store(StorearchivoRequest $request)
     {
-        //
+        $this->repo = ArchivoRepository::GetInstance();
+        $data = $request->all();
+        $objeto = new Archivo($data);
+        $this->repo->create($objeto);
+        $this->repo = null;
+        return json_encode($objeto);
     }
 
     /**
@@ -68,9 +84,13 @@ class ArchivoController extends Controller
      * @param  \App\Models\archivo  $archivo
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatearchivoRequest $request, archivo $archivo)
+    public function update(UpdatearchivoRequest $request, Archivo $archivo)
     {
-        //
+        $this->repo = ArchivoRepository::GetInstance();
+        $data = $request->all();
+        $this->repo->update($archivo, $data);
+        $this->repo = null;
+        return json_encode($archivo);
     }
 
     /**
@@ -81,6 +101,9 @@ class ArchivoController extends Controller
      */
     public function destroy(archivo $archivo)
     {
-        //
+        $this->repo = ArchivoRepository::GetInstance();
+        $this->repo->delete($archivo);
+        $this->repo = null;
+        return json_encode($archivo);
     }
 }
