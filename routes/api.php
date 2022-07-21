@@ -19,9 +19,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::controller(ArchivoController::class)->group(function(){
-    Route::get('/archivo/listar', 'listar');
-    Route::post('/archivo/store', 'store');
-    Route::post('/archivo/update', 'update');
-    Route::post('/archivo/destroy', 'destroy');
+Route::name("archivo.")->group(function(){
+    Route::controller(ArchivoController::class)->group(function(){
+        Route::get('/archivo/listar', 'listar')->name("listar");
+        Route::post('/archivo/store', 'store')->name("guardar");
+        Route::post('/archivo/update', 'update')->name("actualizar");
+        Route::post('/archivo/destroy', 'destroy')->name("eliminar");
+    });
 });
