@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\DocumentoArchivo;
 use App\Http\Requests\StoreDocumentoArchivoRequest;
 use App\Http\Requests\UpdateDocumentoArchivoRequest;
+use App\Repositories\DocumentoArchivo\DocumentoArchivoRepository;
+use Illuminate\Http\Request;
 
 class DocumentoArchivoController extends Controller
 {
+    private $repo = null;
+
+    public function listar(Request $request){
+        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
+        $this->repo = DocumentoArchivoRepository::GetInstance();
+        $lista = $this->repo->getAll($num_rows);
+        $this->repo = null;
+        return json_encode($lista);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +47,12 @@ class DocumentoArchivoController extends Controller
      */
     public function store(StoreDocumentoArchivoRequest $request)
     {
-        //
+        $this->repo = DocumentoArchivoRepository::GetInstance();
+        $data = $request->all();
+        $objeto = new DocumentoArchivo($data);
+        $this->repo->create($objeto);
+        $this->repo = null;
+        return json_encode($objeto);
     }
 
     /**
@@ -70,7 +86,11 @@ class DocumentoArchivoController extends Controller
      */
     public function update(UpdateDocumentoArchivoRequest $request, DocumentoArchivo $documentoArchivo)
     {
-        //
+        $this->repo = DocumentoArchivoRepository::GetInstance();
+        $data = $request->all();
+        $this->repo->update($documentoArchivo, $data);
+        $this->repo = null;
+        return json_encode($documentoArchivo);
     }
 
     /**
@@ -81,6 +101,9 @@ class DocumentoArchivoController extends Controller
      */
     public function destroy(DocumentoArchivo $documentoArchivo)
     {
-        //
+        $this->repo = DocumentoArchivoRepository::GetInstance();
+        $this->repo->delete($documentoArchivo);
+        $this->repo = null;
+        return json_encode($documentoArchivo);
     }
 }

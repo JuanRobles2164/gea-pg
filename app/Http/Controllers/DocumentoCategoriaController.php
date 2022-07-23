@@ -5,9 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\DocumentoCategoria;
 use App\Http\Requests\StoreDocumentoCategoriaRequest;
 use App\Http\Requests\UpdateDocumentoCategoriaRequest;
+use App\Repositories\DocumentoCategoria\DocumentoCategoriaRepository;
+use Illuminate\Http\Request;
 
 class DocumentoCategoriaController extends Controller
 {
+    private $repo = null;
+
+    public function listar(Request $request){
+        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
+        $this->repo = DocumentoCategoriaRepository::GetInstance();
+        $lista = $this->repo->getAll($num_rows);
+        $this->repo = null;
+        return json_encode($lista);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +48,12 @@ class DocumentoCategoriaController extends Controller
      */
     public function store(StoreDocumentoCategoriaRequest $request)
     {
-        //
+        $this->repo = DocumentoCategoriaRepository::GetInstance();
+        $data = $request->all();
+        $objeto = new DocumentoCategoria($data);
+        $this->repo->create($objeto);
+        $this->repo = null;
+        return json_encode($objeto);
     }
 
     /**
@@ -70,7 +87,11 @@ class DocumentoCategoriaController extends Controller
      */
     public function update(UpdateDocumentoCategoriaRequest $request, DocumentoCategoria $documentoCategoria)
     {
-        //
+        $this->repo = DocumentoCategoriaRepository::GetInstance();
+        $data = $request->all();
+        $this->repo->update($documentoCategoria, $data);
+        $this->repo = null;
+        return json_encode($documentoCategoria);
     }
 
     /**
@@ -81,6 +102,9 @@ class DocumentoCategoriaController extends Controller
      */
     public function destroy(DocumentoCategoria $documentoCategoria)
     {
-        //
+        $this->repo = DocumentoCategoriaRepository::GetInstance();
+        $this->repo->delete($documentoCategoria);
+        $this->repo = null;
+        return json_encode($documentoCategoria);
     }
 }
