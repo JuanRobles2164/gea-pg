@@ -22,4 +22,7 @@ class IteracionRepository extends BaseRepository{
     {
         return new Iteracion;
     }
+    public function findByParams($params){
+        
+    }
 }

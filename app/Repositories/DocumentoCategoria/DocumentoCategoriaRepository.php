@@ -22,4 +22,7 @@ class DocumentoCategoriaRepository extends BaseRepository{
     {
         return new DocumentoCategoria;
     }
+    public function findByParams($params){
+        
+    }
 }

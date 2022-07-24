@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\DocumentoCategoria;
-use App\Http\Requests\StoreDocumentoCategoriaRequest;
-use App\Http\Requests\UpdateDocumentoCategoriaRequest;
 use App\Repositories\DocumentoCategoria\DocumentoCategoriaRepository;
 use Illuminate\Http\Request;
 
@@ -46,7 +44,7 @@ class DocumentoCategoriaController extends Controller
      * @param  \App\Http\Requests\StoreDocumentoCategoriaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDocumentoCategoriaRequest $request)
+    public function store(Request $request)
     {
         $this->repo = DocumentoCategoriaRepository::GetInstance();
         $data = $request->all();
@@ -85,7 +83,7 @@ class DocumentoCategoriaController extends Controller
      * @param  \App\Models\DocumentoCategoria  $documentoCategoria
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDocumentoCategoriaRequest $request, DocumentoCategoria $documentoCategoria)
+    public function update(Request $request, DocumentoCategoria $documentoCategoria)
     {
         $this->repo = DocumentoCategoriaRepository::GetInstance();
         $data = $request->all();

@@ -22,4 +22,7 @@ class IteracionDocumentoArchivoRepository extends BaseRepository{
     {
         return new IteracionDocumentoArchivo;
     }
+    public function findByParams($params){
+        
+    }
 }

@@ -22,4 +22,7 @@ class ProyectoRepository extends BaseRepository{
     {
         return new Documento;
     }
+    public function findByParams($params){
+        
+    }
 }

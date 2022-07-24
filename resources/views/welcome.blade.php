@@ -21,11 +21,11 @@
         </style>
     </head>
     <body class="antialiased">
-
         <script>
             let token_value = '{{csrf_token()}}';
             console.log(token_value);
-            let ruta_value = '{{route("archivo.listar")}}';
+            let ruta_value = '{{route("archivo.actualizar")}}';
+            console.log(ruta_value);
         </script>
     </body>
 </html>

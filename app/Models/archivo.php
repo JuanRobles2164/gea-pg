@@ -9,4 +9,5 @@ class Archivo extends Model
 {
     use HasFactory;
     protected $table = 'archivo';
+    protected $fillable = ["nombre", "path_file", "data_file", "data_json"];
 }

@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\documento;
-use App\Http\Requests\StoredocumentoRequest;
-use App\Http\Requests\UpdatedocumentoRequest;
+use Illuminate\Http\Client\Request;
 
 class DocumentoController extends Controller
 {
@@ -34,7 +33,7 @@ class DocumentoController extends Controller
      * @param  \App\Http\Requests\StoredocumentoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoredocumentoRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -68,7 +67,7 @@ class DocumentoController extends Controller
      * @param  \App\Models\documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatedocumentoRequest $request, documento $documento)
+    public function update(Request $request, documento $documento)
     {
         //
     }

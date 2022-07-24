@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\DocumentoArchivo;
-use App\Http\Requests\StoreDocumentoArchivoRequest;
-use App\Http\Requests\UpdateDocumentoArchivoRequest;
 use App\Repositories\DocumentoArchivo\DocumentoArchivoRepository;
 use Illuminate\Http\Request;
 
@@ -42,10 +40,10 @@ class DocumentoArchivoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreDocumentoArchivoRequest  $request
+     * @param  \App\Http\Requests\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDocumentoArchivoRequest $request)
+    public function store(Request $request)
     {
         $this->repo = DocumentoArchivoRepository::GetInstance();
         $data = $request->all();
@@ -84,7 +82,7 @@ class DocumentoArchivoController extends Controller
      * @param  \App\Models\DocumentoArchivo  $documentoArchivo
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDocumentoArchivoRequest $request, DocumentoArchivo $documentoArchivo)
+    public function update(Request $request, DocumentoArchivo $documentoArchivo)
     {
         $this->repo = DocumentoArchivoRepository::GetInstance();
         $data = $request->all();

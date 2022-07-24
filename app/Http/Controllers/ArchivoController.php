@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Archivo;
-use App\Http\Requests\StorearchivoRequest;
 use App\Http\Requests\UpdatearchivoRequest;
 use App\Repositories\Archivo\ArchivoRepository;
 use Illuminate\Http\Request;
@@ -29,6 +28,14 @@ class ArchivoController extends Controller
         return json_encode($lista);
     }
 
+    public function details(Request $request){
+        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
+        $this->repo = ArchivoRepository::GetInstance();
+        $lista = $this->repo->getAll($num_rows);
+        $this->repo = null;
+        return json_encode($lista);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -45,14 +52,14 @@ class ArchivoController extends Controller
      * @param  \App\Http\Requests\StorearchivoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorearchivoRequest $request)
+    public function store(Request $request)
     {
+        
         $this->repo = ArchivoRepository::GetInstance();
         $data = $request->all();
-        $objeto = new Archivo($data);
-        $this->repo->create($objeto);
+        $this->repo->create($data);
         $this->repo = null;
-        return json_encode($objeto);
+        return json_encode($data);
     }
 
     /**
@@ -84,10 +91,12 @@ class ArchivoController extends Controller
      * @param  \App\Models\archivo  $archivo
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatearchivoRequest $request, Archivo $archivo)
+    public function update(Request $request, Archivo $archivo)
     {
+        
         $this->repo = ArchivoRepository::GetInstance();
         $data = $request->all();
+        $archivo = $this->repo->find($data["id"]);
         $this->repo->update($archivo, $data);
         $this->repo = null;
         return json_encode($archivo);
@@ -99,11 +108,14 @@ class ArchivoController extends Controller
      * @param  \App\Models\archivo  $archivo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(archivo $archivo)
+    public function destroy(Request $archivo)
     {
+        $objeto = new Archivo($archivo->all());
+        $objeto->id = $archivo->id;
         $this->repo = ArchivoRepository::GetInstance();
-        $this->repo->delete($archivo);
+        $objeto = $this->repo->find($objeto->id);
+        $this->repo->delete($objeto);
         $this->repo = null;
-        return json_encode($archivo);
+        return json_encode($objeto);
     }
 }

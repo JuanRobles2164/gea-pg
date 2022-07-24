@@ -22,4 +22,7 @@ class CategoriaRepository extends BaseRepository{
     {
         return new Categoria;
     }
+    public function findByParams($params){
+        
+    }
 }

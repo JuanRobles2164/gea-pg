@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\IteracionDocumentoArchivo;
-use App\Http\Requests\StoreIteracionDocumentoArchivoRequest;
-use App\Http\Requests\UpdateIteracionDocumentoArchivoRequest;
+use Illuminate\Http\Client\Request;
 
 class IteracionDocumentoArchivoController extends Controller
 {
@@ -34,7 +33,7 @@ class IteracionDocumentoArchivoController extends Controller
      * @param  \App\Http\Requests\StoreIteracionDocumentoArchivoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreIteracionDocumentoArchivoRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -68,7 +67,7 @@ class IteracionDocumentoArchivoController extends Controller
      * @param  \App\Models\IteracionDocumentoArchivo  $iteracionDocumentoArchivo
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateIteracionDocumentoArchivoRequest $request, IteracionDocumentoArchivo $iteracionDocumentoArchivo)
+    public function update(Request $request, IteracionDocumentoArchivo $iteracionDocumentoArchivo)
     {
         //
     }

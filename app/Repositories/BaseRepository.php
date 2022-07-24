@@ -10,6 +10,8 @@ abstract class BaseRepository{
     //Abstract Operations
     abstract public function getModel();
 
+    abstract public function findByParams($params);
+
     //Create Operations
     public function create($object){
         return $this->getModel()->create($object);

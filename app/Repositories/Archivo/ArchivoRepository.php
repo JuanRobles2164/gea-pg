@@ -21,4 +21,8 @@ class ArchivoRepository extends BaseRepository{
     public function getModel(){
         return new Archivo;
     }
+    public function findByParams($params){
+        $paginado = 15;
+        return Archivo::where('nombre', '=', $params["nombre"])->paginate($paginado);
+    }
 }

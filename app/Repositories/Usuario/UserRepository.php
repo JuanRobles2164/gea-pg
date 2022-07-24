@@ -22,4 +22,7 @@ class UserRepository extends BaseRepository{
     {
         return new User;
     }
+    public function findByParams($params){
+        
+    }
 }

@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iteracion;
-use App\Http\Requests\StoreIteracionRequest;
-use App\Http\Requests\UpdateIteracionRequest;
+use Illuminate\Http\Client\Request;
 
 class IteracionController extends Controller
 {
@@ -34,7 +33,7 @@ class IteracionController extends Controller
      * @param  \App\Http\Requests\StoreIteracionRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreIteracionRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -68,7 +67,7 @@ class IteracionController extends Controller
      * @param  \App\Models\Iteracion  $iteracion
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateIteracionRequest $request, Iteracion $iteracion)
+    public function update(Request $request, Iteracion $iteracion)
     {
         //
     }

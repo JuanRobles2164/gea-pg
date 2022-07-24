@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
-use App\Http\Requests\StorecategoriaRequest;
-use App\Http\Requests\UpdatecategoriaRequest;
 use App\Repositories\Categoria\CategoriaRepository;
 use Illuminate\Http\Request;
 
@@ -45,7 +43,7 @@ class CategoriaController extends Controller
      * @param  \App\Http\Requests\StorecategoriaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorecategoriaRequest $request)
+    public function store(Request $request)
     {
         $this->repo = CategoriaRepository::GetInstance();
         $data = $request->all();
@@ -84,7 +82,7 @@ class CategoriaController extends Controller
      * @param  \App\Models\categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatecategoriaRequest $request, categoria $categoria)
+    public function update(Request $request, categoria $categoria)
     {
         $this->repo = CategoriaRepository::GetInstance();
         $data = $request->all();
