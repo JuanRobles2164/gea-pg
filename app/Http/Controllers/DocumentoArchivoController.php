@@ -47,10 +47,9 @@ class DocumentoArchivoController extends Controller
     {
         $this->repo = DocumentoArchivoRepository::GetInstance();
         $data = $request->all();
-        $objeto = new DocumentoArchivo($data);
-        $this->repo->create($objeto);
+        $this->repo->create($data);
         $this->repo = null;
-        return json_encode($objeto);
+        return json_encode($data);
     }
 
     /**

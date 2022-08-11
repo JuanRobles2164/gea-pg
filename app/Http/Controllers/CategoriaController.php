@@ -47,10 +47,9 @@ class CategoriaController extends Controller
     {
         $this->repo = CategoriaRepository::GetInstance();
         $data = $request->all();
-        $objeto = new Categoria($data);
-        $this->repo->create($objeto);
+        $this->repo->create($data);
         $this->repo = null;
-        return json_encode($objeto);
+        return json_encode($data);
     }
 
     /**
@@ -86,6 +85,7 @@ class CategoriaController extends Controller
     {
         $this->repo = CategoriaRepository::GetInstance();
         $data = $request->all();
+        $categoria = $this->repo->find($data["id"]);
         $this->repo->update($categoria, $data);
         $this->repo = null;
         return json_encode($categoria);
@@ -97,11 +97,14 @@ class CategoriaController extends Controller
      * @param  \App\Models\categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(categoria $categoria)
+    public function destroy(Request $categoria)
     {
+        $objeto = new Categoria($categoria->all());
+        $objeto->id = $categoria->id;
         $this->repo = CategoriaRepository::GetInstance();
-        $this->repo->delete($categoria);
+        $objeto = $this->repo->find($objeto->id);
+        $this->repo->delete($objeto);
         $this->repo = null;
-        return json_encode($categoria);
+        return json_encode($objeto);
     }
 }
