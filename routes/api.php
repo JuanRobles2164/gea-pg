@@ -3,9 +3,15 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArchivoController;
-use App\Http\Controllers\CategoriaController;
-use App\Http\Controllers\DocumentoArchivoController;
-use App\Http\Controllers\DocumentoCategoriaController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\EstadoController;
+use App\Http\Controllers\FaseController;
+use App\Http\Controllers\LicitacionController;
+use App\Http\Controllers\LicitacionFaseController;
+use App\Http\Controllers\TipoDocumentoController;
+use App\Http\Controllers\TipoLicitacionController;
+use App\Models\FaseTipoLicitacion;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::name("cliente.")->group(function(){
-    Route::controller(ArchivoController::class)->group(function(){
+    Route::controller(ClienteController::class)->group(function(){
         Route::get('/cliente/listar', 'listar')->name("listar");
         Route::post('/cliente/store', 'store')->name("guardar");
         Route::post('/cliente/update', 'update')->name("actualizar");
@@ -32,7 +38,7 @@ Route::name("cliente.")->group(function(){
 });
 
 Route::name("documento.")->group(function(){
-    Route::controller(DocumentoArchivoController::class)->group(function(){
+    Route::controller(DocumentoController::class)->group(function(){
         Route::get('/documento/listar', 'listar')->name("listar");
         Route::post('/documento/store', 'store')->name("guardar");
         Route::post('/documento/update', 'update')->name("actualizar");
@@ -40,18 +46,18 @@ Route::name("documento.")->group(function(){
     });
 });
 
-Route::name("documento_tipo_licitacion.")->group(function(){
+/*Route::name("documento_tipo_licitacion.")->group(function(){
     Route::controller(ArchivoController::class)->group(function(){
         Route::get('/documento_tipo_licitacion/listar', 'listar')->name("listar");
         Route::post('/documento_tipo_licitacion/store', 'store')->name("guardar");
         Route::post('/documento_tipo_licitacion/update', 'update')->name("actualizar");
         Route::post('/documento_tipo_licitacion/destroy', 'destroy')->name("eliminar");
     });
-});
+});*/
 
 
 Route::name("tipo_licitacion.")->group(function(){
-    Route::controller(ArchivoController::class)->group(function(){
+    Route::controller(TipoLicitacionController::class)->group(function(){
         Route::get('/tipo_licitacion/listar', 'listar')->name("listar");
         Route::post('/tipo_licitacion/store', 'store')->name("guardar");
         Route::post('/tipo_licitacion/update', 'update')->name("actualizar");
@@ -59,17 +65,17 @@ Route::name("tipo_licitacion.")->group(function(){
     });
 });
 
-Route::name("empresa.")->group(function(){
+/* Route::name("empresa.")->group(function(){
     Route::controller(ArchivoController::class)->group(function(){
         Route::get('/empresa/listar', 'listar')->name("listar");
         Route::post('/empresa/store', 'store')->name("guardar");
         Route::post('/empresa/update', 'update')->name("actualizar");
         Route::post('/empresa/destroy', 'destroy')->name("eliminar");
     });
-});
+}); */
 
 Route::name("estado.")->group(function(){
-    Route::controller(ArchivoController::class)->group(function(){
+    Route::controller(EstadoController::class)->group(function(){
         Route::get('/estado/listar', 'listar')->name("listar");
         Route::post('/estado/store', 'store')->name("guardar");
         Route::post('/estado/update', 'update')->name("actualizar");
@@ -78,7 +84,7 @@ Route::name("estado.")->group(function(){
 });
 
 Route::name("fase.")->group(function(){
-    Route::controller(ArchivoController::class)->group(function(){
+    Route::controller(FaseController::class)->group(function(){
         Route::get('/fase/listar', 'listar')->name("listar");
         Route::post('/fase/store', 'store')->name("guardar");
         Route::post('/fase/update', 'update')->name("actualizar");
@@ -87,7 +93,7 @@ Route::name("fase.")->group(function(){
 });
 
 Route::name("fase_tipo_licitacion.")->group(function(){
-    Route::controller(ArchivoController::class)->group(function(){
+    Route::controller(FaseTipoLicitacion::class)->group(function(){
         Route::get('/fase_tipo_licitacion/listar', 'listar')->name("listar");
         Route::post('/fase_tipo_licitacion/store', 'store')->name("guardar");
         Route::post('/fase_tipo_licitacion/update', 'update')->name("actualizar");
@@ -95,17 +101,17 @@ Route::name("fase_tipo_licitacion.")->group(function(){
     });
 });
 
-Route::name("fase_tipo_tipo_licitacion.")->group(function(){
+/* Route::name("fase_tipo_tipo_licitacion.")->group(function(){
     Route::controller(ArchivoController::class)->group(function(){
         Route::get('/fase_tipo_tipo_licitacion/listar', 'listar')->name("listar");
         Route::post('/fase_tipo_tipo_licitacion/store', 'store')->name("guardar");
         Route::post('/fase_tipo_tipo_licitacion/update', 'update')->name("actualizar");
         Route::post('/fase_tipo_tipo_licitacion/destroy', 'destroy')->name("eliminar");
     });
-});
+});*/
 
 Route::name("licitacion.")->group(function(){
-    Route::controller(ArchivoController::class)->group(function(){
+    Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/listar', 'listar')->name("listar");
         Route::post('/licitacion/store', 'store')->name("guardar");
         Route::post('/licitacion/update', 'update')->name("actualizar");
@@ -114,7 +120,7 @@ Route::name("licitacion.")->group(function(){
 });
 
 Route::name("licitacion_fase.")->group(function(){
-    Route::controller(ArchivoController::class)->group(function(){
+    Route::controller(LicitacionFaseController::class)->group(function(){
         Route::get('/licitacion_fase/listar', 'listar')->name("listar");
         Route::post('/licitacion_fase/store', 'store')->name("guardar");
         Route::post('/licitacion_fase/update', 'update')->name("actualizar");
@@ -123,7 +129,7 @@ Route::name("licitacion_fase.")->group(function(){
 });
 
 Route::name("tipo_documento.")->group(function(){
-    Route::controller(ArchivoController::class)->group(function(){
+    Route::controller(TipoDocumentoController::class)->group(function(){
         Route::get('/tipo_documento/listar', 'listar')->name("listar");
         Route::post('/tipo_documento/store', 'store')->name("guardar");
         Route::post('/tipo_documento/update', 'update')->name("actualizar");
@@ -132,7 +138,7 @@ Route::name("tipo_documento.")->group(function(){
 });
 
 Route::name("tipo_licitacion.")->group(function(){
-    Route::controller(ArchivoController::class)->group(function(){
+    Route::controller(TipoLicitacionController::class)->group(function(){
         Route::get('/tipo_licitacion/listar', 'listar')->name("listar");
         Route::post('/tipo_licitacion/store', 'store')->name("guardar");
         Route::post('/tipo_licitacion/update', 'update')->name("actualizar");

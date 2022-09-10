@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Http\Requests\UpdateClienteRequest;
 use App\Repositories\Cliente\ClienteRepository;
+use App\Repositories\Estado\EstadoRepository;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -17,7 +18,17 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        $this->repo = ClienteRepository::GetInstance();
+        $lista = $this->repo->getAll();
+        $this->repo = null;
+
+        $this->repo = EstadoRepository::GetInstance();
+        $listaEstados = $this->repo->getAll();
+        $this->repo = null;
+        $allData = ['clientes' => $lista,
+                    'estados' => $listaEstados
+        ];
+        return view('Cliente.index', $allData);
     }
 
     public function listar(Request $request){

@@ -15,11 +15,15 @@ class EstadoController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * 
      */
     public function index()
     {
-        //
+        $this->repo = EstadoRepository::GetInstance();
+        $lista = $this->repo->getAll();
+        $this->repo = null;
+        $allData = ['estados' => $lista];
+        return view('Estado.index', $allData);
     }
 
     public function listar(Request $request){

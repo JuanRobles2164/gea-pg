@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ArchivoController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EstadoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,5 +17,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+//Como seguiremos usando sólo la API, entonces dejaremos sólo las rutas que devuelvan las vistas en este archivo
+
+Route::name("estado.")->group(function(){
+    Route::controller(EstadoController::class)->group(function(){
+        Route::get('/estado/index', 'index')->name("index");
+    });
+});
+
+Route::name("cliente.")->group(function(){
+    Route::controller(ClienteController::class)->group(function(){
+        Route::get('/cliente/index', 'index')->name("index");
+    });
 });
 
