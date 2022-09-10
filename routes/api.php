@@ -22,38 +22,121 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::name("archivo.")->group(function(){
+Route::name("cliente.")->group(function(){
     Route::controller(ArchivoController::class)->group(function(){
-        Route::get('/archivo/listar', 'listar')->name("listar");
-        Route::post('/archivo/store', 'store')->name("guardar");
-        Route::post('/archivo/update', 'update')->name("actualizar");
-        Route::post('/archivo/destroy', 'destroy')->name("eliminar");
+        Route::get('/cliente/listar', 'listar')->name("listar");
+        Route::post('/cliente/store', 'store')->name("guardar");
+        Route::post('/cliente/update', 'update')->name("actualizar");
+        Route::post('/cliente/destroy', 'destroy')->name("eliminar");
     });
 });
 
-Route::name("categoria.")->group(function(){
-    Route::controller(CategoriaController::class)->group(function(){
-        Route::get('/categoria/listar', 'listar')->name("listar");
-        Route::post('/categoria/store', 'store')->name("guardar");
-        Route::post('/categoria/update', 'update')->name("actualizar");
-        Route::post('/categoria/destroy', 'destroy')->name("eliminar");
-    });
-});
-
-Route::name("documento_archivo.")->group(function(){
+Route::name("documento.")->group(function(){
     Route::controller(DocumentoArchivoController::class)->group(function(){
-        Route::get('/documento_archivo/listar', 'listar')->name("listar");
-        Route::post('/documento_archivo/store', 'store')->name("guardar");
-        Route::post('/documento_archivo/update', 'update')->name("actualizar");
-        Route::post('/documento_archivo/destroy', 'destroy')->name("eliminar");
+        Route::get('/documento/listar', 'listar')->name("listar");
+        Route::post('/documento/store', 'store')->name("guardar");
+        Route::post('/documento/update', 'update')->name("actualizar");
+        Route::post('/documento/destroy', 'destroy')->name("eliminar");
     });
 });
 
-Route::name("documento_categoria.")->group(function(){
-    Route::controller(DocumentoCategoriaController::class)->group(function(){
-        Route::get('/documento_categoria/listar', 'listar')->name("listar");
-        Route::post('/documento_categoria/store', 'store')->name("guardar");
-        Route::post('/documento_categoria/update', 'update')->name("actualizar");
-        Route::post('/documento_categoria/destroy', 'destroy')->name("eliminar");
+Route::name("documento_tipo_licitacion.")->group(function(){
+    Route::controller(ArchivoController::class)->group(function(){
+        Route::get('/documento_tipo_licitacion/listar', 'listar')->name("listar");
+        Route::post('/documento_tipo_licitacion/store', 'store')->name("guardar");
+        Route::post('/documento_tipo_licitacion/update', 'update')->name("actualizar");
+        Route::post('/documento_tipo_licitacion/destroy', 'destroy')->name("eliminar");
     });
 });
+
+
+Route::name("tipo_licitacion.")->group(function(){
+    Route::controller(ArchivoController::class)->group(function(){
+        Route::get('/tipo_licitacion/listar', 'listar')->name("listar");
+        Route::post('/tipo_licitacion/store', 'store')->name("guardar");
+        Route::post('/tipo_licitacion/update', 'update')->name("actualizar");
+        Route::post('/tipo_licitacion/destroy', 'destroy')->name("eliminar");
+    });
+});
+
+Route::name("empresa.")->group(function(){
+    Route::controller(ArchivoController::class)->group(function(){
+        Route::get('/empresa/listar', 'listar')->name("listar");
+        Route::post('/empresa/store', 'store')->name("guardar");
+        Route::post('/empresa/update', 'update')->name("actualizar");
+        Route::post('/empresa/destroy', 'destroy')->name("eliminar");
+    });
+});
+
+Route::name("estado.")->group(function(){
+    Route::controller(ArchivoController::class)->group(function(){
+        Route::get('/estado/listar', 'listar')->name("listar");
+        Route::post('/estado/store', 'store')->name("guardar");
+        Route::post('/estado/update', 'update')->name("actualizar");
+        Route::post('/estado/destroy', 'destroy')->name("eliminar");
+    });
+});
+
+Route::name("fase.")->group(function(){
+    Route::controller(ArchivoController::class)->group(function(){
+        Route::get('/fase/listar', 'listar')->name("listar");
+        Route::post('/fase/store', 'store')->name("guardar");
+        Route::post('/fase/update', 'update')->name("actualizar");
+        Route::post('/fase/destroy', 'destroy')->name("eliminar");
+    });
+});
+
+Route::name("fase_tipo_licitacion.")->group(function(){
+    Route::controller(ArchivoController::class)->group(function(){
+        Route::get('/fase_tipo_licitacion/listar', 'listar')->name("listar");
+        Route::post('/fase_tipo_licitacion/store', 'store')->name("guardar");
+        Route::post('/fase_tipo_licitacion/update', 'update')->name("actualizar");
+        Route::post('/fase_tipo_licitacion/destroy', 'destroy')->name("eliminar");
+    });
+});
+
+Route::name("fase_tipo_tipo_licitacion.")->group(function(){
+    Route::controller(ArchivoController::class)->group(function(){
+        Route::get('/fase_tipo_tipo_licitacion/listar', 'listar')->name("listar");
+        Route::post('/fase_tipo_tipo_licitacion/store', 'store')->name("guardar");
+        Route::post('/fase_tipo_tipo_licitacion/update', 'update')->name("actualizar");
+        Route::post('/fase_tipo_tipo_licitacion/destroy', 'destroy')->name("eliminar");
+    });
+});
+
+Route::name("licitacion.")->group(function(){
+    Route::controller(ArchivoController::class)->group(function(){
+        Route::get('/licitacion/listar', 'listar')->name("listar");
+        Route::post('/licitacion/store', 'store')->name("guardar");
+        Route::post('/licitacion/update', 'update')->name("actualizar");
+        Route::post('/licitacion/destroy', 'destroy')->name("eliminar");
+    });
+});
+
+Route::name("licitacion_fase.")->group(function(){
+    Route::controller(ArchivoController::class)->group(function(){
+        Route::get('/licitacion_fase/listar', 'listar')->name("listar");
+        Route::post('/licitacion_fase/store', 'store')->name("guardar");
+        Route::post('/licitacion_fase/update', 'update')->name("actualizar");
+        Route::post('/licitacion_fase/destroy', 'destroy')->name("eliminar");
+    });
+});
+
+Route::name("tipo_documento.")->group(function(){
+    Route::controller(ArchivoController::class)->group(function(){
+        Route::get('/tipo_documento/listar', 'listar')->name("listar");
+        Route::post('/tipo_documento/store', 'store')->name("guardar");
+        Route::post('/tipo_documento/update', 'update')->name("actualizar");
+        Route::post('/tipo_documento/destroy', 'destroy')->name("eliminar");
+    });
+});
+
+Route::name("tipo_licitacion.")->group(function(){
+    Route::controller(ArchivoController::class)->group(function(){
+        Route::get('/tipo_licitacion/listar', 'listar')->name("listar");
+        Route::post('/tipo_licitacion/store', 'store')->name("guardar");
+        Route::post('/tipo_licitacion/update', 'update')->name("actualizar");
+        Route::post('/tipo_licitacion/destroy', 'destroy')->name("eliminar");
+    });
+});
+

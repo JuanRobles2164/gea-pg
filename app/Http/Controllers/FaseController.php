@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Documento;
-use App\Http\Requests\StoreDocumentoRequest;
-use App\Http\Requests\UpdateDocumentoRequest;
-use App\Repositories\Documento\DocumentoRepository;
+use App\Models\Fase;
+use App\Http\Requests\StorefaseRequest;
+use App\Http\Requests\UpdatefaseRequest;
+use App\Repositories\Fase\FaseRepository;
 use Illuminate\Http\Request;
 
-class DocumentoController extends Controller
+class FaseController extends Controller
 {
     private $repo = null;
     /**
@@ -23,7 +23,7 @@ class DocumentoController extends Controller
 
     public function listar(Request $request){
         $num_rows = $request->cantidad != null ? $request->cantidad : 15;
-        $this->repo = DocumentoRepository::GetInstance();
+        $this->repo = FaseRepository::GetInstance();
         $lista = $this->repo->getAll($num_rows);
         $this->repo = null;
         return json_encode($lista);
@@ -31,7 +31,7 @@ class DocumentoController extends Controller
 
     public function details(Request $request){
         $num_rows = $request->cantidad != null ? $request->cantidad : 15;
-        $this->repo = DocumentoRepository::GetInstance();
+        $this->repo = FaseRepository::GetInstance();
         $lista = $this->repo->getAll($num_rows);
         $this->repo = null;
         return json_encode($lista);
@@ -50,12 +50,12 @@ class DocumentoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreDocumentoRequest  $request
+     * @param  \App\Http\Requests\StoreFaseRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->repo = DocumentoRepository::GetInstance();
+        $this->repo = FaseRepository::GetInstance();
         $data = $request->all();
         $this->repo->create($data);
         $this->repo = null;
@@ -65,10 +65,10 @@ class DocumentoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Documento  $documento
+     * @param  \App\Models\Fase  $fase
      * @return \Illuminate\Http\Response
      */
-    public function show(Documento $documento)
+    public function show(Fase $fase)
     {
         //
     }
@@ -76,10 +76,10 @@ class DocumentoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Documento  $documento
+     * @param  \App\Models\Fase  $fase
      * @return \Illuminate\Http\Response
      */
-    public function edit(Documento $documento)
+    public function edit(Fase $fase)
     {
        //
     }
@@ -87,34 +87,35 @@ class DocumentoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateDocumentoRequest  $request
-     * @param  \App\Models\Documento  $documento
+     * @param  \App\Http\Requests\UpdateFaseRequest  $request
+     * @param  \App\Models\Fase  $fase
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Documento $documento)
+    public function update(Request $request, Fase $fase)
     {
-        $this->repo = DocumentoRepository::GetInstance();
+        $this->repo = FaseRepository::GetInstance();
         $data = $request->all();
-        $documento = $this->repo->find($data["id"]);
-        $this->repo->update($documento, $data);
+        $fase = $this->repo->find($data["id"]);
+        $this->repo->update($fase, $data);
         $this->repo = null;
-        return json_encode($documento);
+        return json_encode($fase);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Documento  $documento
+     * @param  \App\Models\Fase  $fase
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $documento)
+    public function destroy(Request $fase)
     {
-        $objeto = new Documento($documento->all());
-        $objeto->id = $documento->id;
-        $this->repo = DocumentoRepository::GetInstance();
+        $objeto = new Fase($fase->all());
+        $objeto->id = $fase->id;
+        $this->repo = FaseRepository::GetInstance();
         $objeto = $this->repo->find($objeto->id);
         $this->repo->delete($objeto);
         $this->repo = null;
         return json_encode($objeto);
     }
+
 }

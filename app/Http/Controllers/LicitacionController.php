@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Documento;
-use App\Http\Requests\StoreDocumentoRequest;
-use App\Http\Requests\UpdateDocumentoRequest;
-use App\Repositories\Documento\DocumentoRepository;
+use App\Models\Licitacion;
+use App\Http\Requests\StoreLicitacionRequest;
+use App\Http\Requests\UpdateLicitacionRequest;
+use App\Repositories\Licitacion\LicitacionRepository;
 use Illuminate\Http\Request;
 
-class DocumentoController extends Controller
+class LicitacionController extends Controller
 {
     private $repo = null;
     /**
@@ -23,7 +23,7 @@ class DocumentoController extends Controller
 
     public function listar(Request $request){
         $num_rows = $request->cantidad != null ? $request->cantidad : 15;
-        $this->repo = DocumentoRepository::GetInstance();
+        $this->repo = LicitacionRepository::GetInstance();
         $lista = $this->repo->getAll($num_rows);
         $this->repo = null;
         return json_encode($lista);
@@ -31,7 +31,7 @@ class DocumentoController extends Controller
 
     public function details(Request $request){
         $num_rows = $request->cantidad != null ? $request->cantidad : 15;
-        $this->repo = DocumentoRepository::GetInstance();
+        $this->repo = LicitacionRepository::GetInstance();
         $lista = $this->repo->getAll($num_rows);
         $this->repo = null;
         return json_encode($lista);
@@ -50,12 +50,12 @@ class DocumentoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreDocumentoRequest  $request
+     * @param  \App\Http\Requests\StoreLicitacionRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->repo = DocumentoRepository::GetInstance();
+        $this->repo = LicitacionRepository::GetInstance();
         $data = $request->all();
         $this->repo->create($data);
         $this->repo = null;
@@ -65,10 +65,10 @@ class DocumentoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Documento  $documento
+     * @param  \App\Models\Licitacion  $licitacion
      * @return \Illuminate\Http\Response
      */
-    public function show(Documento $documento)
+    public function show(Licitacion $licitacion)
     {
         //
     }
@@ -76,10 +76,10 @@ class DocumentoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Documento  $documento
+     * @param  \App\Models\Licitacion  $licitacion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Documento $documento)
+    public function edit(Licitacion $licitacion)
     {
        //
     }
@@ -87,31 +87,31 @@ class DocumentoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateDocumentoRequest  $request
-     * @param  \App\Models\Documento  $documento
+     * @param  \App\Http\Requests\UpdateLicitacionRequest  $request
+     * @param  \App\Models\Licitacion  $licitacion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Documento $documento)
+    public function update(Request $request, Licitacion $licitacion)
     {
-        $this->repo = DocumentoRepository::GetInstance();
+        $this->repo = LicitacionRepository::GetInstance();
         $data = $request->all();
-        $documento = $this->repo->find($data["id"]);
-        $this->repo->update($documento, $data);
+        $licitacion = $this->repo->find($data["id"]);
+        $this->repo->update($licitacion, $data);
         $this->repo = null;
-        return json_encode($documento);
+        return json_encode($licitacion);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Documento  $documento
+     * @param  \App\Models\Licitacion  $licitacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $documento)
+    public function destroy(Request $licitacion)
     {
-        $objeto = new Documento($documento->all());
-        $objeto->id = $documento->id;
-        $this->repo = DocumentoRepository::GetInstance();
+        $objeto = new Licitacion($licitacion->all());
+        $objeto->id = $licitacion->id;
+        $this->repo = LicitacionRepository::GetInstance();
         $objeto = $this->repo->find($objeto->id);
         $this->repo->delete($objeto);
         $this->repo = null;
