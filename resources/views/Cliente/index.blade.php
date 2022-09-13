@@ -46,6 +46,7 @@
                     <th>{{$c->tipo_identificacion}}</th>
                     <th>{{$c->estado}}</th>
                     <th>
+                        <a href="#" class="btn btn-success">Cambiar estado</a>
                         <a href="#" class="btn btn-success">Ver</a>
                         <a href="#" class="btn btn-warning">Editar</a>
                         <a href="#" class="btn btn-danger">Eliminar</a>
@@ -61,7 +62,6 @@
     <script>
         //Lo correcto es adjuntar mejor un JS que contenga todo, pero lo haremos así mientras xd nada más por el ejemplo
         //Si el JavaScript adjunto requiere renderizar cositas de blade, este debe guardarse como "archivo.blade.js"
-
 
         async function postData(url = '', data = {}) {
             // Esta función en realidad es genérica, sirve para cualquier método que requiera hacer alguna petición al servidor

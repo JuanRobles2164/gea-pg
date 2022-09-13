@@ -21,10 +21,12 @@ class CreateLicitacionsTable extends Migration
             $table->boolean("clonado");
             $table->unsignedBigInteger("cliente");
             $table->unsignedBigInteger("estado");
+            $table->unsignedBigInteger("categoria");
             $table->timestamps();
 
             $table->foreign('cliente')->references('id')->on('cliente');
             $table->foreign('estado')->references('id')->on('estado');
+            $table->foreign('categoria')->references('id')->on('categoria');
         });
     }
 
