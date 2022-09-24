@@ -25,4 +25,5 @@ class DocumentoLicitacionRepository extends BaseRepository{
     public function findByParams($params){
         
     }
+    
 }

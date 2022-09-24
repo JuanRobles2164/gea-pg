@@ -18,6 +18,7 @@
         <div class="form-group">
             <label for="estado_crear">Estado: </label>
             <select name="estado" id="estado_crear">
+                <option value="-1">Seleccione: </option>
                 @foreach ($estados as $e)
                     <option value="{{$e->id}}">{{$e->nombre}}</option>
                 @endforeach
@@ -62,6 +63,7 @@
     <script>
         //Lo correcto es adjuntar mejor un JS que contenga todo, pero lo haremos así mientras xd nada más por el ejemplo
         //Si el JavaScript adjunto requiere renderizar cositas de blade, este debe guardarse como "archivo.blade.js"
+<<<<<<< Updated upstream
 
         async function postData(url = '', data = {}) {
             // Esta función en realidad es genérica, sirve para cualquier método que requiera hacer alguna petición al servidor
@@ -82,6 +84,8 @@
             return response.json(); // Convierte la respuesta del servidor en un objeto JSON
         }
 
+=======
+>>>>>>> Stashed changes
         function crearCliente(){
             let razon_social = document.getElementById("razon_social_crear").value;
             let identificacion = document.getElementById("identificacion_crear").value;
