@@ -9,6 +9,8 @@ use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\FaseController;
 use App\Http\Controllers\LicitacionController;
 use App\Http\Controllers\LicitacionFaseController;
+use App\Http\Controllers\RolController;
+use App\Http\Controllers\RolUsuarioController;
 use App\Http\Controllers\TipoDocumentoController;
 use App\Http\Controllers\TipoLicitacionController;
 use App\Models\FaseTipoLicitacion;
@@ -26,6 +28,24 @@ use App\Models\FaseTipoLicitacion;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::name("rol_usuario.")->group(function(){
+    Route::controller(RolUsuarioController::class)->group(function(){
+        Route::get('/rol_usuario/listar', 'listar')->name("listar");
+        Route::post('/rol_usuario/store', 'store')->name("guardar");
+        Route::post('/rol_usuario/update', 'update')->name("actualizar");
+        Route::post('/rol_usuario/destroy', 'destroy')->name("eliminar");
+    });
+});
+
+Route::name("rol.")->group(function(){
+    Route::controller(RolController::class)->group(function(){
+        Route::get('/rol/listar', 'listar')->name("listar");
+        Route::post('/rol/store', 'store')->name("guardar");
+        Route::post('/rol/update', 'update')->name("actualizar");
+        Route::post('/rol/destroy', 'destroy')->name("eliminar");
+    });
 });
 
 Route::name("cliente.")->group(function(){

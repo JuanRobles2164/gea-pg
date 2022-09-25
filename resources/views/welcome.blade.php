@@ -11,12 +11,11 @@
         Ver xd
     </button>
 
-    <x-guardar-cliente modalTitle="Formulario de clientes" 
-        identificadorModal="id_modal_crear_clientes"
+    <x-guardar-rol modalTitle="Formulario de Roles" 
+        modalId="id_modal_crear_clientes"
         />
     <x-ver-cliente 
     modalTitle="Detalles cliente"
-    modalId="id_ver_clientes_modal"
-    modelId=2/>
+    modalId="id_ver_clientes_modal"/>
 
 @endsection

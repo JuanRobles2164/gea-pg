@@ -1,29 +1,29 @@
 @extends('templates.templateComponentes')
 
 @section('modal-content')    
-    <input type="hidden" name="id_cliente_modal_create" id="id_cliente_modal_create_id" value="{{isset($modelo->id) ? $modelo->id : ''}}">
+    <input type="hidden" name="id_cliente_modal_create" id="id_cliente_modal_create_id">
     <div class="form-group">
         <label class="form-label" for="razon_social_modal_create_id">Razón social:</label>
         <br>
-        <input type="text" class="form-input" id="razon_social_modal_create_id" value="{{isset($modelo->id) ? $modelo->razon_social:''}}">
+        <input type="text" class="form-input" id="razon_social_modal_create_id" value="{{$modelo['razon_social']}}">
     </div>
 
     <div class="form-group">
         <label class="form-label" for="identificacion_modal_create_id">Identificación:</label>
         <br>
-        <input type="text" class="form-input" id="identificacion_modal_create_id" value="{{isset($modelo->id) ? $modelo->identificacion : '' }}">
+        <input type="text" class="form-input" id="identificacion_modal_create_id" value="{{$modelo['identificacion']}}">
     </div>
 
     <div class="form-group">
         <label class="form-label" for="tipo_identificacion_modal_create_id">Tipo identificacion:</label>
         <br>
-        <input type="text" class="form-input" id="tipo_identificacion_modal_create_id" value="{{isset($modelo->id) ? $modelo->tipo_identificacion : ''}}">
+        <input type="text" class="form-input" id="tipo_identificacion_modal_create_id" value="{{$modelo['tipo_identificacion']}}">
     </div>
 
     <div class="form-group">
         <label class="form-label" for="estado_modal_create_id">Estado:</label>
         <br>
-        <select name="estado_modal_create" id="estado_modal_create_id" value="{{isset($modelo->id) ? $modelo->estado : '' }}">
+        <select name="estado_modal_create" id="estado_modal_create_id" value="{{$modelo['estado']}}">
             <option value="-1">Seleccione una opción...</option>
         </select>
     </div>
@@ -32,8 +32,8 @@
 @section('scripts-modal')
     <script>
         function guardarEntidad(){
-            let ruta_crear = '{{route("cliente.guardar")}}';
-            let ruta_editar = '{{route("cliente.actualizar")}}';
+            let ruta_crear = '{{route("usuario.guardar")}}';
+            let ruta_editar = '{{route("usuario.actualizar")}}';
 
             let id = document.getElementById("id_cliente_modal_create_id").value;
             let razon_social = document.getElementById("razon_social_modal_create_id").value;
@@ -68,3 +68,7 @@
         }
     </script>
 @endsection
+
+<div>
+    <!-- I begin to speak only when I am certain what I will say is not better left unsaid. - Cato the Younger -->
+</div>
