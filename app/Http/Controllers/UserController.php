@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rol;
-use App\Repositories\Rol\RolRepository;
+use App\Models\User;
+use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-
-class RolController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class RolController extends Controller
 
     public function listar(Request $request){
         $num_rows = $request->cantidad != null ? $request->cantidad : 15;
-        $this->repo = RolRepository::GetInstance();
+        $this->repo = UserRepository::GetInstance();
         $lista = $this->repo->getAll($num_rows);
         $this->repo = null;
         return json_encode($lista);
@@ -29,7 +29,7 @@ class RolController extends Controller
 
     public function details(Request $request){
         $num_rows = $request->cantidad != null ? $request->cantidad : 15;
-        $this->repo = RolRepository::GetInstance();
+        $this->repo = UserRepository::GetInstance();
         $lista = $this->repo->getAll($num_rows);
         $this->repo = null;
         return json_encode($lista);
@@ -47,33 +47,15 @@ class RolController extends Controller
 
     public function store(Request $request)
     {
-        $this->repo = RolRepository::GetInstance();
+        $this->repo = UserRepository::GetInstance();
         $data = $request->all();
+        $data["password"] = Hash::make($data["password"]);
+        if(isset($data["confirm_password"])){
+            unset($data["confirm_password"]);
+        }
         $data = $this->repo->create($data);
         $this->repo = null;
         return json_encode($data);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Rol  $Rol
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Rol $Rol)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Rol  $Rol
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Rol $Rol)
-    {
-       //
     }
 
     /**
@@ -83,25 +65,24 @@ class RolController extends Controller
      * @param  \App\Models\Rol  $Rol
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rol $Rol)
+    public function update(Request $request, User $user)
     {
-        $this->repo = RolRepository::GetInstance();
+        $this->repo = UserRepository::GetInstance();
         $data = $request->all();
-        $Rol = $this->repo->find($data["id"]);
-        $this->repo->update($Rol, $data);
+        $user = $this->repo->find($data["id"]);
+        $this->repo->update($user, $data);
         $this->repo = null;
-        return json_encode($Rol);
+        return json_encode($user);
     }
 
-    public function destroy(Request $Rol)
+    public function destroy(Request $user)
     {
-        $objeto = new Rol($Rol->all());
-        $objeto->id = $Rol->id;
-        $this->repo = RolRepository::GetInstance();
+        $objeto = new User($user->all());
+        $objeto->id = $user->id;
+        $this->repo = UserRepository::GetInstance();
         $objeto = $this->repo->find($objeto->id);
         $this->repo->delete($objeto);
         $this->repo = null;
         return json_encode($objeto);
     }
-
 }

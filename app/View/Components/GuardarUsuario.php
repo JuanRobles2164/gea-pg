@@ -31,8 +31,6 @@ class GuardarUsuario extends Component
         $this->repo = RolRepository::GetInstance();
         $this->roles = $this->repo->getAll();
 
-        
-
 
         $this->repo = null;
     }

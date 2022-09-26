@@ -22,7 +22,7 @@
 
 @section('scripts-modal')
     <script>
-        function guardarEntidad(){
+        function {{$modal_id}}Crear(){
             let ruta_crear = '{{route("rol.guardar")}}';
             let ruta_editar = '{{route("rol.actualizar")}}';
 
@@ -33,12 +33,13 @@
             let objeto = {
                 id: id,
                 nombre: nombre,
-                descripcion: descripcion,
+                descripcion: descripcion
             }
-            console.log(objeto);
+            if(){
+
+            }
             if(id == undefined || id == null || id == ''){
                 //si viene vacío, va a crear
-                objeto.id = null;
                 postData(ruta_crear, objeto)
                 .then((data) => {
                     console.log(data);

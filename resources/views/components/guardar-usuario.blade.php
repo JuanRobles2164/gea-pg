@@ -1,32 +1,38 @@
 @extends('templates.templateComponentes')
 
 @section('modal-content')    
-    <input type="hidden" name="id_cliente_modal_create" id="id_cliente_modal_create_id">
+    <input type="hidden" name="id_usuario_modal_create_id" id="id_usuario_modal_create_id">
     <div class="form-group">
-        <label class="form-label" for="razon_social_modal_create_id">Razón social:</label>
+        <label class="form-label" for="nombre_user_modal_create_id">Nombre completo:</label>
         <br>
-        <input type="text" class="form-input" id="razon_social_modal_create_id" value="{{$modelo['razon_social']}}">
+        <input type="text" class="form-input" id="nombre_user_modal_create_id" value="{{isset($modelo->id) ? $modelo->name : ''}}">
     </div>
 
     <div class="form-group">
-        <label class="form-label" for="identificacion_modal_create_id">Identificación:</label>
+        <label class="form-label" for="email_user_modal_create_id">Email:</label>
         <br>
-        <input type="text" class="form-input" id="identificacion_modal_create_id" value="{{$modelo['identificacion']}}">
+        <input type="email" class="form-input" id="email_user_modal_create_id" value="{{isset($modelo->id) ? $modelo->email : ''}}">
     </div>
 
     <div class="form-group">
-        <label class="form-label" for="tipo_identificacion_modal_create_id">Tipo identificacion:</label>
+        <label class="form-label" for="password_user_modal_create_id">Contraseña:</label>
         <br>
-        <input type="text" class="form-input" id="tipo_identificacion_modal_create_id" value="{{$modelo['tipo_identificacion']}}">
+        <input type="password" class="form-input" id="password_user_modal_create_id" placeholder="Si no quieres cambiar la contraseña, deja el campo vacío">
     </div>
 
     <div class="form-group">
-        <label class="form-label" for="estado_modal_create_id">Estado:</label>
+        <label class="form-label" for="confirm_password_user_modal_create_id">Confirmar contraseña:</label>
         <br>
-        <select name="estado_modal_create" id="estado_modal_create_id" value="{{$modelo['estado']}}">
-            <option value="-1">Seleccione una opción...</option>
-        </select>
+        <input type="password" class="form-input" id="confirm_password_user_modal_create_id">
     </div>
+
+    <div class="form-group">
+        @foreach ($roles as $r)
+            <input type="checkbox" name="rolCheck" id="rol{{$r->id}}" value="{{$r->id}}">
+            <label for="rol{{$r->id}}">{{$r->nombre}}</label>
+        @endforeach
+    </div>
+
 @endsection
 
 @section('scripts-modal')
@@ -34,19 +40,27 @@
         function guardarEntidad(){
             let ruta_crear = '{{route("usuario.guardar")}}';
             let ruta_editar = '{{route("usuario.actualizar")}}';
+            let rua_obtener_roles_usuario = '{{route("rol_usuario.listar")}}';
 
-            let id = document.getElementById("id_cliente_modal_create_id").value;
-            let razon_social = document.getElementById("razon_social_modal_create_id").value;
-            let identificacion = document.getElementById("identificacion_modal_create_id").value;
-            let tipo_identificacion = document.getElementById("tipo_identificacion_modal_create_id").value;
-            let estado = document.getElementById("estado_modal_create_id").value;
+            let id = document.getElementById("id_usuario_modal_create_id").value;
+            let name = document.getElementById("nombre_user_modal_create_id").value;
+            let email = document.getElementById("email_user_modal_create_id").value;
+            let password = document.getElementById("password_user_modal_create_id").value;
+            let roles_crear = [];
+            let roles_eliminar = [];
+
+            var checkboxes = document.querySelectorAll('input[name="rolCheck"]:checked');
+
+            for (var i = 0; i < checkboxes.length; i++){
+                roles.push(checkboxes[i].value)
+            }
+
 
             let objeto = {
                 id: id,
-                razon_social: razon_social,
-                identificacion: identificacion,
-                tipo_identificacion: tipo_identificacion,
-                estado: estado
+                name: name,
+                email: email,
+                password: password,
             }
             console.log(objeto);
             if(id == undefined || id == null || id == ''){
@@ -55,15 +69,21 @@
                 postData(ruta_crear, objeto)
                 .then((data) => {
                     console.log(data);
-                    alert("Cliente creado exitosamente!");
+                    alert("Usuario creado exitosamente!");
+                    objeto = data;
                 });
             }else{
                 //Si viene con id, va a editar
                 postData(ruta_editar, objeto)
                 .then((data) => {
                     console.log(data);
-                    alert("Cliente editado exitosamente!");
+                    alert("Usuario editado exitosamente!");
+                    objeto = data;
                 });
+            }
+            //Quiere decir que sí creó o actualizó
+            if(objeto.updated_at != undefined){
+
             }
         }
     </script>

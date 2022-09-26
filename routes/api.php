@@ -30,6 +30,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::name("usuario.")->group(function(){
+    Route::controller(RolUsuarioController::class)->group(function(){
+        Route::get('/usuario/listar', 'listar')->name("listar");
+        Route::post('/usuario/store', 'store')->name("guardar");
+        Route::post('/usuario/update', 'update')->name("actualizar");
+        Route::post('/usuario/destroy', 'destroy')->name("eliminar");
+    });
+});
+
 Route::name("rol_usuario.")->group(function(){
     Route::controller(RolUsuarioController::class)->group(function(){
         Route::get('/rol_usuario/listar', 'listar')->name("listar");
