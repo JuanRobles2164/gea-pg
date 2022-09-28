@@ -35,9 +35,6 @@
                 nombre: nombre,
                 descripcion: descripcion
             }
-            if(){
-
-            }
             if(id == undefined || id == null || id == ''){
                 //si viene vacío, va a crear
                 postData(ruta_crear, objeto)

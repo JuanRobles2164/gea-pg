@@ -88,4 +88,19 @@ class RolUsuarioController extends Controller
         $this->repo = null;
         return json_encode($objeto);
     }
+
+    public function agregar(Request $request){
+        $this->repo = RolUsuarioRepository::GetInstance();
+        $usuarioId = $request->id;
+        $rolesIds = $request->roles;
+        $rolesObjs = [];
+        for($i = 0; $i < count($rolesIds); $i++){
+            $objeto = new RolUsuario([
+                'usuario' => $usuarioId,
+                'rol' => $rolesIds[$i]
+            ]);
+            array_push($rolesObjs, $this->repo->asignarRol($objeto));
+        }
+        return $rolesObjs;
+    }
 }

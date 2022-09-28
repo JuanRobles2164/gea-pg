@@ -37,16 +37,18 @@
 
 @section('scripts-modal')
     <script>
-        function guardarEntidad(){
+        function {{$modal_id}}Crear(){
             let ruta_crear = '{{route("usuario.guardar")}}';
             let ruta_editar = '{{route("usuario.actualizar")}}';
             let rua_obtener_roles_usuario = '{{route("rol_usuario.listar")}}';
+
+            let ruta_crear_roles_usuario = '{{route("rol_usuario.agregar")}}';
 
             let id = document.getElementById("id_usuario_modal_create_id").value;
             let name = document.getElementById("nombre_user_modal_create_id").value;
             let email = document.getElementById("email_user_modal_create_id").value;
             let password = document.getElementById("password_user_modal_create_id").value;
-            let roles_crear = [];
+            let roles = [];
             let roles_eliminar = [];
 
             var checkboxes = document.querySelectorAll('input[name="rolCheck"]:checked');
@@ -62,7 +64,7 @@
                 email: email,
                 password: password,
             }
-            console.log(objeto);
+            
             if(id == undefined || id == null || id == ''){
                 //si viene vacío, va a crear
                 objeto.id = null;
@@ -81,9 +83,15 @@
                     objeto = data;
                 });
             }
+            
             //Quiere decir que sí creó o actualizó
             if(objeto.updated_at != undefined){
-
+                objeto.roles = roles;
+                postData(ruta_crear_roles_usuario, objeto)
+                .then((data) => {
+                    alert("Roles asignados satisfactoriamente");
+                    console.log(data);
+                });
             }
         }
     </script>

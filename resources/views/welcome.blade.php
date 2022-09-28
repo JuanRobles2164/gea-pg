@@ -11,7 +11,7 @@
         Ver xd
     </button>
 
-    <x-guardar-rol modalTitle="Formulario de Roles" 
+    <x-guardar-usuario modalTitle="Formulario de Roles" 
         modalId="id_modal_crear_clientes"
         />
     <x-ver-cliente 

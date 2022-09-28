@@ -45,6 +45,7 @@ Route::name("rol_usuario.")->group(function(){
         Route::post('/rol_usuario/store', 'store')->name("guardar");
         Route::post('/rol_usuario/update', 'update')->name("actualizar");
         Route::post('/rol_usuario/destroy', 'destroy')->name("eliminar");
+        Route::post('/rol_usuario/agregar', 'agregar')->name("agregar");
     });
 });
 
