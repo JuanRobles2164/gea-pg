@@ -11,22 +11,17 @@
             <tr>
                 <td>Id</td>
                 <td>Nombre</td>
-                <td>Recurrente</td>
-                <td>Constante</td>
-                <td>Validez</td>
-                <td>Unidad Validez</td>
+                <td>Descripcion</td>
+                
                 <td>Acciones</td>
             </tr>
         </thead>
         <tbody>
-            @foreach ($tipos_documento as $td)
+            @foreach ($fases as $td)
                 <tr style="line-height:50px">
                     <th>{{$td->id}}</th>
                     <th>{{$td->nombre}}</th>
-                    <th>{{$td->recurrente}}</th>
-                    <th>{{$td->constante}}</th>
-                    <th>{{$td->validez}}</th>
-                    <th>{{$td->unidad_validez}}</th>
+                    <th>{{$td->descripcion}}</th>
                     <th>
                         <!-- Aquí van los botones para editar-eliminar y eso xd -->
                     </th>

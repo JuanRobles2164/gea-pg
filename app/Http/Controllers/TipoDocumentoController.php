@@ -18,7 +18,11 @@ class TipoDocumentoController extends Controller
      */
     public function index()
     {
-        //
+        $this->repo = TipoDocumentoRepository::GetInstance();
+        $lista = $this->repo->getAll();
+        $this->repo = null;
+        $allData = ['tipos_documento' => $lista];
+        return view('TipoDocumento.index', $allData);
     }
 
     public function listar(Request $request){
