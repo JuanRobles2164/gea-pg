@@ -14,7 +14,5 @@
     <x-guardar-tipo-documento modalTitle="Formulario de Roles" 
         modalId="id_modal_crear_clientes"
         />
-    <x-ver-cliente 
-    modalId="id_ver_clientes_modal"/>
 
 @endsection

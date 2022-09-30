@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Repositories\Fase\FaseRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Illuminate\View\Component;
 
@@ -10,6 +11,7 @@ class GuardarTipoLicitacion extends Component
     public $modal_title, $modal_id;
     public $model;
     private $repo = null;
+    public $fases;
     /**
      * Create a new component instance.
      *
@@ -24,7 +26,11 @@ class GuardarTipoLicitacion extends Component
             $this->model = $this->repo->find($modelId);
         }
 
+
+        $this->repo = FaseRepository::GetInstance();
+        $this->fases = $this->repo->getAll();
         $this->repo = null;
+
     }
 
     /**
