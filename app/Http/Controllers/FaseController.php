@@ -18,7 +18,13 @@ class FaseController extends Controller
      */
     public function index()
     {
-        //
+        $this->repo = FaseRepository::GetInstance();
+        $lista = $this->repo->getAll();
+        $this->repo = null;
+
+        $allData = ['fases' => $lista
+        ];
+        return view('Fase.index', $allData);
     }
 
     public function listar(Request $request){

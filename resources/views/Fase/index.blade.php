@@ -2,7 +2,7 @@
 
 @section('contenido')
 
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_tipo_documento">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_fases">
         Nuevo
     </button>
     <br>
@@ -24,14 +24,17 @@
                     <th>{{$td->descripcion}}</th>
                     <th>
                         <!-- Aquí van los botones para editar-eliminar y eso xd -->
+                        <a href="#" class="btn btn-warning">Editar</a>
+                        <a href="#" class="btn btn-success">Visualizar</a>
+                        <a href="#" class="btn btn-danger">Eliminar</a>
                     </th>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    <x-guardar-tipo-documento modalTitle="Formulario de Tipos de documento" 
-    modalId="id_modal_tipo_documento"/>
+    <x-guardar-fase modalTitle="Formulario de Fases" 
+    modalId="id_modal_fases"/>
 @endsection
 
 @section('scripts')

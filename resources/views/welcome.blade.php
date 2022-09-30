@@ -15,7 +15,6 @@
         modalId="id_modal_crear_clientes"
         />
     <x-ver-cliente 
-    modalTitle="Detalles cliente"
     modalId="id_ver_clientes_modal"/>
 
 @endsection

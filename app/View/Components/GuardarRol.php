@@ -15,7 +15,7 @@ class GuardarRol extends Component
     public $modal_id, $modal_title, $model;
     
     private $repo = null;
-    public function __construct($modalTitle, $modalId, $modelId = -1)
+    public function __construct($modalTitle = 'Formulario de Roles', $modalId, $modelId = -1)
     {
         $this->modal_id = $modalId;
         $this->modal_title = $modalTitle;

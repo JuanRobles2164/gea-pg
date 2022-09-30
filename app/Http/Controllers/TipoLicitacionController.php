@@ -18,7 +18,13 @@ class TipoLicitacionController extends Controller
      */
     public function index()
     {
-        //
+        $this->repo = TipoLicitacionRepository::GetInstance();
+        $lista = $this->repo->getAll();
+        $this->repo = null;
+
+        $allData = ['tipos_licitacion' => $lista,
+        ];
+        return view('TipoLicitacion.index', $allData);
     }
 
     public function listar(Request $request){

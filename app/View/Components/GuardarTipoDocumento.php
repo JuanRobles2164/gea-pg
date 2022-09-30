@@ -15,7 +15,7 @@ class GuardarTipoDocumento extends Component
      *
      * @return void
      */
-    public function __construct($modalTitle, $modalId, $modelId = -1)
+    public function __construct($modalTitle = 'Formulario de tipos de Documento', $modalId, $modelId = -1)
     {
         $this->modal_id = $modalId;
         $this->modal_title = $modalTitle;

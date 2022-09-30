@@ -11,12 +11,14 @@
     </div>
 
     <div class="form-check">
-        <input type="text" class="form-check-input" name="recurrente_constante_documento_modal_create" id="recurrente_tipo_documento_modal_create_id" value="Recurrente" {{(isset($model->id) && )}}>
+        <input type="radio" class="form-check-input" name="recurrente_constante_documento_modal_create" id="recurrente_tipo_documento_modal_create_id" 
+            value="Recurrente" {{(isset($model->id) && $model->recurrente) ? ' checked' : ''}}>
         <label class="form-check-label" for="recurrente_tipo_documento_modal_create_id">Recurrente</label>
     </div>
 
     <div class="form-check">
-        <input type="text" class="form-check-input" name="recurrente_constante_documento_modal_create" id="constante_tipo_documento_modal_create_id" value="Constante">
+        <input type="radio" class="form-check-input" name="recurrente_constante_documento_modal_create" id="constante_tipo_documento_modal_create_id" 
+            value="Constante" {{(isset($model->id) && $model->constante) ? ' checked' : ''}}>
         <label class="form-check-label" for="constante_tipo_documento_modal_create_id">Constante</label>
     </div>
 

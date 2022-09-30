@@ -7,12 +7,14 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\FaseController;
+use App\Http\Controllers\FaseTipoDocumentoController;
 use App\Http\Controllers\LicitacionController;
 use App\Http\Controllers\LicitacionFaseController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\RolUsuarioController;
 use App\Http\Controllers\TipoDocumentoController;
 use App\Http\Controllers\TipoLicitacionController;
+use App\Http\Controllers\UserController;
 use App\Models\FaseTipoLicitacion;
 
 /*
@@ -30,8 +32,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::name("fase_tipo_documento.")->group(function(){
+    Route::controller(FaseTipoDocumentoController::class)->group(function(){
+        Route::get('/fase_tipo_documento/listar', 'listar')->name("listar");
+        Route::post('/fase_tipo_documento/store', 'store')->name("guardar");
+        Route::post('/fase_tipo_documento/store', 'storeAll')->name("guardar_todo");
+        Route::post('/fase_tipo_documento/update', 'update')->name("actualizar");
+        Route::post('/fase_tipo_documento/destroy', 'destroy')->name("eliminar");
+    });
+});
+
 Route::name("usuario.")->group(function(){
-    Route::controller(RolUsuarioController::class)->group(function(){
+    Route::controller(UserController::class)->group(function(){
         Route::get('/usuario/listar', 'listar')->name("listar");
         Route::post('/usuario/store', 'store')->name("guardar");
         Route::post('/usuario/update', 'update')->name("actualizar");
@@ -75,16 +87,6 @@ Route::name("documento.")->group(function(){
         Route::post('/documento/destroy', 'destroy')->name("eliminar");
     });
 });
-
-/*Route::name("documento_tipo_licitacion.")->group(function(){
-    Route::controller(ArchivoController::class)->group(function(){
-        Route::get('/documento_tipo_licitacion/listar', 'listar')->name("listar");
-        Route::post('/documento_tipo_licitacion/store', 'store')->name("guardar");
-        Route::post('/documento_tipo_licitacion/update', 'update')->name("actualizar");
-        Route::post('/documento_tipo_licitacion/destroy', 'destroy')->name("eliminar");
-    });
-});*/
-
 
 Route::name("tipo_licitacion.")->group(function(){
     Route::controller(TipoLicitacionController::class)->group(function(){

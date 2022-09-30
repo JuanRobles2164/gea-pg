@@ -62,6 +62,22 @@ class FaseTipoDocumentoController extends Controller
         return json_encode($data);
     }
 
+    public function storeAll(Request $request){
+        //Setea el array
+        $this->repo = FaseTipoDocumentoRepository::GetInstance();
+
+        $fase_tipo_documentos = $request->fase_tipo_documentos;
+        $allResponse = [];
+        for($i = 0; $i < count($fase_tipo_documentos); $i++){
+            $data = [
+                'tipo_documento' => $fase_tipo_documentos->tipo_documento,
+                'fase' => $fase_tipo_documentos->fase
+            ];
+            array_push($allResponse, $this->repo->create($data));
+        }
+        return json_encode($allResponse);
+    }
+
     /**
      * Display the specified resource.
      *

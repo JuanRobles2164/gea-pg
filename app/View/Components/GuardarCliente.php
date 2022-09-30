@@ -17,7 +17,7 @@ class GuardarCliente extends Component
      *
      * @return void
      */
-    public function __construct($modalTitle, $identificadorModal, $idElemento = -1)
+    public function __construct($modalTitle = 'Formulario de Clientes', $identificadorModal, $idElemento = -1)
     {
         $this->modal_title = $modalTitle;
         $this->modal_id = $identificadorModal;
@@ -27,7 +27,7 @@ class GuardarCliente extends Component
             $this->modelo = $this->repo->find($idElemento);
             $this->repo = null;
         }else{
-            $this->modelo = $idElemento;
+            $this->modelo = null;
         }
     }
 

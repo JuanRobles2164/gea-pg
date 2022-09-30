@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EstadoController;
+use App\Http\Controllers\TipoDocumentoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,18 @@ Route::name("estado.")->group(function(){
 Route::name("cliente.")->group(function(){
     Route::controller(ClienteController::class)->group(function(){
         Route::get('/cliente/index', 'index')->name("index");
+    });
+});
+
+Route::name("fase.")->group(function(){
+    Route::controller(ClienteController::class)->group(function(){
+        Route::get('/fase/index', 'index')->name("index");
+    });
+});
+
+Route::name("tipo_documento.")->group(function(){
+    Route::controller(TipoDocumentoController::class)->group(function(){
+        Route::get('/tipo_documento/index', 'index')->name("index");
     });
 });
 

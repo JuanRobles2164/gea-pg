@@ -2,34 +2,28 @@
 
 namespace App\View\Components;
 
-use App\Repositories\Fase\FaseRepository;
-use App\Repositories\TipoDocumento\TipoDocumentoRepository;
+use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Illuminate\View\Component;
 
-class GuardarFase extends Component
+class GuardarTipoLicitacion extends Component
 {
     public $modal_title, $modal_id;
     public $model;
-    public $tipos_documento;
-
-    private $repo;
-
+    private $repo = null;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($modalTitle = 'Formulario de Fases', $modalId, $modelId = -1)
+    public function __construct($modalTitle = 'Formulario para tipo de licitación', $modalId, $modelId = -1)
     {
         $this->modal_id = $modalId;
         $this->modal_title = $modalTitle;
         if($modelId != -1){
-            $this->repo = FaseRepository::GetInstance();
+            $this->repo = TipoLicitacionRepository::GetInstance();
             $this->model = $this->repo->find($modelId);
         }
-        $this->repo = TipoDocumentoRepository::GetInstance();
-        $this->tipos_documento = $this->repo->getAll();
-        
+
         $this->repo = null;
     }
 
@@ -40,6 +34,6 @@ class GuardarFase extends Component
      */
     public function render()
     {
-        return view('components.guardar-fase');
+        return view('components.guardar-tipo-licitacion');
     }
 }

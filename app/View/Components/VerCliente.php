@@ -18,7 +18,7 @@ class VerCliente extends Component
     public $model;
     public $estados_cliente;
     private $repo = null;
-    public function __construct($modalTitle, $modalId, $modelId = -1)
+    public function __construct($modalTitle = 'Visualizador de Cliente', $modalId, $modelId = -1)
     {
         $this->modal_id = $modalId;
         $this->modal_title = $modalTitle;

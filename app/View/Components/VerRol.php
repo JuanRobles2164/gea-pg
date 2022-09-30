@@ -16,7 +16,7 @@ class VerRol extends Component
     public $model_id;
     public $model;
     private $repo = null;
-    public function __construct($modalTitle, $modalId, $modelId = -1)
+    public function __construct($modalTitle = 'Visualizador de Rol', $modalId, $modelId = -1)
     {
         $this->modal_id = $modalId;
         $this->modal_title = $modalTitle;

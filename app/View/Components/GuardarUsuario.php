@@ -19,7 +19,7 @@ class GuardarUsuario extends Component
      *
      * @return void
      */
-    public function __construct($modalTitle, $modalId, $modelId = -1)
+    public function __construct($modalTitle = 'Formulario de usuarios', $modalId, $modelId = -1)
     {
         $this->modal_id = $modalId;
         $this->modal_title = $modalTitle;
