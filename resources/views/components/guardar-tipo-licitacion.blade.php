@@ -12,23 +12,23 @@
     </div>
 
     <div class="form-group">
-        <label class="form-label" for="nombre_tipo_licitacion_modal_create_id">Nombre:</label>
+        <label class="form-label" for="descripcion_tipo_licitacion_modal_create_id">Nombre:</label>
         <br>
-        <textarea name="" id="nombre_tipo_licitacion_modal_create_id" cols="30" rows="10" class="form-input">
+        <textarea name="" id="descripcion_tipo_licitacion_modal_create_id" cols="30" rows="10" class="form-input">
             {{isset($modelo->id) ? $modelo->descripcion:''}}
         </textarea>
     </div>
 
     <div class="form-group">
-        <label class="form-label" for="nombre_tipo_licitacion_modal_create_id">Duración:</label>
+        <label class="form-label" for="duracion_tipo_licitacion_modal_create_id">Duración:</label>
         <br>
-        <input type="text" class="form-input" id="nombre_tipo_licitacion_modal_create_id" value="{{isset($modelo->id) ? $modelo->duracion:''}}">
+        <input type="text" class="form-input" id="duracion_tipo_licitacion_modal_create_id" value="{{isset($modelo->id) ? $modelo->duracion:''}}">
     </div>
 
     <div class="form-group">
-        <label class="form-label" for="nombre_tipo_licitacion_modal_create_id">Retención:</label>
+        <label class="form-label" for="retencion_tipo_licitacion_modal_create_id">Retención:</label>
         <br>
-        <input type="text" class="form-input" id="nombre_tipo_licitacion_modal_create_id" value="{{isset($modelo->id) ? $modelo->duracion:''}}">
+        <input type="text" class="form-input" id="retencion_tipo_licitacion_modal_create_id" value="{{isset($modelo->id) ? $modelo->duracion:''}}">
     </div>
 
     <div class="form-group">
@@ -65,10 +65,10 @@
         var FasesSeleccionadasModalCreate = [];
 
         function compararElementos(a,b){
-            if(a < b){
+            if(a.posicion < b.posicion){
                 return -1;
             }
-            if(a > b){
+            if(a.posicion > b.posicion){
                 return 1;
             }
             return 0;
@@ -102,11 +102,17 @@
         }
 
         function recrearListItemsFases(){
+
+            //Ordenar fases seleccionadas
+            FasesSeleccionadasModalCreate.sort(compararElementos);
+
             let lienzo = document.getElementById("fase_tipo_licitacion_modal_create_selected");
-            lienzo.innerHTML = "";
-
-
-
+            let elementos = "";
+            for(i in FasesSeleccionadasModalCreate){
+                let elemento = "<label>"+FasesSeleccionadasModalCreate[i].posicion+". "+FasesSeleccionadasModalCreate[i].nombre+"</label>";
+                elementos += elemento;
+            }
+            lienzo.innerHTML = elementos;
         }
 
         function {{$modal_id}}Crear(){
@@ -116,26 +122,18 @@
             let id = document.getElementById("id_tipo_licitacion_modal_create_id").value;
             let nombre = document.getElementById("nombre_tipo_licitacion_modal_create_id").value;
             //Esto retornará un NodeList
-            let recurrente_constante_NodeList = document.getElementByName("recurrente_constante_licitacion_modal_create");
-            let valorMarcado = "";
-            rates.forEach((rate) => {
-                if (rate.checked) {
-                    valorMarcado = rate.value;
-                }
-            });
-
-            let recurrente = valorMarcado == "Recurrente" ? true : false;
-            let constante = valorMarcado == "Constante" ? true : false;
-            let validez = document.getElementById("validez_tipo_licitacion_modal_create_id").value;
-            let unidad_validez = document.getElementById("unidad_validez_tipo_licitacion_modal_create_id").value;
+            let descripcion = document.getElementById("descripcion_tipo_licitacion_modal_create_id");
+            let duracion = document.getElementById("duracion_tipo_licitacion_modal_create_id");
+            let retencion = document.getElementById("retencion_tipo_licitacion_modal_create_id").value;
+            let fasesSelected = FasesSeleccionadasModalCreate;
+            
 
             let objeto = {
                 id: id,
                 nombre: nombre,
-                recurrente: recurrente,
-                constante: constante,
-                validez: validez,
-                unidad_validez: unidad_validez
+                descripcion: descripcion,
+                duracion: duracion,
+                retencion: retencion
             }
             if(id == undefined || id == null || id == ''){
                 //si viene vacío, va a crear
