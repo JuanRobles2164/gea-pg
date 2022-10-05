@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Documento;
-use App\Http\Requests\StoreDocumentoRequest;
-use App\Http\Requests\UpdateDocumentoRequest;
-use App\Repositories\Documento\DocumentoRepository;
-use Illuminate\Http\Request;
+use App\Models\documento;
+use Illuminate\Http\Client\Request;
 
 class DocumentoController extends Controller
 {
-    private $repo = null;
     /**
      * Display a listing of the resource.
      *
@@ -19,22 +15,6 @@ class DocumentoController extends Controller
     public function index()
     {
         //
-    }
-
-    public function listar(Request $request){
-        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
-        $this->repo = DocumentoRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
-        $this->repo = null;
-        return json_encode($lista);
-    }
-
-    public function details(Request $request){
-        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
-        $this->repo = DocumentoRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
-        $this->repo = null;
-        return json_encode($lista);
     }
 
     /**
@@ -50,25 +30,21 @@ class DocumentoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreDocumentoRequest  $request
+     * @param  \App\Http\Requests\StoredocumentoRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->repo = DocumentoRepository::GetInstance();
-        $data = $request->all();
-        $this->repo->create($data);
-        $this->repo = null;
-        return json_encode($data);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Documento  $documento
+     * @param  \App\Models\documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function show(Documento $documento)
+    public function show(documento $documento)
     {
         //
     }
@@ -76,45 +52,34 @@ class DocumentoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Documento  $documento
+     * @param  \App\Models\documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function edit(Documento $documento)
+    public function edit(documento $documento)
     {
-       //
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateDocumentoRequest  $request
-     * @param  \App\Models\Documento  $documento
+     * @param  \App\Http\Requests\UpdatedocumentoRequest  $request
+     * @param  \App\Models\documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Documento $documento)
+    public function update(Request $request, documento $documento)
     {
-        $this->repo = DocumentoRepository::GetInstance();
-        $data = $request->all();
-        $documento = $this->repo->find($data["id"]);
-        $this->repo->update($documento, $data);
-        $this->repo = null;
-        return json_encode($documento);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Documento  $documento
+     * @param  \App\Models\documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $documento)
+    public function destroy(documento $documento)
     {
-        $objeto = new Documento($documento->all());
-        $objeto->id = $documento->id;
-        $this->repo = DocumentoRepository::GetInstance();
-        $objeto = $this->repo->find($objeto->id);
-        $this->repo->delete($objeto);
-        $this->repo = null;
-        return json_encode($objeto);
+        //
     }
 }
