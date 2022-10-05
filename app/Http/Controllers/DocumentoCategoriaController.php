@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categoria;
-use App\Repositories\Categoria\CategoriaRepository;
+use App\Models\DocumentoCategoria;
+use App\Repositories\DocumentoCategoria\DocumentoCategoriaRepository;
 use Illuminate\Http\Request;
 
-class CategoriaController extends Controller
+class DocumentoCategoriaController extends Controller
 {
     private $repo = null;
 
     public function listar(Request $request){
         $num_rows = $request->cantidad != null ? $request->cantidad : 15;
-        $this->repo = CategoriaRepository::GetInstance();
+        $this->repo = DocumentoCategoriaRepository::GetInstance();
         $lista = $this->repo->getAll($num_rows);
         $this->repo = null;
         return json_encode($lista);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,25 +41,26 @@ class CategoriaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorecategoriaRequest  $request
+     * @param  \App\Http\Requests\StoreDocumentoCategoriaRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->repo = CategoriaRepository::GetInstance();
+        $this->repo = DocumentoCategoriaRepository::GetInstance();
         $data = $request->all();
-        $this->repo->create($data);
+        $objeto = new DocumentoCategoria($data);
+        $this->repo->create($objeto);
         $this->repo = null;
-        return json_encode($data);
+        return json_encode($objeto);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\categoria  $categoria
+     * @param  \App\Models\DocumentoCategoria  $documentoCategoria
      * @return \Illuminate\Http\Response
      */
-    public function show(categoria $categoria)
+    public function show(DocumentoCategoria $documentoCategoria)
     {
         //
     }
@@ -66,10 +68,10 @@ class CategoriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\categoria  $categoria
+     * @param  \App\Models\DocumentoCategoria  $documentoCategoria
      * @return \Illuminate\Http\Response
      */
-    public function edit(categoria $categoria)
+    public function edit(DocumentoCategoria $documentoCategoria)
     {
         //
     }
@@ -77,34 +79,30 @@ class CategoriaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatecategoriaRequest  $request
-     * @param  \App\Models\categoria  $categoria
+     * @param  \App\Http\Requests\UpdateDocumentoCategoriaRequest  $request
+     * @param  \App\Models\DocumentoCategoria  $documentoCategoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, categoria $categoria)
+    public function update(Request $request, DocumentoCategoria $documentoCategoria)
     {
-        $this->repo = CategoriaRepository::GetInstance();
+        $this->repo = DocumentoCategoriaRepository::GetInstance();
         $data = $request->all();
-        $categoria = $this->repo->find($data["id"]);
-        $this->repo->update($categoria, $data);
+        $this->repo->update($documentoCategoria, $data);
         $this->repo = null;
-        return json_encode($categoria);
+        return json_encode($documentoCategoria);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\categoria  $categoria
+     * @param  \App\Models\DocumentoCategoria  $documentoCategoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $categoria)
+    public function destroy(DocumentoCategoria $documentoCategoria)
     {
-        $objeto = new Categoria($categoria->all());
-        $objeto->id = $categoria->id;
-        $this->repo = CategoriaRepository::GetInstance();
-        $objeto = $this->repo->find($objeto->id);
-        $this->repo->delete($objeto);
+        $this->repo = DocumentoCategoriaRepository::GetInstance();
+        $this->repo->delete($documentoCategoria);
         $this->repo = null;
-        return json_encode($objeto);
+        return json_encode($documentoCategoria);
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\documento;
+use App\Models\Iteracion;
 use Illuminate\Http\Client\Request;
 
-class DocumentoController extends Controller
+class IteracionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,7 +30,7 @@ class DocumentoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoredocumentoRequest  $request
+     * @param  \App\Http\Requests\StoreIteracionRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,10 +41,10 @@ class DocumentoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\documento  $documento
+     * @param  \App\Models\Iteracion  $iteracion
      * @return \Illuminate\Http\Response
      */
-    public function show(documento $documento)
+    public function show(Iteracion $iteracion)
     {
         //
     }
@@ -52,10 +52,10 @@ class DocumentoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\documento  $documento
+     * @param  \App\Models\Iteracion  $iteracion
      * @return \Illuminate\Http\Response
      */
-    public function edit(documento $documento)
+    public function edit(Iteracion $iteracion)
     {
         //
     }
@@ -63,11 +63,11 @@ class DocumentoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatedocumentoRequest  $request
-     * @param  \App\Models\documento  $documento
+     * @param  \App\Http\Requests\UpdateIteracionRequest  $request
+     * @param  \App\Models\Iteracion  $iteracion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, documento $documento)
+    public function update(Request $request, Iteracion $iteracion)
     {
         //
     }
@@ -75,10 +75,10 @@ class DocumentoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\documento  $documento
+     * @param  \App\Models\Iteracion  $iteracion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(documento $documento)
+    public function destroy(Iteracion $iteracion)
     {
         //
     }

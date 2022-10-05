@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Documento;
+namespace App\Repositories\Iteracion;
 
-use App\Models\Documento;
+use App\Models\Iteracion;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
-class ProyectoRepository extends BaseRepository{
+class IteracionRepository extends BaseRepository{
     private static $instance;
     private function __construct(){
 
@@ -20,7 +20,7 @@ class ProyectoRepository extends BaseRepository{
     }
     public function getModel()
     {
-        return new Documento;
+        return new Iteracion;
     }
     public function findByParams($params){
         

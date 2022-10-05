@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categoria;
-use App\Repositories\Categoria\CategoriaRepository;
+use App\Models\DocumentoArchivo;
+use App\Repositories\DocumentoArchivo\DocumentoArchivoRepository;
 use Illuminate\Http\Request;
 
-class CategoriaController extends Controller
+class DocumentoArchivoController extends Controller
 {
     private $repo = null;
 
     public function listar(Request $request){
         $num_rows = $request->cantidad != null ? $request->cantidad : 15;
-        $this->repo = CategoriaRepository::GetInstance();
+        $this->repo = DocumentoArchivoRepository::GetInstance();
         $lista = $this->repo->getAll($num_rows);
         $this->repo = null;
         return json_encode($lista);
@@ -40,12 +40,12 @@ class CategoriaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorecategoriaRequest  $request
+     * @param  \App\Http\Requests\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->repo = CategoriaRepository::GetInstance();
+        $this->repo = DocumentoArchivoRepository::GetInstance();
         $data = $request->all();
         $this->repo->create($data);
         $this->repo = null;
@@ -55,10 +55,10 @@ class CategoriaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\categoria  $categoria
+     * @param  \App\Models\DocumentoArchivo  $documentoArchivo
      * @return \Illuminate\Http\Response
      */
-    public function show(categoria $categoria)
+    public function show(DocumentoArchivo $documentoArchivo)
     {
         //
     }
@@ -66,10 +66,10 @@ class CategoriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\categoria  $categoria
+     * @param  \App\Models\DocumentoArchivo  $documentoArchivo
      * @return \Illuminate\Http\Response
      */
-    public function edit(categoria $categoria)
+    public function edit(DocumentoArchivo $documentoArchivo)
     {
         //
     }
@@ -77,34 +77,30 @@ class CategoriaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatecategoriaRequest  $request
-     * @param  \App\Models\categoria  $categoria
+     * @param  \App\Http\Requests\UpdateDocumentoArchivoRequest  $request
+     * @param  \App\Models\DocumentoArchivo  $documentoArchivo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, categoria $categoria)
+    public function update(Request $request, DocumentoArchivo $documentoArchivo)
     {
-        $this->repo = CategoriaRepository::GetInstance();
+        $this->repo = DocumentoArchivoRepository::GetInstance();
         $data = $request->all();
-        $categoria = $this->repo->find($data["id"]);
-        $this->repo->update($categoria, $data);
+        $this->repo->update($documentoArchivo, $data);
         $this->repo = null;
-        return json_encode($categoria);
+        return json_encode($documentoArchivo);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\categoria  $categoria
+     * @param  \App\Models\DocumentoArchivo  $documentoArchivo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $categoria)
+    public function destroy(DocumentoArchivo $documentoArchivo)
     {
-        $objeto = new Categoria($categoria->all());
-        $objeto->id = $categoria->id;
-        $this->repo = CategoriaRepository::GetInstance();
-        $objeto = $this->repo->find($objeto->id);
-        $this->repo->delete($objeto);
+        $this->repo = DocumentoArchivoRepository::GetInstance();
+        $this->repo->delete($documentoArchivo);
         $this->repo = null;
-        return json_encode($objeto);
+        return json_encode($documentoArchivo);
     }
 }

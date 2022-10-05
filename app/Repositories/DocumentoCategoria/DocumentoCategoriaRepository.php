@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Documento;
+namespace App\Repositories\DocumentoCategoria;
 
-use App\Models\Documento;
+use App\Models\DocumentoCategoria;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
-class ProyectoRepository extends BaseRepository{
+class DocumentoCategoriaRepository extends BaseRepository{
     private static $instance;
     private function __construct(){
 
@@ -20,7 +20,7 @@ class ProyectoRepository extends BaseRepository{
     }
     public function getModel()
     {
-        return new Documento;
+        return new DocumentoCategoria;
     }
     public function findByParams($params){
         

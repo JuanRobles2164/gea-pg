@@ -1,9 +1,6 @@
 <?php
 
-use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\EstadoController;
-use App\Http\Controllers\TipoDocumentoController;
-use App\Repositories\Estado\EstadoRepository;
+use App\Http\Controllers\ArchivoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
+Auth::routes();
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 
@@ -28,42 +32,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade'); 
 	 Route::get('map', function () {return view('pages.maps');})->name('map');
-	 Route::get('icons', function () {
-        $repo = EstadoRepository::GetInstance();
-        $lista = $repo->getAll();
-        $repo = null;
-        $allData = ['estados' => $lista];
-        return view('pages.icons', $allData);
-    })->name('icons'); 
+	 Route::get('icons', function () {return view('pages.icons');})->name('icons'); 
 	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
-});
-
-
-
-//Como seguiremos usando sólo la API, entonces dejaremos sólo las rutas que devuelvan las vistas en este archivo
-
-Route::name("estado.")->group(function(){
-    Route::controller(EstadoController::class)->group(function(){
-        Route::get('/estado/index', 'index')->name("index");
-    });
-});
-
-Route::name("cliente.")->group(function(){
-    Route::controller(ClienteController::class)->group(function(){
-        Route::get('/cliente/index', 'index')->name("index");
-    });
-});
-
-Route::name("fase.")->group(function(){
-    Route::controller(ClienteController::class)->group(function(){
-        Route::get('/fase/index', 'index')->name("index");
-    });
-});
-
-Route::name("tipo_documento.")->group(function(){
-    Route::controller(TipoDocumentoController::class)->group(function(){
-        Route::get('/tipo_documento/index', 'index')->name("index");
-    });
 });
 
