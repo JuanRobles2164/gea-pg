@@ -3,20 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
-use App\Repositories\Categoria\CategoriaRepository;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCategoriaRequest;
+use App\Http\Requests\UpdateCategoriaRequest;
 
 class CategoriaController extends Controller
 {
-    private $repo = null;
-
-    public function listar(Request $request){
-        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
-        $this->repo = CategoriaRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
-        $this->repo = null;
-        return json_encode($lista);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -40,25 +31,21 @@ class CategoriaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorecategoriaRequest  $request
+     * @param  \App\Http\Requests\StoreCategoriaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoriaRequest $request)
     {
-        $this->repo = CategoriaRepository::GetInstance();
-        $data = $request->all();
-        $this->repo->create($data);
-        $this->repo = null;
-        return json_encode($data);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\categoria  $categoria
+     * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function show(categoria $categoria)
+    public function show(Categoria $categoria)
     {
         //
     }
@@ -66,10 +53,10 @@ class CategoriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\categoria  $categoria
+     * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function edit(categoria $categoria)
+    public function edit(Categoria $categoria)
     {
         //
     }
@@ -77,34 +64,23 @@ class CategoriaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatecategoriaRequest  $request
-     * @param  \App\Models\categoria  $categoria
+     * @param  \App\Http\Requests\UpdateCategoriaRequest  $request
+     * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, categoria $categoria)
+    public function update(UpdateCategoriaRequest $request, Categoria $categoria)
     {
-        $this->repo = CategoriaRepository::GetInstance();
-        $data = $request->all();
-        $categoria = $this->repo->find($data["id"]);
-        $this->repo->update($categoria, $data);
-        $this->repo = null;
-        return json_encode($categoria);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\categoria  $categoria
+     * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $categoria)
+    public function destroy(Categoria $categoria)
     {
-        $objeto = new Categoria($categoria->all());
-        $objeto->id = $categoria->id;
-        $this->repo = CategoriaRepository::GetInstance();
-        $objeto = $this->repo->find($objeto->id);
-        $this->repo->delete($objeto);
-        $this->repo = null;
-        return json_encode($objeto);
+        //
     }
 }
