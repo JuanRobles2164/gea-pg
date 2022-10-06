@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_tipo_documento">
         Nuevo
     </button>
@@ -37,4 +38,10 @@
 
     <x-guardar-tipo-documento modalTitle="Formulario de Tipos de documento" 
     modalId="id_modal_tipo_documento"/>
+@endsection
+
+@section('scripts')
+    <script>
+
+    </script>
 @endsection

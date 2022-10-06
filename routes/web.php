@@ -52,6 +52,7 @@ Route::name("estado.")->group(function(){
     });
 });
 
+
 Route::name("usuario.")->group(function(){
     Route::controller(UserController::class)->group(function(){
         Route::get('/usuario/index', 'index')->name("index");
@@ -75,6 +76,7 @@ Route::name("tipo_documento.")->group(function(){
         Route::get('/tipo_documento/index', 'index')->name("index");
     });
 });
+
 
 Route::name("tipo_licitacion.")->group(function(){
     Route::controller(TipoLicitacionController::class)->group(function(){

@@ -45,6 +45,7 @@
 @endsection
 
 @push('js')
+
     <script>
         //Lo correcto es adjuntar mejor un JS que contenga todo, pero lo haremos así mientras xd nada más por el ejemplo
         //Si el JavaScript adjunto requiere renderizar cositas de blade, este debe guardarse como "archivo.blade.js"
@@ -64,4 +65,5 @@
         }
 
     </script>
+
 @endpush

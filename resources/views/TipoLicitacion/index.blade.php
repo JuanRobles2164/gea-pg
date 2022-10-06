@@ -32,6 +32,7 @@
                         <a href="#" class="btn btn-danger">Eliminar</a>
                     </th>
                 </tr>
+
             </thead>
             <tbody>
                 @foreach ($tipos_licitacion as $tl)
