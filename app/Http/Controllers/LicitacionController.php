@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Licitacion;
 use App\Http\Requests\StoreLicitacionRequest;
 use App\Http\Requests\UpdateLicitacionRequest;
+use App\Repositories\Cliente\ClienteRepository;
 use App\Repositories\Licitacion\LicitacionRepository;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,17 @@ class LicitacionController extends Controller
      */
     public function index()
     {
-        //
+        $this->repo = ClienteRepository::GetInstance();
+        $lista = $this->repo->getAll();
+        $this->repo = null;
+
+        $this->repo = Categoria::GetInstance();
+        $listaEstados = $this->repo->getAll();
+        $this->repo = null;
+        $allData = ['clientes' => $lista,
+                    'estados' => $listaEstados
+        ];
+        return view('Cliente.index', $allData);
     }
 
     public function listar(Request $request){
