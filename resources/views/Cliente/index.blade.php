@@ -1,6 +1,6 @@
-@extends("template")
+@extends('layouts.app', ['title' => __('Clientes')])
 
-@section("contenido")
+@section("content")
     <!-- Formulario para crear esas cosas xd -->
     <form action="" method="">
         <div class="form-group">
@@ -12,7 +12,7 @@
             <input type="text" name="identificacion" id="identificacion_crear">
         </div>
         <div class="form-group">
-            <label for="identificacion_crear">Tipo Identificación: </label>
+            <label for="tipo_identificacion_crear">Tipo Identificación: </label>
             <input type="text" name="tipo_identificacion" id="tipo_identificacion_crear">
         </div>
         <div class="form-group">
@@ -59,7 +59,7 @@
 
 @endsection
 
-@section('scripts')
+@push('js')
     <script>
         //Lo correcto es adjuntar mejor un JS que contenga todo, pero lo haremos así mientras xd nada más por el ejemplo
         //Si el JavaScript adjunto requiere renderizar cositas de blade, este debe guardarse como "archivo.blade.js"
@@ -83,4 +83,4 @@
         }
 
     </script>
-@endsection
+@endpush

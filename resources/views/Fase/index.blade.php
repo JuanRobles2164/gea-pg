@@ -1,6 +1,6 @@
-@extends('template')
+@extends('layouts.app', ['title' => __('Fases')])
 
-@section('contenido')
+@section('content')
 
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_fases">
         Nuevo
@@ -35,10 +35,4 @@
 
     <x-guardar-fase modalTitle="Formulario de Fases" 
     modalId="id_modal_fases"/>
-@endsection
-
-@section('scripts')
-    <script>
-
-    </script>
 @endsection

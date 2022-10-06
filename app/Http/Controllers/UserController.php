@@ -1,4 +1,4 @@
-<?php ?>
+<?php
 
 namespace App\Http\Controllers;
 
@@ -16,7 +16,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $this->repo = UserRepository::GetInstance();
+        $lista = $this->repo->getAll();
+        $this->repo = null;
+        $allData = ['users' => $lista];
+        //return view('', $allData);
     }
 
     public function listar(Request $request){
