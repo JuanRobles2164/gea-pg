@@ -1,6 +1,7 @@
-@extends('template')
+@extends('layouts.app', ['title' => __('Tipos de documento')])
 
-@section('contenido')
+@section('content')
+
 
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_tipo_documento">
         Nuevo

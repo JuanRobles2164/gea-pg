@@ -1,6 +1,8 @@
-@extends('template')
 
-@section('contenido')
+@extends('layouts.app', ['title' => __('Fases')])
+
+@section('content')
+
 
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_fases">
         Nuevo

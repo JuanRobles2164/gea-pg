@@ -3,7 +3,10 @@
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\TipoDocumentoController;
+use App\Http\Controllers\TipoLicitacionController;
+use App\Http\Controllers\UserController;
 use App\Repositories\Estado\EstadoRepository;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -49,6 +52,13 @@ Route::name("estado.")->group(function(){
     });
 });
 
+
+Route::name("usuario.")->group(function(){
+    Route::controller(UserController::class)->group(function(){
+        Route::get('/usuario/index', 'index')->name("index");
+    });
+});
+
 Route::name("cliente.")->group(function(){
     Route::controller(ClienteController::class)->group(function(){
         Route::get('/cliente/index', 'index')->name("index");
@@ -64,6 +74,13 @@ Route::name("fase.")->group(function(){
 Route::name("tipo_documento.")->group(function(){
     Route::controller(TipoDocumentoController::class)->group(function(){
         Route::get('/tipo_documento/index', 'index')->name("index");
+    });
+});
+
+
+Route::name("tipo_licitacion.")->group(function(){
+    Route::controller(TipoLicitacionController::class)->group(function(){
+        Route::get('/tipo_licitacion/index', 'index')->name("index");
     });
 });
 
