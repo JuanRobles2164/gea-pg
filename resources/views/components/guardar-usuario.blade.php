@@ -1,38 +1,47 @@
 @extends('templates.templateComponentes')
 
-@section('modal-content')    
-    <input type="hidden" name="id_usuario_modal_create_id" id="id_usuario_modal_create_id">
-    <div class="form-group">
-        <label class="form-label" for="nombre_user_modal_create_id">Nombre completo:</label>
-        <br>
-        <input type="text" class="form-input" id="nombre_user_modal_create_id" value="{{isset($modelo->id) ? $modelo->name : ''}}">
+@section('modal-content')
+<form>
+    <div class="row">
+        <div class="col-md-6">
+            <input type="hidden" name="id_usuario_modal_create_id" id="id_usuario_modal_create_id">
+            <div class="form-group">
+                <label class="form-label" for="nombre_user_modal_create_id">Nombre completo:</label>
+                <br>
+                <input type="text" class="form-control form-control-alternative" id="nombre_user_modal_create_id" value="{{isset($modelo->id) ? $modelo->name : ''}}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="form-label" for="email_user_modal_create_id">Email:</label>
+                <br>
+                <input type="email" class="form-control form-control-alternative" id="email_user_modal_create_id" value="{{isset($modelo->id) ? $modelo->email : ''}}">
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label class="form-label" for="email_user_modal_create_id">Email:</label>
-        <br>
-        <input type="email" class="form-input" id="email_user_modal_create_id" value="{{isset($modelo->id) ? $modelo->email : ''}}">
-    </div>
-
+    
     <div class="form-group">
         <label class="form-label" for="password_user_modal_create_id">Contraseña:</label>
         <br>
-        <input type="password" class="form-input" id="password_user_modal_create_id" placeholder="Si no quieres cambiar la contraseña, deja el campo vacío">
+        <input type="password" class="form-control form-control-alternative" id="password_user_modal_create_id" placeholder="Si no quieres cambiar la contraseña, deja el campo vacío">
     </div>
-
     <div class="form-group">
         <label class="form-label" for="confirm_password_user_modal_create_id">Confirmar contraseña:</label>
         <br>
-        <input type="password" class="form-input" id="confirm_password_user_modal_create_id">
+        <input type="password" class="form-control form-control-alternative" id="confirm_password_user_modal_create_id">
     </div>
-
-    <div class="form-group">
+    
+    <div class="custom-control custom-control-alternative custom-checkbox mb-3">
         @foreach ($roles as $r)
-            <input type="checkbox" name="rolCheck" id="rol{{$r->id}}" value="{{$r->id}}">
-            <label for="rol{{$r->id}}">{{$r->nombre}}</label>
+            <div class="row">
+                <div class="col-md-12">
+                    <input class="custom-control-input" type="checkbox" name="rolCheck" id="rol{{$r->id}}" value="{{$r->id}}">
+                    <label class="custom-control-label" for="rol{{$r->id}}">{{$r->nombre}}</label>
+                </div>
+            </div>
         @endforeach
     </div>
-
+</form>   
 @endsection
 
 @section('scripts-modal')

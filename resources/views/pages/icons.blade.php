@@ -117,11 +117,6 @@
                   <span class="nav-link-text">Tables</span>
                 </a>
               </li>
-            <li class="nav-item mb-5 mr-4 ml-4 pl-1 bg-danger" style="position: absolute; bottom: 0;">
-                <a class="nav-link text-white" href="{{route('upgrade')}}">
-                    <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
-                </a>
-            </li>
         </ul>
           <!-- Divider -->
           <hr class="my-3">
@@ -363,7 +358,7 @@
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
                     <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
-                  </div>
+                  </div>  
                 </div>
               </a>
               <div class="dropdown-menu  dropdown-menu-right ">
