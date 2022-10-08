@@ -1,3 +1,6 @@
+@php
+    use App\Enums\UnidadValidezEnum;
+@endphp
 @extends('layouts.app', ['title' => __('Tipos de documento')])
 
 @section('content')
@@ -13,30 +16,30 @@
     <table>
         <thead>
             <tr>
-                <td>Id</td>
-                <td>Nombre</td>
-                <td>Recurrente</td>
-                <td>Constante</td>
-                <td>Validez</td>
-                <td>Unidad Validez</td>
-                <td>Acciones</td>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Recurrente</th>
+                <th>Constante</th>
+                <th>Validez</th>
+                <th>Unidad Validez</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($tipos_documento as $td)
                 <tr style="line-height:50px">
-                    <th>{{$td->id}}</th>
-                    <th>{{$td->nombre}}</th>
-                    <th>{{$td->recurrente}}</th>
-                    <th>{{$td->constante}}</th>
-                    <th>{{$td->validez}}</th>
-                    <th>{{$td->unidad_validez}}</th>
-                    <th>
+                    <td>{{$td->id}}</td>
+                    <td>{{$td->nombre}}</td>
+                    <td>{{$td->recurrente ? 'VERDADERO' : 'FALSO'}}</td>
+                    <td>{{$td->constante ? 'VERDADERO' : 'FALSO'}}</td>
+                    <td>{{$td->validez}}</td>
+                    <td>{{UnidadValidezEnum::retornarTexto($td->unidad_validez)}}</th>
+                    <td>
                         <!-- Aquí van los botones para editar-eliminar y eso xd -->
                         <a href="#" class="btn btn-primary" onclick="setDataToTipoDocumentoModal({{$td->id}})">Ver</a>
                         <a href="#" class="btn btn-warning" onclick="setDataToTipoDocumentoModalEdit({{$td->id}})">Actualizar</a>
                         <a href="#" class="btn btn-danger" onclick="eliminarObjetoTipoDocumentoModalEdit({{$td->id}})">Eliminar</a>
-                    </th>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
@@ -54,7 +57,6 @@
         var ruta_encontrar_tipo_documento = "{{route('tipo_documento.encontrar')}}";
         var ruta_editar_tipo_documento = "{{route('tipo_documento.actualizar')}}";
         var ruta_eliminar_tipo_documento = "{{route('tipo_documento.eliminar')}}";
-        var objeto_obtener_data_tipo_documento_GET = null;
 
         async function obtenerDataTipoDocumento(data){
             const response = await fetch(ruta_encontrar_tipo_documento+"?id="+data.id);
@@ -109,7 +111,6 @@
 
                 $('#id_modal_tipo_documento').modal('show');
             });
-
         }
 
         function eliminarObjetoTipoDocumentoModalEdit(idObjeto){
@@ -120,6 +121,7 @@
             .then((data) => {
                 console.log(data);
                 alert("Licitación eliminada exitosamente!");
+                location.reload();
             });
         }
 

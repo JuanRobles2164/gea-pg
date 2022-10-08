@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Repositories\RolUsuario\RolUsuarioRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +21,7 @@ class UserController extends Controller
         $lista = $this->repo->getAll();
         $this->repo = null;
         $allData = ['users' => $lista];
-        //return view('', $allData);
+        return view('users.main_menu', $allData);
     }
 
     public function listar(Request $request){
@@ -32,11 +33,16 @@ class UserController extends Controller
     }
 
     public function details(Request $request){
-        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
         $this->repo = UserRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
+        $obj = $this->repo->find($request->id);
         $this->repo = null;
-        return json_encode($lista);
+
+        $this->repo = RolUsuarioRepository::GetInstance();
+        $roles = $this->repo->findByParams(['usuario' => $request->id]);
+
+        $allData = ['user' => $obj,
+                    'roles' => $roles];
+        return json_encode($allData);
     }
 
     /**

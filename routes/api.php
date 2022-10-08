@@ -36,7 +36,7 @@ Route::name("fase_tipo_documento.")->group(function(){
     Route::controller(FaseTipoDocumentoController::class)->group(function(){
         Route::get('/fase_tipo_documento/listar', 'listar')->name("listar");
         Route::post('/fase_tipo_documento/store', 'store')->name("guardar");
-        Route::post('/fase_tipo_documento/store', 'storeAll')->name("guardar_todo");
+        Route::post('/fase_tipo_documento/store_all', 'storeAll')->name("guardar_todo");
         Route::post('/fase_tipo_documento/update', 'update')->name("actualizar");
         Route::post('/fase_tipo_documento/destroy', 'destroy')->name("eliminar");
     });
@@ -45,6 +45,7 @@ Route::name("fase_tipo_documento.")->group(function(){
 Route::name("usuario.")->group(function(){
     Route::controller(UserController::class)->group(function(){
         Route::get('/usuario/listar', 'listar')->name("listar");
+        Route::get('/usuario/find', 'details')->name("encontrar");
         Route::post('/usuario/store', 'store')->name("guardar");
         Route::post('/usuario/update', 'update')->name("actualizar");
         Route::post('/usuario/destroy', 'destroy')->name("eliminar");

@@ -17,6 +17,7 @@ class CreateRolUsuariosTable extends Migration
             $table->id();
             $table->unsignedBigInteger("usuario");
             $table->unsignedBigInteger("rol");
+            $table->boolean("activo")->default(true);
             $table->timestamps();
 
             $table->foreign('usuario')->references('id')->on('users');

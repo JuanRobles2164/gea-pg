@@ -21,8 +21,23 @@ class RolUsuarioRepository extends BaseRepository{
     {
         return new RolUsuario;
     }
-    public function findByParams($params){
+
+    public function updateRoles($rolesUsuario){
+        $roles_usuario_actuales = RolUsuario::where('usuario', $rolesUsuario[0]->usuario)->get();
         
+        for($i = 0; $i < count($rolesUsuario); $i++){
+            $objBusqueda = $roles_usuario_actuales->search(function($item) use ($rolesUsuario, $i){
+                return $rolesUsuario[$i]['rol'] == $item->rol;
+            });
+        }
+    }
+
+    public function findByUser($userId){
+        return DB::table('rol_usuario')->where('usuario', $userId)->get();
+    }
+
+    public function findByParams($params){
+        return DB::table('rol_usuario')->where('usuario', $params['usuario'])->get();
     }
 
     /**
