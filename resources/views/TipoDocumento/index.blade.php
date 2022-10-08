@@ -44,6 +44,9 @@
 
     <x-guardar-tipo-documento modalTitle="Formulario de Tipos de documento" 
     modalId="id_modal_tipo_documento"/>
+
+    <x-ver-tipo-documento modalTitle="Visualizador de Tipos de documento" 
+    modalId="id_modal_tipo_documento_viewer"/>
 @endsection
 
 @push('js')
@@ -51,16 +54,61 @@
         var ruta_encontrar_tipo_documento = "{{route('tipo_documento.encontrar')}}";
         var ruta_editar_tipo_documento = "{{route('tipo_documento.actualizar')}}";
         var ruta_eliminar_tipo_documento = "{{route('tipo_documento.eliminar')}}";
+        var objeto_obtener_data_tipo_documento_GET = null;
 
+        async function obtenerDataTipoDocumento(data){
+            const response = await fetch(ruta_encontrar_tipo_documento+"?id="+data.id);
+            return await response.json();
+        }
 
-
+        //Este es para ver los detalles
         function setDataToTipoDocumentoModal(idObjeto){
             let objeto = {
                 id: idObjeto
             };
+            dataToSet = obtenerDataTipoDocumento(objeto);
+            dataToSet.then((data) => {
+                console.log(data);
+
+                document.getElementById("nombre_tipo_documento_modal_view_id").value = data.nombre;
+                document.getElementById("nombre_tipo_documento_modal_view_id").readOnly = true;
+                let recurrente = data.recurrente == 1 ? true : false;
+                let constante = data.constante == 1 ? true : false;
+                document.getElementById("recurrente_tipo_documento_modal_view_id").checked = recurrente;
+                document.getElementById("recurrente_tipo_documento_modal_view_id").disabled = true;
+
+                document.getElementById("constante_tipo_documento_modal_view_id").checked = constante;
+                document.getElementById("constante_tipo_documento_modal_view_id").disabled = true;
+
+                document.getElementById("validez_tipo_documento_modal_view_id").value = data.validez;
+                document.getElementById("validez_tipo_documento_modal_view_id").readOnly = true;
+
+                document.getElementById("unidad_validez_tipo_documento_modal_view_id").value = data.unidad_validez;
+                document.getElementById("unidad_validez_tipo_documento_modal_view_id").disabled = true;
+
+                $('#id_modal_tipo_documento_viewer').modal('show');
+            });
         }
 
+        //Este es para preparar el modal y editarlo
         function setDataToTipoDocumentoModalEdit(idObjeto){
+            let objeto = {
+                id: idObjeto
+            };
+            dataToSet = obtenerDataTipoDocumento(objeto);
+            dataToSet.then((data) => {
+                console.log(data);
+                document.getElementById("id_tipo_documento_modal_create_id").value = data.id;
+                document.getElementById("nombre_tipo_documento_modal_create_id").value = data.nombre;
+                let recurrente = data.recurrente == 1 ? true : false;
+                let constante = data.constante == 1 ? true : false;
+                document.getElementById("recurrente_tipo_documento_modal_create_id").checked = recurrente;
+                document.getElementById("constante_tipo_documento_modal_create_id").checked = constante;
+                document.getElementById("validez_tipo_documento_modal_create_id").value = data.validez;
+                document.getElementById("unidad_validez_tipo_documento_modal_create_id").value = data.unidad_validez;
+
+                $('#id_modal_tipo_documento').modal('show');
+            });
 
         }
 

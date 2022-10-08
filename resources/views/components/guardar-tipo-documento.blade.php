@@ -83,6 +83,7 @@
                 .then((data) => {
                     console.log(data);
                     alert("Tipo de documento creado exitosamente!");
+                    location.reload();
                 });
             }else{
                 //Si viene con id, va a editar
@@ -90,6 +91,7 @@
                 .then((data) => {
                     console.log(data);
                     alert("Tipo de documento editado exitosamente!");
+                    location.reload();
                 });
             }
         }
