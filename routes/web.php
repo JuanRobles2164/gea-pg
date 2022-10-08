@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
         $allData = ['estados' => $lista];
         return view('pages.icons', $allData);
     })->name('icons'); 
-	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
+	 Route::get('table-list', function () {return view('pages.usuarios');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 

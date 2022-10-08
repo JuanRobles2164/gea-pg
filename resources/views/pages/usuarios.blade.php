@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
@@ -15,33 +14,8 @@
   <!-- Icons -->
   <link rel="stylesheet" href="../assets/vendor/nucleo/css/nucleo.css" type="text/css">
   <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
-  <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
-
-  <script>
-    var csrf_token = document.getElementsByName("csrf-token")[0].attributes.content.value;
-
-    async function postData(url = '', data = {}) {
-      // Esta función en realidad es genérica, sirve para cualquier método que requiera hacer alguna petición al servidor
-      const response = await fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': csrf_token
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(data)
-      });
-      return response.json(); // Convierte la respuesta del servidor en un objeto JSON
-    }
-  </script>
-
 </head>
 
 <body>
@@ -171,33 +145,34 @@
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+
+            </div>
           </div>
         </div>
       </div>
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
-      <div class="row justify-content-center">
-        <div class=" col ">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearRolModalPrueba">
-            Launch demo modal
-          </button>
-          <x-guardar-usuario modalId="crearRolModalPrueba" modalTitle="Formulario de Roles" />
+      <div class="row">
+        <div class="col">
+
         </div>
-        </footer>
       </div>
+      <!-- Dark table -->
+
+      <!-- Footer -->
     </div>
-    <!-- Argon Scripts -->
-    <!-- Core -->
-    <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/vendor/js-cookie/js.cookie.js"></script>
-    <script src="../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-    <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-    <!-- Optional JS -->
-    <script src="../assets/vendor/clipboard/dist/clipboard.min.js"></script>
-    <!-- Argon JS -->
-    <script src="../assets/js/argon.js?v=1.2.0"></script>
+  </div>
+  <!-- Argon Scripts -->
+  <!-- Core -->
+  <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/js-cookie/js.cookie.js"></script>
+  <script src="../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  <!-- Argon JS -->
+  <script src="../assets/js/argon.js?v=1.2.0"></script>
 </body>
 
 </html>

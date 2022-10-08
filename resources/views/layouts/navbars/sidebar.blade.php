@@ -14,7 +14,7 @@
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
+                            <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
                         </span>
                     </div>
                 </a>
@@ -84,7 +84,7 @@
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link text-mg5" href="{{ route('map') }}">
+                    <a class="nav-link text-mg5" href="{{ route('table') }}">
                         <i class="fas fa-users"></i> {{ __('Usuarios') }}
                     </a>
                 </li>
@@ -106,7 +106,7 @@
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('user.index') }}">
                                     {{ __('Tipos de licitaciones') }}
                                 </a>
                             </li>
