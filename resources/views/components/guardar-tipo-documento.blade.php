@@ -55,9 +55,9 @@
             let id = document.getElementById("id_tipo_documento_modal_create_id").value;
             let nombre = document.getElementById("nombre_tipo_documento_modal_create_id").value;
             //Esto retornará un NodeList
-            let recurrente_constante_NodeList = document.getElementByName("recurrente_constante_documento_modal_create");
+            let recurrente_constante_NodeList = document.getElementsByName("recurrente_constante_documento_modal_create");
             let valorMarcado = "";
-            rates.forEach((rate) => {
+            recurrente_constante_NodeList.forEach((rate) => {
                 if (rate.checked) {
                     valorMarcado = rate.value;
                 }

@@ -94,11 +94,12 @@ class RolUsuarioController extends Controller
         $usuarioId = $request->id;
         $rolesIds = $request->roles;
         $rolesObjs = [];
+
         for($i = 0; $i < count($rolesIds); $i++){
-            $objeto = new RolUsuario([
+            $objeto = [
                 'usuario' => $usuarioId,
                 'rol' => $rolesIds[$i]
-            ]);
+            ];
             array_push($rolesObjs, $this->repo->asignarRol($objeto));
         }
         return $rolesObjs;

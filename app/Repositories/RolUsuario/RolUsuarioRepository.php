@@ -33,23 +33,14 @@ class RolUsuarioRepository extends BaseRepository{
     }
 
     /**
-     * @param Rol objeto de tipo Rol que contiene el id del rol asignado y el usuario
+     * @param RolUsuario objeto de tipo Rol que contiene el id del rol asignado y el usuario
      */
     public function asignarRol($rol){
-        $roles_usuario = DB::table("rol_usuario")->where("usuario", "=", $rol->usuario);
-        $encontrado = false;
-        for($i = 0; $i < count($roles_usuario); $i++){
-            if($rol->rol == $roles_usuario[$i]->rol){
-                $encontrado = true;
-            }
-        }
         $rol_usuario = null;
-        if($encontrado){
-            $rol_usuario = RolUsuario::updateOrCreate([
-                'usuario' => $rol->usuario,
-                'rol' => $rol->rol
-            ]);
-        }
+        $rol_usuario = RolUsuario::updateOrCreate([
+            'usuario' => $rol['usuario'],
+            'rol' => $rol['rol']
+        ]);
         return $rol_usuario;
     }
 }

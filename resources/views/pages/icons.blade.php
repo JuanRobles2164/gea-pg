@@ -21,6 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
@@ -420,10 +421,10 @@
     <div class="container-fluid mt--6">
       <div class="row justify-content-center">
         <div class=" col ">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearRolModalPrueba">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearUsuarioModalPrueba">
           Launch demo modal
         </button>
-          <x-guardar-usuario modalId="crearRolModalPrueba" modalTitle="Formulario de Roles"/>
+          <x-guardar-usuario modalId="crearUsuarioModalPrueba" modalTitle="Formulario de Usuarios"/>
         </div>
       </footer>
     </div>

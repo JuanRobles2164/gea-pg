@@ -162,7 +162,9 @@ Route::name("licitacion_fase.")->group(function(){
 
 Route::name("tipo_documento.")->group(function(){
     Route::controller(TipoDocumentoController::class)->group(function(){
+
         Route::get('/tipo_documento/listar', 'listar')->name("listar");
+        Route::get('/tipo_documento/find', 'find')->name("encontrar");
         Route::post('/tipo_documento/store', 'store')->name("guardar");
         Route::post('/tipo_documento/update', 'update')->name("actualizar");
         Route::post('/tipo_documento/destroy', 'destroy')->name("eliminar");
