@@ -54,9 +54,8 @@
 
         </div>
     </div>
+    <x-guardar-tipo-licitacion modalTitle="Form licitaciones" modalId="id_tipo_licitacion_modal_create_id"/>
     <script>
-        let selectDetailsTemporal = document.getElementById("unidad_validez_tipo_licitacion_modal_create_id");
-        selectDetailsTemporal.value = "{{isset($model->id) ? $model->unidad_validez : '-1' }}";
     </script>
 @endsection
 

@@ -57,6 +57,7 @@
         var ruta_editar = '{{route("usuario.actualizar")}}';
         var rua_obtener_roles_usuario = '{{route("rol_usuario.listar")}}';
         var ruta_crear_roles_usuario = '{{route("rol_usuario.agregar")}}';
+        var ruta_editar_roles_usuario = "{{route('rol_usuario.actualizar_multiple')}}";
             
         function {{$modal_id}}Crear(){
             let id = document.getElementById("id_usuario_modal_create_id").value;
@@ -101,11 +102,26 @@
                 .then((data) => {
                     alert("Usuario editado exitosamente!");
                     console.log(data);
-                    guardarRoles{{$modal_id}}(data, roles);
+                    nuevoObjetoUsuario = {
+                        id: data.id,
+                        name: data.name,
+                        email: data.email,
+                        roles: roles
+                    };
+                    actualizarRoles{{$modal_id}}(nuevoObjetoUsuario, roles);
                 });
             }
             
         }
+    function actualizarRoles{{$modal_id}}(data, roles){
+        nuevoObjetoUsuario.roles = roles;
+        postData(ruta_editar_roles_usuario, nuevoObjetoUsuario)
+        .then((data) => {
+            alert("Roles editados satisfactoriamente");
+            console.log(data);
+            location.reload();
+        });
+    }
 
     function guardarRoles{{$modal_id}}(data, roles){
         //Quiere decir que sí creó o actualizó
@@ -114,6 +130,7 @@
         .then((data) => {
             alert("Roles asignados satisfactoriamente");
             console.log(data);
+            location.reload();
         });
     }
     </script>

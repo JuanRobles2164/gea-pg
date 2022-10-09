@@ -37,6 +37,7 @@
     </table>
 
     <x-guardar-usuario modalId="id_modal_create_user" modalTitle="Formulario de usuarios"/>
+    <x-ver-usuario modalId="id_modal_view_user" modalTitle="Ver usuario"/>
 @endsection
 
 
@@ -46,6 +47,7 @@
         var ruta_encontrar_usuario = "{{route('usuario.encontrar')}}";
         var ruta_editar_usuario = "{{route('usuario.actualizar')}}";
         var ruta_eliminar_usuario = "{{route('usuario.eliminar')}}";
+        var ruta_editar_roles = "{{route('rol_usuario.actualizar_multiple')}}";
 
         async function obtenerDataUsuario(data){
             const response = await fetch(ruta_encontrar_usuario+"?id="+data.id);
@@ -60,7 +62,30 @@
             dataToSet.then((data) => {
                 console.log(data);
 
-                $('#id_modal_tipo_documento_viewer').modal('show');
+                let userData = data.user;
+                let rolesData = data.roles;
+
+                document.getElementById("nombre_user_modal_view_id").value = userData.name;
+                document.getElementById("nombre_user_modal_view_id").readOnly = true;
+
+                document.getElementById("email_user_modal_view_id").value = userData.email;
+                document.getElementById("email_user_modal_view_id").readOnly = true;
+
+                var checkboxes = document.querySelectorAll('input[name="rolCheckView"]');
+                checkboxes.forEach((el) => {
+                    el.checked = false;
+                    el.disabled = true;
+                });
+                
+                data.roles.forEach(el => {
+                    console.log(el);
+                    if(el.activo == 1){
+                        document.getElementById("rolView"+el.rol).checked = true;
+                    }
+                });
+
+
+                $('#id_modal_view_user').modal('show');
             });
         }
 
@@ -70,9 +95,21 @@
             };
             dataToSet = obtenerDataUsuario(objeto);
             dataToSet.then((data) => {
-                console.log(data);
+                let userData = data.user;
+                let rolesData = data.roles;
+                document.getElementById("id_usuario_modal_create_id").value = userData.id;
+                document.getElementById("nombre_user_modal_create_id").value = userData.name;
+                document.getElementById("email_user_modal_create_id").value = userData.email;
+                
+                var checkboxes = document.querySelectorAll('input[name="rolCheck"]');
 
-                $('#id_modal_tipo_documento').modal('show');
+                data.roles.forEach(el => {
+                    console.log(el);
+                    if(el.activo == 1){
+                        document.getElementById("rol"+el.rol).checked = true;
+                    }
+                });
+                $('#id_modal_create_user').modal('show');
             });
         }
 
@@ -80,10 +117,10 @@
             let data = {
                 id: idObjeto
             }
-            postData(ruta_eliminar_tipo_documento, data)
+            postData(ruta_eliminar_usuario, data)
             .then((data) => {
                 console.log(data);
-                alert("Licitación eliminada exitosamente!");
+                alert("Usuario eliminada exitosamente!");
                 location.reload();
             });
         }

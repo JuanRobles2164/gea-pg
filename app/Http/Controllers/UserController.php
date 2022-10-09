@@ -68,19 +68,17 @@ class UserController extends Controller
         return json_encode($data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateRolRequest  $request
-     * @param  \App\Models\Rol  $Rol
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, User $user)
     {
         $this->repo = UserRepository::GetInstance();
         $data = $request->all();
         $user = $this->repo->find($data["id"]);
-        $this->repo->update($user, $data);
+        if(!isset($data['password'])){
+            $data['password'] = $user->password;
+        }else{
+            $data['password'] = Hash::make($data['password']);
+        }
+        $user = $this->repo->update($user, $data);
         $this->repo = null;
         return json_encode($user);
     }
@@ -91,6 +89,14 @@ class UserController extends Controller
         $objeto->id = $user->id;
         $this->repo = UserRepository::GetInstance();
         $objeto = $this->repo->find($objeto->id);
+
+        $this->repo = RolUsuarioRepository::GetInstance();
+        $roles_usuario = $this->repo->findByUser($objeto->id);
+        foreach($roles_usuario as $ru){
+            $this->repo->delete($ru);
+        }
+
+        $this->repo = UserRepository::GetInstance();
         $this->repo->delete($objeto);
         $this->repo = null;
         return json_encode($objeto);

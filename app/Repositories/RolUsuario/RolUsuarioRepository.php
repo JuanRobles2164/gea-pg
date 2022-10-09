@@ -23,17 +23,22 @@ class RolUsuarioRepository extends BaseRepository{
     }
 
     public function updateRoles($rolesUsuario){
-        $roles_usuario_actuales = RolUsuario::where('usuario', $rolesUsuario[0]->usuario)->get();
-        
-        for($i = 0; $i < count($rolesUsuario); $i++){
-            $objBusqueda = $roles_usuario_actuales->search(function($item) use ($rolesUsuario, $i){
-                return $rolesUsuario[$i]['rol'] == $item->rol;
-            });
+        $roles_ids = [];
+        foreach($rolesUsuario as $ru){
+            array_push($roles_ids, $ru['rol']);
         }
+        $roles_usuario_actuales = DB::table('rol_usuario')->where('usuario', $rolesUsuario[0]['usuario'])
+        ->where('rol', $roles_ids)
+        ->update(['activo' => true]);
+
+        DB::table('rol_usuario')->where('usuario', $rolesUsuario[0]['usuario'])
+        ->whereNotIn('rol', $roles_ids)
+        ->update(['activo' => false]);
+        return $roles_usuario_actuales;
     }
 
     public function findByUser($userId){
-        return DB::table('rol_usuario')->where('usuario', $userId)->get();
+        return RolUsuario::where('usuario', $userId)->get();
     }
 
     public function findByParams($params){
