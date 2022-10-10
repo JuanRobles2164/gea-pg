@@ -1,62 +1,59 @@
-
 @extends('templates.templateComponentes')
 
 @section('modal-content')    
     <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
-    <input type="hidden" name="id_cliente_modal_create" id="id_tipo_licitacion_modal_create_id" value="{{isset($modelo->id) ? $modelo->id : ''}}">
-
-    <div class="form-group">
-        <label class="form-label" for="nombre_tipo_licitacion_modal_create_id">Nombre:</label>
-        <br>
-        <input type="text" class="form-input" id="nombre_tipo_licitacion_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre:''}}">
-    </div>
-
-    <div class="form-group">
-        <label class="form-label" for="descripcion_tipo_licitacion_modal_create_id">Nombre:</label>
-        <br>
-        <textarea name="" id="descripcion_tipo_licitacion_modal_create_id" cols="30" rows="10" class="form-input">
-            {{isset($modelo->id) ? $modelo->descripcion:''}}
-        </textarea>
-    </div>
-
-    <div class="form-group">
-        <label class="form-label" for="duracion_tipo_licitacion_modal_create_id">Duración:</label>
-        <br>
-        <input type="text" class="form-input" id="duracion_tipo_licitacion_modal_create_id" value="{{isset($modelo->id) ? $modelo->duracion:''}}">
-    </div>
-
-    <div class="form-group">
-        <label class="form-label" for="retencion_tipo_licitacion_modal_create_id">Retención:</label>
-        <br>
-        <input type="text" class="form-input" id="retencion_tipo_licitacion_modal_create_id" value="{{isset($modelo->id) ? $modelo->duracion:''}}">
-    </div>
-
-    <div class="form-group">
-        <label class="form-label" for="unidad_validez_tipo_licitacion_modal_create_id">Seleccione las Fases a asociar:</label>
-        <br>
-
-        <div class="col-12">
-            <div class="row">
-                @foreach ($fases as $f)
-                    <input type="checkbox" name="fase_tipo_licitacion_modal_create_select" 
-                        id="fase_tipo_licitacion_modal_create_select{{$f->id}}"
-                        value="{{$f->id}}" onclick="capturarClickFase({{$f->id}})">
-                    <label for="fase_tipo_licitacion_modal_create_select{{$f->id}}" class="form-label">
-                        {{$f->nombre}}
-                    </label>
-                @endforeach
-            </div>
-        </div> 
-    </div>
-
-    <div class="form-group">
-        <div class="form-group" id="fase_tipo_licitacion_modal_create_selected">
-
+    <input type="hidden" name="id_cliente_modal_create" id="id_tipo_licitacion_modal_create_id">
+    <form action="">
+        <div class="form-group">
+            <label class="form-label" for="nombre_tipo_licitacion_modal_create_id">Nombre:</label>
+            <br>
+            <input type="text" class="form-input" id="nombre_tipo_licitacion_modal_create_id">
         </div>
-    </div>
-    <x-guardar-tipo-licitacion modalTitle="Form licitaciones" modalId="id_tipo_licitacion_modal_create_id"/>
-    <script>
-    </script>
+    
+        <div class="form-group">
+            <label class="form-label" for="descripcion_tipo_licitacion_modal_create_id">Nombre:</label>
+            <br>
+            <textarea name="" id="descripcion_tipo_licitacion_modal_create_id" cols="30" rows="10" class="form-input">
+                
+            </textarea>
+        </div>
+    
+        <div class="form-group">
+            <label class="form-label" for="duracion_tipo_licitacion_modal_create_id">Duración:</label>
+            <br>
+            <input type="text" class="form-input" id="duracion_tipo_licitacion_modal_create_id">
+        </div>
+    
+        <div class="form-group">
+            <label class="form-label" for="retencion_tipo_licitacion_modal_create_id">Retención:</label>
+            <br>
+            <input type="text" class="form-input" id="retencion_tipo_licitacion_modal_create_id">
+        </div>
+    
+        <div class="form-group">
+            <label class="form-label" for="unidad_validez_tipo_licitacion_modal_create_id">Seleccione las Fases a asociar:</label>
+            <br>
+    
+            <div class="col-12">
+                <div class="row">
+                    @foreach ($fases as $f)
+                        <input type="checkbox" name="fase_tipo_licitacion_modal_create_select" 
+                            id="fase_tipo_licitacion_modal_create_select{{$f->id}}"
+                            value="{{$f->id}}" onclick="capturarClickFase({{$f->id}})">
+                        <label for="fase_tipo_licitacion_modal_create_select{{$f->id}}" class="form-label">
+                            {{$f->nombre}}
+                        </label>
+                    @endforeach
+                </div>
+            </div> 
+        </div>
+    
+        <div class="form-group">
+            <div class="form-group" id="fase_tipo_licitacion_modal_create_selected">
+    
+            </div>
+        </div>
+    </form>
 @endsection
 
 @section('scripts-modal')

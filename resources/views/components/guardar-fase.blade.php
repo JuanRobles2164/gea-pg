@@ -46,7 +46,7 @@
             let descripcion = document.getElementById("descripcion_fase_modal_create_id").value;
 
             //Devuelve una NodeList
-            let tiposDocumentoNodeList = document.getElementByName("tipo_documento_select_modal_create");
+            let tiposDocumentoNodeList = document.getElementsByName("tipo_documento_select_modal_create");
             let tiposDocumentos = [];
             tiposDocumentoNodeList.forEach(element => {
                 if(element.checked){
@@ -67,6 +67,11 @@
                     console.log(data);
                     alert("Fase creada exitosamente!");
                     objeto = data;
+                    postData(ruta_crear_fases_tipo_documento, objeto)
+                    .then((data) => {
+                        console.log(data);
+                        alert("Fases asociadas con éxito!");
+                    });
                 });
             }else{
                 //Si viene con id, va a editar
@@ -79,11 +84,7 @@
             }
             //Inserta las relaciones con el tipo de documento
             if(objeto.updated_at != undefined){
-                postData(ruta_crear_fases_tipo_documento, objeto)
-                .then((data) => {
-                    console.log(data);
-                    alert("Fases asociadas con éxito!");
-                });
+                
             }
         }
     </script>

@@ -41,6 +41,7 @@
                 </tbody>
             </table>
         </div>
+        {{ $licitaciones->links('components.paginador') }}
 
     </div>
 @endsection

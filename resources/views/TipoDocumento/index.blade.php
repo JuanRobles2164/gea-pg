@@ -102,6 +102,7 @@
                 </div>
                 <div class="card-footer py-4">
                     <!--paginacion-->
+                    {{$tipos_documento->links('components.paginador')}}
                 </div>
             </div>
         </div>

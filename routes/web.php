@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EstadoController;
+use App\Http\Controllers\FaseController;
 use App\Http\Controllers\TipoDocumentoController;
 use App\Http\Controllers\TipoLicitacionController;
 use App\Http\Controllers\UserController;
@@ -66,7 +67,7 @@ Route::name("cliente.")->group(function(){
 });
 
 Route::name("fase.")->group(function(){
-    Route::controller(ClienteController::class)->group(function(){
+    Route::controller(FaseController::class)->group(function(){
         Route::get('/fase/index', 'index')->name("index");
     });
 });

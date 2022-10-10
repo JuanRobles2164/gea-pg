@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $this->repo = UserRepository::GetInstance();
-        $lista = $this->repo->getAll();
+        $lista = $this->repo->getAll(1);
         $this->repo = null;
         $allData = ['users' => $lista];
         return view('users.main_menu', $allData);

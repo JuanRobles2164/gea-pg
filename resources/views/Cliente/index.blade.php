@@ -57,6 +57,7 @@
             @endforeach
         </tbody>
     </table>
+    {{ $clientes->links('components.paginador') }}
 
 @endsection
 
