@@ -113,7 +113,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer py-4">
+                <div class="card-footer py-3">
                     <!--paginacion-->
                     {{$users->links('components.paginador')}}
                 </div>
