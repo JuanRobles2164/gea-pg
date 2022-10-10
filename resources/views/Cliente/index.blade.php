@@ -2,7 +2,6 @@
 @extends('layouts.app', ['title' => __('Clientes')])
 
 @section("content")
-
     <!-- Formulario para crear esas cosas xd -->
     <form action="" method="">
         <div class="form-group">

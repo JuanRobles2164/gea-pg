@@ -7930,6 +7930,19 @@ button.close
     vertical-align: text-top !important;
 }
 
+.bg-mg3
+{
+    background-color: #e47c5d !important;
+}
+
+a.bg-mg3:hover,
+a.bg-mg3:focus,
+button.bg-mg3:hover,
+button.bg-mg3:focus
+{
+    background-color: #ffa084 !important;
+}
+
 .bg-primary
 {
     background-color: #5e72e4 !important;
@@ -12452,6 +12465,11 @@ button.bg-darker:focus
     .py-md-7
     {
         padding-top: 6rem !important;
+    }
+    .pt-md-7-5,
+    .py-md-7-5
+    {
+        padding-top: 5rem !important;
     }
     .pr-md-7,
     .px-md-7

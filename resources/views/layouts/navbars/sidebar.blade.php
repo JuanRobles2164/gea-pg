@@ -20,29 +20,29 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                     <div class=" dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">{{ __('Welcome!') }}</h6>
+                        <h6 class="text-overflow m-0">{{ __('Bienvenido!') }}</h6>
                     </div>
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
                         <i class="ni ni-single-02"></i>
-                        <span>{{ __('My profile') }}</span>
+                        <span>{{ __('Perfil') }}</span>
                     </a>
                     <a href="#" class="dropdown-item">
                         <i class="ni ni-settings-gear-65"></i>
-                        <span>{{ __('Settings') }}</span>
+                        <span>{{ __('Configuracion') }}</span>
                     </a>
                     <a href="#" class="dropdown-item">
                         <i class="ni ni-calendar-grid-58"></i>
-                        <span>{{ __('Activity') }}</span>
+                        <span>{{ __('Actividad') }}</span>
                     </a>
                     <a href="#" class="dropdown-item">
                         <i class="ni ni-support-16"></i>
-                        <span>{{ __('Support') }}</span>
+                        <span>{{ __('Soporte') }}</span>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
                         <i class="ni ni-user-run"></i>
-                        <span>{{ __('Logout') }}</span>
+                        <span>{{ __('Cerrar sesion') }}</span>
                     </a>
                 </div>
             </li>
@@ -84,17 +84,17 @@
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link text-mg5" href="{{ route('table') }}">
+                    <a class="nav-link text-mg5" href="{{ route('usuario.index') }}">
                         <i class="fas fa-users"></i> {{ __('Usuarios') }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-mg5" href="{{ route('icons') }}">
+                    <a class="nav-link text-mg5" href="{{ route('home') }}">
                         <i class="fas fa-gavel"></i> {{ __('Licitaciones') }}
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link text-mg5" href="{{ route('map') }}">
+                    <a class="nav-link text-mg5" href="{{ route('cliente.index') }}">
                         <i class="fas fa-address-book"></i> {{ __('Clientes') }}
                     </a>
                 </li>
@@ -106,17 +106,17 @@
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('tipo_licitacion.index') }}">
                                     {{ __('Tipos de licitaciones') }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('tipo_documento.index') }}">
                                     {{ __('Tipos de documentos') }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('fase.index') }}">
                                     {{ __('Fases') }}
                                 </a>
                             </li>
