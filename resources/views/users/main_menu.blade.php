@@ -43,16 +43,23 @@
             <div class="card shadow">
                 <div class="card-header border-0">
                     <div class="row align-items-center">
-                        <div class="col-9">
+                        <div class="col-8">
                             <h3 class="mb-0">Usuarios</h3>
                         </div>
-                        <div class="col-2">
-                            <input class="form-control" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search" style="width:200px; height:30px;">
-                        </div>
-                        <div class="col text-right">
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_create_user">
-                                Crear <i class="fas fa-plus"></i>
-                            </button>
+                        <div class="col">
+                            <div class="row align-items-center">
+                                <div class="col">
+                           
+                                </div>
+                                <div class="col-6 justify-content-end text-right">
+                                    <input class="form-control form-control-sm" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search">
+                                </div>
+                                <div class="col justify-content-end text-right">
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_create_user">
+                                        Crear <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

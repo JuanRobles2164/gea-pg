@@ -1,5 +1,5 @@
 @php
-    use App\Enums\UnidadValidezEnum;
+use App\Enums\UnidadValidezEnum;
 @endphp
 @extends('layouts.app', ['title' => __('Tipos de documento')])
 
@@ -45,16 +45,23 @@
             <div class="card shadow">
                 <div class="card-header border-0">
                     <div class="row align-items-center">
-                        <div class="col-9">
+                        <div class="col-8">
                             <h3 class="mb-0">Tipos de documentos</h3>
                         </div>
-                        <div class="col-2">
-                            <input class="form-control" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search" style="width:200px; height:30px;">
-                        </div>
-                        <div class="col text-right">
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_tipo_documento">
-                                Crear <i class="fas fa-plus"></i>
-                            </button>
+                        <div class="col">
+                            <div class="row align-items-center">
+                                <div class="col">
+
+                                </div>
+                                <div class="col-6 justify-content-end text-right">
+                                    <input class="form-control form-control-sm" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search">
+                                </div>
+                                <div class="col justify-content-end text-right">
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_tipo_documento">
+                                        Crear <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,28 +114,26 @@
             </div>
         </div>
     </div>
-    
 
-    <x-guardar-tipo-documento modalTitle="Formulario de Tipos de documento" 
-    modalId="id_modal_tipo_documento"/>
 
-    <x-ver-tipo-documento modalTitle="Visualizador de Tipos de documento" 
-    modalId="id_modal_tipo_documento_viewer"/>
-@endsection
+    <x-guardar-tipo-documento modalTitle="Formulario de Tipos de documento" modalId="id_modal_tipo_documento" />
 
-@push('js')
+    <x-ver-tipo-documento modalTitle="Visualizador de Tipos de documento" modalId="id_modal_tipo_documento_viewer" />
+    @endsection
+
+    @push('js')
     <script>
         var ruta_encontrar_tipo_documento = "{{route('tipo_documento.encontrar')}}";
         var ruta_editar_tipo_documento = "{{route('tipo_documento.actualizar')}}";
         var ruta_eliminar_tipo_documento = "{{route('tipo_documento.eliminar')}}";
 
-        async function obtenerDataTipoDocumento(data){
-            const response = await fetch(ruta_encontrar_tipo_documento+"?id="+data.id);
+        async function obtenerDataTipoDocumento(data) {
+            const response = await fetch(ruta_encontrar_tipo_documento + "?id=" + data.id);
             return await response.json();
         }
 
         //Este es para ver los detalles
-        function setDataToTipoDocumentoModal(idObjeto){
+        function setDataToTipoDocumentoModal(idObjeto) {
             let objeto = {
                 id: idObjeto
             };
@@ -157,7 +162,7 @@
         }
 
         //Este es para preparar el modal y editarlo
-        function setDataToTipoDocumentoModalEdit(idObjeto){
+        function setDataToTipoDocumentoModalEdit(idObjeto) {
             let objeto = {
                 id: idObjeto
             };
@@ -177,17 +182,16 @@
             });
         }
 
-        function eliminarObjetoTipoDocumentoModalEdit(idObjeto){
+        function eliminarObjetoTipoDocumentoModalEdit(idObjeto) {
             let data = {
                 id: idObjeto
             }
             postData(ruta_eliminar_tipo_documento, data)
-            .then((data) => {
-                console.log(data);
-                alert("Licitación eliminada exitosamente!");
-                location.reload();
-            });
+                .then((data) => {
+                    console.log(data);
+                    alert("Licitación eliminada exitosamente!");
+                    location.reload();
+                });
         }
-
     </script>
-@endpush
+    @endpush
