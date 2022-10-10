@@ -4,46 +4,109 @@
 @extends('layouts.app', ['title' => __('Tipos de documento')])
 
 @section('content')
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_tipo_documento">
-        Nuevo
-    </button>
-    <br>
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Recurrente</th>
-                <th>Constante</th>
-                <th>Validez</th>
-                <th>Unidad Validez</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($tipos_documento as $td)
-                <tr style="line-height:50px">
-                    <td>{{$td->id}}</td>
-                    <td>{{$td->nombre}}</td>
-                    <td>{{$td->recurrente ? 'VERDADERO' : 'FALSO'}}</td>
-                    <td>{{$td->constante ? 'VERDADERO' : 'FALSO'}}</td>
-                    <td>{{$td->validez}}</td>
-                    <td>{{UnidadValidezEnum::retornarTexto($td->unidad_validez)}}</th>
-                    <td>
-                        <!-- Aquí van los botones para editar-eliminar y eso xd -->
-                        <a href="#" class="btn btn-primary" onclick="setDataToTipoDocumentoModal({{$td->id}})">Ver</a>
-                        <a href="#" class="btn btn-warning" onclick="setDataToTipoDocumentoModalEdit({{$td->id}})">Actualizar</a>
-                        <a href="#" class="btn btn-danger" onclick="eliminarObjetoTipoDocumentoModalEdit({{$td->id}})">Eliminar</a>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+
+@include('layouts.headers.cards')
+
+<div class="container-fluid mt--9">
+    @if(isset($info))
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>¡{{$info}}!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    @if(isset($success))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>¡{{$success}}!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    @if(isset($danger))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>¡{{$danger}}!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    @if(isset($warning))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>¡{{$warning}}!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col-9">
+                            <h3 class="mb-0">Tipos de documentos</h3>
+                        </div>
+                        <div class="col-2">
+                            <input class="form-control" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search" style="width:200px; height:30px;">
+                        </div>
+                        <div class="col text-right">
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_tipo_documento">
+                                Crear <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table align-items-center">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Id</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Recurrente</th>
+                                <th scope="col">Constante</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($tipos_documento as $td)
+                            <tr>
+                                <td scope="row">
+                                    <a href="#" class="btn btn-danger btn-sm" onclick="eliminarObjetoTipoDocumentoModalEdit({{$td->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                                <td scope="row">{{$td->id}}</td>
+                                <td scope="row">{{$td->nombre}}</td>
+                                <td scope="row">{{$td->recurrente ? 'Verdadero' : 'Falso'}}</td>
+                                <td scope="row">{{$td->constante ? 'Verdadero' : 'Falso'}}</td>
+                                <td scope="row">
+                                    <a href="#" class="btn btn-info btn-sm" onclick="setDataToTipoDocumentoModal({{$td->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-default btn-sm" onclick="setDataToTipoDocumentoModalEdit({{$td->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-user-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer py-4">
+                    <!--paginacion-->
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
     <x-guardar-tipo-documento modalTitle="Formulario de Tipos de documento" 
     modalId="id_modal_tipo_documento"/>
