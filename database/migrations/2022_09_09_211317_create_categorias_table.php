@@ -17,6 +17,7 @@ class CreateCategoriasTable extends Migration
             $table->id();
             $table->string("nombre");
             $table->string("descripcion");
+            $table->string('css_style')->default('navajowhite');
             $table->timestamps();
         });
     }
