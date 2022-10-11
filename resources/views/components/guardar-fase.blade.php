@@ -1,36 +1,42 @@
-
 @extends('templates.templateComponentes')
 
-@section('modal-content')    
+@section('modal-content')
 
-<!-- I begin to speak only when I am certain what I will say is not better left unsaid. - Cato the Younger -->
-
-    <input type="hidden" name="id_fase_modal_create" id="id_fase_modal_create_id" value="{{isset($modelo->id) ? $modelo->id : '' }}">
-    <div class="form-group">
-        <label class="form-label" for="nombre_fase_modal_create_id">Nombre:</label>
-        <br>
-        <input type="text" class="form-input" id="nombre_fase_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre : '' }}">
+<form>
+    <input type="hidden" class="form-control form-control-alternative" name="id_fase_modal_create" id="id_fase_modal_create_id" value="{{isset($modelo->id) ? $modelo->id : '' }}">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="nombre_fase_modal_create_id">Nombre:</label>
+                <input type="text" class="form-control form-control-alternative" id="nombre_fase_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre : '' }}">
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label class="form-label" for="descripcion_fase_modal_create_id">Descripción:</label>
-        <br>
-        <textarea name="descripcion_fase_modal_create" id="descripcion_fase_modal_create_id" cols="30" rows="10">
-            {{isset($modelo->id) ? $modelo->descripcion : '' }}
-        </textarea>
+    <div class="row">
+        <div class="col-md-8">
+            <form>
+                <label class="form-label" for="descripcion_fase_modal_create_id">Descripción:</label>
+                <textarea class="form-control form-control-alternative" name="descripcion_fase_modal_create" id="descripcion_fase_modal_create_id" rows="5">{{isset($modelo->id) ? $modelo->descripcion : '' }}</textarea>
+            </form>
+        </div>
     </div>
-
-    <div class="form-group">
-        <div class="row">
-            <div class="col-12">
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <label for="unidad_validez_tipo_licitacion_modal_create_id">Seleccione el tipo de documento:</label>
+            <div class="custom-control custom-checkbox mb-3">
                 @foreach ($tipos_documento as $td)
-                    <label for="tipo_documento_select_modal_create_{{$loop->index}}">{{$td->nombre}}</label>
-                    <input type="checkbox" name="tipo_documento_select_modal_create" 
-                        id="tipo_documento_select_modal_create_{{$loop->index}}" value="{{$td->id}}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="checkbox" class="custom-control-input" name="tipo_documento_select_modal_create" id="tipo_documento_select_modal_create_{{$loop->index}}" value="{{$td->id}}">
+                        <label class="custom-control-label" for="tipo_documento_select_modal_create_{{$loop->index}}">{{$td->nombre}}</label>
+                    </div>
+                </div>
                 @endforeach
             </div>
         </div>
     </div>
+</form>
 @endsection
 
 @section('scripts-modal')
