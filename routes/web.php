@@ -5,6 +5,8 @@ use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\FaseController;
 use App\Http\Controllers\TipoDocumentoController;
 use App\Http\Controllers\TipoLicitacionController;
+use App\Http\Controllers\LicitacionController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\UserController;
 use App\Repositories\Estado\EstadoRepository;
 use Illuminate\Support\Facades\Auth;
@@ -85,3 +87,11 @@ Route::name("tipo_licitacion.")->group(function(){
     });
 });
 
+Route::name("licitacion.")->group(function(){
+    Route::controller(CategoriaController::class)->group(function(){
+        Route::get('/licitacion/categorias', 'index')->name("categorias");
+    });
+    Route::controller(LicitacionController::class)->group(function(){
+        Route::get('/licitacion/index', 'index')->name("index");
+    });
+});

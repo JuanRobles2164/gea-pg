@@ -20,7 +20,11 @@ class LicitacionController extends Controller
      */
     public function index()
     {
-        return view('Licitacion.index');
+        $this->repo = LicitacionRepository::GetInstance();
+        $lista = $this->repo->getAll();
+        $this->repo = null;
+        $allData = ['licitaciones' => $lista];
+        return view('Licitacion.index', $allData);
     }
 
     public function listar(Request $request){
