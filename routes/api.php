@@ -47,6 +47,8 @@ Route::name("usuario.")->group(function(){
         Route::get('/usuario/listar', 'listar')->name("listar");
         Route::get('/usuario/find', 'details')->name("encontrar");
         Route::post('/usuario/store', 'store')->name("guardar");
+        Route::post('/usuario/toggle_user_state', 'toggleUserState')->name("toggle_user_state");
+        Route::post('/usuario/reset_password', 'resetPassword')->name("reset_password");
         Route::post('/usuario/update', 'update')->name("actualizar");
         Route::post('/usuario/destroy', 'destroy')->name("eliminar");
     });

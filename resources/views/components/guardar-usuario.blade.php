@@ -18,6 +18,14 @@
                 <input type="email" class="form-control form-control-alternative" id="email_user_modal_create_id" value="{{isset($modelo->id) ? $modelo->email : ''}}">
             </div>
         </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="form-label" for="identificacion_user_modal_create_id">Identificacion:</label>
+                <br>
+                <input type="text" class="form-control form-control-alternative" id="identificacion_user_modal_create_id" value="{{isset($modelo->id) ? $modelo->identificacion : ''}}">
+            </div>
+        </div>
     </div>
     
     <div class="form-group">
@@ -64,6 +72,7 @@
             let name = document.getElementById("nombre_user_modal_create_id").value;
             let email = document.getElementById("email_user_modal_create_id").value;
             let password = document.getElementById("password_user_modal_create_id").value;
+            let identificacion = document.getElementById("identificacion_user_modal_create_id").value;
             let roles = [];
             let roles_eliminar = [];
 
@@ -79,6 +88,7 @@
                 name: name,
                 email: email,
                 password: password,
+                identificacion: identificacion
             }
             
             if(id == undefined || id == null || id == ''){

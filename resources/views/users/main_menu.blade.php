@@ -91,15 +91,15 @@
                                 <td scope="row">{{$u->id}}</td>
                                 <td scope="row">{{$u->name}}</td>
                                 <td scope="row">{{$u->email}}</td>
-                                @if($u->estado_eliminado == 0)
+                                @if($u->estado == 1)
                                 <td scope="row">
-                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado">
+                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateUsuario({{$u->id}})">
                                         Activo
                                     </a>
                                 </td>
                                 @else
                                 <td scope="row">
-                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado">
+                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateUsuario({{$u->id}})">
                                         Inactivo
                                     </a>
                                 </td>
@@ -111,7 +111,7 @@
                                     <a href="#" class="btn btn-default btn-sm" onclick="setDataToUsuarioModalEdit({{$u->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-user-edit"></i>
                                     </a>
-                                    <a href="#" class="btn btn-primary btn-sm" onclick="" title="Restaurar" data-toggle="tooltip" data-placement="bottom">
+                                    <a href="#" class="btn btn-primary btn-sm" onclick="resetPasswordRequest({{$u->id}})" title="Restaurar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-sync-alt"></i>
                                     </a>
                                 </td>
@@ -140,6 +140,9 @@
         var ruta_editar_usuario = "{{route('usuario.actualizar')}}";
         var ruta_eliminar_usuario = "{{route('usuario.eliminar')}}";
         var ruta_editar_roles = "{{route('rol_usuario.actualizar_multiple')}}";
+        var ruta_restaurar_password = "{{route('usuario.reset_password')}}";
+
+        var ruta_alternar_estado_usuario = "{{route('usuario.toggle_user_state')}}";
 
         async function obtenerDataUsuario(data) {
             const response = await fetch(ruta_encontrar_usuario + "?id=" + data.id);
@@ -216,5 +219,30 @@
                     location.reload();
                 });
         }
+
+        function resetPasswordRequest(idUsuario){
+            let objeto = {
+                id: idUsuario
+            }
+
+            postData(ruta_restaurar_password, objeto)
+            .then((data) => {
+                console.log(data);
+                alert('Contraseña reestablecida satisfactoriamente');
+            });   
+        }
+
+        function toggleStateUsuario(idUsuario){
+            let objeto = {
+                id: idUsuario
+            }
+
+            postData(ruta_alternar_estado_usuario, objeto)
+            .then((data) => {
+                console.log(data);
+                location.reload();
+            });   
+        }
+
     </script>
     @endpush

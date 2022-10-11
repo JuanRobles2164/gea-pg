@@ -3,6 +3,8 @@ namespace App\Repositories;
 
 abstract class BaseRepository{
     private static $instance;
+    private const ACTIVO = 1;
+    private const INACTIVO = 2;
     private function __construct(){
 
     }

@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $this->repo = UserRepository::GetInstance();
-        $lista = $this->repo->getAll(1);
+        $lista = $this->repo->getAll();
         $this->repo = null;
         $allData = ['users' => $lista];
         return view('users.main_menu', $allData);
@@ -53,6 +53,24 @@ class UserController extends Controller
     public function create()
     {
         //
+    }
+
+    public function toggleUserState(Request $request){
+        $this->repo = UserRepository::GetInstance();
+        $usuario = $this->repo->toggleState($request->id);
+        $this->repo = null;
+        return json_encode($usuario);
+    }
+
+    public function resetPassword(Request $request){
+        $this->repo = UserRepository::GetInstance();
+        $usuario = $this->repo->resetPassword($request->id);
+        $this->repo = null;
+        return json_encode(
+            ["status" => "ok",
+            "mensaje" => "Se ha restablecido la contraseña con éxito",
+            "entidad" => $usuario
+            ]);
     }
 
     public function store(Request $request)
