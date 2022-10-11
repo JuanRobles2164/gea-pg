@@ -44,6 +44,11 @@
     --white: #fff;
     --neutral: #fff;
     --darker: black;
+    --mg1: #5ebdb2;
+    --mg2: #f0ddaa;
+    --mg3: #e47c5d;
+    --mg4: #e42d40;
+    --mg5: #142b3b;
     --breakpoint-xs: 0;
     --breakpoint-sm: 576px;
     --breakpoint-md: 768px;
@@ -6109,8 +6114,8 @@ input[type='button'].btn-block
     z-index: 1;
 
     color: #fff;
-    border-color: #5e72e4; 
-    background-color: #5e72e4;
+    border-color: #ffa084; 
+    background-color: #ffa084;
 }
 
 .page-item.disabled .page-link
@@ -7923,6 +7928,19 @@ button.close
 .align-text-top
 {
     vertical-align: text-top !important;
+}
+
+.bg-mg3
+{
+    background-color: #e47c5d !important;
+}
+
+a.bg-mg3:hover,
+a.bg-mg3:focus,
+button.bg-mg3:hover,
+button.bg-mg3:focus
+{
+    background-color: #ffa084 !important;
 }
 
 .bg-primary
@@ -12448,6 +12466,11 @@ button.bg-darker:focus
     {
         padding-top: 6rem !important;
     }
+    .pt-md-7-5,
+    .py-md-7-5
+    {
+        padding-top: 5rem !important;
+    }
     .pr-md-7,
     .px-md-7
     {
@@ -14564,6 +14587,61 @@ button.bg-darker:focus
     color: #5e72e4 !important;
 }
 
+.text-mg1
+{
+    color: #5ebdb2 !important;
+}
+
+.text-mg2
+{
+    color: #f0ddaa !important;
+}
+
+.text-mg3
+{
+    color:  #e47c5d !important;
+}
+
+.text-mg4
+{
+    color: #e42d40 !important;
+}
+
+.text-mg5
+{
+    color: #142b3b !important;
+}
+
+a.text-mg1:hover,
+a.text-mg1:focus
+{
+    color: #509D94 !important;
+}
+
+a.text-mg2:hover,
+a.text-mg2:focus
+{
+    color: #CDC09D !important;
+}
+
+a.text-mg3:hover,
+a.text-mg3:focus
+{
+    color: #CE7257 !important;
+}
+
+a.text-mg4:hover,
+a.text-mg4:focus
+{
+    color: #B32635 !important;
+}
+
+a.text-mg5:hover,
+a.text-mg5:focus
+{
+    color: #2B5C7E !important;
+}
+
 a.text-primary:hover,
 a.text-primary:focus
 {
@@ -15046,7 +15124,7 @@ button.bg-lighter:focus
 
 .bg-gradient-primary
 {
-    background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
+    background: linear-gradient(87deg, #e47c5d 0, #ffa084 100%) !important;
 }
 
 .bg-gradient-secondary
@@ -15402,7 +15480,7 @@ button.section-darker:focus
 
 .bg-gradient-primary
 {
-    background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
+    background: linear-gradient(87deg, #e47c5d 0, #ffa084 100%) !important;
 }
 
 .bg-gradient-secondary
@@ -20206,7 +20284,7 @@ textarea[resize='horizontal']
 
 .page-item.active .page-link
 {
-    box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
+    box-shadow: 0 7px 14px rgba(228, 124, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
 }
 
 .page-item .page-link,

@@ -1,137 +1,126 @@
 @extends('layouts.app', ['title' => __('Licitaciones')])
 
 @section('content')
-    <div class="container">
-        <form>
-            <div class="form-group">
-                <label for="">Número:</label>
-                <input type="text" name="" id="numero_licitacion_crear_id">
-            </div>
 
-            <div class="form-group">
-                <label for="nombre_licitacion_crear_id">Nombre</label>
-                <input type="text" name="nombre_licitacion_crear" id="nombre_licitacion_crear_id">
-            </div>
-
-            <div class="form-group">
-                <label for="descripcion_licitacion_crear_id">Descripción:</label>
-                <textarea name="descripcion_licitacion_crear" id="descripcion_licitacion_crear_id" cols="30" rows="10">
-                    
-                </textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="fecha_inicio_licitacion_crear_id">Fecha de inicio:</label>
-                <input type="date" name="fecha_inicio_licitacion_crear" id="fecha_inicio_licitacion_crear_id">
-            </div>
-
-            <div class="form-group">
-                <label for="fecha_fin_licitacion_crear_id">Fecha de fin:</label>
-                <input type="date" name="fecha_fin_licitacion_crear" id="fecha_fin_licitacion_crear_id">
-            </div>
-
-            <div class="form-group">
-                <label for="clonado_licitacion_crear_id">Clonado</label>
-                <input type="checkbox" name="clonado_licitacion_crear" id="clonado_licitacion_crear_id">
-            </div>
-
-            <div class="form-group">
-                <label for="cliente_licitacion_crear_id">Seleccione el Cliente:</label>
-                <select name="cliente_licitacion_crear" id="cliente_licitacion_crear_id">
-                    @foreach ($clientes as $c)
-                        <option value="{{ $c->id }}">{{ $c->razon_social }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="estado_licitacion_crear_id">Estado:</label>
-                <input type="text" name="estado_licitacion_crear" id="estado_licitacion_crear_id">
-            </div>
-
-            <div class="form-group">
-                <label for="categoria_licitacion_crear_id">Categoría:</label>
-                <select name="categoria_licitacion_crear" id="categoria_licitacion_crear_id">
-                    @foreach ($categorias as $c)
-                        <option value="{{ $c->id }}">{{ $c->nombre }}</option>
-                    @endforeach
-                </select>
-                <input type="text">
-            </div>
-            <a href="#" class="btn btn-primary" onclick="crearLicitacion()">Crear</a>
-        </form>
-
-        <div class="container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td>id</td>
-                        <td>Número</td>
-                        <td>Nombre</td>
-                        <td>Fecha de inicio</td>
-                        <td>Fecha de fin</td>
-                        <td>Clonado</td>
-                        <td>Cliente</td>
-                        <td>Estado</td>
-                        <td>Categoría</td>
-                        <td>Acciones</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($licitaciones as $lic)
-                        <tr style="line-height:50px;">
-                            <td>{{$lic->id}}</td>
-                            <td>{{$lic->numero}}</td>
-                            <td>{{$lic->nombre}}</td>
-                            <td>{{$lic->fecha_inicio}}</td>
-                            <td>{{$lic->fecha_fin}}</td>
-                            <td>{{$lic->clonado}}</td>
-                            <td>{{$lic->cliente}}</td>
-                            <td>{{$lic->estado}}</td>
-                            <td>{{$lic->categoria}}</td>
-                            <td>
-                                <a href="#" class="btn btn-primary">Detalles</a>
-                                <a href="#" class="btn btn-warning">Editar</a>
-                                <a href="#" class="btn btn-danger">Eliminar</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
+@include('layouts.headers.cards')
+<div class="container-fluid mt--9">
+    @if(isset($info))
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>¡{{$info}}!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
+    @endif
+    @if(isset($success))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>¡{{$success}}!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    @if(isset($danger))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>¡{{$danger}}!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    @if(isset($warning))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>¡{{$warning}}!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Licitaciones</h3>
+                        </div>
+                        <div class="col">
+                            <div class="row align-items-center">
+                                <div class="col">
+                           
+                                </div>
+                                <div class="col-6 justify-content-end text-right">
+                                    <input class="form-control form-control-sm" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search">
+                                </div>
+                                <div class="col justify-content-end text-right">
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#">
+                                        Crear <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table align-items-center">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Id</th>
+                                <th scope="col">Número</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Fecha de inicio</th>
+                                <th scope="col">Fecha de fin</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($licitaciones as $lic)
+                            <tr>
+                                <td scope="row">
+                                    <a href="#" class="btn btn-danger btn-sm" onclick="" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                                <td scope="row">{{$lic->id}}</td>
+                                <td scope="row">{{$lic->numero}}</td>
+                                <td scope="row">{{$lic->fecha_inicio}}</td>
+                                <td scope="row">{{$lic->fecha_fin}}</td>
+                                <td scope="row">{{$lic->cliente}}</td>
+                                <td scope="row">{{$lic->estado}}</td>
+                                <td scope="row">
+                                    <a href="#" class="btn btn-info btn-sm" onclick="" title="Ver" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-default btn-sm" onclick="" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-user-edit"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-primary btn-sm" onclick="" title="Restaurar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer py-3">
+                    <!--paginacion-->
+                    {{ $licitaciones->links('components.paginador') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @push('js')
-    <script>
-        function crearLicitacion(){
-            let numero = document.getElementById("numero_licitacion_crear_id").value;
-            let nombre = document.getElementById("nombre_licitacion_crear_id").value;
-            let descripcion = document.getElementById("descripcion_licitacion_crear_id").value;
-            let fecha_inicio = document.getElementById("fecha_inicio_licitacion_crear_id").value;
-            let fecha_fin = document.getElementById("fecha_fin_licitacion_crear_id").value;
-            let clonado = document.getElementById("clonado_licitacion_crear_id").value;
-            let cliente = document.getElementById("cliente_licitacion_crear_id").value;
-            let estado = document.getElementById("estado_licitacion_crear_id").value;
-            let categoria = document.getElementById("categoria_licitacion_crear_id").value;
-
-            let data = {
-                numero: numero,
-                nombre: nombre,
-                descripcion: descripcion,
-                fecha_inicio: fecha_inicio,
-                fecha_fin: fecha_fin,
-                clonado: clonado,
-                cliente: cliente,
-                estado: estado,
-                categoria: categoria
-            }
-            postData('{{route("licitacion.guardar")}}', data)
-            .then((data) => {
-                console.log(data);
-                alert("Licitación creada exitosamente!");
-            });
-        }
-    </script>
+    
 @endpush

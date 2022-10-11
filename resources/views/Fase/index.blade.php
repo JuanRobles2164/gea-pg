@@ -3,7 +3,10 @@
 
 @section('content')
 
-
+    <br>
+    <br>
+    <br>
+    <br>
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_fases">
         Nuevo
     </button>
@@ -34,6 +37,7 @@
             @endforeach
         </tbody>
     </table>
+    {{ $fases->links('components.paginador') }}
 
     <x-guardar-fase modalTitle="Formulario de Fases" 
     modalId="id_modal_fases"/>

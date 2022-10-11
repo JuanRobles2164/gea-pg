@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EstadoController;
+use App\Http\Controllers\FaseController;
 use App\Http\Controllers\TipoDocumentoController;
 use App\Http\Controllers\TipoLicitacionController;
+use App\Http\Controllers\LicitacionController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\UserController;
 use App\Repositories\Estado\EstadoRepository;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
         $allData = ['estados' => $lista];
         return view('pages.icons', $allData);
     })->name('icons'); 
-	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
+	 Route::get('table-list', function () {return view('pages.usuarios');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
@@ -66,7 +69,7 @@ Route::name("cliente.")->group(function(){
 });
 
 Route::name("fase.")->group(function(){
-    Route::controller(ClienteController::class)->group(function(){
+    Route::controller(FaseController::class)->group(function(){
         Route::get('/fase/index', 'index')->name("index");
     });
 });
@@ -84,3 +87,11 @@ Route::name("tipo_licitacion.")->group(function(){
     });
 });
 
+Route::name("licitacion.")->group(function(){
+    Route::controller(CategoriaController::class)->group(function(){
+        Route::get('/licitacion/categorias', 'index')->name("categorias");
+    });
+    Route::controller(LicitacionController::class)->group(function(){
+        Route::get('/licitacion/index', 'index')->name("index");
+    });
+});
