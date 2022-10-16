@@ -187,11 +187,11 @@ use App\Enums\UnidadValidezEnum;
                 id: idObjeto
             }
             postData(ruta_eliminar_tipo_documento, data)
-                .then((data) => {
-                    console.log(data);
-                    alert("Licitación eliminada exitosamente!");
-                    location.reload();
-                });
+            .then((data) => {
+                console.log(data);
+                alert("Licitación eliminada exitosamente!");
+                location.reload();
+            });
         }
     </script>
     @endpush

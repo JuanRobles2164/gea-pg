@@ -28,10 +28,9 @@
                     <th>{{$td->nombre}}</th>
                     <th>{{$td->descripcion}}</th>
                     <th>
-                        <!-- Aquí van los botones para editar-eliminar y eso xd -->
                         <a href="#" class="btn btn-warning">Editar</a>
                         <a href="#" class="btn btn-success">Visualizar</a>
-                        <a href="#" class="btn btn-danger">Eliminar</a>
+                        <a href="#" class="btn btn-danger" onclick="eliminarRegistro({{$td->id}})">Eliminar</a>
                     </th>
                 </tr>
             @endforeach
@@ -43,8 +42,22 @@
     modalId="id_modal_fases"/>
 @endsection
 
-@section('scripts')
+@push('js')
     <script>
-
+        var ruta_eliminar_fase = "{{route('fase.eliminar')}}";
+        function eliminarRegistro(idObjeto){
+            let data = {
+                id: idObjeto
+            }
+            postData(ruta_eliminar_fase, data)
+            .then((data) => {
+                console.log(data);
+                alert("Fase eliminada exitosamente!");
+                location.reload();
+            }).catch((error) => {
+                alert("No es posible eliminar esta Fase");
+                console.log(error);
+            });
+        }
     </script>
-@endsection
+@endpush
