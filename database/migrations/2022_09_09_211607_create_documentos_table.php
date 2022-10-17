@@ -23,7 +23,7 @@ class CreateDocumentosTable extends Migration
             $table->date("fecha_vencimiento")->nullable();
             $table->binary("data_file")->nullable();
             $table->string("path_file")->nullable();
-            $table->unsignedBigInteger("estado");
+            $table->unsignedBigInteger('estado')->default(1);
             $table->unsignedBigInteger("tipo_documento");
             $table->timestamps();
 

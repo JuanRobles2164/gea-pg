@@ -1,47 +1,44 @@
 @extends('templates.templateModalVisualizar')
 
 @section('modal-visualizer')
-<form>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="razon_social_modal_details_id">Razón social:</label>
-                <input class="form-control form-control-alternative" id="razon_social_modal_details_id">{{isset($model->id) ? $model->razon_social : '' }}</input>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="estado_modal_details_id">Estado:</label>
-                <select class="form-control form-control-alternative" name="estado_modal_details" id="estado_modal_details_id">
-                    <option value="-1">Seleccione una opción...</option>
-                    @foreach ($estados_cliente as $i)
-                    <option value={{$i->id}}>{{$i->nombre}}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="identificacion_modal_details_id">Identificación:</label>
-                <input type="number" class="form-control form-control-alternative" id="identificacion_modal_details_id">{{isset($model->id) ? $model->identificacion : ''}}</input>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="tipo_identificacion_modal_details_id">Tipo identificacion:</label>
-                <select class="form-control form-control-alternative" id="tipo_identificacion_modal_details_id">{{isset($model->id) ? $model->tipo_identificacion : ''}}
-                    <option value="'1">Seleccione una opción...</option>
-                    <option >xd</option>
-                </select>
-            </div>
-        </div>
-    </div>
-</form>
+<div class="form-group">
+    <label class="form-label" for="rsocial_cliente_modal_view_id">Razón social:</label>
+    <br>
+    <input for="" class="form-input" id="rsocial_cliente_modal_view_id">{{isset($model->id) ? $model->razon_social : '' }}</label>
+</div>
 
-<script>
+<div class="form-group">
+    <label class="form-label" for="email_cliente_modal_view_id">Email:</label>
+    <br>
+    <input type="email" class="form-control form-control-alternative" id="email_cliente_modal_view_id">
+</div>
+
+<div class="form-group">
+    <label class="form-label" for="direccion_cliente_modal_view_id">Direccion:</label>
+    <br>
+    <input class="form-input" for="" id="direccion_cliente_modal_view_id">{{isset($model->id) ? $model->direccion : ''}}</label>
+</div>
+
+<div class="form-group">
+    <label class="form-label" for="identificacion_cliente_modal_view_id">Identificación:</label>
+    <br>
+    <input class="form-input" for="" id="identificacion_cliente_modal_view_id">{{isset($model->id) ? $model->identificacion : ''}}</label>
+</div>
+
+<div class="form-group">
+    <label class="form-label" for="tident_cliente_modal_view_id">Tipo identificacion:</label>
+    <br>
+    <input id="tident_cliente_modal_view_id" class="form-input">{{isset($model->id) ? $model->tipo_identificacion : ''}}</label>
+</div>
+
+<div class="form-group">
+    <label class="form-label" for="telefono_cliente_modal_view_id">Telefono:</label>
+    <br>
+    <input id="telefono_cliente_modal_view_id" class="form-input">{{isset($model->id) ? $model->telefono : ''}}</label>
+</div>
+
+<!-- <script>
     let selectDetailsTemporal = document.getElementById("estado_modal_details_id");
     selectDetailsTemporal.value = "{{isset($model->id) ? $model->estado : '-1' }}";
-</script>
+</script> -->
 @endsection

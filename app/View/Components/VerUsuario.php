@@ -19,7 +19,7 @@ class VerUsuario extends Component
      *
      * @return void
      */
-    public function __construct($modalTitle = 'Visualizador de Tipos de documento', $modalId, $modelId = -1)
+    public function __construct($modalTitle = 'Visualizador de Usuarios', $modalId, $modelId = -1)
     {
         $this->modal_id = $modalId;
         $this->modal_title = $modalTitle;

@@ -19,7 +19,7 @@ class TipoDocumentoController extends Controller
     public function index()
     {
         $this->repo = TipoDocumentoRepository::GetInstance();
-        $lista = $this->repo->getAll();
+        $lista = $this->repo->getAllEstado();
         $this->repo = null;
         $allData = ['tipos_documento' => $lista];
         return view('TipoDocumento.index', $allData);
@@ -28,7 +28,7 @@ class TipoDocumentoController extends Controller
     public function listar(Request $request){
         $num_rows = $request->cantidad != null ? $request->cantidad : 15;
         $this->repo = TipoDocumentoRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
+        $lista = $this->repo->getAllEstado($num_rows);
         $this->repo = null;
         return json_encode($lista);
     }
@@ -94,6 +94,13 @@ class TipoDocumentoController extends Controller
        //
     }
 
+    public function toggleTipoDocState(Request $request){
+        $this->repo = TipoDocumentoRepository::GetInstance();
+        $cliente = $this->repo->toggleState($request->id);
+        $this->repo = null;
+        return json_encode($cliente);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -117,14 +124,14 @@ class TipoDocumentoController extends Controller
      * @param  \App\Models\TipoDocumento  $tipoDocumento
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $tipoDocumento)
+    public function destroy(Request $request, TipoDocumento $tipoDocumento)
     {
-        $objeto = new TipoDocumento($tipoDocumento->all());
-        $objeto->id = $tipoDocumento->id;
         $this->repo = TipoDocumentoRepository::GetInstance();
-        $objeto = $this->repo->find($objeto->id);
-        $this->repo->delete($objeto);
+        $data = $request->all();
+        $data["estado"] = '3';
+        $tipoDocumento = $this->repo->find($data["id"]);
+        $this->repo->update($tipoDocumento, $data);
         $this->repo = null;
-        return json_encode($objeto);
+        return json_encode($tipoDocumento);
     }
 }

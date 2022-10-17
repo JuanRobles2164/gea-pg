@@ -19,7 +19,7 @@ class ClienteController extends Controller
     public function index()
     {
         $this->repo = ClienteRepository::GetInstance();
-        $lista = $this->repo->getAll();
+        $lista = $this->repo->getAllEstado();
         $this->repo = null;
 
         $this->repo = EstadoRepository::GetInstance();
@@ -34,17 +34,18 @@ class ClienteController extends Controller
     public function listar(Request $request){
         $num_rows = $request->cantidad != null ? $request->cantidad : 15;
         $this->repo = ClienteRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
+        $lista = $this->repo->getAllEstado($num_rows);
         $this->repo = null;
         return json_encode($lista);
     }
 
     public function details(Request $request){
-        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
         $this->repo = ClienteRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
+        $obj = $this->repo->find($request->id);
         $this->repo = null;
-        return json_encode($lista);
+
+        $allData = ['cliente'=> $obj];
+        return json_encode($allData);
     }
 
     /**
@@ -111,20 +112,27 @@ class ClienteController extends Controller
         return json_encode($cliente);
     }
 
+    public function toggleClienteState(Request $request){
+        $this->repo = ClienteRepository::GetInstance();
+        $cliente = $this->repo->toggleState($request->id);
+        $this->repo = null;
+        return json_encode($cliente);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $cliente)
+    public function destroy(Request $request, Cliente $cliente)
     {
-        $objeto = new Cliente($cliente->all());
-        $objeto->id = $cliente->id;
         $this->repo = ClienteRepository::GetInstance();
-        $objeto = $this->repo->find($objeto->id);
-        $this->repo->delete($objeto);
+        $data = $request->all();
+        $data["estado"] = '3';
+        $cliente = $this->repo->find($data["id"]);
+        $this->repo->update($cliente, $data);
         $this->repo = null;
-        return json_encode($objeto);
+        return json_encode($cliente);
     }
 }
