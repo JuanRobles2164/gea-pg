@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),
             'identificacion' => '01010101',
+            'estado' => '1',
             'created_at' => now(),
             'updated_at' => now()
         ]);
