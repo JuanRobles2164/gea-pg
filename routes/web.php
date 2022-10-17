@@ -94,4 +94,7 @@ Route::name("licitacion.")->group(function(){
     Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/index', 'index')->name("index");
     });
+    Route::controller(LicitacionController::class)->group(function(){
+        Route::get('/licitacion/edit', 'edit')->name("edit");
+    });
 });

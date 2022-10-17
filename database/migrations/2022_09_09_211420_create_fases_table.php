@@ -17,6 +17,7 @@ class CreateFasesTable extends Migration
             $table->id();
             $table->string("nombre");
             $table->string("descripcion");
+            $table->unsignedBigInteger("estado");
             $table->timestamps();
         });
     }

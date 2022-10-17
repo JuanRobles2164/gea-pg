@@ -9,5 +9,5 @@ class Fase extends Model
 {
     use HasFactory;
     protected $table = 'fase';
-    protected $fillable = ["id", "nombre", "descripcion"];
+    protected $fillable = ["id", "nombre", "descripcion", "estado"];
 }
