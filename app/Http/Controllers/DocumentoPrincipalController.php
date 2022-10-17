@@ -54,6 +54,6 @@ class DocumentoPrincipalController extends Controller
 
         $data = $this->repo->create($dataToSave);
         $this->repo = null;
-        return json_encode(['db' => $data, 'proccesed' => $dataToSave]);
+        return $this->index();
     }
 }
