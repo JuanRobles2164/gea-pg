@@ -32,7 +32,10 @@ abstract class BaseRepository{
     public function getAllEstado($paginate = 15, $estado = 3){
         return $this->getModel()->where("estado", "!=", $estado)->paginate($paginate);
     }
-
+    //Trae un listado de todos las entidades activas
+    public function getAllActivos($paginate = 15, $estado = 1){
+        return $this->getModel()->where("estado", $estado)->paginate($paginate);
+    }
     //Update Operations
     public function update($object, $data){
         $object->fill($data);
