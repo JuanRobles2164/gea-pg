@@ -56,7 +56,7 @@ class RolUsuarioController extends Controller
     {
         $this->repo = RolUsuarioRepository::GetInstance();
         $data = $request->all();
-        $this->repo->create($data);
+        $data = $this->repo->create($data);
         $this->repo = null;
         return json_encode($data);
     }
@@ -89,16 +89,30 @@ class RolUsuarioController extends Controller
         return json_encode($objeto);
     }
 
+    public function updateRoles(Request $request){
+        $roles = [];
+        foreach($request->roles as $r){
+            array_push($roles, ['rol' => $r, 'usuario' => $request->id]);
+        }
+        if(count($roles) == 0){
+            return json_encode(['status' => "No hay roles seleccionados"]);
+        }
+        $this->repo = RolUsuarioRepository::GetInstance();
+        $response = $this->repo->updateRoles($roles);
+        return json_encode(['status' => $response]);
+    }
+
     public function agregar(Request $request){
         $this->repo = RolUsuarioRepository::GetInstance();
         $usuarioId = $request->id;
         $rolesIds = $request->roles;
         $rolesObjs = [];
+
         for($i = 0; $i < count($rolesIds); $i++){
-            $objeto = new RolUsuario([
+            $objeto = [
                 'usuario' => $usuarioId,
                 'rol' => $rolesIds[$i]
-            ]);
+            ];
             array_push($rolesObjs, $this->repo->asignarRol($objeto));
         }
         return $rolesObjs;

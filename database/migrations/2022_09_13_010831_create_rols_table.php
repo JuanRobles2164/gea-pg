@@ -21,17 +21,6 @@ class CreateRolsTable extends Migration
             $table->unsignedBigInteger("estado");
             $table->timestamps();
         });
-        DB::table('rol')
-        ->insert([[
-            'id' => 1,
-            'nombre' => 'Gerente',
-            'descripcion' => 'Rol de gerente'
-        ],
-        [
-            'id' => 2,
-            'nombre' => 'Usuario',
-            'descripcion' => 'Rol de usuario'
-        ]]);
     }
 
     /**

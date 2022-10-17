@@ -1,21 +1,24 @@
-@extends('template')
+@extends('layouts.app', ['title' => __('Tipos de Licitaciones')])
 
-@section('contenido')
-
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_tipo_documento">
+@section('content')
+    <br>
+    <br>
+    <br>
+    <br>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_tipo_licitacion">
         Nuevo
     </button>
     <br>
     <table>
         <thead>
-            <tr>
-                <td>Id</td>
-                <td>Nombre</td>
-                <td>Descripción</td>
-                <td>Duración</td>
-                <td>Retención</td>
-                <td>Acciones</td>
-            </tr>
+        <tr>
+            <td>Id</td>
+            <td>Nombre</td>
+            <td>Descripción</td>
+            <td>Duración</td>
+            <td>Retención</td>
+            <td>Acciones</td>
+        </tr>
         </thead>
         <tbody>
             @foreach ($tipos_licitacion as $tl)
@@ -35,13 +38,14 @@
             @endforeach
         </tbody>
     </table>
-
-    <x-guardar-tipo-licitacion 
-        modalId="id_modal_tipo_licitacion"/>
+    {{ $tipos_licitacion->links('components.paginador') }}
+    
+    <x-guardar-tipo-licitacion modalTitle="Formulario de tipos de licitacion"
+    modalId="id_modal_tipo_licitacion"/>
 @endsection
 
-@section('scripts')
+@push('js')
     <script>
 
     </script>
-@endsection
+@endpush

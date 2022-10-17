@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Licitacion;
 use App\Http\Requests\StoreLicitacionRequest;
 use App\Http\Requests\UpdateLicitacionRequest;
+use App\Repositories\Categoria\CategoriaRepository;
+use App\Repositories\Cliente\ClienteRepository;
 use App\Repositories\Licitacion\LicitacionRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Illuminate\Http\Request;
@@ -19,7 +21,11 @@ class LicitacionController extends Controller
      */
     public function index()
     {
-        //
+        $this->repo = LicitacionRepository::GetInstance();
+        $lista = $this->repo->getAll();
+        $this->repo = null;
+        $allData = ['licitaciones' => $lista];
+        return view('Licitacion.index', $allData);
     }
 
     public function listar(Request $request){
@@ -56,8 +62,17 @@ class LicitacionController extends Controller
      */
     public function store(Request $request)
     {
+        $this->repo = CategoriaRepository::GetInstance();
+        //Intentará buscar primero un registro de Categoria que concuerde con el nombre, si no lo encuentra, lo creará
+        $categoria = $this->repo->firstOrCreate([
+            'nombre' => $request->categoria
+        ]);
+        $this->repo = null;
+
         $this->repo = LicitacionRepository::GetInstance();
         $data = $request->all();
+        $data["categoria"] = $categoria->id;
+
         $this->repo->create($data);
         $this->repo = null;
         return json_encode($data);

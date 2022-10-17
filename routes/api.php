@@ -36,7 +36,7 @@ Route::name("fase_tipo_documento.")->group(function(){
     Route::controller(FaseTipoDocumentoController::class)->group(function(){
         Route::get('/fase_tipo_documento/listar', 'listar')->name("listar");
         Route::post('/fase_tipo_documento/store', 'store')->name("guardar");
-        Route::post('/fase_tipo_documento/store', 'storeAll')->name("guardar_todo");
+        Route::post('/fase_tipo_documento/store_all', 'storeAll')->name("guardar_todo");
         Route::post('/fase_tipo_documento/update', 'update')->name("actualizar");
         Route::post('/fase_tipo_documento/destroy', 'destroy')->name("eliminar");
     });
@@ -45,7 +45,10 @@ Route::name("fase_tipo_documento.")->group(function(){
 Route::name("usuario.")->group(function(){
     Route::controller(UserController::class)->group(function(){
         Route::get('/usuario/listar', 'listar')->name("listar");
+        Route::get('/usuario/find', 'details')->name("encontrar");
         Route::post('/usuario/store', 'store')->name("guardar");
+        Route::post('/usuario/toggle_user_state', 'toggleUserState')->name("toggle_user_state");
+        Route::post('/usuario/reset_password', 'resetPassword')->name("reset_password");
         Route::post('/usuario/update', 'update')->name("actualizar");
         Route::post('/usuario/destroy', 'destroy')->name("eliminar");
     });
@@ -55,6 +58,7 @@ Route::name("rol_usuario.")->group(function(){
     Route::controller(RolUsuarioController::class)->group(function(){
         Route::get('/rol_usuario/listar', 'listar')->name("listar");
         Route::post('/rol_usuario/store', 'store')->name("guardar");
+        Route::post('/rol_usuario/update_roles', 'updateRoles')->name("actualizar_multiple");
         Route::post('/rol_usuario/update', 'update')->name("actualizar");
         Route::post('/rol_usuario/destroy', 'destroy')->name("eliminar");
         Route::post('/rol_usuario/agregar', 'agregar')->name("agregar");
@@ -162,7 +166,9 @@ Route::name("licitacion_fase.")->group(function(){
 
 Route::name("tipo_documento.")->group(function(){
     Route::controller(TipoDocumentoController::class)->group(function(){
+
         Route::get('/tipo_documento/listar', 'listar')->name("listar");
+        Route::get('/tipo_documento/find', 'find')->name("encontrar");
         Route::post('/tipo_documento/store', 'store')->name("guardar");
         Route::post('/tipo_documento/update', 'update')->name("actualizar");
         Route::post('/tipo_documento/destroy', 'destroy')->name("eliminar");

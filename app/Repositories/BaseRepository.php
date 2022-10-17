@@ -3,6 +3,8 @@ namespace App\Repositories;
 
 abstract class BaseRepository{
     private static $instance;
+    private const ACTIVO = 1;
+    private const INACTIVO = 2;
     private function __construct(){
 
     }
@@ -11,7 +13,10 @@ abstract class BaseRepository{
     abstract public function getModel();
 
     abstract public function findByParams($params);
-
+    
+    public function firstOrCreate($params){
+        return $this->getModel()->firstOrCreate($params);
+    }
     //Create Operations
     public function create($object){
         return $this->getModel()->create($object);
