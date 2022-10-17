@@ -17,7 +17,7 @@ class CreateLicitacionsTable extends Migration
             $table->id();
             $table->string("nombre");
             $table->date("fecha_inicio");
-            $table->date("fecha_fin")->nullable();
+            $table->date("fecha_fin");
             $table->boolean("clonado");
             $table->unsignedBigInteger("cliente");
             $table->unsignedBigInteger("estado");

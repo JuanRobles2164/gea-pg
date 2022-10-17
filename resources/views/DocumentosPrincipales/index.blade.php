@@ -1,33 +1,44 @@
 @extends('layouts.app', ['title' => __('Estados')])
 
 @section("content")
-    <form class="">
+<br>
+<br>
+<br>
+    <form class="container" action="{{route('documento_principal.guardar_documento_no_api')}}" method="POST" enctype="multipart/form-data">
+        @csrf
         <div class="form-group">
-            <select name="" id="" class="form-control">
+            <select name="tipo_documento" id="tipo_documento_select" class="form-control">
                 <option value="-1">Seleccione un tipo de documento</option>
+                @foreach ($tipos_documento as $td)
+                    <option value="{{$td->id}}">{{$td->nombre}}</option>
+                @endforeach
             </select>
         </div>
         <div class="form-group">
-            <input type="file" name="archivo_tipo_documento_principal" id="archivo_tipo_documento_principal_crear" class="form-control">
+            <input type="file" name="data_file" id="data_file" class="form-control">
         </div>
 
         <div class="form-group">
-            <div class="row">
-                <div class="form-control">
-                    <input type="checkbox" name="tipo_documento_recurrente_constante_check" id="tipo_documento_recurrente_constante_check_recurrente">
-                    <label for="tipo_documento_recurrente_constante_check_recurrente" class="form-label">Recurrente</label>
+            <div class="form-row form-control">
+                <div>
+                    <input type="radio" name="tipo_documento_recurrente_constante_check" 
+                        id="tipo_documento_recurrente_constante_check_recurrente" value="constante">
+                    <label for="tipo_documento_recurrente_constante_check_recurrente" class="form-label">Recurrente </label>
                 </div>
-                <div class="form-control">
-                    <input type="checkbox" name="tipo_documento_recurrente_constante_check" id="tipo_documento_recurrente_constante_check_constante">
-                    <label for="tipo_documento_recurrente_constante_check_constante" class="form-label">Constante</label>
+                
+                <div>
+                    <input type="radio" name="tipo_documento_recurrente_constante_check" 
+                        id="tipo_documento_recurrente_constante_check_constante" value="constante">
+                    <label for="tipo_documento_recurrente_constante_check_constante" class="form-label"> Constante</label>
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="" class="form-label">Fecha fin</label>
-            <input type="date" name="tipo_documento_principal_fecha_fin_create" id="tipo_documento_principal_fecha_fin_create_id">
+            <label for="tipo_documento_principal_fecha_fin_create_id" class="form-label">Fecha fin</label>
+            <input type="date" name="fecha_vence" id="tipo_documento_principal_fecha_fin_create_id">
         </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
 @endsection
 

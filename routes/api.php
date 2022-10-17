@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\DocumentoPrincipalController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\FaseController;
 use App\Http\Controllers\FaseTipoDocumentoController;
@@ -30,6 +31,12 @@ use App\Models\FaseTipoLicitacion;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::name("documento_principal.")->group(function(){
+    Route::controller(DocumentoPrincipalController::class)->group(function(){
+        Route::post('/documento_principal/guardar_documento', 'guardarDocumento')->name("guardar_documento");
+    });
 });
 
 Route::name("fase_tipo_documento.")->group(function(){

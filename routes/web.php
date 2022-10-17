@@ -7,6 +7,7 @@ use App\Http\Controllers\TipoDocumentoController;
 use App\Http\Controllers\TipoLicitacionController;
 use App\Http\Controllers\LicitacionController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\DocumentoPrincipalController;
 use App\Http\Controllers\UserController;
 use App\Repositories\Estado\EstadoRepository;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +53,13 @@ Route::group(['middleware' => 'auth'], function () {
 Route::name("estado.")->group(function(){
     Route::controller(EstadoController::class)->group(function(){
         Route::get('/estado/index', 'index')->name("index");
+    });
+});
+
+Route::name("documento_principal.")->group(function(){
+    Route::controller(DocumentoPrincipalController::class)->group(function(){
+        Route::get('/documento_principal/index', 'index')->name("index");
+        Route::post('/documento_principal/guardar_documento', 'guardarDocumento')->name("guardar_documento_no_api");
     });
 });
 
