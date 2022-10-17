@@ -18,12 +18,14 @@ class RolSeeder extends Seeder
         ->insert([[
             'id' => 1,
             'nombre' => 'Gerente',
-            'descripcion' => 'Rol de gerente'
+            'descripcion' => 'Rol de gerente',
+            'estado' => '1'
         ],
         [
             'id' => 2,
-            'nombre' => 'Usuario',
-            'descripcion' => 'Rol de usuario'
+            'nombre' => 'Operario',
+            'descripcion' => 'Rol de operario', 
+            'estado' => '1'
         ]]);
     }
 }

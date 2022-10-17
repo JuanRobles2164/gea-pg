@@ -9,5 +9,5 @@ class LicitacionFase extends Model
 {
     use HasFactory;
     protected $table = 'licitacion_fase';
-    protected $fillable = ["id", "fase", "licitacion", "estado"];
+    protected $fillable = ["id", "fase", "licitacion", "observacion", "estado"];
 }

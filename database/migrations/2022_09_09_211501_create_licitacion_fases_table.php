@@ -17,12 +17,12 @@ class CreateLicitacionFasesTable extends Migration
             $table->id();
             $table->unsignedBigInteger("fase");
             $table->unsignedBigInteger("licitacion");
+            $table->string("observacion")->nullable();
             $table->unsignedBigInteger("estado");
             $table->timestamps();
 
             $table->foreign('fase')->references('id')->on('fase');
             $table->foreign('licitacion')->references('id')->on('licitacion');
-            $table->foreign('estado')->references('id')->on('estado');
         });
     }
 

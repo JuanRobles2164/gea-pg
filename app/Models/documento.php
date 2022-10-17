@@ -9,5 +9,5 @@ class Documento extends Model
 {
     use HasFactory;
     protected $table = 'documento';
-    protected $fillable = ["nombre", "path_file", "data_file", "data_json", "tipo_documento"];
+    protected $fillable = ["numero", "nombre", "descripcion", "recurrente", "constante", "fecha_vencimiento", "path_file", "data_file", "estado", "tipo_documento"];
 }
