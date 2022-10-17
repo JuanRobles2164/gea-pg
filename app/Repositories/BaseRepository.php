@@ -28,6 +28,10 @@ abstract class BaseRepository{
     public function getAll($paginate = 15){
         return $this->getModel()->paginate($paginate);
     }
+    //Trae un listado de todos las entidades no eliminadas
+    public function getAllEstado($paginate = 15, $estado = 3){
+        return $this->getModel()->where("estado", "!=", $estado)->paginate($paginate);
+    }
 
     //Update Operations
     public function update($object, $data){
