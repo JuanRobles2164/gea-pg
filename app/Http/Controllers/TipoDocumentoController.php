@@ -41,6 +41,12 @@ class TipoDocumentoController extends Controller
         return json_encode($lista);
     }
 
+    public function find(Request $request){
+        $this->repo = TipoDocumentoRepository::GetInstance();
+        $modelo = $this->repo->find($request->id);
+        return json_encode($modelo);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -61,7 +67,7 @@ class TipoDocumentoController extends Controller
     {
         $this->repo = TipoDocumentoRepository::GetInstance();
         $data = $request->all();
-        $this->repo->create($data);
+        $data = $this->repo->create($data);
         $this->repo = null;
         return json_encode($data);
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Http\Requests\StoreCategoriaRequest;
 use App\Http\Requests\UpdateCategoriaRequest;
+use App\Repositories\Categoria\CategoriaRepository;
 
 class CategoriaController extends Controller
 {
@@ -15,7 +16,11 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $this->repo = CategoriaRepository::GetInstance();
+        $lista = $this->repo->getAll();
+        $this->repo = null;
+        $allData = ['categorias' => $lista];
+        return view('Licitacion.categorias_index', $allData);
     }
 
     /**

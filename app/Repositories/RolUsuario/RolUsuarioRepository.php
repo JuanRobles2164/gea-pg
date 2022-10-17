@@ -21,8 +21,28 @@ class RolUsuarioRepository extends BaseRepository{
     {
         return new RolUsuario;
     }
+
+    public function updateRoles($rolesUsuario){
+        $roles_ids = [];
+        foreach($rolesUsuario as $ru){
+            array_push($roles_ids, $ru['rol']);
+        }
+        $roles_usuario_actuales = DB::table('rol_usuario')->where('usuario', $rolesUsuario[0]['usuario'])
+        ->where('rol', $roles_ids)
+        ->update(['activo' => true]);
+
+        DB::table('rol_usuario')->where('usuario', $rolesUsuario[0]['usuario'])
+        ->whereNotIn('rol', $roles_ids)
+        ->update(['activo' => false]);
+        return $roles_usuario_actuales;
+    }
+
+    public function findByUser($userId){
+        return RolUsuario::where('usuario', $userId)->get();
+    }
+
     public function findByParams($params){
-        
+        return DB::table('rol_usuario')->where('usuario', $params['usuario'])->get();
     }
 
     /**
@@ -33,23 +53,14 @@ class RolUsuarioRepository extends BaseRepository{
     }
 
     /**
-     * @param Rol objeto de tipo Rol que contiene el id del rol asignado y el usuario
+     * @param RolUsuario objeto de tipo Rol que contiene el id del rol asignado y el usuario
      */
     public function asignarRol($rol){
-        $roles_usuario = DB::table("rol_usuario")->where("usuario", "=", $rol->usuario);
-        $encontrado = false;
-        for($i = 0; $i < count($roles_usuario); $i++){
-            if($rol->rol == $roles_usuario[$i]->rol){
-                $encontrado = true;
-            }
-        }
         $rol_usuario = null;
-        if($encontrado){
-            $rol_usuario = RolUsuario::updateOrCreate([
-                'usuario' => $rol->usuario,
-                'rol' => $rol->rol
-            ]);
-        }
+        $rol_usuario = RolUsuario::updateOrCreate([
+            'usuario' => $rol['usuario'],
+            'rol' => $rol['rol']
+        ]);
         return $rol_usuario;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Repositories\RolUsuario\RolUsuarioRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $this->repo = UserRepository::GetInstance();
+        $lista = $this->repo->getAll();
+        $this->repo = null;
+        $allData = ['users' => $lista];
+        return view('users.main_menu', $allData);
     }
 
     public function listar(Request $request){
@@ -28,11 +33,16 @@ class UserController extends Controller
     }
 
     public function details(Request $request){
-        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
         $this->repo = UserRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
+        $obj = $this->repo->find($request->id);
         $this->repo = null;
-        return json_encode($lista);
+
+        $this->repo = RolUsuarioRepository::GetInstance();
+        $roles = $this->repo->findByParams(['usuario' => $request->id]);
+
+        $allData = ['user' => $obj,
+                    'roles' => $roles];
+        return json_encode($allData);
     }
 
     /**
@@ -43,6 +53,24 @@ class UserController extends Controller
     public function create()
     {
         //
+    }
+
+    public function toggleUserState(Request $request){
+        $this->repo = UserRepository::GetInstance();
+        $usuario = $this->repo->toggleState($request->id);
+        $this->repo = null;
+        return json_encode($usuario);
+    }
+
+    public function resetPassword(Request $request){
+        $this->repo = UserRepository::GetInstance();
+        $usuario = $this->repo->resetPassword($request->id);
+        $this->repo = null;
+        return json_encode(
+            ["status" => "ok",
+            "mensaje" => "Se ha restablecido la contraseña con éxito",
+            "entidad" => $usuario
+            ]);
     }
 
     public function store(Request $request)
@@ -58,19 +86,17 @@ class UserController extends Controller
         return json_encode($data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateRolRequest  $request
-     * @param  \App\Models\Rol  $Rol
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, User $user)
     {
         $this->repo = UserRepository::GetInstance();
         $data = $request->all();
         $user = $this->repo->find($data["id"]);
-        $this->repo->update($user, $data);
+        if(!isset($data['password'])){
+            $data['password'] = $user->password;
+        }else{
+            $data['password'] = Hash::make($data['password']);
+        }
+        $user = $this->repo->update($user, $data);
         $this->repo = null;
         return json_encode($user);
     }
@@ -81,6 +107,14 @@ class UserController extends Controller
         $objeto->id = $user->id;
         $this->repo = UserRepository::GetInstance();
         $objeto = $this->repo->find($objeto->id);
+
+        $this->repo = RolUsuarioRepository::GetInstance();
+        $roles_usuario = $this->repo->findByUser($objeto->id);
+        foreach($roles_usuario as $ru){
+            $this->repo->delete($ru);
+        }
+
+        $this->repo = UserRepository::GetInstance();
         $this->repo->delete($objeto);
         $this->repo = null;
         return json_encode($objeto);

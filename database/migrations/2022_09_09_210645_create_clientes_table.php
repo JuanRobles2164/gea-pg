@@ -18,9 +18,8 @@ class CreateClientesTable extends Migration
             $table->string("razon_social");
             $table->string("identificacion");
             $table->string("tipo_identificacion");
-            $table->unsignedBigInteger("estado");
+            $table->unsignedBigInteger("estado")->default('1');
             $table->timestamps();
-
             $table->foreign('estado')->references('id')->on('estado');
         });
     }

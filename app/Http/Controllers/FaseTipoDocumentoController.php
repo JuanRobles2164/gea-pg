@@ -57,7 +57,7 @@ class FaseTipoDocumentoController extends Controller
     {
         $this->repo = FaseTipoDocumentoRepository::GetInstance();
         $data = $request->all();
-        $this->repo->create($data);
+        $data = $this->repo->create($data);
         $this->repo = null;
         return json_encode($data);
     }

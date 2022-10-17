@@ -67,7 +67,7 @@ class ClienteController extends Controller
     {
         $this->repo = ClienteRepository::GetInstance();
         $data = $request->all();
-        $this->repo->create($data);
+        $data = $this->repo->create($data);
         $this->repo = null;
         return json_encode($data);
     }
