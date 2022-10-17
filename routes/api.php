@@ -174,6 +174,7 @@ Route::name("tipo_documento.")->group(function(){
         Route::post('/tipo_documento/store', 'store')->name("guardar");
         Route::post('/tipo_documento/update', 'update')->name("actualizar");
         Route::post('/tipo_documento/destroy', 'destroy')->name("eliminar");
+        Route::post('/tipo_documento/toggle_tipodoc_state', 'toggleTipoDocState')->name("toggle_tipodoc_state");
     });
 });
 

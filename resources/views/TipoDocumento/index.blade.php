@@ -57,7 +57,7 @@ use App\Enums\UnidadValidezEnum;
                                     <input class="form-control form-control-sm" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search">
                                 </div>
                                 <div class="col justify-content-end text-right">
-                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_tipo_documento">
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_create_tipo_documento">
                                         Crear <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
@@ -77,8 +77,7 @@ use App\Enums\UnidadValidezEnum;
                                 <th scope="col"></th>
                                 <th scope="col">Id</th>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Recurrente</th>
-                                <th scope="col">Constante</th>
+                                <th scope="col">Descripcion</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -92,8 +91,20 @@ use App\Enums\UnidadValidezEnum;
                                 </td>
                                 <td scope="row">{{$td->id}}</td>
                                 <td scope="row">{{$td->nombre}}</td>
-                                <td scope="row">{{$td->recurrente ? 'Verdadero' : 'Falso'}}</td>
-                                <td scope="row">{{$td->constante ? 'Verdadero' : 'Falso'}}</td>
+                                <td scope="row">{{$td->descripcion}}</td>
+                                @if($td->estado == 1)
+                                <td scope="row">
+                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoDoc({{$td->id}})">
+                                        Activo
+                                    </a>
+                                </td>
+                                @else
+                                <td scope="row">
+                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoDoc({{$td->id}})">
+                                        Inactivo
+                                    </a>
+                                </td>
+                                @endif
                                 <td scope="row">
                                     <a href="#" class="btn btn-info btn-sm" onclick="setDataToTipoDocumentoModal({{$td->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-eye"></i>
@@ -114,18 +125,17 @@ use App\Enums\UnidadValidezEnum;
             </div>
         </div>
     </div>
-
-
-    <x-guardar-tipo-documento modalTitle="Formulario de Tipos de documento" modalId="id_modal_tipo_documento" />
+    <x-guardar-tipo-documento modalTitle="Formulario de Tipos de documento" modalId="id_modal_create_tipo_documento" />
 
     <x-ver-tipo-documento modalTitle="Visualizador de Tipos de documento" modalId="id_modal_tipo_documento_viewer" />
-    @endsection
+@endsection
 
-    @push('js')
+@push('js')
     <script>
         var ruta_encontrar_tipo_documento = "{{route('tipo_documento.encontrar')}}";
         var ruta_editar_tipo_documento = "{{route('tipo_documento.actualizar')}}";
         var ruta_eliminar_tipo_documento = "{{route('tipo_documento.eliminar')}}";
+        var ruta_alternar_estado_tipodoc = "{{route('tipo_documento.toggle_tipodoc_state')}}";
 
         async function obtenerDataTipoDocumento(data) {
             const response = await fetch(ruta_encontrar_tipo_documento + "?id=" + data.id);
@@ -143,19 +153,8 @@ use App\Enums\UnidadValidezEnum;
 
                 document.getElementById("nombre_tipo_documento_modal_view_id").value = data.nombre;
                 document.getElementById("nombre_tipo_documento_modal_view_id").readOnly = true;
-                let recurrente = data.recurrente == 1 ? true : false;
-                let constante = data.constante == 1 ? true : false;
-                document.getElementById("recurrente_tipo_documento_modal_view_id").checked = recurrente;
-                document.getElementById("recurrente_tipo_documento_modal_view_id").disabled = true;
-
-                document.getElementById("constante_tipo_documento_modal_view_id").checked = constante;
-                document.getElementById("constante_tipo_documento_modal_view_id").disabled = true;
-
-                document.getElementById("validez_tipo_documento_modal_view_id").value = data.validez;
-                document.getElementById("validez_tipo_documento_modal_view_id").readOnly = true;
-
-                document.getElementById("unidad_validez_tipo_documento_modal_view_id").value = data.unidad_validez;
-                document.getElementById("unidad_validez_tipo_documento_modal_view_id").disabled = true;
+                document.getElementById("descripcion_tipo_documento_modal_view_id").value = data.descripcion;
+                document.getElementById("descripcion_tipo_documento_modal_view_id").disabled = true;
 
                 $('#id_modal_tipo_documento_viewer').modal('show');
             });
@@ -171,14 +170,9 @@ use App\Enums\UnidadValidezEnum;
                 console.log(data);
                 document.getElementById("id_tipo_documento_modal_create_id").value = data.id;
                 document.getElementById("nombre_tipo_documento_modal_create_id").value = data.nombre;
-                let recurrente = data.recurrente == 1 ? true : false;
-                let constante = data.constante == 1 ? true : false;
-                document.getElementById("recurrente_tipo_documento_modal_create_id").checked = recurrente;
-                document.getElementById("constante_tipo_documento_modal_create_id").checked = constante;
-                document.getElementById("validez_tipo_documento_modal_create_id").value = data.validez;
-                document.getElementById("unidad_validez_tipo_documento_modal_create_id").value = data.unidad_validez;
+                document.getElementById("descripcion_tipo_documento_modal_create_id").value = data.descripcion;
 
-                $('#id_modal_tipo_documento').modal('show');
+                $('#id_modal_create_tipo_documento').modal('show');
             });
         }
 
@@ -193,5 +187,17 @@ use App\Enums\UnidadValidezEnum;
                     location.reload();
                 });
         }
+
+        function toggleStateTipoDoc(idObjeto){
+            let objeto = {
+                id: idObjeto
+            }
+            postData(ruta_alternar_estado_tipodoc, objeto)
+            .then((data) => {
+                console.log(data);
+                location.reload();
+            });   
+        }
     </script>
-    @endpush
+
+ @endpush

@@ -25,4 +25,16 @@ class TipoDocumentoRepository extends BaseRepository{
     public function findByParams($params){
         
     }
+
+    public function toggleState($clienteId){
+        $cliente = $this->find($clienteId);
+        if($cliente->estado == 1){
+            $cliente->estado = 2;
+        }else{
+            $cliente->estado = 1;
+        }
+        
+        $cliente->save();
+        return $cliente;
+    }
 }
