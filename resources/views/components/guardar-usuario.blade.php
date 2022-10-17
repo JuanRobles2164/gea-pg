@@ -8,14 +8,14 @@
             <div class="form-group">
                 <label class="form-label" for="nombre_user_modal_create_id">Nombre completo:</label>
                 <br>
-                <input type="text" class="form-control form-control-alternative" id="nombre_user_modal_create_id" value="{{isset($modelo->id) ? $modelo->name : ''}}">
+                <input type="text" class="form-control form-control-alternative" id="nombre_user_modal_create_id" value="{{isset($model->id) ? $model->name : ''}}">
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label" for="email_user_modal_create_id">Email:</label>
                 <br>
-                <input type="email" class="form-control form-control-alternative" id="email_user_modal_create_id" value="{{isset($modelo->id) ? $modelo->email : ''}}">
+                <input type="email" class="form-control form-control-alternative" id="email_user_modal_create_id" value="{{isset($model->id) ? $model->email : ''}}">
             </div>
         </div>
 
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label class="form-label" for="identificacion_user_modal_create_id">Identificacion:</label>
                 <br>
-                <input type="text" class="form-control form-control-alternative" id="identificacion_user_modal_create_id" value="{{isset($modelo->id) ? $modelo->identificacion : ''}}">
+                <input type="text" class="form-control form-control-alternative" id="identificacion_user_modal_create_id" value="{{isset($model->id) ? $model->identificacion : ''}}">
             </div>
         </div>
     </div>

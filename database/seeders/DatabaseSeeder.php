@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             EstadoSeeder::class,
             UsersTableSeeder::class,
             RolSeeder::class,
+            CategoriaSeeder::class,
         ]);
     }
 }

@@ -1,4 +1,3 @@
-
 @extends('layouts.app', ['title' => __('Clientes')])
 
 @section('content')
@@ -220,4 +219,4 @@
         }
 
     </script>
-    @endpush
+@endpush
