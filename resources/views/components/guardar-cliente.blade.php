@@ -73,23 +73,14 @@
             tipo_identificacion: tipo_identificacion,
             telefono: telefono
         }
-        console.log(objeto);
+        
         if (id == undefined || id == null || id == '') {
             //si viene vacío, va a crear
             objeto.id = null;
             postData(ruta_crear, objeto)
                 .then((data) => {
                     alert("Cliente creado exitosamente!");
-                    nuevoObjetoCliente = {
-                        id: data.id,
-                        rsocial: data.razon_social,
-                        email: data.email,
-                        direccion: data.direccion,
-                        identificacion: data.identificacion,
-                        tident: data.tipo_identificacion,
-                        telefono: data.telefono
-                    };
-                    console.log(nuevoObjetoCliente);
+                    console.log(data);
                     location.reload();
                 });
         } else {
@@ -98,16 +89,7 @@
                 .then((data) => {
                     alert("Cliente editado exitosamente!");
                     console.log(data);
-                    nuevoObjetoCliente = {
-                        id: data.id,
-                        rsocial: data.rsocial,
-                        email: data.email,
-                        direccion: data.direccion,
-                        identificacion: data.identificacion,
-                        tident: data.tident,
-                        telefono: data.telefono
-                    };
-                    console.log(nuevoObjetoCliente);
+                    console.log(data);
                     location.reload();
                 });
         }
