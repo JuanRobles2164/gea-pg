@@ -21,7 +21,7 @@ class CreateClientesTable extends Migration
             $table->string("identificacion");
             $table->string("tipo_identificacion");
             $table->string("telefono");
-            $table->unsignedBigInteger("estado")->default('1');
+            $table->unsignedBigInteger('estado')->default(1);
             $table->timestamps();
         });
     }

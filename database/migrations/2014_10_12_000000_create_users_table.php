@@ -23,8 +23,6 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('estado')->default(1);
             $table->rememberToken();
             $table->timestamps();
-
-            $table->foreign('estado')->references('id')->on('estado');
         });
     }
 
