@@ -21,6 +21,7 @@ class CreateLicitacionsTable extends Migration
             $table->date("fecha_inicio");
             $table->date("fecha_fin")->nullable();
             $table->string("observacion")->nullable();
+
             $table->unsignedBigInteger("estado");
             $table->unsignedBigInteger("cliente");
             $table->unsignedBigInteger("tipo_licitacion");

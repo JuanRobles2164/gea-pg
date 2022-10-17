@@ -19,6 +19,7 @@ class CreateCategoriasTable extends Migration
             $table->string("descripcion");
             $table->string('css_style')->default('navajowhite');
             $table->unsignedBigInteger("estado");
+
             $table->timestamps();
         });
     }
