@@ -77,9 +77,11 @@ Route::name("rol.")->group(function(){
 Route::name("cliente.")->group(function(){
     Route::controller(ClienteController::class)->group(function(){
         Route::get('/cliente/listar', 'listar')->name("listar");
+        Route::get('/cliente/find', 'details')->name("encontrar");
         Route::post('/cliente/store', 'store')->name("guardar");
         Route::post('/cliente/update', 'update')->name("actualizar");
         Route::post('/cliente/destroy', 'destroy')->name("eliminar");
+        Route::post('/cliente/toggle_cliente_state', 'toggleClienteState')->name("toggle_cliente_state");
     });
 });
 

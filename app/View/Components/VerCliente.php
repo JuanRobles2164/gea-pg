@@ -16,7 +16,6 @@ class VerCliente extends Component
     public $modal_title, $modal_id;
     public $model_id;
     public $model;
-    public $estados_cliente;
     private $repo = null;
     public function __construct($modalTitle = 'Visualizador de Cliente', $modalId, $modelId = -1)
     {
@@ -27,10 +26,6 @@ class VerCliente extends Component
             $this->model = $this->repo->find($modelId);
             $this->repo = null;
         }
-
-        $this->repo = EstadoRepository::GetInstance();
-        $this->estados_cliente = $this->repo->getAll();
-        $this->repo = null;
     }
 
     /**

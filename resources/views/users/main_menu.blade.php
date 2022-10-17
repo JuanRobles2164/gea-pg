@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Tipos de documento')])
+@extends('layouts.app', ['title' => __('Usuarios')])
 
 
 @section('content')

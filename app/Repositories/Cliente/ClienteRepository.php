@@ -25,4 +25,19 @@ class ClienteRepository extends BaseRepository{
     public function findByParams($params){
         
     }
+
+    //Si es Activo (1), al restarle 3 quedará -2 (Inexistente)
+    //Y al aplicar Valor absoluto, quedará 2 (Inactivo)
+    //TREMENDO MINDFUCK HOLY SHIET :o
+    public function toggleState($clienteId){
+        $cliente = $this->find($clienteId);
+        if($cliente->estado == 1){
+            $cliente->estado = 2;
+        }else{
+            $cliente->estado = 1;
+        }
+        
+        $cliente->save();
+        return $cliente;
+    }
 }
