@@ -6,6 +6,7 @@ use App\Models\Licitacion;
 use App\Http\Requests\StoreLicitacionRequest;
 use App\Http\Requests\UpdateLicitacionRequest;
 use App\Repositories\Licitacion\LicitacionRepository;
+use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Illuminate\Http\Request;
 
 class LicitacionController extends Controller
@@ -79,9 +80,14 @@ class LicitacionController extends Controller
      * @param  \App\Models\Licitacion  $licitacion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Licitacion $licitacion)
+    public function edit(Request $request)
     {
-       //
+        $this->repo = LicitacionRepository::GetInstance();
+        $obj = $this->repo->find($request->id);
+        $this->repo = null;
+
+        $allData = ['licitacion' => $obj];
+        return view('Licitacion.edit', $allData);
     }
 
     /**

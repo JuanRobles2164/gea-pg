@@ -46,3 +46,21 @@ Route::name("tipo_documento.")->group(function(){
     });
 });
 
+
+Route::name("tipo_licitacion.")->group(function(){
+    Route::controller(TipoLicitacionController::class)->group(function(){
+        Route::get('/tipo_licitacion/index', 'index')->name("index");
+    });
+});
+
+Route::name("licitacion.")->group(function(){
+    Route::controller(CategoriaController::class)->group(function(){
+        Route::get('/licitacion/categorias', 'index')->name("categorias");
+    });
+    Route::controller(LicitacionController::class)->group(function(){
+        Route::get('/licitacion/index', 'index')->name("index");
+    });
+    Route::controller(LicitacionController::class)->group(function(){
+        Route::get('/licitacion/edit', 'edit')->name("edit");
+    });
+});

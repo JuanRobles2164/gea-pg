@@ -15,17 +15,20 @@ class CreateLicitacionsTable extends Migration
     {
         Schema::create('licitacion', function (Blueprint $table) {
             $table->id();
+            $table->string("numero");
             $table->string("nombre");
+            $table->string("descripcion");
             $table->date("fecha_inicio");
             $table->date("fecha_fin")->nullable();
-            $table->boolean("clonado");
-            $table->unsignedBigInteger("cliente");
+            $table->string("observacion")->nullable();
             $table->unsignedBigInteger("estado");
+            $table->unsignedBigInteger("cliente");
+            $table->unsignedBigInteger("tipo_licitacion");
             $table->unsignedBigInteger("categoria");
             $table->timestamps();
 
             $table->foreign('cliente')->references('id')->on('cliente');
-            $table->foreign('estado')->references('id')->on('estado');
+            $table->foreign('tipo_licitacion')->references('id')->on('tipo_licitacion');
             $table->foreign('categoria')->references('id')->on('categoria');
         });
     }
