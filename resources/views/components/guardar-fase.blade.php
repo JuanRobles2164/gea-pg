@@ -5,7 +5,7 @@
 <form>
     <input type="hidden" class="form-control form-control-alternative" name="id_fase_modal_create" id="id_fase_modal_create_id" value="{{isset($modelo->id) ? $modelo->id : '' }}">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="form-group">
                 <label for="nombre_fase_modal_create_id">Nombre:</label>
                 <input type="text" class="form-control form-control-alternative" id="nombre_fase_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre : '' }}">
@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <form>
                 <label class="form-label" for="descripcion_fase_modal_create_id">Descripción:</label>
                 <textarea class="form-control form-control-alternative" name="descripcion_fase_modal_create" id="descripcion_fase_modal_create_id" rows="5">{{isset($modelo->id) ? $modelo->descripcion : '' }}</textarea>
@@ -23,7 +23,7 @@
     <br>
     <div class="row">
         <div class="col-md-12">
-            <label for="unidad_validez_tipo_licitacion_modal_create_id">Seleccione el tipo de documento:</label>
+            <label for="tipo_documento_select_modal_create_id">Seleccione el tipo de documento:</label>
             <div class="custom-control custom-checkbox mb-3">
                 @foreach ($tipos_documento as $td)
                 <div class="row">
@@ -89,12 +89,23 @@
                     console.log(data);
                     alert("Fase editada exitosamente!");
                     objeto = data;
+                    limpiarForm{{$modal_id}}();
                 });
             }
             //Inserta las relaciones con el tipo de documento
             if(objeto.updated_at != undefined){
                 
             }
+        }
+        function limpiarForm{{$modal_id}}(){
+            document.getElementById("id_fase_modal_create_id").value = "";
+            document.getElementById("nombre_fase_modal_create_id").value = "";
+            document.getElementById("descripcion_fase_modal_create_id").value = "";
+
+            let tiposDocumentoNodeList = document.getElementsByName("tipo_documento_select_modal_create");
+            tiposDocumentoNodeList.forEach(element => {
+                element.checked = false;
+            });
         }
     </script>
 @endsection
