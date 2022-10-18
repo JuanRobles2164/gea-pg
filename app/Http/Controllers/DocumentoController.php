@@ -55,6 +55,11 @@ class DocumentoController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'data_file' => ['required'],
+            'tipo_documento' => ['required']
+        ]);
+
         $this->repo = DocumentoRepository::GetInstance();
         $data = $request->all();
         $this->repo->create($data);

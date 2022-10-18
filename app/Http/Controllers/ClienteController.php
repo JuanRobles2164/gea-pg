@@ -66,6 +66,14 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'razon_social' => ['required'],
+            'email' => ['required', 'email'],
+            'direccion' => ['required', 'string', 'max:80'],
+            'identificacion' => ['required', 'max:20'],
+            'tipo_identificacion' => 'required',
+            'telefono' => ['required']
+        ]);
         $this->repo = ClienteRepository::GetInstance();
         $data = $request->all();
         $data = $this->repo->create($data);
@@ -104,6 +112,15 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {
+        $validated = $request->validate([
+            'razon_social' => ['required'],
+            'email' => ['required', 'email'],
+            'direccion' => ['required', 'string', 'max:80'],
+            'identificacion' => ['required', 'max:20'],
+            'tipo_identificacion' => 'required',
+            'telefono' => ['required']
+        ]);
+
         $this->repo = ClienteRepository::GetInstance();
         $data = $request->all();
         $cliente = $this->repo->find($data["id"]);

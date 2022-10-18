@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class RolController extends Controller
 {
+    private $validationRules = [
+        'nombre' => 'required',
+        'descripcion' => 'required'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -47,6 +51,8 @@ class RolController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate($this->validationRules);
+
         $this->repo = RolRepository::GetInstance();
         $data = $request->all();
         $data = $this->repo->create($data);
@@ -85,6 +91,8 @@ class RolController extends Controller
      */
     public function update(Request $request, Rol $Rol)
     {
+        $request->validate($this->validationRules);
+        
         $this->repo = RolRepository::GetInstance();
         $data = $request->all();
         $Rol = $this->repo->find($data["id"]);

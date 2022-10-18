@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class FaseTipoDocumentoController extends Controller
 {
+    private $validationRules = [
+        'tipo_documento' => 'required',
+        'fase' => 'required'
+    ];
     private $repo = null;
     /**
      * Display a listing of the resource.
@@ -55,6 +59,7 @@ class FaseTipoDocumentoController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate($this->validationRules);
         $this->repo = FaseTipoDocumentoRepository::GetInstance();
         $data = $request->all();
         $data = $this->repo->create($data);
@@ -116,6 +121,7 @@ class FaseTipoDocumentoController extends Controller
      */
     public function update(Request $request, FaseTipoDocumento $faseTipoDocumento)
     {
+        $validated = $request->validate($this->validationRules);
         $this->repo = FaseTipoDocumentoRepository::GetInstance();
         $data = $request->all();
         $faseTipoDocumento = $this->repo->find($data["id"]);
