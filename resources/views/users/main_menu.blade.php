@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Tipos de documento')])
+@extends('layouts.app', ['title' => __('Usuarios')])
 
 
 @section('content')
@@ -196,12 +196,10 @@
                 document.getElementById("nombre_user_modal_create_id").value = userData.name;
                 document.getElementById("email_user_modal_create_id").value = userData.email;
 
-                var checkboxes = document.querySelectorAll('input[name="rolCheck"]');
-
                 data.roles.forEach(el => {
                     console.log(el);
                     if (el.activo == 1) {
-                        document.getElementById("rol" + el.rol).checked = true;
+                        document.getElementById("rolView" + el.rol).checked = true;
                     }
                 });
                 $('#id_modal_create_user').modal('show');

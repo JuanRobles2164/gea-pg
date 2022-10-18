@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\DocumentoPrincipalController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\FaseController;
 use App\Http\Controllers\FaseTipoDocumentoController;
@@ -30,6 +31,12 @@ use App\Models\FaseTipoLicitacion;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::name("documento_principal.")->group(function(){
+    Route::controller(DocumentoPrincipalController::class)->group(function(){
+        Route::post('/documento_principal/guardar_documento', 'guardarDocumento')->name("guardar_documento");
+    });
 });
 
 Route::name("fase_tipo_documento.")->group(function(){
@@ -77,9 +84,11 @@ Route::name("rol.")->group(function(){
 Route::name("cliente.")->group(function(){
     Route::controller(ClienteController::class)->group(function(){
         Route::get('/cliente/listar', 'listar')->name("listar");
+        Route::get('/cliente/find', 'details')->name("encontrar");
         Route::post('/cliente/store', 'store')->name("guardar");
         Route::post('/cliente/update', 'update')->name("actualizar");
         Route::post('/cliente/destroy', 'destroy')->name("eliminar");
+        Route::post('/cliente/toggle_cliente_state', 'toggleClienteState')->name("toggle_cliente_state");
     });
 });
 
@@ -173,6 +182,7 @@ Route::name("tipo_documento.")->group(function(){
         Route::post('/tipo_documento/store', 'store')->name("guardar");
         Route::post('/tipo_documento/update', 'update')->name("actualizar");
         Route::post('/tipo_documento/destroy', 'destroy')->name("eliminar");
+        Route::post('/tipo_documento/toggle_tipodoc_state', 'toggleTipoDocState')->name("toggle_tipodoc_state");
     });
 });
 

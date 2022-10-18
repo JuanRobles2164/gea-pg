@@ -16,10 +16,8 @@ class CreateTipoDocumentosTable extends Migration
         Schema::create('tipo_documento', function (Blueprint $table) {
             $table->id();
             $table->string("nombre");
-            $table->boolean("recurrente");
-            $table->boolean("constante");
-            $table->boolean("validez");
-            $table->boolean("unidad_validez");
+            $table->string("descripcion");
+            $table->unsignedBigInteger('estado')->default(1);
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\TipoDocumentoController;
 use App\Http\Controllers\TipoLicitacionController;
 use App\Http\Controllers\LicitacionController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\DocumentoPrincipalController;
 use App\Http\Controllers\UserController;
 use App\Repositories\Estado\EstadoRepository;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +56,13 @@ Route::name("estado.")->group(function(){
     });
 });
 
+Route::name("documento_principal.")->group(function(){
+    Route::controller(DocumentoPrincipalController::class)->group(function(){
+        Route::get('/documento_principal/index', 'index')->name("index");
+        Route::post('/documento_principal/guardar_documento', 'guardarDocumento')->name("guardar_documento_no_api");
+    });
+});
+
 
 Route::name("usuario.")->group(function(){
     Route::controller(UserController::class)->group(function(){
@@ -93,5 +101,8 @@ Route::name("licitacion.")->group(function(){
     });
     Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/index', 'index')->name("index");
+    });
+    Route::controller(LicitacionController::class)->group(function(){
+        Route::get('/licitacion/edit', 'edit')->name("edit");
     });
 });

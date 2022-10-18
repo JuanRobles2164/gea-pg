@@ -17,8 +17,7 @@ class CreateTipoLicitacionsTable extends Migration
             $table->id();
             $table->string("nombre");
             $table->string("descripcion");
-            $table->string("duracion");
-            $table->string("retencion");
+            $table->unsignedBigInteger('estado')->default(1);
             $table->timestamps();
         });
     }

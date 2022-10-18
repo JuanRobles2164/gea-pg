@@ -28,6 +28,13 @@ class EstadoSeeder extends Seeder
                 'descripcion' => 'Estado inactivo',
                 'updated_at' => now(),
                 'created_at' => now()
+            ],
+            [
+                'id' => 3,
+                'nombre' => 'Eliminado',
+                'descripcion' => 'Estado eliminado',
+                'updated_at' => now(),
+                'created_at' => now()
             ]
         ];
         DB::table('estado')

@@ -15,9 +15,9 @@ class CreateFaseTipoLicitacionsTable extends Migration
     {
         Schema::create('fase_tipo_licitacion', function (Blueprint $table) {
             $table->id();
+            $table->integer("orden");
             $table->unsignedBigInteger("fase");
             $table->unsignedBigInteger("tipo_licitacion");
-            $table->integer("prioridad");
             $table->timestamps();
 
             $table->foreign('fase')->references('id')->on('fase');

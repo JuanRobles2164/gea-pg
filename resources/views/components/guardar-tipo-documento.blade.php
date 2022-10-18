@@ -4,55 +4,15 @@
 <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
 <form>
     <input type="hidden" class="form-control form-control-alternative" name="id_cliente_modal_create" id="id_tipo_documento_modal_create_id" value="{{isset($modelo->id) ? $modelo->id : ''}}">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="nombre_tipo_documento_modal_create_id">Nombre:</label>
-                <input type="text" class="form-control form-control-alternative" id="nombre_tipo_documento_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre:''}}">
-            </div>
-        </div>
+    <div class="form-group">
+        <label for="nombre_tipo_documento_modal_create_id">Nombre:</label>
+        <input class="form-control form-control-alternative" id="nombre_tipo_documento_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre:''}}">
     </div>
-
-    <div class="row">
-        <class class="col-md-4">
-            <div class="custom-control custom-radio mb-3">
-                <input type="radio" class="custom-control-input" name="recurrente_constante_documento_modal_create" id="recurrente_tipo_documento_modal_create_id" value="Recurrente" {{(isset($model->id) && $model->recurrente) ? ' checked' : ''}}>
-                <label class="custom-control-label" for="recurrente_tipo_documento_modal_create_id">Recurrente</label>
-            </div>
-        </class>
-        <div class="col-md-4">
-            <div class="custom-control custom-radio mb-3">
-                <input type="radio" class="custom-control-input" name="recurrente_constante_documento_modal_create" id="constante_tipo_documento_modal_create_id" value="Constante" {{(isset($model->id) && $model->constante) ? ' checked' : ''}}>
-                <label class="custom-control-label" for="constante_tipo_documento_modal_create_id">Constante</label>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="validez_tipo_documento_modal_create_id">Validez:</label>
-                <input type="number" min="1" class="form-control form-control-alternative" id="validez_tipo_documento_modal_create_id" value="{{isset($modelo->id) ? $modelo->validez : ''}}">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="unidad_validez_tipo_documento_modal_create_id">Unidad Validez:</label>
-                <select class="form-control form-control-alternative" name="unidad_validez_tipo_documento_modal_create" id="unidad_validez_tipo_documento_modal_create_id">
-                    <option value="-1" disabled>Seleccione una opción...</option>
-                    <option value="1">Dias</option>
-                    <option value="2">Semanas</option>
-                    <option value="3">Meses</option>
-                    <option value="4">Años</option>
-                </select>
-            </div>
-        </div>
+    <div class="form-group">
+        <label for="descripcion_tipo_documento_modal_create_id">Descripcion:</label>
+        <textarea class="form-control form-control-alternative" id="descripcion_tipo_documento_modal_create_id" rows="3" value="{{isset($modelo->id) ? $modelo->descripcion:''}}"></textarea>
     </div>
 </form>
-<script>
-    let selectDetailsTemporal = document.getElementById("unidad_validez_tipo_documento_modal_create_id");
-    selectDetailsTemporal.value = "{{isset($model->id) ? $model->unidad_validez : '-1' }}";
-</script>
 @endsection
 
 @section('scripts-modal')
@@ -63,30 +23,17 @@
 
             let id = document.getElementById("id_tipo_documento_modal_create_id").value;
             let nombre = document.getElementById("nombre_tipo_documento_modal_create_id").value;
-            //Esto retornará un NodeList
-            let recurrente_constante_NodeList = document.getElementsByName("recurrente_constante_documento_modal_create");
-            let valorMarcado = "";
-            recurrente_constante_NodeList.forEach((rate) => {
-                if (rate.checked) {
-                    valorMarcado = rate.value;
-                }
-            });
+            let descripcion = document.getElementById("descripcion_tipo_documento_modal_create_id").value;
 
-            let recurrente = valorMarcado == "Recurrente" ? true : false;
-            let constante = valorMarcado == "Constante" ? true : false;
-            let validez = document.getElementById("validez_tipo_documento_modal_create_id").value;
-            let unidad_validez = document.getElementById("unidad_validez_tipo_documento_modal_create_id").value;
-
+            
             let objeto = {
                 id: id,
                 nombre: nombre,
-                recurrente: recurrente,
-                constante: constante,
-                validez: validez,
-                unidad_validez: unidad_validez
+                descripcion: descripcion
             }
+            console.log(ruta_crear, objeto)
             if(id == undefined || id == null || id == ''){
-                //si viene vacío, va a crear
+                //si viene vacÃ­o, va a crear
                 objeto.id = null;
                 postData(ruta_crear, objeto)
                 .then((data) => {

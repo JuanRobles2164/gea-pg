@@ -1,162 +1,222 @@
 @extends('layouts.app', ['title' => __('Clientes')])
 
-@section("content")
+@section('content')
 
 @include('layouts.headers.cards')
-<!-- Formulario para crear esas cosas xd -->
-<form>
-    <div class="container-fluid mt--7">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="razon_social_crear">Razon Social:</label>
-                    <input type="text" class="form-control form-control-alternative" name="razon_social" id="razon_social_crear">
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="identificacion_crear">Identificación:</label>
-                    <input type="number" class="form-control form-control-alternative" name="identificacion" id="identificacion_crear">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="tipo_identificacion_crear">Tipo Identificación:</label>
-                    <select class="form-control form-control-alternative" name="tipo_identificacion" id="tipo_identificacion_crear">
-                        <option disabled>Seleccione:</option>
-                        <option>xd</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="estado_crear">Estado:</label>
-                    <select class="form-control form-control-alternative" name="estado" id="estado_crear">
-                        <option value="-1" disabled>Seleccione: </option>
-                        @foreach ($estados as $e)
-                        <option value="{{$e->id}}">{{$e->nombre}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        </div>
-        <a href="#" class="btn btn-warning" onclick="crearCliente()">Crear</a>
-    </div>
-</form>
-<br>
-<div class="container-fluid">
-    <div class="col">
-        <div class="card shadow">
-            <div class="card-header border-0">
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <h3 class="mb-0">clientes</h3>
-                    </div>
-                    <div class="col">
-                        <div class="row align-items-center">
-                            <div class="col">
 
-                            </div>
-                            <div class="col-6 justify-content-end text-right">
-                                <input class="form-control form-control-sm" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search">
-                            </div>
-                            <div class="col justify-content-end text-right">
-                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_create_user">
-                                    Crear <i class="fas fa-plus"></i>
-                                </button>
+<div class="container-fluid mt--9">
+    @if(isset($info))
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>¡{{$info}}!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    @if(isset($success))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>¡{{$success}}!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    @if(isset($danger))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>¡{{$danger}}!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    @if(isset($warning))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>¡{{$warning}}!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Clientes</h3>
+                        </div>
+                        <div class="col">
+                            <div class="row align-items-center">
+                                <div class="col">
+                           
+                                </div>
+                                <div class="col-6 justify-content-end text-right">
+                                    <input class="form-control form-control-sm" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search">
+                                </div>
+                                <div class="col justify-content-end text-right">
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_create_cliente">
+                                        Crear <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="table-responsive">
-                <table class="table align-items-center">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Id</th>
-                            <th scope="col">Razon social</th>
-                            <th scope="col">Identificación</th>
-                            <th scope="col">Tipo Identificación</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($clientes as $c)
-                        <tr>
-                            <td scope="row">
-                                <div class="media align-items-cente">
-                                    <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-                                </div>
-                            </td>
-                            <td scope="row">
-                                <div class="media align-items-center">
-                                    {{$c->id}}
-                                </div>
-                            </td>
-                            <td scope="row">
-                                <div class="media align-items-center">
-                                    {{$c->razon_social}}
-                                </div>
-                            </td>
-                            <td scope="row">
-                                <div class="media align-items-center">
-                                    {{$c->tipo_identificacion}}
-                                </div>
-                            </td>
-                            <td scope="row">
-                                <div class="media align-items-center">
-                                    {{$c->estado}}
-                                </div>
-                            </td>
-                            <td scope="row">
-                                <div class="media align-items-center">
-                                    <a href="#" class="btn btn-secondary btn-sm">Cambiar estado</a>
-                                </div>
-                            </td>
-                            <td scope="row">
-                                <div class="media align-items-center">
-                                    <a href="#" class="btn btn-info btn-sm"><i class="far fa-eye"></i></a>
-                                    <a href="#" class="btn btn-default btn-sm"><i class="fas fa-edit"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+
+                <div class="col-12">
+
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table align-items-center">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Id</th>
+                                <th scope="col">Razon Social</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Identificacion</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($clientes as $cli)
+                            <tr>
+                                <td scope="row">
+                                    <a href="#" class="btn btn-danger btn-sm" onclick="eliminarObjetoClienteModalEdit({{$cli->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                                <td scope="row">{{$cli->id}}</td>
+                                <td scope="row">{{$cli->razon_social}}</td>
+                                <td scope="row">{{$cli->email}}</td>
+                                <td scope="row">{{$cli->identificacion}}</td>
+                                @if($cli->estado == 1)
+                                <td scope="row">
+                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateCliente({{$cli->id}})">
+                                        Activo
+                                    </a>
+                                </td>
+                                @else
+                                <td scope="row">
+                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateCliente({{$cli->id}})">
+                                        Inactivo
+                                    </a>
+                                </td>
+                                @endif
+                                <td scope="row">
+                                    <a href="#" class="btn btn-info btn-sm" onclick="setDataToClienteModal({{$cli->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-default btn-sm" onclick="setDataToClienteModalEdit({{$cli->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-user-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 <div class="card-footer py-3">
-                    {{ $clientes->links('components.paginador') }}
+                    <!--paginacion-->
+                    {{$clientes->links('components.paginador')}}
                 </div>
             </div>
         </div>
     </div>
-</div>
-@endsection
 
-@push('js')
-<script>
-    //Lo correcto es adjuntar mejor un JS que contenga todo, pero lo haremos así mientras xd nada más por el ejemplo
-    //Si el JavaScript adjunto requiere renderizar cositas de blade, este debe guardarse como "archivo.blade.js"
-    function crearCliente() {
-        let razon_social = document.getElementById("razon_social_crear").value;
-        let identificacion = document.getElementById("identificacion_crear").value;
-        let tipo_identificacion = document.getElementById("tipo_identificacion_crear").value;
-        let estado = document.getElementById("estado_crear").value;
+    <x-guardar-cliente modalId="id_modal_create_cliente" modalTitle="Formulario de clientes" />
+    <x-ver-cliente modalId="id_modal_view_cliente" modalTitle="Ver cliente" />
+    @endsection
 
-        let data = {
-            razon_social: razon_social,
-            identificacion: identificacion,
-            tipo_identificacion: tipo_identificacion,
-            estado: estado
+
+
+    @push('js')
+    <script>
+        var ruta_encontrar_cliente = "{{route('cliente.encontrar')}}";
+        var ruta_editar_cliente = "{{route('cliente.actualizar')}}";
+        var ruta_eliminar_cliente = "{{route('cliente.eliminar')}}";
+        var ruta_alternar_estado_cliente = "{{route('cliente.toggle_cliente_state')}}";
+
+        async function obtenerDataCliente(data) {
+            const response = await fetch(ruta_encontrar_cliente + "?id=" + data.id);
+            return await response.json();
         }
-        postData('{{route("cliente.guardar")}}', data)
+
+        function setDataToClienteModal(idObjeto) {
+            let objeto = {
+                id: idObjeto
+            };
+            dataToSet = obtenerDataCliente(objeto);
+            dataToSet.then((data) => {
+                console.log(data);
+
+                let clienteData = data.cliente;
+                document.getElementById("rsocial_cliente_modal_view_id").value = clienteData.razon_social;
+                document.getElementById("rsocial_cliente_modal_view_id").readOnly = true;
+
+                document.getElementById("email_cliente_modal_view_id").value = clienteData.email;
+                document.getElementById("email_cliente_modal_view_id").readOnly = true;
+
+                document.getElementById("direccion_cliente_modal_view_id").value = clienteData.direccion;
+                document.getElementById("direccion_cliente_modal_view_id").readOnly = true;
+
+                document.getElementById("identificacion_cliente_modal_view_id").value = clienteData.identificacion;
+                document.getElementById("identificacion_cliente_modal_view_id").readOnly = true;
+
+                document.getElementById("tident_cliente_modal_view_id").value = clienteData.tipo_identificacion;
+                document.getElementById("tident_cliente_modal_view_id").readOnly = true;
+
+                document.getElementById("telefono_cliente_modal_view_id").value = clienteData.telefono;
+                document.getElementById("telefono_cliente_modal_view_id").readOnly = true;
+
+                $('#id_modal_view_cliente').modal('show');
+            });
+        }
+
+        function setDataToClienteModalEdit(idObjeto) {
+            let objeto = {
+                id: idObjeto
+            };
+            dataToSet = obtenerDataCliente(objeto);
+            dataToSet.then((data) => {
+                let clienteData = data.cliente;
+
+                document.getElementById("id_cliente_modal_create_id").value = clienteData.id;
+                document.getElementById("rsocial_cliente_modal_create_id").value = clienteData.razon_social;
+                document.getElementById("email_cliente_modal_create_id").value = clienteData.email;
+                document.getElementById("direccion_cliente_modal_create_id").value = clienteData.direccion;
+                document.getElementById("identificacion_cliente_modal_create_id").value = clienteData.identificacion;
+                document.getElementById("tident_cliente_modal_create_id").value = clienteData.tipo_identificacion;
+                document.getElementById("telefono_cliente_modal_create_id").value = clienteData.telefono;
+
+                $('#id_modal_create_cliente').modal('show');
+            });
+        }
+
+        function eliminarObjetoClienteModalEdit(idObjeto) {
+            let data = {
+                id: idObjeto
+            }
+            postData(ruta_eliminar_cliente, data)
+                .then((data) => {
+                    console.log(data);
+                    alert("Cliente eliminada exitosamente!");
+                    location.reload();
+                });
+        }
+
+        function toggleStateCliente(idObjeto){
+            let objeto = {
+                id: idObjeto
+            }
+            postData(ruta_alternar_estado_cliente, objeto)
             .then((data) => {
                 console.log(data);
-                alert("Cliente creado exitosamente!");
-            });
-    }
-</script>
+                location.reload();
+            });   
+        }
+
+    </script>
 @endpush

@@ -42,6 +42,24 @@
                 return response.json(); // Convierte la respuesta del servidor en un objeto JSON
             }
 
+            async function postDataFiles(url = '', data) {
+            // Esta función en realidad es genérica, sirve para cualquier método que requiera hacer alguna petición al servidor
+            const response = await fetch(url, {
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    mode: 'cors', // no-cors, *cors, same-origin
+                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: 'same-origin', // include, *same-origin, omit
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'X-CSRF-TOKEN': csrf_token
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    body: data
+                });
+                return response.json(); // Convierte la respuesta del servidor en un objeto JSON
+            }
+
             async function getData(url = '', data = {}) {
             // Esta función en realidad es genérica, sirve para cualquier método que requiera hacer alguna petición al servidor
             const response = await fetch(url, {

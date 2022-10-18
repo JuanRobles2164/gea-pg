@@ -15,10 +15,15 @@ class CreateDocumentosTable extends Migration
     {
         Schema::create('documento', function (Blueprint $table) {
             $table->id();
+            $table->string("numero");
             $table->string("nombre");
+            $table->string("descripcion")->nullable();
+            $table->boolean("recurrente")->nullable();
+            $table->boolean("constante")->nullable();
+            $table->date("fecha_vencimiento")->nullable();
             $table->binary("data_file")->nullable();
-            $table->string("data_json")->nullable();
             $table->string("path_file")->nullable();
+            $table->unsignedBigInteger('estado')->default(1);
             $table->unsignedBigInteger("tipo_documento");
             $table->timestamps();
 
@@ -33,6 +38,6 @@ class CreateDocumentosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documentos');
+        Schema::dropIfExists('documento');
     }
 }

@@ -65,13 +65,20 @@ class FaseTipoDocumentoController extends Controller
     public function storeAll(Request $request){
         //Setea el array
         $this->repo = FaseTipoDocumentoRepository::GetInstance();
-
         $fase_tipo_documentos = $request->fase_tipo_documentos;
         $allResponse = [];
-        for($i = 0; $i < count($fase_tipo_documentos); $i++){
+        if(is_array($fase_tipo_documentos)){
+            for($i = 0; $i < count($fase_tipo_documentos); $i++){
+                $data = [
+                    'tipo_documento' => $fase_tipo_documentos[$i],
+                    'fase' => $request->id
+                ];
+                array_push($allResponse, $this->repo->create($data));
+            }
+        }else{
             $data = [
-                'tipo_documento' => $fase_tipo_documentos->tipo_documento,
-                'fase' => $fase_tipo_documentos->fase
+                'tipo_documento' => $fase_tipo_documentos,
+                'fase' => $request->id
             ];
             array_push($allResponse, $this->repo->create($data));
         }
