@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 class EstadoController extends Controller
 {
     private $repo = null;
+    private $validationRules = [
+        'nombre' => 'required',
+        'descripcion' => ['required', 'max:50']
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -60,6 +65,7 @@ class EstadoController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate($this->validationRules);
         $this->repo = EstadoRepository::GetInstance();
         $data = $request->all();
         $data =  $this->repo->create($data);
@@ -98,6 +104,7 @@ class EstadoController extends Controller
      */
     public function update(Request $request, Estado $estado)
     {
+        $validated = $request->validate($this->validationRules);
         $this->repo = EstadoRepository::GetInstance();
         $data = $request->all();
         $estado = $this->repo->find($data["id"]);

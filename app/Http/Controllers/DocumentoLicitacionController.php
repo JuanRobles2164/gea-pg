@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class DocumentoLicitacionController extends Controller
 {
+    private $validationRules = [
+        'documento' => 'required',
+        'licitacion_fase' => 'required',
+        'clonado' => 'required'
+    ];
    private $repo = null;
     /**
      * Display a listing of the resource.
@@ -56,6 +61,7 @@ class DocumentoLicitacionController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate($this->validationRules);
         $this->repo = DocumentoLicitacionRepository::GetInstance();
         $data = $request->all();
         $data = $this->repo->create($data);
@@ -94,6 +100,7 @@ class DocumentoLicitacionController extends Controller
      */
     public function update(Request $request, DocumentoLicitacion $documentoLicitacion)
     {
+        $validated = $request->validate($this->validationRules);
         $this->repo = DocumentoLicitacionRepository::GetInstance();
         $data = $request->all();
         $documentoLicitacion = $this->repo->find($data["id"]);

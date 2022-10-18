@@ -81,7 +81,9 @@
                 .then((data) => {
                     alert("Cliente creado exitosamente!");
                     console.log(data);
-                    location.reload();
+                    //location.reload();
+                }).catch((error) => {
+                    
                 });
         } else {
             //Si viene con id, va a editar
