@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Rule;
 use App\Models\User;
 use App\Repositories\RolUsuario\RolUsuarioRepository;
 use App\Repositories\User\UserRepository;
@@ -75,6 +76,15 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => [
+                'required', 'min:3'
+            ],
+            'email' => [
+                'required', 'email', 'unique:users'
+            ],
+            'identificacion' => 'required'
+        ]);
         $this->repo = UserRepository::GetInstance();
         $data = $request->all();
         $data["password"] = Hash::make($data["password"]);

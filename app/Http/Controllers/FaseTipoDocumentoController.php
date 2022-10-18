@@ -77,8 +77,8 @@ class FaseTipoDocumentoController extends Controller
             }
         }else{
             $data = [
-                'tipo_documento' => $fase_tipo_documentos->tipo_documento,
-                'fase' => $fase_tipo_documentos->fase
+                'tipo_documento' => $fase_tipo_documentos,
+                'fase' => $request->id
             ];
             array_push($allResponse, $this->repo->create($data));
         }
