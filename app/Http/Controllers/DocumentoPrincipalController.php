@@ -9,7 +9,11 @@ use Illuminate\Http\Request;
 
 class DocumentoPrincipalController extends Controller
 {
-
+    private $validationRules = [
+        'data_file' => 'required',
+        'tipo_documento_recurrente_constante_check' => 'required',
+        'fecha_vende' => ['required', 'date']
+    ];
     public function index(){
         $this->repo = TipoDocumentoRepository::GetInstance();
         $tipos_documento = $this->repo->getAll();
@@ -19,6 +23,7 @@ class DocumentoPrincipalController extends Controller
         return view('DocumentosPrincipales.index', $allData);
     }
     public function guardarDocumento(Request $request){
+        $validated = $request->validate($this->validationRules);
         //Primero guarda el documento y luego intentará guardad la entidad
         $nombreArchivoOriginal = $request->file('data_file')->getClientOriginalName();
         $path_file = $request->file('data_file')->store('documentos_principales');

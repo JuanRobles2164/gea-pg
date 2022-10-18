@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class TipoLicitacionController extends Controller
 {
+    private $validationRules = [
+        'nombre' => 'required',
+        'descripcion' => 'required',
+    ];
     private $repo = null;
     /**
      * Display a listing of the resource.
@@ -61,6 +65,7 @@ class TipoLicitacionController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->validationRules);
         $this->repo = TipoLicitacionRepository::GetInstance();
         $data = $request->all();
         $data = $this->repo->create($data);
@@ -99,6 +104,7 @@ class TipoLicitacionController extends Controller
      */
     public function update(Request $request, TipoLicitacion $tipoLicitacion)
     {
+        $request->validate($this->validationRules);
         $this->repo = TipoLicitacionRepository::GetInstance();
         $data = $request->all();
         $tipoLicitacion = $this->repo->find($data["id"]);

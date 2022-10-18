@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class TipoDocumentoController extends Controller
 {
+    private $validationRules = [
+        'nombre' => 'required',
+        'descripcion' => 'required'
+    ];
     private $repo = null;
     /**
      * Display a listing of the resource.
@@ -65,6 +69,7 @@ class TipoDocumentoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->validationRules);
         $this->repo = TipoDocumentoRepository::GetInstance();
         $data = $request->all();
         $data = $this->repo->create($data);
@@ -95,6 +100,7 @@ class TipoDocumentoController extends Controller
     }
 
     public function toggleTipoDocState(Request $request){
+        $request->validate($this->validationRules);
         $this->repo = TipoDocumentoRepository::GetInstance();
         $cliente = $this->repo->toggleState($request->id);
         $this->repo = null;

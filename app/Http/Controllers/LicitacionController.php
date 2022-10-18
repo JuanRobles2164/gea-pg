@@ -13,6 +13,16 @@ use Illuminate\Http\Request;
 
 class LicitacionController extends Controller
 {
+    private $validationRules = [
+        'numero' => 'required',
+        'nombre' => 'required',
+        'descripcion' => 'required',
+        'fecha_inicio' => ['required', 'date'],
+        'fecha_fin' => ['required', 'date'],
+        'cliente' => 'required',
+        'tipo_licitacion' => 'required',
+        'categoria' => 'required'
+    ];
     private $repo = null;
     /**
      * Display a listing of the resource.
@@ -62,6 +72,7 @@ class LicitacionController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate($this->validationRules);
         $this->repo = CategoriaRepository::GetInstance();
         //Intentará buscar primero un registro de Categoria que concuerde con el nombre, si no lo encuentra, lo creará
         $categoria = $this->repo->firstOrCreate([
@@ -114,6 +125,8 @@ class LicitacionController extends Controller
      */
     public function update(Request $request, Licitacion $licitacion)
     {
+        $validated = $request->validate($this->validationRules);
+        
         $this->repo = LicitacionRepository::GetInstance();
         $data = $request->all();
         $licitacion = $this->repo->find($data["id"]);
