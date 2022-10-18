@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArchivoController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\DocumentoPrincipalController;
@@ -194,3 +195,12 @@ Route::name("tipo_licitacion.")->group(function(){
     });
 });
 
+Route::name("categoria.")->group(function(){
+    Route::controller(CategoriaController::class)->group(function(){
+        Route::get('/categoria/listar', 'listar')->name("listar");
+        Route::get('/categoria/find', 'details')->name("encontrar");
+        Route::post('/categoria/store', 'store')->name("guardar");
+        Route::post('/categoria/update', 'update')->name("actualizar");
+        Route::post('/categoria/destroy', 'destroy')->name("eliminar");
+    });
+});
