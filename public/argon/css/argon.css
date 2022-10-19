@@ -8049,7 +8049,7 @@ button.bg-dark:focus
 
 .bg-default
 {
-    background-color: #172b4d !important;
+    background-color: #f7fafc !important;
 }
 
 a.bg-default:hover,
@@ -15124,7 +15124,12 @@ button.bg-lighter:focus
 
 .bg-gradient-primary
 {
-    background: linear-gradient(87deg, #e47c5d 0, #ffa084 100%) !important;
+    background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
+}
+
+.bg-gradient-login
+{
+    background: linear-gradient(87deg, #172b4d 0, #f7fafc 100%) !important;
 }
 
 .bg-gradient-secondary
@@ -15480,7 +15485,12 @@ button.section-darker:focus
 
 .bg-gradient-primary
 {
-    background: linear-gradient(87deg, #e47c5d 0, #ffa084 100%) !important;
+    background: linear-gradient(195deg, #172b4d 0, #f7fafc 200%) !important;
+}
+
+.bg-gradient-login
+{
+    background: linear-gradient(87deg, #172b4d 0, #f7fafc 100%) !important
 }
 
 .bg-gradient-secondary
@@ -15620,12 +15630,12 @@ button.section-darker:focus
 
 .fill-default
 {
-    fill: #172b4d;
+    fill: #f7fafc;
 }
 
 .stroke-default
 {
-    stroke: #172b4d;
+    stroke: #f7fafc;
 }
 
 .fill-white
@@ -21944,4 +21954,11 @@ html:not([dir='rtl']) .noUi-horizontal .noUi-handle
     bottom: 0; 
 
     height: 3px;
+}
+
+footer.py-5 {
+    background: #f7fafc;
+}
+footer.footer.pt-0 {
+    background: #f7fafc;
 }
