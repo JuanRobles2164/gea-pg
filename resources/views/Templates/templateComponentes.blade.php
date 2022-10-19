@@ -11,7 +11,7 @@
           @yield('modal-content')
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="{{$modal_id}}Limpiar()">Cerrar</button>
           <a href="#" class="btn btn-primary" onclick="{{$modal_id}}Crear()">Guardar</a>
         </div>
       </div>

@@ -105,4 +105,7 @@ Route::name("licitacion.")->group(function(){
     Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/edit', 'edit')->name("edit");
     });
+    Route::controller(LicitacionController::class)->group(function(){
+        Route::get('/licitacion/create', 'create')->name("create");
+    });
 });
