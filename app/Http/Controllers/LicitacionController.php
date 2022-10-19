@@ -7,24 +7,41 @@ use App\Http\Requests\StoreLicitacionRequest;
 use App\Http\Requests\UpdateLicitacionRequest;
 use App\Repositories\Categoria\CategoriaRepository;
 use App\Repositories\Cliente\ClienteRepository;
+use App\Repositories\Fase\FaseRepository;
 use App\Repositories\Licitacion\LicitacionRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Illuminate\Http\Request;
 
 class LicitacionController extends Controller
 {
+    private $validationRules = [
+        'numero' => 'required',
+        'nombre' => 'required',
+        'descripcion' => 'required',
+        'fecha_inicio' => ['required', 'date'],
+        'fecha_fin' => ['required', 'date'],
+        'cliente' => 'required',
+        'tipo_licitacion' => 'required',
+        'categoria' => 'required'
+    ];
     private $repo = null;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->repo = LicitacionRepository::GetInstance();
-        $lista = $this->repo->getAll();
+        $lista = null;
+        if(isset($request->categoria)){
+            $lista = $this->repo->getAllEstadosCategoria($request->categoria);
+            $allData = ['licitaciones' => $lista, 'categoria' => $request->categoria];
+        }else{
+            $lista = $this->repo->getAllEstado();
+            $allData = ['licitaciones' => $lista];
+        }
         $this->repo = null;
-        $allData = ['licitaciones' => $lista];
         return view('Licitacion.index', $allData);
     }
 
@@ -51,7 +68,18 @@ class LicitacionController extends Controller
      */
     public function create()
     {
-        //
+        $this->repo = ClienteRepository::GetInstance();
+        $listaClientes = $this->repo->getAllActivos();
+        $this->repo = null;
+        $this->repo = TipoLicitacionRepository::GetInstance();
+        $listaTiposLicitaciones = $this->repo->getAllActivos();
+        $this->repo = null;
+        $this->repo = CategoriaRepository::GetInstance();
+        $listaCategorias = $this->repo->getAllActivos();
+        $allData = ['clientes' => $listaClientes, 
+        'tiposLics' => $listaTiposLicitaciones, 
+        'categorias' => $listaCategorias];
+        return view('Licitacion.crear', $allData);
     }
 
     /**
@@ -62,6 +90,7 @@ class LicitacionController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate($this->validationRules);
         $this->repo = CategoriaRepository::GetInstance();
         //Intentará buscar primero un registro de Categoria que concuerde con el nombre, si no lo encuentra, lo creará
         $categoria = $this->repo->firstOrCreate([
@@ -101,7 +130,10 @@ class LicitacionController extends Controller
         $obj = $this->repo->find($request->id);
         $this->repo = null;
 
-        $allData = ['licitacion' => $obj];
+        $this->repo = FaseRepository::GetInstance();
+        $fases = $this->repo->findByParams($request->tipo_licitacion);
+
+        $allData = ['licitacion' => $obj, 'fases' => $fases];
         return view('Licitacion.edit', $allData);
     }
 
@@ -114,6 +146,8 @@ class LicitacionController extends Controller
      */
     public function update(Request $request, Licitacion $licitacion)
     {
+        $validated = $request->validate($this->validationRules);
+        
         $this->repo = LicitacionRepository::GetInstance();
         $data = $request->all();
         $licitacion = $this->repo->find($data["id"]);

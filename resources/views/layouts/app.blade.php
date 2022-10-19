@@ -31,6 +31,7 @@
                     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                     credentials: 'same-origin', // include, *same-origin, omit
                     headers: {
+                        'Accept': 'application/json',
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': csrf_token
                         // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -105,6 +106,8 @@
         @stack('js')
         
         <!-- Argon JS -->
+        <script src="{{ asset('argon') }}/vendor/js-cookie/js.cookie.js"></script>
+        <script src="{{ asset('argon') }}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
         <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
     </body>
 </html>

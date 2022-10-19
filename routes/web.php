@@ -58,7 +58,7 @@ Route::name("estado.")->group(function(){
 
 Route::name("documento_principal.")->group(function(){
     Route::controller(DocumentoPrincipalController::class)->group(function(){
-        Route::get('/documento_principal/index', 'index')->name("index");
+        Route::get('/documento_principal/crear', 'index')->name("crear");
         Route::post('/documento_principal/guardar_documento', 'guardarDocumento')->name("guardar_documento_no_api");
     });
 });
@@ -104,5 +104,8 @@ Route::name("licitacion.")->group(function(){
     });
     Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/edit', 'edit')->name("edit");
+    });
+    Route::controller(LicitacionController::class)->group(function(){
+        Route::get('/licitacion/create', 'create')->name("create");
     });
 });

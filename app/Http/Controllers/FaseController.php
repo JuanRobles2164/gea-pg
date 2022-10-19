@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class FaseController extends Controller
 {
+    private $validationRules = [
+        'nombre' => 'required',
+        'descripcion' => ['required', 'max:200']
+    ];
     private $repo = null;
     /**
      * Display a listing of the resource.
@@ -60,6 +64,7 @@ class FaseController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate($this->validationRules);
         $this->repo = FaseRepository::GetInstance();
         $data = $request->all();
         $data = $this->repo->create($data);
@@ -98,6 +103,7 @@ class FaseController extends Controller
      */
     public function update(Request $request, Fase $fase)
     {
+        $validated = $request->validate($this->validationRules);
         $this->repo = FaseRepository::GetInstance();
         $data = $request->all();
         $fase = $this->repo->find($data["id"]);
