@@ -2,10 +2,10 @@
 
 @section('modal-content')
 <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
-<input type="hidden" class="form-control form-control-alternative" name="id_cliente_modal_create" id="id_tipo_licitacion_modal_create_id">
+<input type="hidden" class="form-control form-control-alternative" name="id_tipo_licitacion_modal_create" id="id_tipo_licitacion_modal_create_id">
 <form action="">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label" for="nombre_tipo_licitacion_modal_create_id">Nombre:</label>
                 <br>
@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <form>
                 <label class="form-label" for="descripcion_tipo_licitacion_modal_create_id">Descripción:</label>
                 <textarea name="" class="form-control form-control-alternative" id="descripcion_tipo_licitacion_modal_create_id" rows="5"></textarea>
@@ -22,20 +22,6 @@
         </div>
     </div>
     <br>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label" for="duracion_tipo_licitacion_modal_create_id">Duración:</label>
-                <input type="text" class="form-control form-control-alternative" id="duracion_tipo_licitacion_modal_create_id">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label" for="retencion_tipo_licitacion_modal_create_id">Retención:</label>
-                <input type="text" class="form-control form-control-alternative" id="retencion_tipo_licitacion_modal_create_id">
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-12">
             <label for="unidad_validez_tipo_licitacion_modal_create_id">Seleccione las Fases a asociar:</label>
@@ -116,18 +102,14 @@
             let id = document.getElementById("id_tipo_licitacion_modal_create_id").value;
             let nombre = document.getElementById("nombre_tipo_licitacion_modal_create_id").value;
             //Esto retornará un NodeList
-            let descripcion = document.getElementById("descripcion_tipo_licitacion_modal_create_id");
-            let duracion = document.getElementById("duracion_tipo_licitacion_modal_create_id");
-            let retencion = document.getElementById("retencion_tipo_licitacion_modal_create_id").value;
+            let descripcion = document.getElementById("descripcion_tipo_licitacion_modal_create_id").value;
             let fasesSelected = FasesSeleccionadasModalCreate;
             
 
             let objeto = {
                 id: id,
                 nombre: nombre,
-                descripcion: descripcion,
-                duracion: duracion,
-                retencion: retencion
+                descripcion: descripcion
             }
             if(id == undefined || id == null || id == ''){
                 //si viene vacío, va a crear
@@ -136,6 +118,7 @@
                 .then((data) => {
                     console.log(data);
                     alert("Tipo de licitacion creado exitosamente!");
+                    location.reload();
                 });
             }else{
                 //Si viene con id, va a editar
@@ -143,8 +126,17 @@
                 .then((data) => {
                     console.log(data);
                     alert("Tipo de licitacion editado exitosamente!");
+                    objeto = data;
+                    limpiarForm{{$modal_id}}();
+                    location.reload();
                 });
             }
+        }
+        function limpiarForm{{$modal_id}}(){
+            document.getElementById("id_tipo_licitacion_modal_create_id").value = "";
+            document.getElementById("nombre_tipo_licitacion_modal_create_id").value = "";
+            document.getElementById("descripcion_tipo_licitacion_modal_create_id").value = "";
+
         }
     </script>
 @endsection
