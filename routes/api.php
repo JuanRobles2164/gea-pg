@@ -104,6 +104,7 @@ Route::name("documento.")->group(function(){
 Route::name("tipo_licitacion.")->group(function(){
     Route::controller(TipoLicitacionController::class)->group(function(){
         Route::get('/tipo_licitacion/listar', 'listar')->name("listar");
+        Route::get('/tipo_licitacion/find', 'details')->name("encontrar");
         Route::post('/tipo_licitacion/store', 'store')->name("guardar");
         Route::post('/tipo_licitacion/update', 'update')->name("actualizar");
         Route::post('/tipo_licitacion/destroy', 'destroy')->name("eliminar");
