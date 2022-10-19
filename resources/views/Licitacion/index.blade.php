@@ -53,9 +53,9 @@
                                     <input class="form-control form-control-sm" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search">
                                 </div>
                                 <div class="col justify-content-end text-right">
-                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#">
+                                    <!-- <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#">
                                         Crear <i class="fas fa-plus"></i>
-                                    </button>
+                                    </button> -->
                                 </div>
                             </div>
                         </div>
@@ -77,6 +77,12 @@
                                 <th scope="col">Fecha de inicio</th>
                                 <th scope="col">Fecha de fin</th>
                                 <th scope="col">Cliente</th>
+                                <th scope="col">Tipo Licitacion</th>
+                                @if(isset($categoria))
+                                
+                                @else
+                                <th scope="col">Categoria</th>
+                                @endif
                                 <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
@@ -91,11 +97,33 @@
                                 </td>
                                 <td scope="row">{{$lic->id}}</td>
                                 <td scope="row">{{$lic->numero}}</td>
+                                <td scope="row">{{$lic->nombre}}</td>
                                 <td scope="row">{{$lic->fecha_inicio}}</td>
                                 <td scope="row">{{$lic->fecha_fin}}</td>
                                 <td scope="row">{{$lic->cliente}}</td>
-                                <td scope="row">{{$lic->estado}}</td>
+                                <td scope="row">{{$lic->tipo_licitacion}}</td>
+                                @if(isset($categoria))
+                                
+                                @else
+                                <td scope="row">{{$lic->categoria}}</td>
+                                @endif
+                                @if($lic->estado == 1)
                                 <td scope="row">
+                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="">
+                                        Activo
+                                    </a>
+                                </td>
+                                @else
+                                <td scope="row">
+                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="">
+                                        Inactivo
+                                    </a>
+                                </td>
+                                @endif
+                                <td scope="row">
+                                    <a href="#" class="btn btn-primary btn-sm" onclick="" title="Clonar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </a>
                                     <a href="#" class="btn btn-info btn-sm" onclick="" title="Ver" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-eye"></i>
                                     </a>
