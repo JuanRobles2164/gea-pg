@@ -7,7 +7,7 @@ use App\Enums\UnidadValidezEnum;
 
 @include('layouts.headers.cards')
 
-<div class="container-fluid mt--9">
+<div class="container-fluid mt--0">
     @if(isset($info))
     <div class="alert alert-info alert-dismissible fade show" role="alert">
         <strong>¡{{$info}}!</strong>
@@ -78,6 +78,7 @@ use App\Enums\UnidadValidezEnum;
                                 <th scope="col">Id</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Descripcion</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>

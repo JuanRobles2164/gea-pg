@@ -3,7 +3,7 @@
 @section('content')
 
 @include('layouts.headers.cards')
-<div class="container-fluid mt--9">
+<div class="container-fluid mt--0">
     @if(isset($info))
     <div class="alert alert-info alert-dismissible fade show" role="alert">
         <strong>¡{{$info}}!</strong>
