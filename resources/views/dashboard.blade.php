@@ -3,9 +3,11 @@
 @section('content')
     @include('layouts.headers.cards')
     
-    <div class="container-fluid mt--7">
+    <div class="container-fluid ">
         <div class="row">
-           
+           <div class="container-angie">
+                <span>GABITOOOOOOO</span>
+           </div>
         </div>
         <div class="row mt-5">
            
