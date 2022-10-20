@@ -4,7 +4,7 @@
 
 @include('layouts.headers.cards')
 
-<div class="container-fluid mt--8">
+<div class="container-fluid mt--0">
     <div class="row">
         <div class="col">
             <div class="card shadow">
