@@ -3,12 +3,7 @@
 @section('content')
 
 @include('layouts.headers.cards')
-<div class="container-fluid mt--9">
-    <div class="col justify-content-start text-start">
-        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#id_modal_create_categoria" style="width: 45px;height: 45px;padding: 6px 0px;border-radius: 22px;text-align: center;font-size: 12px;line-height: 1.42857;">
-            <i class="fas fa-plus"></i>
-        </button>
-    </div>
+<div class="container-fluid mt--1">
     <div class="row align-items-center">
         <div class="col pt-4">
             <div style="width: 18rem;">
@@ -47,7 +42,11 @@
         </div>
         @endforeach
     </div>
-
+    <div class="col justify-content-end text-start">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_create_categoria" style="width: 45px;height: 45px;padding: 6px 0px;border-radius: 22px;text-align: center;font-size: 12px;line-height: 1.42857;">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
     <x-guardar-categoria modalId="id_modal_create_categoria" modalTitle="Formulario de categorias" />
 </div>
 

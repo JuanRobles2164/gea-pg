@@ -40,11 +40,10 @@ class TipoLicitacionController extends Controller
     }
 
     public function details(Request $request){
-        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
         $this->repo = TipoLicitacionRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
+        $objeto = $this->repo->find($request->id);
         $this->repo = null;
-        return json_encode($lista);
+        return json_encode($objeto);
     }
 
     /**
