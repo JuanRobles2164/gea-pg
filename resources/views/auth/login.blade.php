@@ -10,17 +10,10 @@
                     <div class="card-header bg-transparent pb-5">
                         
                         <div class="btn-wrapper text-center">
-                            <a href="#" class="btn btn-neutral btn-icon">
-                                <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/brand/blue.png" alt="TSW"></span>
-                            </a>
+                            <img width="50%" src="{{ asset('argon') }}/img/brand/blue.png" alt="TSW">
                         </div>
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-muted mb-4">
-                            <small>
-                                    Username <strong>admin@argon.com</strong> Password: <strong>secret</strong>
-                            </small>
-                        </div>  
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf
 
@@ -50,30 +43,10 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="custom-control custom-control-alternative custom-checkbox">
-                                <input class="custom-control-input" name="remember" id="customCheckLogin" type="checkbox" {{ old('remember') ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="customCheckLogin">
-                                    <span class="text-muted">{{ __('Recuérdame') }}</span>
-                                </label>
-                            </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary my-4">{{ __('Iniciar sesión') }}</button>
                             </div>
                         </form>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-6">
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-light">
-                                <small>{{ __('¿Se te olvidó tu contraseña?') }}</small>
-                            </a>
-                        @endif
-                    </div>
-                    <div class="col-6 text-right">
-                        <a href="{{ route('register') }}" class="text-light">
-                            <small>{{ __('Crear una nueva cuenta') }}</small>
-                        </a>
                     </div>
                 </div>
             </div>
