@@ -5,9 +5,7 @@
     
     <div class="container-fluid ">
         <div class="row">
-           <div class="container-angie">
-                <span>GABITOOOOOOO</span>
-           </div>
+           //para donde vaya a meter la tabla guiese de otra pantalla pero pues la variale a iterar se llama '$licitaciones'
         </div>
         <div class="row mt-5">
            

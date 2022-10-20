@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Licitacion;
+use App\Repositories\Licitacion\LicitacionRepository;
+use Illuminate\Http\Request;
+
 class HomeController extends Controller
 {
     /**
@@ -19,8 +23,13 @@ class HomeController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('dashboard');
+        $this->repo = LicitacionRepository::GetInstance();
+        $lista = null;
+        $lista = $this->repo->getAllEstado();
+        $allData = ['licitaciones' => $lista];
+        $this->repo = null;
+        return view('dashboard', $allData);
     }
 }
