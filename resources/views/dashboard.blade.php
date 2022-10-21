@@ -43,9 +43,9 @@
                         <table class="table align-items-center">
                             <thead class="thead-light">
                                 <tr>
-                                    <td scope="row">{{$li->nombre}}</td>
-                                    <td scope="row">{{$li->fecha_inicio}}</td>
-                                    <td scope="row">{{$li->fecha_fin}}</td>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Fecha Inicio</th>
+                                    <th scope="col">Fecha Fin</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
