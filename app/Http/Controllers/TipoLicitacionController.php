@@ -72,6 +72,17 @@ class TipoLicitacionController extends Controller
         return json_encode($data);
     }
 
+    
+    public function storeInView(Request $request)
+    {
+        $request->validate($this->validationRules);
+        $this->repo = TipoLicitacionRepository::GetInstance();
+        $data = $request->all();
+        $data = $this->repo->create($data);
+        $this->repo = null;
+        return json_encode($data);
+    }
+
     /**
      * Display the specified resource.
      *

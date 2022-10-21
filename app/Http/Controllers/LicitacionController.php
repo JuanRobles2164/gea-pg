@@ -10,6 +10,7 @@ use App\Repositories\Cliente\ClienteRepository;
 use App\Repositories\Fase\FaseRepository;
 use App\Repositories\Licitacion\LicitacionRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LicitacionController extends Controller
@@ -18,8 +19,8 @@ class LicitacionController extends Controller
         'numero' => 'required',
         'nombre' => 'required',
         'descripcion' => 'required',
-        'fecha_inicio' => ['required', 'date'],
-        'fecha_fin' => ['required', 'date'],
+        'fecha_inicio' => ['required'],
+        'fecha_fin' => ['required'],
         'cliente' => 'required',
         'tipo_licitacion' => 'required',
         'categoria' => 'required'
@@ -34,6 +35,7 @@ class LicitacionController extends Controller
     {
         $this->repo = LicitacionRepository::GetInstance();
         $lista = null;
+        $allData = [];
         if(isset($request->categoria)){
             $lista = $this->repo->getAllEstadosCategoria($request->categoria);
             $allData = ['licitaciones' => $lista, 'categoria' => $request->categoria];
@@ -42,6 +44,7 @@ class LicitacionController extends Controller
             $allData = ['licitaciones' => $lista];
         }
         $this->repo = null;
+        //return json_encode($allData);
         return view('Licitacion.index', $allData);
     }
 
@@ -76,9 +79,13 @@ class LicitacionController extends Controller
         $this->repo = null;
         $this->repo = CategoriaRepository::GetInstance();
         $listaCategorias = $this->repo->getAllActivos();
-        $allData = ['clientes' => $listaClientes, 
-        'tiposLics' => $listaTiposLicitaciones, 
-        'categorias' => $listaCategorias];
+        $numeroDocumento = Carbon::now()->getTimestamp();
+        $allData = [
+            'clientes' => $listaClientes, 
+            'tiposLics' => $listaTiposLicitaciones, 
+            'categorias' => $listaCategorias,
+            'numero_documento' => $numeroDocumento,
+        ];
         return view('Licitacion.crear', $allData);
     }
 
@@ -105,6 +112,22 @@ class LicitacionController extends Controller
         $this->repo->create($data);
         $this->repo = null;
         return json_encode($data);
+    }
+
+    public function storeInView(Request $request)
+    {
+        $validated = $request->validate($this->validationRules);
+        //return $request;
+        $data = $request->all();
+        $data['fecha_inicio'] = new Carbon ($data['fecha_inicio']);
+        if(isset($data['fecha_fin'])){
+            $data['fecha_fin'] = new Carbon($data['fecha_fin']);
+        }
+        
+        $this->repo = LicitacionRepository::GetInstance();
+        $this->repo->create($data);
+        $this->repo = null;
+        return redirect(route('licitacion.create'));
     }
 
     /**
