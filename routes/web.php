@@ -95,17 +95,18 @@ Route::name("tipo_licitacion.")->group(function(){
     });
 });
 
-Route::name("licitacion.")->group(function(){
+Route::name("categoria.")->group(function(){
     Route::controller(CategoriaController::class)->group(function(){
+        Route::get('/categoria/index', 'index')->name("index");
+    });
+});
+
+Route::name("licitacion.")->group(function(){
+    Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/categorias', 'index')->name("categorias");
-    });
-    Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/index', 'index')->name("index");
-    });
-    Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/edit', 'edit')->name("edit");
-    });
-    Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/create', 'create')->name("create");
+        Route::post('/licitacion/create_entity', 'storeInView')->name("crear_post");
     });
 });

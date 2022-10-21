@@ -105,7 +105,7 @@
                                 @if(isset($categoria))
                                 
                                 @else
-                                <td scope="row">{{$lic->categoria}}</td>
+                                <td scope="row">{{get_object_vars($lic->categoria())}}</td>
                                 @endif
                                 @if($lic->estado == 1)
                                 <td scope="row">
