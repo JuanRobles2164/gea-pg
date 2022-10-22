@@ -6,6 +6,7 @@ use App\Repositories\Documento\DocumentoRepository;
 use App\Repositories\TipoDocumento\TipoDocumentoRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentoPrincipalController extends Controller
 {
@@ -37,7 +38,7 @@ class DocumentoPrincipalController extends Controller
             $file = $request->file('data_file');
             $filename = $file->getClientOriginalName();
             $folder = uniqid() . '-' . now()->timestamp;
-            $file_path = $file->store('documentos_temporales');
+            $file_path = Storage::disk('local')->put('documentos_temporales/', $file);
             $request->session()->put('file_path', $file_path);
             $request->session()->put('file_name', $filename);
             return $file_path;
@@ -52,7 +53,11 @@ class DocumentoPrincipalController extends Controller
         if($request->session()->exists('file_path')){
             $this->repo = DocumentoRepository::GetInstance();
             $data = $request->all();
-            $data['path_file'] = $request->session()->get('path_file');
+
+            $newPathFile = "documentos_principales/".now()->timestamp."".$request->session()->get('file_name');
+            Storage::disk('local')->move($request->session()->get('file_path'), $newPathFile);
+
+            $data['path_file'] = $newPathFile;
             $data['nombre'] = $request->session()->get('file_name');
 
             if($data['tipo_documento_recurrente_constante_check'] != 'Constante'){
