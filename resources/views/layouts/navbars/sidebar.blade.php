@@ -89,7 +89,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-mg5" href="{{ route('licitacion.categorias') }}">
+                    <a class="nav-link text-mg5" href="{{ route('categoria.index') }}">
                         <i class="fas fa-gavel"></i> {{ __('Licitaciones') }}
                     </a>
                 </li>
