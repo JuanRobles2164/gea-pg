@@ -2264,6 +2264,24 @@ pre code
 
 @media (max-width: 767.98px)
 {
+    /* estilos responsive */
+    .header {
+        display: none;
+    }
+    .row.row-home {
+        display: inline-grid;
+    }
+    .row.row-home .column.col-6 {
+        max-width: 58.33333%;
+        flex: 0 0 58.33333%;
+    }
+    .card.shadow.card-home1 {
+        padding: 15px;
+    }
+    .card.shadow.card-home2 {
+        padding: 15px;
+    }
+
     .table-responsive-md
     {
         display: block;
@@ -21961,4 +21979,13 @@ footer.py-5 {
 }
 footer.footer.pt-0 {
     background: #f7fafc;
+}
+
+.card.shadow.card-home1 {
+    margin: 5px;
+    padding: 25px;
+}
+.card.shadow.card-home2 {
+    margin: 5px;
+    padding: 25px;
 }

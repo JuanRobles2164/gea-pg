@@ -89,7 +89,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-mg5" href="{{ route('licitacion.categorias') }}">
+                    <a class="nav-link text-mg5" href="{{ route('categoria.index') }}">
                         <i class="fas fa-gavel"></i> {{ __('Licitaciones') }}
                     </a>
                 </li>
@@ -136,7 +136,7 @@
                 </li>
                 <li class="nav-item mb-5 mr-4 ml-4 pl-1 bg-secondary" style="position: absolute; bottom: 0;">
                     <a class="nav-link text-mg5" href="#" target="_blank">
-                        <i class="ni ni-building"></i> Info Empresa
+                        <i class="ni ni-building"></i> Nosotros
                     </a>
                 </li>
             </ul>
