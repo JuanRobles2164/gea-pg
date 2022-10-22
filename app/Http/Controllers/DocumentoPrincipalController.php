@@ -15,15 +15,27 @@ class DocumentoPrincipalController extends Controller
         'fecha_vende' => ['required', 'date']
     ];
     public function index(){
+        $this->repo = DocumentoRepository::GetInstance();
+        $documentos = $this->repo->getAllPrincipales();
+        $allData = [
+            'documentos' => $documentos,
+        ];
+        return view('DocumentosPrincipales.index', $allData);
+    }
+
+    public function gestion(){
         $this->repo = TipoDocumentoRepository::GetInstance();
         $tipos_documento = $this->repo->getAll();
         $allData = [
             'tipos_documento' => $tipos_documento,
         ];
-        return view('DocumentosPrincipales.index', $allData);
+        return view('DocumentosPrincipales.gestion',  $allData);
     }
+
     public function guardarDocumento(Request $request){
+        return $request;
         $validated = $request->validate($this->validationRules);
+        
         //Primero guarda el documento y luego intentará guardad la entidad
         $nombreArchivoOriginal = $request->file('data_file')->getClientOriginalName();
         $path_file = $request->file('data_file')->store('documentos_principales');
@@ -49,7 +61,7 @@ class DocumentoPrincipalController extends Controller
             'descripcion' => isset($data['descripcion']) ? $data['descripcion'] : "N/A",
             'recurrente' => $data['recurrente'],
             'constante' => $data['constante'],
-            'fecha_vence' => $data['fecha_vence'],
+            'fecha_vencimiento' => $data['fecha_vencimiento'],
             'path_file' => $path_file,
             'estado' => 1,
             'tipo_documento' => $data['tipo_documento'],

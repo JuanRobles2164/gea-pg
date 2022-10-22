@@ -34,4 +34,7 @@ class DocumentoRepository extends BaseRepository{
         $acumulado->paginate($paginado);
         return $acumulado;
     }
+    public function getAllPrincipales($paginate = 15, $estado = 3){
+        return $this->getModel()->where("estado", "!=", $estado)->where("constante", true)->orWhere("recurrente", true)->paginate($paginate);
+    }
 }
