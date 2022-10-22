@@ -112,7 +112,7 @@
                         <ul class="nav nav-sm flex-column">
                             
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('documento_principal.crear') }}">
+                                <a class="nav-link" href="{{ route('documento_principal.index') }}">
                                     {{ __('Cargar documentos') }}
                                 </a>
                             </li>
