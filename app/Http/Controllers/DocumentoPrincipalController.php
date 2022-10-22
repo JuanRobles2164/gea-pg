@@ -12,7 +12,7 @@ class DocumentoPrincipalController extends Controller
     private $validationRules = [
         'data_file' => 'required',
         'tipo_documento_recurrente_constante_check' => 'required',
-        'fecha_vende' => ['required', 'date']
+        'fecha_vence' => ['required']
     ];
     public function index(){
         $this->repo = DocumentoRepository::GetInstance();
@@ -32,10 +32,22 @@ class DocumentoPrincipalController extends Controller
         return view('DocumentosPrincipales.gestion',  $allData);
     }
 
+    public function subirDocTemporal(Request $request){
+        if($request->hasFile('data_file')){
+            $file = $request->file('data_file');
+            $filename = $file->getClientOriginalName();
+            $folder = uniqid() . '-' . now()->timestamp;
+            $file->store('documentos_temporales');
+
+            return $folder;
+
+        }
+        return "";
+    }
+
     public function guardarDocumento(Request $request){
-        return $request;
         $validated = $request->validate($this->validationRules);
-        
+        return $request;
         //Primero guarda el documento y luego intentará guardad la entidad
         $nombreArchivoOriginal = $request->file('data_file')->getClientOriginalName();
         $path_file = $request->file('data_file')->store('documentos_principales');
