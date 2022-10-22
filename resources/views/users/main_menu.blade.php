@@ -130,6 +130,9 @@
 
     <x-guardar-usuario modalId="id_modal_create_user" modalTitle="Formulario de usuarios" />
     <x-ver-usuario modalId="id_modal_view_user" modalTitle="Ver usuario" />
+    
+    @include('layouts.footers.auth')
+
     @endsection
 
 
@@ -166,6 +169,9 @@
                 document.getElementById("email_user_modal_view_id").value = userData.email;
                 document.getElementById("email_user_modal_view_id").readOnly = true;
 
+                document.getElementById("identificacion_user_modal_view_id").value = userData.identificacion;
+                document.getElementById("identificacion_user_modal_view_id").readOnly = true;
+
                 var checkboxes = document.querySelectorAll('input[name="rolCheckView"]');
                 checkboxes.forEach((el) => {
                     el.checked = false;
@@ -174,7 +180,7 @@
 
                 data.roles.forEach(el => {
                     console.log(el);
-                    if (el.activo == 1) {
+                    if (el.estado == 1) {
                         document.getElementById("rolView" + el.rol).checked = true;
                     }
                 });
@@ -195,11 +201,12 @@
                 document.getElementById("id_usuario_modal_create_id").value = userData.id;
                 document.getElementById("nombre_user_modal_create_id").value = userData.name;
                 document.getElementById("email_user_modal_create_id").value = userData.email;
+                document.getElementById("identificacion_user_modal_create_id").value = userData.identificacion;
 
                 data.roles.forEach(el => {
                     console.log(el);
-                    if (el.activo == 1) {
-                        document.getElementById("rolView" + el.rol).checked = true;
+                    if (el.estado == 1) {
+                        document.getElementById("rol" + el.rol).checked = true;
                     }
                 });
                 $('#id_modal_create_user').modal('show');
