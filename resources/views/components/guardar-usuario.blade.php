@@ -85,6 +85,7 @@
             let name = document.getElementById("nombre_user_modal_create_id").value;
             let email = document.getElementById("email_user_modal_create_id").value;
             let password = document.getElementById("password_user_modal_create_id").value;
+            let password_confirmation = document.getElementById("confirm_password_user_modal_create_id").value;
             let identificacion = document.getElementById("identificacion_user_modal_create_id").value;
             let roles = [];
             let roles_eliminar = [];
@@ -101,6 +102,7 @@
                 name: name,
                 email: email,
                 password: password,
+                password_confirmation: password_confirmation,
                 identificacion: identificacion
             }
             
