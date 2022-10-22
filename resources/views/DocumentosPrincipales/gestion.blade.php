@@ -65,7 +65,6 @@
                 url: "{{ route('documento_principal.doc_temporal') }}",
                 headers: {
                     'X-CSRF-TOKEN': "{{csrf_token()}}"
-
                 }
             }
         });
