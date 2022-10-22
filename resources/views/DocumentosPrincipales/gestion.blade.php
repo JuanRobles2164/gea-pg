@@ -24,7 +24,7 @@
             </select>
         </div>
         <div class="form-group">
-            <input type="file" name="data_file" id="data_file" class="form-control">
+            <input type="file" name="data_file" id="data_file" class="filepond">
         </div>
 
         <div class="form-group">
@@ -54,6 +54,21 @@
 
 @push('js')
     <script>
+        
+        // Get a reference to the file input element
+        const inputElement = document.querySelector('input[type="file"]');
+        // Create a FilePond instance
+        const pond = FilePond.create(inputElement);
+
+        FilePond.setOptions({
+            server: {
+                url: "{{ route('documento_principal.doc_temporal') }}",
+                headers: {
+                    'X-CSRF-TOKEN': "{{csrf_token()}}"
+
+                }
+            }
+        });
 
     </script>
 @endpush
