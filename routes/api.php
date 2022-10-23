@@ -38,7 +38,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::name("archivos.")->group(function(){
     Route::controller(ArchivosTemporalesController::class)->group(function(){
         Route::post('/archivos_temporales/subir', 'subirArchivoTemporal')->name("subi_archivo");
-        Route::get('/archivos_temporales/descargar', 'descargarArchivos')->name("descargar_archivos");
+        Route::get('/archivos_temporales/descargar', 'descargarArchivos')->name("descargar_archivo");
+        Route::get('/archivos_temporales/visualizar', 'verArchivoNavegador')->name("ver_archivo");
     });
 });
 

@@ -117,11 +117,11 @@
                                     <a href="#" class="btn btn-default btn-sm" onclick="" title="Editar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-file-signature"></i>
                                     </a>
-                                    <a href="#" class="btn btn-info btn-sm" onclick="" title="Ver Documento" data-toggle="tooltip" data-placement="bottom">
+                                    <a href="{{route('archivos.ver_archivo', ['id' => $d->id])}}" class="btn btn-info btn-sm" target="_blank" onclick="" title="Ver Documento" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="#" class="btn btn-default btn-sm" onclick="" title="Descargar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fa-solid fa-file-arrow-down"></i>
+                                    <a href="{{route('archivos.descargar_archivo', ['id' => $d->id])}}" class="btn btn-default btn-sm" title="Descargar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fa fa-download"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -140,5 +140,7 @@
 
 
 @push('js')
-
+    <script>
+        
+    </script>
 @endpush
