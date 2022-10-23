@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArchivoController;
+use App\Http\Controllers\ArchivosTemporalesController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DocumentoController;
@@ -32,6 +33,14 @@ use App\Models\FaseTipoLicitacion;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::name("archivos.")->group(function(){
+    Route::controller(ArchivosTemporalesController::class)->group(function(){
+        Route::post('/archivos_temporales/subir', 'subirArchivoTemporal')->name("subi_archivo");
+        Route::get('/archivos_temporales/descargar', 'descargarArchivos')->name("descargar_archivo");
+        Route::get('/archivos_temporales/visualizar', 'verArchivoNavegador')->name("ver_archivo");
+    });
 });
 
 Route::name("documento_principal.")->group(function(){
