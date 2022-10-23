@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArchivosTemporalesController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\FaseController;

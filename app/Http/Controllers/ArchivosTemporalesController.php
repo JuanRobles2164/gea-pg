@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Repositories\Documento\DocumentoRepository;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+
+class ArchivosTemporalesController extends Controller
+{
+    private $repo;
+    public function subirMultiplesArchivosTemporalesSimultaneo(Request $request){
+        if($request->hasFile('data_file')){
+            $archivos = $request->data_file;
+            $file_paths = [];
+            $file_names = [];
+            foreach($archivos as $a){
+                $file = $request->file('data_file');
+                $filename = $file->getClientOriginalName();
+                $folder = uniqid() . '-' . now()->timestamp;
+                $file_path = Storage::disk('local')->put('documentos_temporales/', $file);
+                array_push($file_paths, $file_path);
+                array_push($file_names, $filename);
+            }
+            $request->session()->put('file_path', $file_path);
+            $request->session()->put('file_name', $filename);
+            return $file_path;
+        }
+        return [""];
+    }
+
+    public function subirUnicoArchivoGuardarEnMultiplesTemporales(Request $request){
+        if($request->hasFile('data_file')){
+            $file = $request->file('data_file');
+            $filename = $file->getClientOriginalName();
+            $folder = uniqid() . '-' . now()->timestamp;
+            $file_path = Storage::disk('local')->put('documentos_temporales/', $file);
+            $request->session()->put('file_path', $file_path);
+            $request->session()->put('file_name', $filename);
+            return $file_path;
+        }
+        return "";
+    }
+
+    public function subirArchivoTemporal(Request $request){
+        if($request->hasFile('data_file')){
+            $file = $request->file('data_file');
+            $filename = $file->getClientOriginalName();
+            $folder = uniqid() . '-' . now()->timestamp;
+            $file_path = Storage::disk('local')->put('documentos_temporales/', $file);
+            $request->session()->put('file_path', $file_path);
+            $request->session()->put('file_name', $filename);
+            return $file_path;
+        }
+        return "";
+    }
+
+    public function descargarArchivos(Request $request){
+        $request->validate([
+            'id' => ['required', 'exists:documento']
+        ]);
+        $this->repo = DocumentoRepository::GetInstance();
+        $documentoInstance = $this->repo->find($request->id);
+        return Storage::download($documentoInstance->path_file);
+    }
+}
