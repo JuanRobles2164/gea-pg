@@ -3,7 +3,7 @@
 @section('content')
 
 @include('layouts.headers.cards')
-<div class="container-fluid mt--0">
+<div class="container-fluid mt-8">
     @if(isset($info))
     <div class="alert alert-info alert-dismissible fade show" role="alert">
         <strong>¡{{$info}}!</strong>
@@ -35,6 +35,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
     @endif
 
     <div class="row">
@@ -45,7 +46,7 @@
                     <!-- informacion de la licitacion para editar -->
                     <div id="accordion">
                         @foreach ($fases as $fase)
-                            <x-fases-element componentId="{{$fase->id}}" componentTitle="{{$fase->nombre}}" :modelo="$fase" />
+                            <x-fases-element componentId="{{$fase->id}}" componentTitle="{{$fase->nombre}}" licitacion="{{$licitacion->id}}" :modelo="$fase" />
                         @endforeach
                     </div>
                 </div>

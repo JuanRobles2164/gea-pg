@@ -48,6 +48,18 @@ class LicitacionController extends Controller
         return view('Licitacion.index', $allData);
     }
 
+    public function gestionDocumentosIndex(Request $request){
+        $this->repo = LicitacionRepository::GetInstance();
+        $obj = $this->repo->find($request->id);
+        $this->repo = null;
+
+        $this->repo = FaseRepository::GetInstance();
+        $fases = $this->repo->findByParams($request->tipo_licitacion);
+
+        $allData = ['licitacion' => $obj, 'fases' => $fases];
+        return view('Licitacion.gestion_documentos', $allData);
+    }
+
     public function listar(Request $request){
         $num_rows = $request->cantidad != null ? $request->cantidad : 15;
         $this->repo = LicitacionRepository::GetInstance();

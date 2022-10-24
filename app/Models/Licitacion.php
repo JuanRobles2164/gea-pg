@@ -11,12 +11,10 @@ class Licitacion extends Model
 {
     use HasFactory;
     protected $table = 'licitacion';
-    protected $fillable = ["id", "numero", "nombre", "descripcion", "fecha_inicio", "fecha_fin", "observacion", "estado", "cliente", "tipo_licitacion"];
+    protected $fillable = ["id", "numero", "nombre", "descripcion", "fecha_inicio", "fecha_fin", "observacion", "estado", "cliente", "tipo_licitacion", "categoria"];
 
     public function categoria(){
-        //return $this->belongsTo(Categoria::class, "categoria", "id");
-
         $this->repo = CategoriaRepository::GetInstance();
-        return $this->repo->find($this->id);
+        return $this->repo->find($this->categoria);
     }
 }
