@@ -12,6 +12,11 @@ abstract class BaseRepository{
     //Abstract Operations
     abstract public function getModel();
 
+    /**
+     * Dependiendo de los valores que tenga este array, se buscará bajo ciertos criterios u otros
+     * @param array $params arreglo de parámetros
+     * @return Illuminate\Database\Eloquent\Collection
+     */
     abstract public function findByParams($params);
     
     public function firstOrCreate($params){

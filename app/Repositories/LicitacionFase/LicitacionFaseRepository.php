@@ -22,7 +22,18 @@ class LicitacionFaseRepository extends BaseRepository{
     {
         return new LicitacionFase;
     }
+
     public function findByParams($params){
-        
+        $listado = $this->getModel();
+        if(isset($params['licitacion'])){
+            $listado = $listado->where('licitacion', $params['licitacion']);
+        }
+        if(isset($params['fase'])){
+            $listado = $listado->where('fase', $params['fase']);
+        }
+        if(isset($params['unico_registro'])){
+            return $listado->first();
+        }
+        return $listado->get();
     }
 }
