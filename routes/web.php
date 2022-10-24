@@ -108,7 +108,7 @@ Route::name("categoria.")->group(function(){
 Route::name("licitacion.")->group(function(){
     Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/index', 'index')->name("index");
-        Route::get('/licitacion/edit', 'edit')->name("edit");
+        Route::get('/licitacion/gestionar_documentos_licitacion', 'gestionDocumentosIndex')->name("gestion_documentos_index");
         Route::get('/licitacion/create', 'create')->name("create");
         Route::post('/licitacion/create_entity', 'storeInView')->name("crear_post");
     });

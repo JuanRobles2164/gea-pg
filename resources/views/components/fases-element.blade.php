@@ -56,7 +56,7 @@
                 </div>
                 <div class="card-footer py-3">
                     <!--paginacion-->
-                    {{ $documentos->links('components.paginador') }}
+                    <!-- $documentos->links('components.paginador') -->
                 </div>
             </div>
         </div>
