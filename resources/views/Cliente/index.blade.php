@@ -128,6 +128,9 @@
 
     <x-guardar-cliente modalId="id_modal_create_cliente" modalTitle="Formulario de clientes" />
     <x-ver-cliente modalId="id_modal_view_cliente" modalTitle="Ver cliente" />
+
+    @include('layouts.footers.auth')
+        
     @endsection
 
 

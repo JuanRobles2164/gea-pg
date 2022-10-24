@@ -1,15 +1,16 @@
 <?php
-
 namespace App\View\Components;
 
 use App\Repositories\Cliente\ClienteRepository;
 use Illuminate\View\Component;
+use App\Enums\TipoIdentificacionEnum;
 
 class GuardarCliente extends Component
 {
     public $modal_title;
     public $modal_id;
     public $model;
+    public $tipo_ident;
     private $repo = null;
 
     /**
@@ -21,6 +22,7 @@ class GuardarCliente extends Component
     {
         $this->modal_title = $modalTitle;
         $this->modal_id = $modalId;
+        $this->tipo_ident = TipoIdentificacionEnum::getEnum();
 
         if($modelId != -1 || $modelId != '-1'){
             $this->repo = ClienteRepository::GetInstance();

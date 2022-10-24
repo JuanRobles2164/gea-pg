@@ -6,7 +6,7 @@
 <div class="form-group">
     <label class="form-label" for="nombre_tipo_documento_modal_view_id">Nombre:</label>
     <br>
-    <input type="text" class="form-input" id="nombre_tipo_documento_modal_view_id" value="{{isset($modelo->id) ? $modelo->nombre:''}}">
+    <input type="text" class="form-control form-control-alternative" id="nombre_tipo_documento_modal_view_id" value="{{isset($modelo->id) ? $modelo->nombre:''}}">
 </div>
 <div class="form-group">
     <label class="form-label" for="descripcion_tipo_documento_modal_view_id">Descripcion:</label>

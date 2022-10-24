@@ -46,6 +46,13 @@ class FaseController extends Controller
         return json_encode($objeto);
     }
 
+    public function detailsByTipoLic(Request $request){
+        $this->repo = FaseRepository::GetInstance();
+        $lista = $this->repo->findByParams($request->tipo);
+        $this->repo = null;
+        return json_encode($lista);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
