@@ -9,13 +9,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="nombre_rol_modal_create_id">Nombre:</label>
-                <input type="text" class="form-control form-control-alternative" id="nombre_rol_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre : '' }}">
+                <input type="text" class="form-control form-control-alternative" id="nombre_rol_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre : '' }}" autocomplete="disabled">
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="descripcion_rol_modal_create_id">Descripción:</label>
-                <textarea class="form-control form-control-alternative" name="descripcion_rol_modal_create" id="descripcion_rol_modal_create_id" rows="10">
+                <textarea class="form-control form-control-alternative" name="descripcion_rol_modal_create" id="descripcion_rol_modal_create_id" rows="10" autocomplete="disabled">
                     {{isset($modelo->id) ? $modelo->descripcion : '' }}
                 </textarea>
             </div>

@@ -8,7 +8,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label for="nombre_fase_modal_create_id">Nombre:</label>
-                <input type="text" class="form-control form-control-alternative" id="nombre_fase_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre : '' }}">
+                <input type="text" class="form-control form-control-alternative" id="nombre_fase_modal_create_id" autocomplete="disabled" value="{{isset($modelo->id) ? $modelo->nombre : '' }}">
             </div>
         </div>
     </div>
@@ -16,7 +16,7 @@
         <div class="col-md-12">
             <form>
                 <label class="form-label" for="descripcion_fase_modal_create_id">Descripción:</label>
-                <textarea class="form-control form-control-alternative" name="descripcion_fase_modal_create" id="descripcion_fase_modal_create_id" rows="5">{{isset($modelo->id) ? $modelo->descripcion : '' }}</textarea>
+                <textarea class="form-control form-control-alternative" name="descripcion_fase_modal_create" autocomplete="disabled" id="descripcion_fase_modal_create_id" rows="5">{{isset($modelo->id) ? $modelo->descripcion : '' }}</textarea>
             </form>
         </div>
     </div>

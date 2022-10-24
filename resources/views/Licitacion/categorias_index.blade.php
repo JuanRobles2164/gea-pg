@@ -50,6 +50,8 @@
     <x-guardar-categoria modalId="id_modal_create_categoria" modalTitle="Formulario de categorias" />
 </div>
 
+@include('layouts.footers.auth')
+
 @endsection
 
 @push('js')

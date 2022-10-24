@@ -73,6 +73,8 @@
 <x-guardar-fase modalId="id_modal_fases" modalTitle="Formulario de Fases" />
 <x-ver-fase modalId="id_modal_view_fase" modalTitle="Ver fase" />
 
+@include('layouts.footers.auth')
+
 @endsection
 
 @push('js')

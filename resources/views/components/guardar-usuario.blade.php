@@ -3,7 +3,7 @@
 @section('modal-content')
 <form>
     <div class="row">
-        <div class="col-md-6">
+        <div class="ge">
             <input type="hidden" name="id_usuario_modal_create_id" id="id_usuario_modal_create_id">
             <div class="form-group">
                 <label class="form-label" for="nombre_user_modal_create_id">Nombre completo:</label>

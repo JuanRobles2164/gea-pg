@@ -2927,6 +2927,8 @@ textarea.form-control
     }
 }
 
+
+
 .btn
 {
     font-size: 1rem;
@@ -21988,4 +21990,56 @@ footer.footer.pt-0 {
 .card.shadow.card-home2 {
     margin: 5px;
     padding: 25px;
+}
+
+.draggable-list {
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 0;
+    list-style-type: none;
+}
+
+.draggable-list li {
+    background-color: #fff;
+    display: flex;
+    flex: 1;
+}
+
+.draggable-list li:not(:last-of-type) {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.draggable-list .number {
+    background-color: var(--background-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    height: 60px;
+    width: 60px;
+}
+
+.draggable-list li.over .draggable {
+background-color: #eaeaea;
+}
+
+.draggable-list .list-name {
+    margin: 0 20px 0 0;
+}
+
+.draggable-list li.right .list-name {
+    color: #3ae374;
+}
+
+.draggable-list li.wrong .list-name {
+    color: #ff3838;
+}
+
+.draggable {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    flex: 1;
 }

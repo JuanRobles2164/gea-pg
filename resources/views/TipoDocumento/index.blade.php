@@ -129,6 +129,9 @@ use App\Enums\UnidadValidezEnum;
     <x-guardar-tipo-documento modalTitle="Formulario de Tipos de documento" modalId="id_modal_create_tipo_documento" />
 
     <x-ver-tipo-documento modalTitle="Visualizador de Tipos de documento" modalId="id_modal_tipo_documento_viewer" />
+    
+@include('layouts.footers.auth')
+
 @endsection
 
 @push('js')

@@ -71,6 +71,8 @@
 <x-ver-tipo-licitacion modalId="id_modal_view_tipo_licitacion" modalTitle="Ver cliente" />
 <x-guardar-tipo-licitacion modalId="id_modal_tipo_licitacion" modalTitle="Formulario de tipos de licitacion" />
 
+@include('layouts.footers.auth')
+
 @endsection
 
 @push('js')
