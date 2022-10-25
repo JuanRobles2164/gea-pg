@@ -5,29 +5,29 @@
     <input type="hidden" name="" id="id_licitacion_crear_modal_id">
     <div class="form-group">
         <label for="">Número:</label>
-        <input type="text" name="" id="numero_licitacion_crear_modal_id">
+        <input type="text" name="" id="numero_licitacion_crear_modal_id" autocomplete="disabled">
     </div>
 
     <div class="form-group">
         <label for="nombre_licitacion_crear_modal_id">Nombre</label>
-        <input type="text" name="nombre_licitacion_crear" id="nombre_licitacion_crear_modal_id">
+        <input type="text" name="nombre_licitacion_crear" id="nombre_licitacion_crear_modal_id" autocomplete="disabled">
     </div>
 
     <div class="form-group">
         <label for="descripcion_licitacion_crear_modal_id">Descripción:</label>
-        <textarea name="descripcion_licitacion_crear" id="descripcion_licitacion_crear_modal_id" cols="30" rows="10">
+        <textarea name="descripcion_licitacion_crear" id="descripcion_licitacion_crear_modal_id" cols="30" rows="10" autocomplete="disabled">
             
         </textarea>
     </div>
 
     <div class="form-group">
         <label for="fecha_inicio_licitacion_crear_modal_id">Fecha de inicio:</label>
-        <input type="date" name="fecha_inicio_licitacion_crear" id="fecha_inicio_licitacion_crear_modal_id">
+        <input type="date" name="fecha_inicio_licitacion_crear" id="fecha_inicio_licitacion_crear_modal_id" autocomplete="disabled">
     </div>
 
     <div class="form-group">
         <label for="fecha_fin_licitacion_crear_modal_id">Fecha de fin:</label>
-        <input type="date" name="fecha_fin_licitacion_crear" id="fecha_fin_licitacion_crear_modal_id">
+        <input type="date" name="fecha_fin_licitacion_crear" id="fecha_fin_licitacion_crear_modal_id" autocomplete="disabled">
     </div>
 
     <div class="form-group">

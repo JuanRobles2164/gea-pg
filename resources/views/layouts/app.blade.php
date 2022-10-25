@@ -20,6 +20,9 @@
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
 
+        <!-- Filepond Library -->
+        <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+
         <script>
             var csrf_token = document.getElementsByName("csrf-token")[0].attributes.content.value;
     
@@ -102,7 +105,10 @@
 
         <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
         <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        
+
+        <!-- Filepond Library JS -->
+        <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+
         @stack('js')
         
         <!-- Argon JS -->

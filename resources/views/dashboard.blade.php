@@ -43,19 +43,18 @@
                         <table class="table align-items-center">
                             <thead class="thead-light">
                                 <tr>
-                                    <td scope="row">{{$li->nombre}}</td>
-                                    <td scope="row">{{$li->fecha_inicio}}</td>
-                                    <td scope="row">{{$li->fecha_fin}}</td>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Fecha Inicio</th>
+                                    <th scope="col">Fecha Fin</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($licitaciones as $li)
                                 <tr>
-                                    <td scope="row">{{$li->id}}</td>
                                     <td scope="row">{{$li->nombre}}</td>
-                                    <td scope="row">{{$li->descripcion}}</td>
                                     <td scope="row">{{$li->fecha_inicio}}</td>
+                                    <td scope="row">{{$li->fecha_fin}}</td>
                                     <td scope="row">
                                         <a href="#" class="btn btn-info btn-sm" onclick="setDataToClienteModal({{$li->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
                                             <i class="fas fa-eye"></i>

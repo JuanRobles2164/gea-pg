@@ -77,13 +77,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => [
-                'required', 'min:3'
-            ],
-            'email' => [
-                'required', 'email', 'unique:users'
-            ],
-            'identificacion' => 'required'
+            'name' => ['required', 'min:3'],
+            'email' => ['required', 'email', 'unique:users'],
+            'identificacion' => 'required',
+            'password' => ['required', 'confirmed']
         ]);
         $this->repo = UserRepository::GetInstance();
         $data = $request->all();
@@ -99,12 +96,8 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
-            'name' => [
-                'required', 'min:3'
-            ],
-            'email' => [
-                'required', 'email', 'unique:users'
-            ],
+            'name' => ['required', 'min:3' ], 
+            'email' => ['required', 'email', 'unique:users'],
             'identificacion' => 'required'
         ]);
         
@@ -114,6 +107,9 @@ class UserController extends Controller
         if(!isset($data['password'])){
             $data['password'] = $user->password;
         }else{
+            $request->validate([
+                'password' => 'confirmed'
+            ]);
             $data['password'] = Hash::make($data['password']);
         }
         $user = $this->repo->update($user, $data);

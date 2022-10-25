@@ -23,7 +23,11 @@ class DocumentoLicitacionRepository extends BaseRepository{
         return new DocumentoLicitacion;
     }
     public function findByParams($params){
-        
+        $listado = $this->getModel();
+        if(isset($params['licitacion_fase'])){
+            $listado = $listado->where('licitacion_fase', $params['licitacion_fase']);
+        }
+        return $listado->get();
     }
     
 }

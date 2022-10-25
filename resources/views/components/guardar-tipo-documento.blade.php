@@ -6,11 +6,11 @@
     <input type="hidden" class="form-control form-control-alternative" name="id_cliente_modal_create" id="id_tipo_documento_modal_create_id" value="{{isset($modelo->id) ? $modelo->id : ''}}">
     <div class="form-group">
         <label for="nombre_tipo_documento_modal_create_id">Nombre:</label>
-        <input class="form-control form-control-alternative" id="nombre_tipo_documento_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre:''}}">
+        <input class="form-control form-control-alternative" id="nombre_tipo_documento_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre:''}}" autocomplete="disabled">
     </div>
     <div class="form-group">
         <label for="descripcion_tipo_documento_modal_create_id">Descripcion:</label>
-        <textarea class="form-control form-control-alternative" id="descripcion_tipo_documento_modal_create_id" rows="3" value="{{isset($modelo->id) ? $modelo->descripcion:''}}"></textarea>
+        <textarea class="form-control form-control-alternative" id="descripcion_tipo_documento_modal_create_id" rows="3" value="{{isset($modelo->id) ? $modelo->descripcion:''}}" autocomplete="disabled"></textarea>
     </div>
 </form>
 @endsection
@@ -50,6 +50,11 @@
                     location.reload();
                 });
             }
+        }
+        function {{$modal_id}}Limpiar(){
+            document.getElementById("id_tipo_documento_modal_create_id").value = '';
+            document.getElementById("nombre_tipo_documento_modal_create_id").value = '';
+            document.getElementById("descripcion_tipo_documento_modal_create_id").value = '';
         }
     </script>
 @endsection

@@ -105,7 +105,7 @@
                                 @if(isset($categoria))
                                 
                                 @else
-                                <td scope="row">{{get_object_vars($lic->categoria())}}</td>
+                                <td scope="row">{{$lic->categoria()->nombre}}</td>
                                 @endif
                                 @if($lic->estado == 1)
                                 <td scope="row">
@@ -139,6 +139,7 @@
                         </tbody>
                     </table>
                 </div>
+
                 <div class="card-footer py-3">
                     <!--paginacion-->
                     {{ $licitaciones->links('components.paginador') }}
@@ -146,6 +147,7 @@
             </div>
         </div>
     </div>
+@include('layouts.footers.auth')
 
 @endsection
 

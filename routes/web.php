@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArchivosTemporalesController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\FaseController;
@@ -58,7 +59,10 @@ Route::name("estado.")->group(function(){
 
 Route::name("documento_principal.")->group(function(){
     Route::controller(DocumentoPrincipalController::class)->group(function(){
-        Route::get('/documento_principal/crear', 'index')->name("crear");
+        Route::get('/documento_principal/index', 'index')->name("index");
+        Route::get('/documento_principal/gestion', 'gestion')->name("gestion");
+
+        Route::post('/documento_principal/guardar_documento/sube_doc_temporal', 'subirDocTemporal')->name('doc_temporal');
         Route::post('/documento_principal/guardar_documento', 'guardarDocumento')->name("guardar_documento_no_api");
     });
 });
@@ -103,9 +107,8 @@ Route::name("categoria.")->group(function(){
 
 Route::name("licitacion.")->group(function(){
     Route::controller(LicitacionController::class)->group(function(){
-        Route::get('/licitacion/categorias', 'index')->name("categorias");
         Route::get('/licitacion/index', 'index')->name("index");
-        Route::get('/licitacion/edit', 'edit')->name("edit");
+        Route::get('/licitacion/gestionar_documentos_licitacion', 'gestionDocumentosIndex')->name("gestion_documentos_index");
         Route::get('/licitacion/create', 'create')->name("create");
         Route::post('/licitacion/create_entity', 'storeInView')->name("crear_post");
     });
