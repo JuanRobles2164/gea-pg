@@ -48,7 +48,7 @@ class FaseController extends Controller
 
     public function detailsByTipoLic(Request $request){
         $this->repo = FaseRepository::GetInstance();
-        $lista = $this->repo->findByParams($request->tipo);
+        $lista = $this->repo->obtenerFasesDocumentosByTipoLicitacion($request->tipo);
         $this->repo = null;
         return json_encode($lista);
     }
