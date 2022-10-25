@@ -136,4 +136,28 @@ class FaseController extends Controller
         return json_encode($objeto);
     }
 
+    public function obtenerDocumentosYFasesByTipoLicitacionId(Request $request){
+        $allData = [];
+        $this->repo = FaseRepository::GetInstance();
+        
+        $fases = $this->repo->obtenerFasesDocumentosByTipoLicitacion($request->id);
+        foreach($fases as $f){
+            $documentos = $this->repo->obtenerDocumentosByFaseId($f->id);
+            $arrTemp = [
+                'fase' => $f,
+                'documentos' => $documentos
+            ];
+            array_push($allData, $arrTemp);
+        }
+        $this->repo = null;
+        return json_encode($allData);
+    }
+
+    public function obtenerDocumentosByFaseId(Request $request){
+        $this->repo = FaseRepository::GetInstance();
+        $documentos = $this->repo->obtenerDocumentosByFaseId($request->id);
+        $this->repo = null;
+        return json_encode($documentos);
+    }
+
 }
