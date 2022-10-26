@@ -4,7 +4,7 @@
 
 @include('layouts.headers.cards')
 
-<div class="container-fluid mt-8">
+<div class="container-fluid mt-0">
     <div class="row">
         <div class="col">
             <div class="card shadow">
@@ -15,9 +15,15 @@
                         </div>
                         <div class="col">
                             <div class="row align-items-center">
-                                <div class="col text-right">
-                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_tipo_licitacion">
-                                        Nuevo
+                                <div class="col">
+
+                                </div>
+                                <div class="col-6 justify-content-end text-right">
+                                    <input class="form-control form-control-sm" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search">
+                                </div>
+                                <div class="col justify-content-end text-right">
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_tipo_licitacion">
+                                        Crear <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
                             </div>

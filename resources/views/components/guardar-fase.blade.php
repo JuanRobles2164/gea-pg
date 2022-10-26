@@ -21,18 +21,30 @@
         </div>
     </div>
     <br>
-    <div class="row">
-        <div class="col-md-12">
-            <label for="tipo_documento_select_modal_create_id">Seleccione el tipo de documento:</label>
-            <div class="custom-control custom-checkbox mb-3">
-                @foreach ($tipos_documento as $td)
-                <div class="row">
-                    <div class="col-md-12">
-                        <input type="checkbox" class="custom-control-input" name="tipo_documento_select_modal_create" id="tipo_documento_select_modal_create_{{$loop->index}}" value="{{$td->id}}">
-                        <label class="custom-control-label" for="tipo_documento_select_modal_create_{{$loop->index}}">{{$td->nombre}}</label>
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Seleccione los tipo de documento
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row row-cols-2">
+                            @foreach ($tipos_documento as $td)
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="tipo_documento_select_modal_create" id="tipo_documento_select_modal_create_{{$loop->index}}" value="{{$td->id}}">
+                                        <label class="custom-control-label" for="tipo_documento_select_modal_create_{{$loop->index}}">{{$td->nombre}}</label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-                @endforeach
             </div>
         </div>
     </div>

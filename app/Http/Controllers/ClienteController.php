@@ -66,7 +66,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'razon_social' => ['required'],
             'email' => ['required', 'email'],
             'direccion' => ['required', 'string', 'max:80'],
@@ -74,6 +74,7 @@ class ClienteController extends Controller
             'tipo_identificacion' => 'required',
             'telefono' => ['required']
         ]);
+        
         $this->repo = ClienteRepository::GetInstance();
         $data = $request->all();
         $data = $this->repo->create($data);
