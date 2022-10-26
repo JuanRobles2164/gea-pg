@@ -10,7 +10,7 @@ class DocumentoLicitacion extends Model
 {
     use HasFactory;
     protected $table = 'documento_licitacion';
-    protected $fillable = ["id", "documento", "licitacion_fase", "revisado"];
+    protected $fillable = ["id", "documento", "licitacion_fase", "revisado", "estado"];
     private $repo;
 
     public function documento(){

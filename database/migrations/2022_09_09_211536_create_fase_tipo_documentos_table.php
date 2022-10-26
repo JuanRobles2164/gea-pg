@@ -17,6 +17,7 @@ class CreateFaseTipoDocumentosTable extends Migration
             $table->id();
             $table->unsignedBigInteger("tipo_documento");
             $table->unsignedBigInteger("fase");
+            $table->unsignedBigInteger('estado')->default(1);
             $table->timestamps();
 
             $table->foreign('tipo_documento')->references('id')->on('tipo_documento');
