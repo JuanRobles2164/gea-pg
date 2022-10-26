@@ -22,7 +22,7 @@
                                     <input class="form-control form-control-sm" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search">
                                 </div>
                                 <div class="col justify-content-end text-right">
-                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_tipo_licitacion">
+                                    <button onclick="obtenerDatos();" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_tipo_licitacion">
                                         Crear <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
@@ -45,7 +45,7 @@
                             @foreach ($tipos_licitacion as $tl)
                             <tr>
                                 <th scope="row">
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="eliminarObjetoTipoLicitacionModal({{$tl->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                    <a type="button" class="btn btn-danger btn-sm" onclick="eliminarObjetoTipoLicitacionModal({{$tl->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </th>
@@ -54,10 +54,10 @@
                                 <th scope="row">{{$tl->descripcion}}</th>
                                 <th scope="row">
                                     <!-- Aquí van los botones para editar-visualizar y eso xd -->
-                                    <a href="#" class="btn btn-default btn-sm" onclick="setDataToTipoLicitacionModalEdit({{$tl->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                    <a type="button"class="btn btn-default btn-sm" onclick="setDataToTipoLicitacionModalEdit({{$tl->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-user-edit"></i>
                                     </a>
-                                    <a href="#" class="btn btn-info btn-sm" onclick="setDataToTipoLicitacionModal({{$tl->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
+                                    <a type="button" class="btn btn-info btn-sm" onclick="setDataToTipoLicitacionModal({{$tl->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                 </th>
@@ -83,6 +83,7 @@
 
 @push('js')
 <script>
+    let listItems = [];
     var ruta_encontrar_tipo_licitacion = "{{route('tipo_licitacion.encontrar')}}";
     var ruta_editar_tipo_licitacion = "{{route('tipo_licitacion.actualizar')}}";
     var ruta_eliminar_tipo_licitacion = "{{route('tipo_licitacion.eliminar')}}";
@@ -163,44 +164,55 @@
         return objetoBusqueda != undefined;
     }
 
-    function obtenerDatos(idObjeto){
+    function obtenerDatos(idObjeto = null){
         let fases = [];
         let fasesAsociadas  = [];
         dataToSet = obtenerDataFase();
         dataToSet.then((data) => {
             console.log(data.data);
             fases = data.data;
-        });
-        dataToSet = obtenerDataFaseAsociadas(idObjeto);
-        dataToSet.then((data) => {
-            console.log(data);
-            fasesAsociadas = data;
-
-            if(fases !=  null && fasesAsociadas != null){
-                fasesAsociadas.forEach((el) => {
-                    if(buscarFaseEntreFasesAsociadas(el, fases)){
-                        let index = fases.findIndex(function(item){
-                            return item.id == el.id;
-                        });
-                        if(index != -1){
-                            console.log('eliminado', fases.splice(index, 1), index);
-                        }
-                    }
-                    crearListaFase(el);
-                });
+            if(idObjeto == null){
                 fases.forEach((el) => {
-                    let selectFases =  document.getElementById("select_fases");
-                    const option = document.createElement('option');
-                    option.value = el.id;
-                    option.text = el.nombre;
-                    selectFases.appendChild(option);
-                });
-
-                console.log(fases);
-                console.log(fasesAsociadas);
+                let selectFases =  document.getElementById("select_fases");
+                const option = document.createElement('option');
+                option.value = el.id;
+                option.text = el.nombre;
+                selectFases.appendChild(option);
+            });
             }
-            
         });
+        if(idObjeto != null){
+            dataToSet = obtenerDataFaseAsociadas(idObjeto);
+            dataToSet.then((data) => {
+                console.log(data);
+                fasesAsociadas = data;
+
+                if(fases !=  null && fasesAsociadas != null){
+                    fasesAsociadas.forEach((el) => {
+                        if(buscarFaseEntreFasesAsociadas(el, fases)){
+                            let index = fases.findIndex(function(item){
+                                return item.id == el.id;
+                            });
+                            if(index != -1){
+                                console.log('eliminado', fases.splice(index, 1), index);
+                            }
+                        }
+                        crearListaFase(el);
+                    });
+                    fases.forEach((el) => {
+                        let selectFases =  document.getElementById("select_fases");
+                        const option = document.createElement('option');
+                        option.value = el.id;
+                        option.text = el.nombre;
+                        selectFases.appendChild(option);
+                    });
+
+                    console.log(fases);
+                    console.log(fasesAsociadas);
+                }
+                
+            });
+        }
     }
 
     function crearListaFase(fase){
@@ -222,9 +234,9 @@
                         ${nombrefase} 
                     </p>
                     <i class="fas fa-bars"></i>
-                    <button class="btn btn-danger btn-sm justify-content-center" onclick="quitarDeLista(${index})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                    <a type="button" id="boton${index}" class="btn btn-danger btn-sm justify-content-center" onclick="quitarDeLista(${index})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
                         <i class="far fa-trash-alt"></i>
-                    </button>
+                    </a>
                 </div>
             `;
             listItems.push(listItem);

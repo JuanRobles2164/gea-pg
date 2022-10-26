@@ -46,28 +46,16 @@
 
 @section('scripts-modal')
     <script>
-    let listItems = [];
-    
     function crearList(){
         const draggable_list = document.getElementById('draggable-list');
-        const div = document.getElementById('hidden-element');
-        
         //se agrega el texto Fases:
         let lab_text = 'Fases:';
-        let data = [];
         document.getElementById('label_fases').innerHTML = lab_text;
-
         //se obtiene lo guardado en el select y se agrega a  la lista
         const select = document.getElementById('select_fases');
         var idfase = select.value;
-        console.log(idfase);
         if(idfase != 0){
-            let index;
-            if(listItems.length == 0){
-               index = listItems.length;
-            }else{
-                index = parseInt(listItems[listItems.length-1].getAttribute("data-index"))+1;
-            }
+            let index = listItems.length;
             
             var nombrefase = select.options[select.selectedIndex].text;
             const listItem = document.createElement('li');
@@ -80,9 +68,9 @@
                         ${nombrefase} 
                     </p>
                     <i class="fas fa-bars"></i>
-                    <button class="btn btn-danger btn-sm justify-content-center" onclick="quitarDeLista(${index})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                    <a type="button" id="boton" class="btn btn-danger btn-sm justify-content-center" onclick="quitarDeLista(${index})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
                         <i class="far fa-trash-alt"></i>
-                    </button>
+                    </a>
                 </div>
             `;
             listItems.push(listItem);
@@ -151,17 +139,46 @@
         const idFaseTwo = listItems[toIndex].getAttribute('id-fase');
         listItems[fromIndex].setAttribute('id-fase', idFaseTwo);
         listItems[toIndex].setAttribute('id-fase', idFaseOne);
+
+        const nombreFaseOne = listItems[fromIndex].getAttribute('nombre-fase');
+        const nombreFaseTwo = listItems[toIndex].getAttribute('nombre-fase');
+        listItems[fromIndex].setAttribute('nombre-fase', nombreFaseTwo);
+        listItems[toIndex].setAttribute('nombre-fase', nombreFaseOne);
+
+        const onClickOne = listItems[fromIndex].querySelectorAll("#boton")[0].getAttribute("onClick");
+        const onClickDos = listItems[toIndex].querySelectorAll("#boton")[0].getAttribute("onClick");
+        
+        listItems[fromIndex].querySelectorAll("#boton")[0].setAttribute("onClick", onClickDos);
+        listItems[toIndex].querySelectorAll("#boton")[0].setAttribute("onClick", onClickOne);
+
+        const draggable_list = document.getElementById('draggable-list');
+        console.log(draggable_list.children)
+        for (const child of draggable_list.children) {
+            if(idFaseOne == child.getAttribute('id-fase')){
+                child.replaceWith(listItems[toIndex]);
+            }
+            if(idFaseTwo == child.getAttribute('id-fase')){
+                child.replaceWith(listItems[fromIndex]);
+            }
+        }
     }
 
     function quitarDeLista(index){
         const select = document.getElementById('select_fases');
         const draggable_list = document.getElementById('draggable-list');
-        draggable_list.removeChild(listItems[index]);
         const option = document.createElement('option');
         option.value = listItems[index].getAttribute("id-fase");
         option.text = listItems[index].getAttribute("nombre-fase");
         select.appendChild(option);
         listItems.splice(index, 1);
+        // draggable_list.removeChild(listItems[index]);
+        draggable_list.innerHTML = '';
+        listItems.forEach((el, i) => {
+            el.setAttribute('data-index', i);
+            el.querySelectorAll("#boton")[0].setAttribute("onClick", `quitarDeLista(${i})`);
+            draggable_list.appendChild(el);
+            addEventListeners();
+        });
     }
     
     function {{$modal_id}}Crear(){
