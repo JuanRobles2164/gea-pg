@@ -31,23 +31,6 @@ class GuardarTipoLicitacion extends Component
         $this->repo = FaseRepository::GetInstance();
         $this->fases = $this->repo->getAll();
         $this->repo = null;
-
-        // $fasesEliminar = [];
-        // if( $this->fases != null && $this->fasesAgregadas!= null){
-        //     Log::debug((array) $this->fasesAgregadas);
-        //     foreach($this->fases as $f){
-        //         foreach($this->fasesAgregadas as $fa){
-        //             if($fa->id == $f->id){
-        //                 array_push($fasesEliminar, $f->id);
-        //                 break;
-        //             }
-        //         }
-        //     }
-        //     $array_num = count($fasesEliminar);
-        //     for ($i = 0; $i < $array_num; ++$i){
-        //         unset($this->fases[$fasesEliminar[$i]]);
-        //     }
-        // }
     }
 
     /**

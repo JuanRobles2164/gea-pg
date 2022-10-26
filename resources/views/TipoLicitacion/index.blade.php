@@ -172,13 +172,19 @@
             console.log(data.data);
             fases = data.data;
             if(idObjeto == null){
-                fases.forEach((el) => {
+                listItems = [];
+                document.getElementById('label_fases').innerHTML = '';
+                document.getElementById('draggable-list').innerHTML = '';
                 let selectFases =  document.getElementById("select_fases");
-                const option = document.createElement('option');
-                option.value = el.id;
-                option.text = el.nombre;
-                selectFases.appendChild(option);
-            });
+                let option = document.getElementById("option_select");
+                selectFases.innerHTML = '';
+                selectFases.appendChild(option);   
+                fases.forEach((el) => {
+                    const option = document.createElement('option');
+                    option.value = el.id;
+                    option.text = el.nombre;
+                    selectFases.appendChild(option);
+                });
             }
         });
         if(idObjeto != null){
@@ -188,6 +194,9 @@
                 fasesAsociadas = data;
 
                 if(fases !=  null && fasesAsociadas != null){
+                    listItems = [];
+                    document.getElementById('label_fases').innerHTML = '';
+                    document.getElementById('draggable-list').innerHTML = '';
                     fasesAsociadas.forEach((el) => {
                         if(buscarFaseEntreFasesAsociadas(el, fases)){
                             let index = fases.findIndex(function(item){
@@ -199,14 +208,17 @@
                         }
                         crearListaFase(el);
                     });
+                    let selectFases =  document.getElementById("select_fases");
+                    let option = document.getElementById("option_select");
+                    selectFases.innerHTML = '';
+                    selectFases.appendChild(option);     
                     fases.forEach((el) => {
-                        let selectFases =  document.getElementById("select_fases");
                         const option = document.createElement('option');
                         option.value = el.id;
                         option.text = el.nombre;
                         selectFases.appendChild(option);
                     });
-
+                    
                     console.log(fases);
                     console.log(fasesAsociadas);
                 }
@@ -234,7 +246,7 @@
                         ${nombrefase} 
                     </p>
                     <i class="fas fa-bars"></i>
-                    <a type="button" id="boton${index}" class="btn btn-danger btn-sm justify-content-center" onclick="quitarDeLista(${index})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                    <a type="button" id="boton" class="btn btn-danger btn-sm justify-content-center" onclick="quitarDeLista(${index})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
                         <i class="far fa-trash-alt"></i>
                     </a>
                 </div>
@@ -242,10 +254,6 @@
             listItems.push(listItem);
             draggable_list.appendChild(listItem);
             addEventListeners();
-        }else{
-            listItems = [];
-            document.getElementById('label_fases').innerHTML = '';
-            document.getElementById('draggable-list').innerHTML = '';
         }
     }
 </script>

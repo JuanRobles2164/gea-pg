@@ -30,10 +30,12 @@ class FaseRepository extends BaseRepository{
        return $fases;
     }
 
-    public function obtenerFasesDocumentosByTipoLicitacion($idTipoLicitacion){
+    public function obtenerFasesDocumentosByTipoLicitacion($idTipoLicitacion,  $estado = 3){
         $fases = DB::table('fase_tipo_licitacion')
         ->join('fase', 'fase.id', '=', 'fase_tipo_licitacion.fase')
         ->where('fase_tipo_licitacion.tipo_licitacion', '=', $idTipoLicitacion)
+        ->where('fase.estado','<>',$estado)
+        ->where('fase_tipo_licitacion.estado','<>',$estado)
         ->select('fase.*')
         ->get();
         return $fases;

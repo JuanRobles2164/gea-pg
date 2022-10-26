@@ -25,4 +25,26 @@ class FaseTipoLicitacionRepository extends BaseRepository{
     public function findByParams($params){
         
     }
+    
+    public function obtenerFasesTLByTipoLicitacion($idTipoLicitacion, $estado = 3){
+        $fasestl = DB::table('fase_tipo_licitacion')
+        ->where('fase_tipo_licitacion.tipo_licitacion', '=', $idTipoLicitacion)
+        ->where('fase_tipo_licitacion.estado','<>', $estado)
+        ->select('fase_tipo_licitacion.*')
+        ->get();
+        return $fasestl;
+    }
+    public function updateftl($data){
+        $parametros = null;
+        if(array_key_exists('estado', $data)){
+            $parametros = ['estado' => $data['estado']];
+        }else{
+            $parametros = ['orden' => $data['orden']];
+        }
+        $update = FaseTipoLicitacion::updateOrCreate(
+            ['tipo_licitacion' => $data['tipo_licitacion'], 'fase' => $data['fase']],
+            $parametros
+        );
+        return $update;
+    }
 }

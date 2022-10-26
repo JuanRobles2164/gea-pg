@@ -9,6 +9,7 @@ use App\Models\FaseTipoLicitacion;
 use App\Repositories\FaseTipoLicitacion\FaseTipoLicitacionRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class TipoLicitacionController extends Controller
 {
@@ -152,10 +153,43 @@ class TipoLicitacionController extends Controller
         $request->validate($this->validationRules);
         $this->repo = TipoLicitacionRepository::GetInstance();
         $data = $request->all();
+        $dataTipoLicitacion = [];
+        $dataTipoLicitacion['nombre'] = $data['nombre'];
+        $dataTipoLicitacion['descripcion'] = $data['descripcion'];
         $tipoLicitacion = $this->repo->find($data["id"]);
-        $this->repo->update($tipoLicitacion, $data);
+        $entidad = $this->repo->update($tipoLicitacion, $dataTipoLicitacion);
+        $retorno['tipo_licitacion'] = $entidad;
+        $retorno['fase_tipo_licitacion'] = [];
         $this->repo = null;
-        return json_encode($tipoLicitacion);
+
+        $this->repo = FaseTipoLicitacionRepository::GetInstance();
+        $fasestl = $this->repo->obtenerFasesTLByTipoLicitacion($data["id"]);
+        $array_num = count($data['fases']);
+        for ($i = 0; $i < $array_num; ++$i){
+            $fasesModificadas = [];
+            $dataFaseTipoLicitacion['orden'] = $data['fases'][$i]['index'];
+            $dataFaseTipoLicitacion['fase'] = $data['fases'][$i]['idFase'];
+            $dataFaseTipoLicitacion['tipo_licitacion'] = $entidad->id;     
+            if($fasestl != null){
+                foreach($fasestl as $ftl){
+                    if($ftl->fase == $data['fases'][$i]['idFase']){     
+                        array_push($fasesModificadas,$ftl->id);            
+                        break;
+                    }
+                }
+            }
+            if(count($fasesModificadas) != 0){
+                foreach($fasestl as $ftl){
+                    if(!(in_array($ftl->id,$fasesModificadas))){
+                        $dataFaseTipoLicitacion['estado'] = '3';
+                    }
+                }
+            }
+            array_push($retorno['fase_tipo_licitacion'],  $this->repo->updateftl($dataFaseTipoLicitacion));
+        }
+
+        $this->repo = null;
+        return json_encode($retorno);
     }
 
     /**

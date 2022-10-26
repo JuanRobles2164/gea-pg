@@ -78,10 +78,6 @@
             
             addEventListeners();
             select.options[select.selectedIndex].remove();
-        }else{
-            listItems = [];
-            document.getElementById('label_fases').innerHTML = '';
-            document.getElementById('draggable-list').innerHTML = '';
         }
         
     }
@@ -233,7 +229,7 @@
         document.getElementById("descripcion_tipo_licitacion_modal_create_id").value = '';
         document.getElementById("draggable-list").innerHTML = '';
         let option = document.getElementById("option_select");
-        let select = document.getElementById('select_fases')
+        let select = document.getElementById('select_fases');
         select.innerHTML = '';
         select.appendChild(option);
     }
