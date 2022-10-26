@@ -205,9 +205,25 @@
             postData(ruta_eliminar_cliente, data)
                 .then((data) => {
                     console.log(data);
-                    alert("Cliente eliminada exitosamente!");
-                    location.reload();
-                });
+                    swal({
+                        title: "Esta seguro que desea eliminar",
+                        icon: "warning",
+                        buttons: ["Cancelar", "OK"],
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            swal("Cliente eliminada exitosamente!", {
+                                icon: "success",
+                            })
+                            .then((willDelete) => {
+                                location.reload();
+                            });
+                        } else {
+                            swal("Acción cancelada");
+                        }
+                    });
+                }); 
         }
 
         function toggleStateCliente(idObjeto){

@@ -18,4 +18,7 @@
     </div>
   </div>
 
-  @yield('scripts-modal')
+  @push('js')
+    @yield('scripts-modal')
+  @endpush
+  

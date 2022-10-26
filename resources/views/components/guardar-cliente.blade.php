@@ -1,47 +1,48 @@
 @extends('templates.templateComponentes')
 
 @section('modal-content')
-<input type="hidden" name="id_cliente_modal_create" id="id_cliente_modal_create_id" value="{{isset($modelo->id) ? $modelo->id : ''}}">
-<div class="row">
-    <div class="form-group col-md-6">
-        <label class="form-label" for="rsocial_cliente_modal_create_id">Razón social:</label>
-        <br>
-        <input for="" class="form-control form-control-alternative" id="rsocial_cliente_modal_create_id" autocomplete="disabled">{{isset($model->id) ? $model->razon_social : '' }}</input>
+
+<form method="post">
+    @csrf
+    <input type="hidden" name="id_cliente_modal_create" id="id_cliente_modal_create_id" value="{{isset($modelo->id) ? $modelo->id : ''}}">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label class="form-label" for="rsocial_cliente_modal_create_id">Razón social:</label>
+            <input class="form-control form-control-alternative" id="rsocial_cliente_modal_create_id" autocomplete="disabled">{{isset($model->id) ? $model->razon_social : '' }}</input>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="form-label" for="telefono_cliente_modal_create_id">Telefono:</label>
+            <br>
+            <input id="telefono_cliente_modal_create_id" class="form-control form-control-alternative">{{isset($model->id) ? $model->telefono : ''}}</input>
+        </div>
     </div>
-    <div class="form-group col-md-6">
-        <label class="form-label" for="telefono_cliente_modal_create_id">Telefono:</label>
-        <br>
-        <input id="telefono_cliente_modal_create_id" class="form-control form-control-alternative">{{isset($model->id) ? $model->telefono : ''}}</input>
-    </div>
-</div>
-<div class="row">
-    <div class="form-group col-md-6">
-        <label class="form-label" for="identificacion_cliente_modal_create_id">Identificación:</label>
-        <br>
-        <input class="form-control form-control-alternative" for="" id="identificacion_cliente_modal_create_id">{{isset($model->id) ? $model->identificacion : ''}}</input>
-    </div>
-    <div class="form-group col-md-6">
-        <label class="form-label" for="tident_cliente_modal_create_id">Tipo identificacion:</label>
-        <br>
-        <select class="form-control form-control-alternative" value="{{old('tipoIdent')}}" name="tipoIdent" id="tident_cliente_modal_create_id">
-            @foreach ($tipo_ident as $key => $ti)
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label class="form-label" for="identificacion_cliente_modal_create_id">Identificación:</label>
+            <br>
+            <input class="form-control form-control-alternative" for="" id="identificacion_cliente_modal_create_id">{{isset($model->id) ? $model->identificacion : ''}}</input>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="form-label" for="tident_cliente_modal_create_id">Tipo identificacion:</label>
+            <br>
+            <select class="form-control form-control-alternative" value="{{old('tipoIdent')}}" name="tipoIdent" id="tident_cliente_modal_create_id">
+                @foreach ($tipo_ident as $key => $ti)
                 <option value="{{$ti}}">{{$ti}}</option>
-            @endforeach
-        </select>
+                @endforeach
+            </select>
+        </div>
     </div>
-</div>
-<div class="form-group">
-    <label class="form-label" for="email_cliente_modal_create_id">Email:</label>
-    <br>
-    <input type="email" class="form-control form-control-alternative" id="email_cliente_modal_create_id" autocomplete="disabled"> {{isset($model->id) ? $model->email : '' }} </input>
-</div>
-<div class="form-group">
-    <label class="form-label" for="direccion_cliente_modal_create_id">Direccion:</label>
-    <br>
-    <input class="form-control form-control-alternative" for="" id="direccion_cliente_modal_create_id">{{isset($model->id) ? $model->direccion : ''}}</input>
-</div>
-
-
+    <div class="form-group">
+        <label class="form-label" for="email_cliente_modal_create_id">Email:</label>
+        <br>
+        <input type="email" class="form-control form-control-alternative" id="email_cliente_modal_create_id" autocomplete="disabled"> {{isset($model->id) ? $model->email : '' }} </input>
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="direccion_cliente_modal_create_id">Direccion:</label>
+        <br>
+        <input class="form-control form-control-alternative" for="" id="direccion_cliente_modal_create_id">{{isset($model->id) ? $model->direccion : ''}}</input>
+    </div>
+</form>
 
 
 @endsection
@@ -80,28 +81,45 @@
             tipo_identificacion: tipo_identificacion,
             telefono: telefono
         }
-        
+
         if (id == undefined || id == null || id == '') {
             //si viene vacío, va a crear
             objeto.id = null;
             postData(ruta_crear, objeto)
                 .then((data) => {
-                    alert("Cliente creado exitosamente!");
                     console.log(data);
-                    location.reload();
+                    if (data.errors != undefined) {
+                        imprimirErrores(data);
+                    } else {
+                        swal({
+                            title: "Cliente creado exitosamente!",
+                            icon: "success",
+                            buttons: true,
+                        })
+                        .then((willDelete) => {
+                            location.reload();
+                        });
+                    }
                 }).catch((error) => {
-                    
+                    console.log(error);
                 });
         } else {
             //Si viene con id, va a editar
             postData(ruta_editar, objeto)
                 .then((data) => {
-                    alert("Cliente editado exitosamente!");
                     console.log(data);
-                    location.reload();
+                    swal({
+                        title: "Cliente editado exitosamente!",
+                        icon: "success",
+                        buttons: true,
+                    })
+                    .then((willDelete) => {
+                        location.reload();
+                    });
                 });
         }
     }
+
     function {{$modal_id}}Limpiar(){
         document.getElementById("id_cliente_modal_create_id").value = '';
         document.getElementById("rsocial_cliente_modal_create_id").value = '';
@@ -112,4 +130,5 @@
         document.getElementById("telefono_cliente_modal_create_id").value = '';
     }
 </script>
+
 @endsection

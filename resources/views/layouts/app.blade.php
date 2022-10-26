@@ -85,6 +85,7 @@
     
         </script>
 
+
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
@@ -109,9 +110,33 @@
         <!-- Filepond Library JS -->
         <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 
+
+        <script>
+            function imprimirErrores(data){
+                //limpiar el componente
+                //alert(data.message);
+                //notificador-errores
+                let errores = data.errors;
+                let erroresMostrar = [];
+                for(let msg in errores){
+                    errores[msg].forEach((el) => {
+                        erroresMostrar.push(el);
+                    });
+                    //Agregar error por error al componente que los muestra
+                }
+                swal({
+                    title: "Completa los campos obligatorios",
+                    text: erroresMostrar.join("\n"),
+                    icon: "error",
+                    button: "OK",
+                });
+            }
+        </script>
+
         @stack('js')
         
         <!-- Argon JS -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="{{ asset('argon') }}/vendor/js-cookie/js.cookie.js"></script>
         <script src="{{ asset('argon') }}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
         <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
