@@ -9,5 +9,5 @@ class FaseTipoDocumento extends Model
 {
     use HasFactory;
     protected $table = 'fase_tipo_documento';
-    protected $fillable = ["id", "tipo_documento", "fase"];
+    protected $fillable = ["id", "tipo_documento", "fase", "estado"];
 }

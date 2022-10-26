@@ -18,6 +18,7 @@ class CreateFaseTipoLicitacionsTable extends Migration
             $table->integer("orden");
             $table->unsignedBigInteger("fase");
             $table->unsignedBigInteger("tipo_licitacion");
+            $table->unsignedBigInteger('estado')->default(1);
             $table->timestamps();
 
             $table->foreign('fase')->references('id')->on('fase');

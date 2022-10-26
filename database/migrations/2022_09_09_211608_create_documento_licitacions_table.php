@@ -18,6 +18,7 @@ class CreateDocumentoLicitacionsTable extends Migration
             $table->unsignedBigInteger("documento");
             $table->unsignedBigInteger("licitacion_fase");
             $table->boolean("revisado");
+            $table->unsignedBigInteger('estado')->default(1);
             $table->timestamps();
 
             $table->foreign('documento')->references('id')->on('documento');
