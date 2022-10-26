@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
-
+@php
+use App\Http\Util\Utilidades;
+@endphp
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -104,7 +106,7 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item mb-5 mr-4 ml-4 pl-1 bg-secondary" style="position: absolute; bottom: 0;">
+            <li class="nav-item " >
               <a class="nav-link text-mg5" href="#" target="_blank">
                 <i class="ni ni-building"></i> Info Empresa
               </a>
@@ -126,12 +128,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
-                  <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
-                  </span>
-                  <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
-                  </div>
+                  <span class="mb-0 text-sm  font-weight-bold user-circle">{{ Utilidades::obtenerInicial( auth()->user()->name ) }}</span>
                 </div>
               </a>
               <div class="dropdown-menu  dropdown-menu-right ">
@@ -141,18 +138,6 @@
                 <a href="#!" class="dropdown-item">
                   <i class="ni ni-single-02"></i>
                   <span>My profile</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
-                  <span>Settings</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-calendar-grid-58"></i>
-                  <span>Activity</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-support-16"></i>
-                  <span>Support</span>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="#!" class="dropdown-item">
