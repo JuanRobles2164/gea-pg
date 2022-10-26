@@ -48,7 +48,7 @@ class FaseController extends Controller
 
     public function detailsByTipoLic(Request $request){
         $this->repo = FaseRepository::GetInstance();
-        $lista = $this->repo->findByParams($request->tipo);
+        $lista = $this->repo->obtenerFasesDocumentosByTipoLicitacion($request->tipo);
         $this->repo = null;
         return json_encode($lista);
     }
@@ -134,6 +134,30 @@ class FaseController extends Controller
         $this->repo->delete($objeto);
         $this->repo = null;
         return json_encode($objeto);
+    }
+
+    public function obtenerDocumentosYFasesByTipoLicitacionId(Request $request){
+        $allData = [];
+        $this->repo = FaseRepository::GetInstance();
+        
+        $fases = $this->repo->obtenerFasesDocumentosByTipoLicitacion($request->id);
+        foreach($fases as $f){
+            $documentos = $this->repo->obtenerDocumentosByFaseId($f->id);
+            $arrTemp = [
+                'fase' => $f,
+                'documentos' => $documentos
+            ];
+            array_push($allData, $arrTemp);
+        }
+        $this->repo = null;
+        return json_encode($allData);
+    }
+
+    public function obtenerDocumentosByFaseId(Request $request){
+        $this->repo = FaseRepository::GetInstance();
+        $documentos = $this->repo->obtenerDocumentosByFaseId($request->id);
+        $this->repo = null;
+        return json_encode($documentos);
     }
 
 }

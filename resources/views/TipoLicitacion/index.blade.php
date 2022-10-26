@@ -86,6 +86,8 @@
     var ruta_encontrar_tipo_licitacion = "{{route('tipo_licitacion.encontrar')}}";
     var ruta_editar_tipo_licitacion = "{{route('tipo_licitacion.actualizar')}}";
     var ruta_eliminar_tipo_licitacion = "{{route('tipo_licitacion.eliminar')}}";
+    var ruta_consultar_fases = "{{route('fase.listar')}}";
+    var ruta_consultar_fases_asociadas = "{{route('fase.encontrar_por_tipolic')}}";
 
     async function obtenerDataTipoLicitacion(data) {
         const response = await fetch(ruta_encontrar_tipo_licitacion + "?id=" + data.id);
@@ -124,7 +126,8 @@
             document.getElementById("id_tipo_licitacion_modal_create_id").value = tipoLicitacionData.id;
             document.getElementById("nombre_tipo_licitacion_modal_create_id").value = tipoLicitacionData.nombre;
             document.getElementById("descripcion_tipo_licitacion_modal_create_id").value = tipoLicitacionData.descripcion;
-
+            console.log(idObjeto);
+            obtenerDatos(idObjeto);
 
             $('#id_modal_tipo_licitacion').modal('show');
         });
@@ -140,6 +143,98 @@
                 alert("Tipo Licitación eliminada exitosamente!");
                 location.reload();
             });
+    }
+    async function obtenerDataFase(data) {
+        const response = await fetch(ruta_consultar_fases);
+        return await response.json();
+    }
+
+    async function obtenerDataFaseAsociadas(data) {
+        const response = await fetch(ruta_consultar_fases_asociadas + "?tipo=" + data);
+        return await response.json();
+    }
+
+    function buscarFaseEntreFasesAsociadas(faseAsociada, fases){
+        let objetoBusqueda = fases.find((e) => {
+            if(e.id == faseAsociada.id){
+                return true;
+            }
+        });
+        return objetoBusqueda != undefined;
+    }
+
+    function obtenerDatos(idObjeto){
+        let fases = [];
+        let fasesAsociadas  = [];
+        dataToSet = obtenerDataFase();
+        dataToSet.then((data) => {
+            console.log(data.data);
+            fases = data.data;
+        });
+        dataToSet = obtenerDataFaseAsociadas(idObjeto);
+        dataToSet.then((data) => {
+            console.log(data);
+            fasesAsociadas = data;
+
+            if(fases !=  null && fasesAsociadas != null){
+                fasesAsociadas.forEach((el) => {
+                    if(buscarFaseEntreFasesAsociadas(el, fases)){
+                        let index = fases.findIndex(function(item){
+                            return item.id == el.id;
+                        });
+                        if(index != -1){
+                            console.log('eliminado', fases.splice(index, 1), index);
+                        }
+                    }
+                    crearListaFase(el);
+                });
+                fases.forEach((el) => {
+                    let selectFases =  document.getElementById("select_fases");
+                    const option = document.createElement('option');
+                    option.value = el.id;
+                    option.text = el.nombre;
+                    selectFases.appendChild(option);
+                });
+
+                console.log(fases);
+                console.log(fasesAsociadas);
+            }
+            
+        });
+    }
+
+    function crearListaFase(fase){
+        const draggable_list = document.getElementById('draggable-list');
+        const select = document.getElementById('select_fases');
+        if(fase.id != 0){
+            index = listItems.length;
+            let lab_text = 'Fases:';
+            document.getElementById('label_fases').innerHTML = lab_text;
+            
+            var nombrefase = fase.nombre;
+            const listItem = document.createElement('li');
+            listItem.setAttribute('data-index', index);
+            listItem.setAttribute('id-fase', fase.id);
+            listItem.setAttribute('nombre-fase', nombrefase);
+            listItem.innerHTML = `
+                <div class="draggable" draggable="true">
+                    <p class="list-name justify-content-start" id="parrafo${index}">
+                        ${nombrefase} 
+                    </p>
+                    <i class="fas fa-bars"></i>
+                    <button class="btn btn-danger btn-sm justify-content-center" onclick="quitarDeLista(${index})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </div>
+            `;
+            listItems.push(listItem);
+            draggable_list.appendChild(listItem);
+            addEventListeners();
+        }else{
+            listItems = [];
+            document.getElementById('label_fases').innerHTML = '';
+            document.getElementById('draggable-list').innerHTML = '';
+        }
     }
 </script>
 @endpush

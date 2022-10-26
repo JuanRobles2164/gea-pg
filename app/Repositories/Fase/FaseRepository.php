@@ -12,21 +12,41 @@ class FaseRepository extends BaseRepository{
     private function __construct(){
 
     }
-    public static function GetInstance(){
+    public static function GetInstance() {
         if(!self::$instance instanceof self){
             self::$instance = new self();
         }
         return self::$instance;
     }
-    public function getModel()
-    {
+    public function getModel() {
         return new Fase;
     }
-    public function findByParams($idTipoLicitacion){
+
+    public function findByParams($idTipoLicitacion) {
        $fases = DB::table('fase')
        ->join('fase_tipo_documento', 'fase.id','=','fase_tipo_documento.fase')
        ->select('fase.*')
        ->get();
        return $fases;
+    }
+
+    public function obtenerFasesDocumentosByTipoLicitacion($idTipoLicitacion){
+        $fases = DB::table('fase_tipo_licitacion')
+        ->join('fase', 'fase.id', '=', 'fase_tipo_licitacion.fase')
+        ->where('fase_tipo_licitacion.tipo_licitacion', '=', $idTipoLicitacion)
+        ->select('fase.*')
+        ->get();
+        return $fases;
+    }
+
+    public function obtenerDocumentosByFaseId($idFase) {
+        $documentos = DB::table('documento')
+        ->join('tipo_documento', 'documento.tipo_documento', '=', 'tipo_documento.id')
+        ->join('fase_tipo_documento', 'tipo_documento.id', '=', 'fase_tipo_documento.tipo_documento')
+        ->where('fase_tipo_documento.fase', $idFase)
+        ->select('documento.*', 'tipo_documento.*')
+        ->get();
+        
+        return $documentos;
     }
 }

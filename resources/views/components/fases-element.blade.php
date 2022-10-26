@@ -1,5 +1,4 @@
 <div class="card">
-    <!-- Esto deberia ser un componente (por cada fase se genera un collapse) -->
     <div class="card-header" id="headingOne">
         <h5 class="mb-0">
             <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -53,10 +52,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
-                <div class="card-footer py-3">
-                    <!--paginacion-->
-                    <!-- $documentos->links('components.paginador') -->
                 </div>
             </div>
         </div>

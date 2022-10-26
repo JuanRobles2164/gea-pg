@@ -134,10 +134,13 @@ Route::name("fase.")->group(function(){
     Route::controller(FaseController::class)->group(function(){
         Route::get('/fase/listar', 'listar')->name("listar");
         Route::get('/fase/find', 'details')->name("encontrar");
-        Route::post('/fase/detailsbytipo', 'detailsByTipoLic')->name("encontrar_por_tipolic");
+        Route::get('/fase/detailsbytipo', 'detailsByTipoLic')->name("encontrar_por_tipolic");
         Route::post('/fase/store', 'store')->name("guardar");
         Route::post('/fase/update', 'update')->name("actualizar");
         Route::post('/fase/destroy', 'destroy')->name("eliminar");
+        Route::get('/fase/obtener_documentos_por_fase_id', 'obtenerDocumentosByFaseId')->name("obtener_documentos_por_fase_id");
+        Route::get('/fase/obtener_documentos_y_fases_by_tipo_licitacion_id', 'obtenerDocumentosYFasesByTipoLicitacionId')
+                ->name("obtener_documentos_y_fases_by_tipo_licitacion_id");
     });
 });
 

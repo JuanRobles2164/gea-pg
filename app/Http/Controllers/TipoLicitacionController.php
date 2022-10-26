@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\TipoLicitacion;
 use App\Http\Requests\StoreTipoLicitacionRequest;
 use App\Http\Requests\UpdateTipoLicitacionRequest;
+use App\Models\FaseTipoLicitacion;
+use App\Repositories\FaseTipoLicitacion\FaseTipoLicitacionRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Illuminate\Http\Request;
 
@@ -67,20 +69,53 @@ class TipoLicitacionController extends Controller
         $request->validate($this->validationRules);
         $this->repo = TipoLicitacionRepository::GetInstance();
         $data = $request->all();
-        $data = $this->repo->create($data);
+        $retorno = [];
+
+        $dataTipoLicitacion = [];
+        $dataTipoLicitacion['nombre'] = $data['nombre'];
+        $dataTipoLicitacion['descripcion'] = $data['descripcion'];
+        $entidad = $this->repo->create($dataTipoLicitacion);
+        $retorno['tipo_licitacion'] = $entidad;
+        $retorno['fase_tipo_licitacion'] = [];
         $this->repo = null;
-        return json_encode($data);
+
+        $this->repo = FaseTipoLicitacionRepository::GetInstance();
+        
+        $array_num = count($data['fases']);
+        for ($i = 0; $i < $array_num; ++$i){
+            $dataFaseTipoLicitacion['orden'] = $data['fases'][$i]['index'];
+            $dataFaseTipoLicitacion['fase'] = $data['fases'][$i]['idFase'];
+            $dataFaseTipoLicitacion['tipo_licitacion'] = $entidad->id;
+            array_push($retorno['fase_tipo_licitacion'], $this->repo->create($dataFaseTipoLicitacion));
+        }
+        return json_encode($retorno);
     }
 
     
     public function storeInView(Request $request)
     {
-        $request->validate($this->validationRules);
-        $this->repo = TipoLicitacionRepository::GetInstance();
-        $data = $request->all();
-        $data = $this->repo->create($data);
-        $this->repo = null;
-        return json_encode($data);
+        // $request->validate($this->validationRules);
+        // $this->repo = TipoLicitacionRepository::GetInstance();
+        // $data = $request->all();
+        // $retorno = [];
+
+        // $dataTipoLicitacion = [];
+        // $dataTipoLicitacion['nombre'] = $data['nombre'];
+        // $dataTipoLicitacion['descripcion'] = $data['descripcion'];
+        // $entidad = $this->repo->create($dataTipoLicitacion);
+        // $retorno['tipo_licitacion'] = $entidad;
+        // $retorno['fase_tipo_licitacion'] = [];
+        // $this->repo = null;
+
+        // $this->repo = FaseTipoLicitacionRepository::GetInstance();
+        
+        // foreach ($data['fases'] as $fase) {
+        //     $dataFaseTipoLicitacion['orden'] = $fase->index;
+        //     $dataFaseTipoLicitacion['fase'] = $fase->idFase;
+        //     $dataFaseTipoLicitacion['tipo_licitacion'] = $entidad->id;
+        //     array_push($retorno['fase_tipo_licitacion'], $this->repo->create($dataFaseTipoLicitacion));
+        // }
+        // return json_encode($retorno);
     }
 
     /**

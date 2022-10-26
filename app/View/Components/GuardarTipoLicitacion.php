@@ -4,14 +4,17 @@ namespace App\View\Components;
 
 use App\Repositories\Fase\FaseRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\Component;
 
 class GuardarTipoLicitacion extends Component
 {
     public $modal_title, $modal_id;
     public $model;
-    private $repo = null;
     public $fases;
+    public $fasesAgregadas;
+    private $repo = null;
+
     /**
      * Create a new component instance.
      *
@@ -25,12 +28,26 @@ class GuardarTipoLicitacion extends Component
             $this->repo = TipoLicitacionRepository::GetInstance();
             $this->model = $this->repo->find($modelId);
         }
-
-
         $this->repo = FaseRepository::GetInstance();
         $this->fases = $this->repo->getAll();
         $this->repo = null;
 
+        // $fasesEliminar = [];
+        // if( $this->fases != null && $this->fasesAgregadas!= null){
+        //     Log::debug((array) $this->fasesAgregadas);
+        //     foreach($this->fases as $f){
+        //         foreach($this->fasesAgregadas as $fa){
+        //             if($fa->id == $f->id){
+        //                 array_push($fasesEliminar, $f->id);
+        //                 break;
+        //             }
+        //         }
+        //     }
+        //     $array_num = count($fasesEliminar);
+        //     for ($i = 0; $i < $array_num; ++$i){
+        //         unset($this->fases[$fasesEliminar[$i]]);
+        //     }
+        // }
     }
 
     /**

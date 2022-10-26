@@ -26,10 +26,7 @@
     <div class="row">
         <div class="col-md-10">  
             <select id="select_fases" class="custom-select form-control-alternative" name="fase">
-                <option  value="0">Seleccione una fase...</option>
-                @foreach ($fases as $f)
-                    <option value="{{$f->id}}">{{$f->nombre}}</option>
-                @endforeach
+                <option id="option_select" value="0">Seleccione una fase...</option>
             </select>
         </div> 
         <div class="col-md-2">
@@ -42,8 +39,8 @@
         <label id="label_fases" for="fases"></label>
         <ul class="draggable-list form-control-alternative" id="draggable-list"></ul>
     </div>
-    <div id="hidden">
-    </div> 
+    <!-- <div id="hidden-element">
+    </div>  -->
 </form>
 @endsection
 
@@ -53,7 +50,7 @@
     
     function crearList(){
         const draggable_list = document.getElementById('draggable-list');
-        const div = document.getElementById('hidden');
+        const div = document.getElementById('hidden-element');
         
         //se agrega el texto Fases:
         let lab_text = 'Fases:';
@@ -65,36 +62,34 @@
         var idfase = select.value;
         console.log(idfase);
         if(idfase != 0){
-            let index =  listItems.length;
+            let index;
+            if(listItems.length == 0){
+               index = listItems.length;
+            }else{
+                index = parseInt(listItems[listItems.length-1].getAttribute("data-index"))+1;
+            }
+            
             var nombrefase = select.options[select.selectedIndex].text;
             const listItem = document.createElement('li');
             listItem.setAttribute('data-index', index);
             listItem.setAttribute('id-fase', idfase);
+            listItem.setAttribute('nombre-fase', nombrefase);
             listItem.innerHTML = `
-                <span class="number">${index + 1}</span>
                 <div class="draggable" draggable="true">
-                    <p class="list-name justify-content-start">
+                    <p class="list-name justify-content-start" id="parrafo${index}">
                         ${nombrefase} 
                     </p>
                     <i class="fas fa-bars"></i>
-                    <button class="btn btn-danger btn-sm justify-content-center" onclick="quitarDeLista()" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                    <button class="btn btn-danger btn-sm justify-content-center" onclick="quitarDeLista(${index})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
                         <i class="far fa-trash-alt"></i>
                     </button>
                 </div>
             `;
             listItems.push(listItem);
-            let dataObject = [index + 1, idfase];
-
-            const input = document.createElement("input");
-            input.setAttribute("type", "hidden");
-            input.setAttribute("id", index);
-            input.setAttribute("name", "fases[]");
-            input.setAttribute("value", dataObject);
-
-            div.appendChild(input);
             draggable_list.appendChild(listItem);
             
             addEventListeners();
+            select.options[select.selectedIndex].remove();
         }else{
             listItems = [];
             document.getElementById('label_fases').innerHTML = '';
@@ -156,16 +151,17 @@
         const idFaseTwo = listItems[toIndex].getAttribute('id-fase');
         listItems[fromIndex].setAttribute('id-fase', idFaseTwo);
         listItems[toIndex].setAttribute('id-fase', idFaseOne);
-        
-        let data = document.getElementsByName('fases[]');
-        let dataObject = [parseInt(listItems[toIndex].getAttribute('data-index'))+1,parseInt(listItems[toIndex].getAttribute('id-fase'))];
-        data[fromIndex].value = dataObject;
-        dataObject = [parseInt(listItems[fromIndex].getAttribute('data-index'))+1,parseInt(listItems[fromIndex].getAttribute('id-fase'))];
-        data[toIndex].value = dataObject;
     }
 
-    function quitarDeLista(){
-
+    function quitarDeLista(index){
+        const select = document.getElementById('select_fases');
+        const draggable_list = document.getElementById('draggable-list');
+        draggable_list.removeChild(listItems[index]);
+        const option = document.createElement('option');
+        option.value = listItems[index].getAttribute("id-fase");
+        option.text = listItems[index].getAttribute("nombre-fase");
+        select.appendChild(option);
+        listItems.splice(index, 1);
     }
     
     function {{$modal_id}}Crear(){
@@ -174,15 +170,25 @@
 
         let id = document.getElementById("id_tipo_licitacion_modal_create_id").value;
         let nombre = document.getElementById("nombre_tipo_licitacion_modal_create_id").value;
-            //Esto retornará un NodeList
         let descripcion = document.getElementById("descripcion_tipo_licitacion_modal_create_id").value;
-        let fasesSelected = FasesSeleccionadasModalCreate;
-            
+        let fases =  [];
+        let fasesNL = document.getElementsByName('fases[]');
+
+        listItems.forEach((el, index) => {
+            let objFase = {
+                index: index, 
+                idFase:el.getAttribute("id-fase")
+            };
+            fases.push(objFase);
+        });
+
         let objeto = {
             id: id,
             nombre: nombre,
-            descripcion: descripcion
+            descripcion: descripcion, 
+            fases: fases
         }
+        console.log(objeto);
         if(id == undefined || id == null || id == ''){
             //si viene vacío, va a crear
             objeto.id = null;
@@ -190,7 +196,7 @@
             .then((data) => {
                 console.log(data);
                 alert("Tipo de licitacion creado exitosamente!");
-                location.reload();
+                // location.reload();
             });
         }else{
             //Si viene con id, va a editar
@@ -199,8 +205,7 @@
                 console.log(data);
                 alert("Tipo de licitacion editado exitosamente!");
                 objeto = data;
-                limpiarForm{{$modal_id}}();
-                location.reload();
+                // location.reload();
             });
         }
     }
@@ -209,7 +214,11 @@
         document.getElementById("id_tipo_licitacion_modal_create_id").value = '';
         document.getElementById("nombre_tipo_licitacion_modal_create_id").value = '';
         document.getElementById("descripcion_tipo_licitacion_modal_create_id").value = '';
-
+        document.getElementById("draggable-list").innerHTML = '';
+        let option = document.getElementById("option_select");
+        let select = document.getElementById('select_fases')
+        select.innerHTML = '';
+        select.appendChild(option);
     }
     </script>
 @endsection
