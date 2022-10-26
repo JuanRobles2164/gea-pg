@@ -1,3 +1,6 @@
+@php
+use App\Http\Util\Utilidades;
+@endphp
 <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
         <!-- Toggler -->
@@ -13,9 +16,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
-                        <span class="avatar avatar-sm rounded-circle">
-                            <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
-                        </span>
+                        <span class="mb-0 text-sm  font-weight-bold user-circle">{{ Utilidades::obtenerInicial( auth()->user()->name ) }}</span>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
@@ -25,18 +26,6 @@
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
                         <i class="ni ni-single-02"></i>
                         <span>{{ __('My profile') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-settings-gear-65"></i>
-                        <span>{{ __('Settings') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-calendar-grid-58"></i>
-                        <span>{{ __('Activity') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-support-16"></i>
-                        <span>{{ __('Support') }}</span>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
@@ -66,7 +55,7 @@
                 </div>
             </div>
             <!-- Form -->
-            <form class="mt-4 mb-3 d-md-none">
+            <!-- <form class="mt-4 mb-3 d-md-none">
                 <div class="input-group input-group-rounded input-group-merge">
                     <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="{{ __('Search') }}" aria-label="Search">
                     <div class="input-group-prepend">
@@ -75,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            </form> -->
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -123,7 +112,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item mb-5 mr-4 ml-4 pl-1 bg-secondary" style="position: absolute; bottom: 0;">
+                <li class="nav-item " >
                     <a class="nav-link text-mg5" href="#" target="_blank">
                         <i class="ni ni-building"></i> Info Empresa
                     </a>
