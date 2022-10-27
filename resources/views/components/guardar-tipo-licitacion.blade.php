@@ -209,7 +209,7 @@
             .then((data) => {
                 console.log(data);
                 alert("Tipo de licitacion creado exitosamente!");
-                // location.reload();
+                location.reload();
             });
         }else{
             //Si viene con id, va a editar
@@ -218,7 +218,7 @@
                 console.log(data);
                 alert("Tipo de licitacion editado exitosamente!");
                 objeto = data;
-                // location.reload();
+                location.reload();
             });
         }
     }

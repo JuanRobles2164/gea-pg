@@ -28,7 +28,7 @@
             </select>
         </div> 
         <div class="col-md-2">
-            <button type="button"  class="btn btn-primary btn-sm" style="float: right;" onclick="crearList()"> Agregar</button>
+            <button type="button"  class="btn btn-primary btn-sm" style="float: right;"> Agregar</button>
         </div>
     </div>
     <div class="form-group" style="pointer-events: none;">

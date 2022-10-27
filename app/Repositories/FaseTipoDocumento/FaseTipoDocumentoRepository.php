@@ -25,4 +25,20 @@ class FaseTipoDocumentoRepository extends BaseRepository{
     public function findByParams($params){
         
     }
+
+    public function obtenerTiposDocsByFase($idFase, $estado = 3){
+        $fasestd = DB::table('fase_tipo_documento')
+        ->where('fase_tipo_documento.fase', '=', $idFase)
+        ->where('fase_tipo_documento.estado','<>', $estado)
+        ->select('fase_tipo_documento.*')
+        ->get();
+        return $fasestd;
+    }
+    public function updateftd($data){
+        $update = FaseTipoDocumento::updateOrCreate(
+            ['tipo_documento' => $data['tipo_documento'], 'fase' => $data['fase']],
+            ['estado' => $data['estado']]
+        );
+        return $update;
+    }
 }
