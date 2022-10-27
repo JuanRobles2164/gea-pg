@@ -202,28 +202,28 @@
             let data = {
                 id: idObjeto
             }
-            postData(ruta_eliminar_cliente, data)
-                .then((data) => {
-                    console.log(data);
-                    swal({
-                        title: "Esta seguro que desea eliminar",
-                        icon: "warning",
-                        buttons: ["Cancelar", "OK"],
-                        dangerMode: true,
+            swal({
+                title: "Esta seguro que desea eliminar",
+                icon: "warning",
+                buttons: ["Cancelar", "OK"],
+                dangerMode: true,
+            })
+            .then((result) => {
+                if (result) {
+                    swal("Cliente eliminada exitosamente!", {
+                        icon: "success",
                     })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            swal("Cliente eliminada exitosamente!", {
-                                icon: "success",
-                            })
-                            .then((willDelete) => {
-                                location.reload();
-                            });
-                        } else {
-                            swal("Acción cancelada");
-                        }
+                    .then((result) => {
+                        postData(ruta_eliminar_cliente, data)
+                        .then((data) =>{
+                            console.log(data);
+                            location.reload();
+                        });
                     });
-                }); 
+                } else {
+                    swal("Acción cancelada");
+                }
+            });
         }
 
         function toggleStateCliente(idObjeto){

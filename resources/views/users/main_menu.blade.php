@@ -217,12 +217,28 @@
             let data = {
                 id: idObjeto
             }
-            postData(ruta_eliminar_usuario, data)
-                .then((data) => {
-                    console.log(data);
-                    alert("Usuario eliminada exitosamente!");
-                    location.reload();
-                });
+            swal({
+                title: "Esta seguro que desea eliminar el registro ?",
+                icon: "warning",
+                buttons: ["Cancelar", "OK"],
+                dangerMode: true,
+            })
+            .then((result) => {
+                if (result) {
+                    swal("Usuario eliminado exitosamente!", {
+                        icon: "success",
+                    })
+                    .then((result) => {
+                        postData(ruta_eliminar_usuario, data)
+                        .then((data) =>{
+                            console.log(data);
+                            location.reload();
+                        });
+                    });
+                } else {
+                    swal("Acción cancelada");
+                }
+            });
         }
 
         function resetPasswordRequest(idUsuario){
@@ -233,7 +249,7 @@
             postData(ruta_restaurar_password, objeto)
             .then((data) => {
                 console.log(data);
-                alert('Contraseña reestablecida satisfactoriamente');
+                swal("Contraseña reestablecida satisfactoriamente", " ", "success");
             });   
         }
 
