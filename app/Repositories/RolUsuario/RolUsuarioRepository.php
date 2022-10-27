@@ -24,16 +24,59 @@ class RolUsuarioRepository extends BaseRepository{
 
     public function updateRoles($rolesUsuario){
         $roles_ids = [];
+        $idUsuario = $rolesUsuario[0]['usuario'];
         foreach($rolesUsuario as $ru){
             array_push($roles_ids, $ru['rol']);
         }
-        $roles_usuario_actuales = DB::table('rol_usuario')->where('usuario', $rolesUsuario[0]['usuario'])
-        ->where('rol', $roles_ids)
-        ->update(['estado' => 1]);
+        $registros = [];
+        $registros_nuevos = [];
+        $roles_originales = DB::table('rol_usuario')->where('usuario', $idUsuario);
+        if($roles_originales != null){
+            foreach($roles_originales->cursor() as $elemento){
+                //Si coincide con los elementos recibidos, deberá setearlo como activo y asignado
+                if(in_array($elemento->rol, $roles_ids)){
+                    array_push($registros, [
+                        'id' => $elemento->id,
+                        'rol' => $elemento->rol,
+                        'usuario' => $elemento->usuario,
+                        'estado' => 1
+                    ]);
+                    if (($key = array_search($elemento->rol, $roles_ids)) !== false) {
+                        unset($roles_ids[$key]);
+                    }
+                }else{
+                    //Si no coincide con los elementos recibidos, deberá setearlo como inactivo
+                    array_push($registros, [
+                        'id' => $elemento->id,
+                        'rol' => $elemento->rol,
+                        'usuario' => $idUsuario,
+                        'estado' => 2
+                    ]);
+                }
+            }
+            //si no encontró estos roles, es porque falta asignarlos
+            foreach($roles_ids as $rid){
+                array_push($registros_nuevos, [
+                    'rol' => $rid,
+                    "usuario" => $idUsuario,
+                    "estado" => 1
+                ]);
+            }
+        }else{
+            //Si no tiene roles asignados, deberá agregarlos
+            foreach($roles_ids as $rol){
+                array_push($registros_nuevos, [
+                    'rol' => $rol,
+                    'usuario' => $idUsuario,
+                    'estado' => 1
+                ]);
+            }
+        }
 
-        DB::table('rol_usuario')->where('usuario', $rolesUsuario[0]['usuario'])
-        ->whereNotIn('rol', $roles_ids)
-        ->update(['estado' => 2]);
+        $roles_usuario_actuales = $this->getModel()->upsert($registros, ['id', 'rol', 'usuario']);
+        if(count($registros_nuevos) != 0){
+            $this->getModel()->insert($registros_nuevos);
+        }
         return $roles_usuario_actuales;
     }
 
