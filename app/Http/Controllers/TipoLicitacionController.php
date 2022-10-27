@@ -49,6 +49,13 @@ class TipoLicitacionController extends Controller
         return json_encode($objeto);
     }
 
+    public function toggleTipoLicState(Request $request){
+        $this->repo = TipoLicitacionRepository::GetInstance();
+        $tipo_lic = $this->repo->toggleState($request->id);
+        $this->repo = null;
+        return json_encode($tipo_lic);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

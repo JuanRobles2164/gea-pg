@@ -56,6 +56,13 @@ class FaseController extends Controller
         return json_encode($lista);
     }
 
+    public function toggleFaseState(Request $request){
+        $this->repo = FaseRepository::GetInstance();
+        $fase = $this->repo->toggleState($request->id);
+        $this->repo = null;
+        return json_encode($fase);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

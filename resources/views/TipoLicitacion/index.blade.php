@@ -38,6 +38,7 @@
                                 <th scope="col">Id</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Descripción</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -52,6 +53,19 @@
                                 <th scope="row">{{$tl->id}}</th>
                                 <th scope="row">{{$tl->nombre}}</th>
                                 <th scope="row">{{$tl->descripcion}}</th>
+                                @if($tl->estado == 1)
+                                <td scope="row">
+                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoLic({{$tl->id}})">
+                                        Activo
+                                    </a>
+                                </td>
+                                @else
+                                <td scope="row">
+                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoLic({{$tl->id}})">
+                                        Inactivo
+                                    </a>
+                                </td>
+                                @endif
                                 <th scope="row">
                                     <!-- Aquí van los botones para editar-visualizar y eso xd -->
                                     <a type="button"class="btn btn-default btn-sm" onclick="setDataToTipoLicitacionModalEdit({{$tl->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
@@ -89,6 +103,7 @@
     var ruta_eliminar_tipo_licitacion = "{{route('tipo_licitacion.eliminar')}}";
     var ruta_consultar_fases = "{{route('fase.listar')}}";
     var ruta_consultar_fases_asociadas = "{{route('fase.encontrar_por_tipolic')}}";
+    var ruta_alternar_estado_tipolic = "{{route('tipo_licitacion.toggle_tipo_licitacion_state')}}"
 
     async function obtenerDataTipoLicitacion(data) {
         const response = await fetch(ruta_encontrar_tipo_licitacion + "?id=" + data.id);
@@ -289,6 +304,17 @@
             draggable_list.appendChild(listItem);
             addEventListeners();
         }
+    }
+    function toggleStateTipoLic(idTipoLic){
+        let objeto = {
+            id: idTipoLic
+        }
+
+        postData(ruta_alternar_estado_tipolic, objeto)
+        .then((data) => {
+            console.log(data);
+            location.reload();
+        });   
     }
 </script>
 @endpush
