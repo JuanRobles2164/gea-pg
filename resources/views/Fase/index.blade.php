@@ -113,7 +113,7 @@
             document.getElementById("descripcion_fase_modal_details_id").value = faseData.descripcion;
             document.getElementById("descripcion_fase_modal_details_id").readOnly = true;
            
-            obtenerDatos(idObjeto);
+            obtenerDatos(idObjeto, false);
 
             $('#id_modal_view_fase').modal('show');
         });
@@ -131,7 +131,7 @@
             document.getElementById("nombre_fase_modal_create_id").value = FaseData.nombre;
             document.getElementById("descripcion_fase_modal_create_id").value = FaseData.descripcion;
 
-            obtenerDatos(idObjeto);
+            obtenerDatos(idObjeto, true);
 
             $('#id_modal_fases').modal('show');
         });
@@ -168,7 +168,7 @@
         return objetoBusqueda != undefined;
     }
 
-    const  obtenerDatos = async (idObjeto = null) => {
+    const  obtenerDatos = async (idObjeto = null, isEditar) => {
         try {
             let tDocs = [];
             let tDocsAsociadas  = [];
@@ -211,7 +211,7 @@
                                     console.log('eliminado', tDocs.splice(index, 1), index);
                                 }
                             }
-                            crearListaFase(el);
+                            crearListaFase(el, isEditar);
                         });
                         let selectTDocs =  document.getElementById("select_tdocs");
                         let option = document.getElementById("option_select");
@@ -235,14 +235,27 @@
         }
     }
 
-    function crearListaFase(tDoc){
-        const draggable_list = document.getElementById('draggable-list');
-        const select = document.getElementById('select_tdocs');
+    function crearListaFase(tDoc, isEditar){
+        let draggable_list = null;
+        let select = null ;
+        let lab_text = 'Tipos de documentos:';
+        if(isEditar){
+            draggable_list = document.getElementById('draggable-list');
+            select  = document.getElementById('select_tdocs');
+            if(tDoc.id != 0){
+                document.getElementById('label_tdocs').innerHTML = lab_text;
+            }
+        }else{
+            draggable_list = document.getElementById('draggable-list-view');
+            select  = document.getElementById('select_tdocs-view');
+            if(tDoc.id != 0){
+                document.getElementById('label_tdocs-view').innerHTML = lab_text;
+            }
+        }
+        
+        
         if(tDoc.id != 0){
-            index = listItems.length;
-            let lab_text = 'Tipos de documentos:';
-            document.getElementById('label_tdocs').innerHTML = lab_text;
-            
+            index = listItems.length;            
             var nombreTDocs = tDoc.nombre;
             const listItem = document.createElement('li');
             listItem.setAttribute('data-index', index);
