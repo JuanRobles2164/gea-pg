@@ -111,7 +111,10 @@
                 </div>
             </div>
         </div>
+
     </form>
+
+    <x-modal-documentos-fase-agregar-licitacion/>
 
 @include('layouts.footers.auth')
 
@@ -120,9 +123,16 @@
 @push('js')
     <script>
 
-        let ruta_obtener_documentos_fase = "{{route('fase.obtener_documentos_y_fases_by_tipo_licitacion_id')}}";
+        let ruta_obtener_documentos_tipo_licitacion = "{{route('fase.obtener_documentos_y_fases_by_tipo_licitacion_id')}}";
+        let ruta_obtener_documentos_fase = "{{route('fase.obtener_documentos_por_fase_id')}}";
+
         document.getElementById("tipo_licitacion_select_id").addEventListener("change", consultarFases);
         let collapseFasesIterator = 0;
+
+        async function obtenerDocumentosTipoLicitacion(idTipoLicitacion){
+            const response = await fetch(ruta_obtener_documentos_tipo_licitacion +"?id="+idTipoLicitacion);
+            return response.json();
+        }
 
         async function obtenerDocumentosFase(idFase){
             const response = await fetch(ruta_obtener_documentos_fase +"?id="+idFase);
@@ -132,9 +142,9 @@
         function consultarFases(){
             //tipo_licitacion_select_id
             let selectElementHtml = document.getElementById('tipo_licitacion_select_id');
-            let idFaseSelected = getSelectedOption(selectElementHtml).value;
-            if(idFaseSelected != "-1" || idFaseSelected != -1){
-                let dataToSet = obtenerDocumentosFase(idFaseSelected);
+            let idTipoLicitacionSelected = getSelectedOption(selectElementHtml).value;
+            if(idTipoLicitacionSelected != "-1" || idTipoLicitacionSelected != -1){
+                let dataToSet = obtenerDocumentosTipoLicitacion(idTipoLicitacionSelected);
                 dataToSet
                 .then((data) => {
                     console.log(data);
@@ -143,27 +153,46 @@
                         'fase' => obj,
                         'documentos' array(objs)
                     }*/
-                    //limpiarYConcatenarFasesLicitacion(data);
+                    limpiarYConcatenarFasesLicitacion(data, idTipoLicitacionSelected);
                 });
             }
             
         }
 
-        function limpiarYConcatenarFasesLicitacion(data){
+        function mostrarModalDocumentosAsociadosFase(idFase){
+            let response = obtenerDocumentosFase(idFase);
+            response
+                .then((data) => {
+                    console.log(data);
+                    $('#modalFases').modal('show');
+                });
+        }
+
+        function limpiarYConcatenarFasesLicitacion(data, idTipoLicitacion){
             let elementoAcordion = document.getElementById('accordion_fases_documentos');
             elementoAcordion.innerHTML = '';
 
             let elementoFaseCadena = `
                 <div class="card">
                     <div class="card-header" id="headingOne:fase_id">
+                        
                         <h6 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse_fase_:fase_id" aria-expanded="true" aria-controls="collapseOne">
+                            <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse_fase_:fase_id" aria-expanded="false" aria-controls="collapseOne">
                                 :nombre_fase
                             </button>
                         </h6>
+                        <div class="float-right">
+                            <button type="button" onclick="mostrarModalDocumentosAsociadosFase(:fase_id)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+
+                            <button type="button" onclick="">
+                                <i class="fa fa-file"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <div id="collapse_fase_:fase_id" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_fases_documentos">
+                    <div id="collapse_fase_:fase_id" class="collapse" aria-labelledby="headingOne:fase_id" data-parent="#accordion_fases_documentos">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table align-items-center">
@@ -195,6 +224,28 @@
                                             </td>
                                         </tr>
                                         `;
+            
+            //Plantilla para concatenar por fase
+            let htmlConcatenar = "";
+
+            for(let elemento in data){
+                let htmlElementosTabla = "";
+                let fase = data[elemento].fase;
+                let htmlConcatenarElementoFase = ""+elementoFaseCadena;
+                htmlConcatenarElementoFase = htmlConcatenarElementoFase.replace(/:fase_id/g, fase.id)
+                                                                        .replace(":nombre_fase", fase.nombre)
+                                                                        .replace(":id_tipo_licitacion", idTipoLicitacion);
+                let htmlElementoTablaTemplate = ""+elementoDocumentoTabla;
+                let documentos = data[elemento].documentos;
+                documentos.forEach((el) => {
+                    htmlElementosTabla += htmlElementoTablaTemplate.replace(":doc_id", el.id)
+                                                                    .replace(":doc_numero", el.numero)
+                                                                    .replace(":doc_nombre", el.nombre);
+                });
+                htmlConcatenarElementoFase = htmlConcatenarElementoFase.replace(":elementosDocumentoTabla", htmlElementosTabla);
+                htmlConcatenar += htmlConcatenarElementoFase;
+            }
+            elementoAcordion.innerHTML = htmlConcatenar;
         }
 
         
