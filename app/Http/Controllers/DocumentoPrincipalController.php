@@ -12,7 +12,7 @@ class DocumentoPrincipalController extends Controller
 {
     private $validationRules = [
         'data_file' => 'required',
-        'tipo_documento_recurrente_constante_check' => 'required',
+        'recurrente_constante' => 'required',
         'fecha_vencimiento' => ['required']
     ];
     public function index(){
@@ -27,8 +27,10 @@ class DocumentoPrincipalController extends Controller
     public function gestion(){
         $this->repo = TipoDocumentoRepository::GetInstance();
         $tipos_documento = $this->repo->getAll();
+        $numero = now()->timestamp;
         $allData = [
             'tipos_documento' => $tipos_documento,
+            'numero' => $numero
         ];
         return view('DocumentosPrincipales.gestion',  $allData);
     }
@@ -60,25 +62,25 @@ class DocumentoPrincipalController extends Controller
             $data['path_file'] = $newPathFile;
             $data['nombre'] = $request->session()->get('file_name');
 
-            if($data['tipo_documento_recurrente_constante_check'] != 'Constante'){
+            if($data['recurrente_constante'] != 'constante'){
                 $data['recurrente'] = false;
                 $data['constante'] = true;
             }else{
                 $data['recurrente'] = true;
                 $data['constante'] = false;
             }
-            unset($data['tipo_documento_recurrente_constante_check']);
+            unset($data['recurrente_constante']);
 
             if(isset($data['data_file'])){
                 unset($data['data_file']);
             }
             $dataToSave = [
-                'numero' => Carbon::now()->timestamp,
+                'numero' => $data['numero'],
                 'nombre' => $data['nombre'],
                 'descripcion' => isset($data['descripcion']) ? $data['descripcion'] : "N/A",
                 'recurrente' => $data['recurrente'],
                 'constante' => $data['constante'],
-                'fecha_vencimiento' => $data['fecha_vencimiento'],
+                'fecha_vencimiento' => Carbon::parse($data['fecha_vencimiento']),
                 'path_file' => $data['path_file'],
                 'estado' => 1,
                 'tipo_documento' => $data['tipo_documento'],

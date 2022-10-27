@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Fase;
 use App\Http\Requests\StorefaseRequest;
 use App\Http\Requests\UpdatefaseRequest;
+use App\Repositories\Documento\DocumentoRepository;
 use App\Repositories\Fase\FaseRepository;
 use Illuminate\Http\Request;
 
@@ -48,7 +49,7 @@ class FaseController extends Controller
 
     public function detailsByTipoLic(Request $request){
         $this->repo = FaseRepository::GetInstance();
-        $lista = $this->repo->obtenerFasesDocumentosByTipoLicitacion($request->tipo);
+        $lista = $this->repo->obtenerFasesByTipoLicitacion($request->tipo);
         $this->repo = null;
         return json_encode($lista);
     }
@@ -140,7 +141,8 @@ class FaseController extends Controller
         $allData = [];
         $this->repo = FaseRepository::GetInstance();
         
-        $fases = $this->repo->obtenerFasesDocumentosByTipoLicitacion($request->id);
+        $fases = $this->repo->obtenerFasesByTipoLicitacion($request->id);
+        $this->repo = DocumentoRepository::GetInstance();
         foreach($fases as $f){
             $documentos = $this->repo->obtenerDocumentosByFaseId($f->id);
             $arrTemp = [
@@ -154,7 +156,7 @@ class FaseController extends Controller
     }
 
     public function obtenerDocumentosByFaseId(Request $request){
-        $this->repo = FaseRepository::GetInstance();
+        $this->repo = DocumentoRepository::GetInstance();
         $documentos = $this->repo->obtenerDocumentosByFaseId($request->id);
         $this->repo = null;
         return json_encode($documentos);

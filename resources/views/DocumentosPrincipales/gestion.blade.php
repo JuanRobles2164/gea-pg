@@ -35,7 +35,7 @@
                             <div class="form-group col-md-6">
                                 <label for="numero">Numero:</label>
                                 <input type="text" class="form-control form-control-alternative" id="numeroComponenteInput" placeholder="hacer funcion asignar numero" readonly 
-                                        name="numero" value="">
+                                    name="numero" value="{{$numero}}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="tipo_documento_select">Tipo documento:</label>

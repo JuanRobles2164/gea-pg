@@ -38,4 +38,15 @@ class DocumentoRepository extends BaseRepository{
     public function getAllPrincipales($paginate = 15, $estado = 3){
         return $this->getModel()->where("estado", "!=", $estado)->where("constante", true)->orWhere("recurrente", true)->paginate($paginate);
     }
+
+    public function obtenerDocumentosByFaseId($idFase) {
+        $documentos = DB::table('fase_tipo_documento')
+        ->join('tipo_documento', 'fase_tipo_documento.tipo_documento', '=', 'tipo_documento.id')
+        ->join('documento', 'tipo_documento.id', '=', 'documento.tipo_documento')
+        ->where('fase_tipo_documento.fase', $idFase)
+        ->select('documento.*', 'tipo_documento.*')
+        ->get();
+        
+        return $documentos;
+    }
 }
