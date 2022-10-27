@@ -144,7 +144,7 @@
         .then((data) => {
             alert("Roles editados satisfactoriamente");
             console.log(data);
-            location.reload();
+            //location.reload();
         });
     }
 
@@ -155,7 +155,7 @@
         .then((data) => {
             alert("Roles asignados satisfactoriamente");
             console.log(data);
-            location.reload();
+            //location.reload();
         });
     }
 

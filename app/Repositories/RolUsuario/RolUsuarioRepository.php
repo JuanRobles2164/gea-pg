@@ -29,11 +29,11 @@ class RolUsuarioRepository extends BaseRepository{
         }
         $roles_usuario_actuales = DB::table('rol_usuario')->where('usuario', $rolesUsuario[0]['usuario'])
         ->where('rol', $roles_ids)
-        ->update(['activo' => true]);
+        ->update(['estado' => 1]);
 
         DB::table('rol_usuario')->where('usuario', $rolesUsuario[0]['usuario'])
         ->whereNotIn('rol', $roles_ids)
-        ->update(['activo' => false]);
+        ->update(['estado' => 2]);
         return $roles_usuario_actuales;
     }
 
