@@ -94,7 +94,7 @@
                         swal({
                             title: "Cliente creado exitosamente!",
                             icon: "success",
-                            buttons: true,
+                            buttons: "OK",
                         })
                         .then((willDelete) => {
                             location.reload();
@@ -111,7 +111,7 @@
                     swal({
                         title: "Cliente editado exitosamente!",
                         icon: "success",
-                        buttons: true,
+                        buttons: "OK",
                     })
                     .then((willDelete) => {
                         location.reload();

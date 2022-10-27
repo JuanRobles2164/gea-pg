@@ -3,11 +3,10 @@
 @section('modal-content')
 <form>
     <div class="row">
-        <div class="ge">
+        <div class="col-md-6">
             <input type="hidden" name="id_usuario_modal_create_id" id="id_usuario_modal_create_id">
             <div class="form-group">
                 <label class="form-label" for="nombre_user_modal_create_id">Nombre completo:</label>
-                <br>
                 <input type="text" class="form-control form-control-alternative" id="nombre_user_modal_create_id" value="{{isset($model->id) ? $model->name : ''}}" autocomplete="disabled">
             </div>
         </div>
@@ -15,7 +14,6 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label" for="identificacion_user_modal_create_id">Identificacion:</label>
-                <br>
                 <input type="text" class="form-control form-control-alternative" id="identificacion_user_modal_create_id" value="{{isset($model->id) ? $model->identificacion : ''}}" autocomplete="disabled">
             </div>
         </div>
@@ -23,7 +21,6 @@
         <div class="col">
             <div class="form-group">
                 <label class="form-label" for="email_user_modal_create_id">Email:</label>
-                <br>
                 <input type="email" class="form-control form-control-alternative" id="email_user_modal_create_id" value="{{isset($model->id) ? $model->email : ''}}" autocomplete="disabled">
             </div>
         </div>
@@ -32,12 +29,10 @@
     
     <div class="form-group">
         <label class="form-label" for="password_user_modal_create_id">Contraseña:</label>
-        <br>
         <input type="password" class="form-control form-control-alternative" id="password_user_modal_create_id" placeholder="Si no quieres cambiar la contraseña, deja el campo vacío" autocomplete="disabled">
     </div>
     <div class="form-group">
         <label class="form-label" for="confirm_password_user_modal_create_id">Confirmar contraseña:</label>
-        <br>
         <input type="password" class="form-control form-control-alternative" id="confirm_password_user_modal_create_id" autocomplete="disabled">
     </div>
     <div class="form-group">
@@ -111,29 +106,46 @@
                 objeto.id = null;
                 postData(ruta_crear, objeto)
                 .then((data) => {
-                    alert("Usuario creado exitosamente!");
-                    nuevoObjetoUsuario = {
-                        id: data.id,
-                        name: data.name,
-                        email: data.email,
-                        roles: roles
-                    };
-                    console.log(nuevoObjetoUsuario, roles);
-                    guardarRoles{{$modal_id}}(data, roles);
+                    console.log(data);
+                    if (data.errors != undefined){
+                        imprimirErrores(data);
+                    } else{
+                        swal({
+                            title: "Usuario creado exitosamente!",
+                            icon: "success",
+                            buttons: "OK",
+                        })
+                        .then((value) => {
+                            nuevoObjetoUsuario = {
+                                id: data.id,
+                                name: data.name,
+                                email: data.email,
+                                roles: roles
+                            };
+                            console.log(nuevoObjetoUsuario, roles);
+                            guardarRoles{{$modal_id}}(data, roles);
+                        });
+                    }
                 });
             }else{
                 //Si viene con id, va a editar
                 postData(ruta_editar, objeto)
                 .then((data) => {
-                    alert("Usuario editado exitosamente!");
                     console.log(data);
-                    nuevoObjetoUsuario = {
+                    swal({
+                        title: "Cliente editado exitosamente!",
+                        icon: "success",
+                        buttons: "OK",
+                    })
+                    .then((value) => {
+                        nuevoObjetoUsuario = {
                         id: data.id,
                         name: data.name,
                         email: data.email,
                         roles: roles
-                    };
-                    actualizarRoles{{$modal_id}}(nuevoObjetoUsuario, roles);
+                        };
+                        actualizarRoles{{$modal_id}}(nuevoObjetoUsuario, roles);
+                    });
                 });
             }
             
@@ -142,9 +154,15 @@
         nuevoObjetoUsuario.roles = roles;
         postData(ruta_editar_roles_usuario, nuevoObjetoUsuario)
         .then((data) => {
-            alert("Roles editados satisfactoriamente");
             console.log(data);
-            //location.reload();
+            swal({
+                title: "Roles editados satisfactoriamente",
+                icon: "success",
+                buttons: "OK",
+            })
+            .then((value) => {
+                location.reload();
+            });
         });
     }
 
@@ -153,9 +171,15 @@
         nuevoObjetoUsuario.roles = roles;
         postData(ruta_crear_roles_usuario, nuevoObjetoUsuario)
         .then((data) => {
-            alert("Roles asignados satisfactoriamente");
             console.log(data);
-            //location.reload();
+            swal({
+                title: "Roles asignados satisfactoriamente",
+                icon: "success",
+                buttons: "OK",
+            })
+            .then((value) => {
+                location.reload();
+            });
         });
     }
 
