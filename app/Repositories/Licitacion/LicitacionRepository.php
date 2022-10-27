@@ -30,4 +30,17 @@ class LicitacionRepository extends BaseRepository{
             ->where("categoria", $idCategoria)
             ->paginate($paginate);
     }
+
+    public function getLicitacionesPorVencer($estado = 3, $paginate = 15){
+        return $this->getModel()->where("estado", "!=", $estado)
+            ->where("estado","1")
+            ->where('fecha_fin', '>=', now()->subDays(10))
+            ->paginate($paginate);
+    }
+    public function getLicitacionesCreadasMes($estado = 3, $paginate = 15){
+        return $this->getModel()->where("estado", "!=", $estado)
+            ->where("estado","1")
+            ->where('created_at', '>=', now()->subDays(30))
+            ->paginate($paginate);
+    }
 }

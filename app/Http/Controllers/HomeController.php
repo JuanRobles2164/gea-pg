@@ -26,9 +26,15 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $this->repo = LicitacionRepository::GetInstance();
-        $lista = null;
-        $lista = $this->repo->getAllEstado();
-        $allData = ['licitaciones' => $lista];
+        $creadasMes = null;
+        $creadasMes = $this->repo->getLicitacionesCreadasMes();
+        $vencerMes = null;
+        $vencerMes = $this->repo->getLicitacionesPorVencer();
+        
+        $allData = [
+            'creadasMes' => $creadasMes,
+            'vencerMes' => $vencerMes
+        ];
         $this->repo = null;
         return view('dashboard', $allData);
     }
