@@ -185,15 +185,15 @@ class FaseController extends Controller
      * @param  \App\Models\Fase  $fase
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $fase)
+    public function destroy(Request $request)
     {
-        $objeto = new Fase($fase->all());
-        $objeto->id = $fase->id;
         $this->repo = FaseRepository::GetInstance();
-        $objeto = $this->repo->find($objeto->id);
-        $this->repo->delete($objeto);
+        $data = $request->all();
+        $data["estado"] = '3';
+        $fase = $this->repo->find($data["id"]);
+        $this->repo->update($fase, $data);
         $this->repo = null;
-        return json_encode($objeto);
+        return json_encode($fase);
     }
 
     public function obtenerDocumentosYFasesByTipoLicitacionId(Request $request){

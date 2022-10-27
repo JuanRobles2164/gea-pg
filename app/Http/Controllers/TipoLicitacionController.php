@@ -209,14 +209,14 @@ class TipoLicitacionController extends Controller
      * @param  \App\Models\TipoLicitacion  $tipoLicitacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $tipoLicitacion)
+    public function destroy(Request $request)
     {
-        $objeto = new TipoLicitacion($tipoLicitacion->all());
-        $objeto->id = $tipoLicitacion->id;
         $this->repo = TipoLicitacionRepository::GetInstance();
-        $objeto = $this->repo->find($objeto->id);
-        $this->repo->delete($objeto);
+        $data = $request->all();
+        $data["estado"] = '3';
+        $tipoLic = $this->repo->find($data["id"]);
+        $this->repo->update($tipoLic, $data);
         $this->repo = null;
-        return json_encode($objeto);
+        return json_encode($tipoLic);
     }
 }
