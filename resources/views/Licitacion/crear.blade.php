@@ -163,7 +163,7 @@
             let response = obtenerDocumentosFase(idFase);
             response
                 .then((data) => {
-                    console.log(data);
+                    renderizarDocumentosFasesModal(data);
                     $('#modalFases').modal('show');
                 });
         }
@@ -205,7 +205,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyDocumentosFaseTipoLicitacion:id_tipo_licitacion">
-                                        :elementosDocumentoTabla
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -214,7 +214,8 @@
                 </div>
             </div>
             `;
-
+            //:elementosDocumentoTabla
+            //dento del elemento con id = tbodyDocumentosFaseTipoLicitacion:id_tipo_licitacion
             let elementoDocumentoTabla = `
                                         <tr>
                                             <td scope="row">:doc_id</td>
