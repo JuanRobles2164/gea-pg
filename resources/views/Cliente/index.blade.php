@@ -203,14 +203,14 @@
                 id: idObjeto
             }
             swal({
-                title: "Esta seguro que desea eliminar",
+                title: "Esta seguro que desea eliminar el registro ?",
                 icon: "warning",
                 buttons: ["Cancelar", "OK"],
                 dangerMode: true,
             })
             .then((result) => {
                 if (result) {
-                    swal("Cliente eliminada exitosamente!", {
+                    swal("Cliente eliminado exitosamente!", {
                         icon: "success",
                     })
                     .then((result) => {

@@ -208,17 +208,35 @@
             postData(ruta_crear, objeto)
             .then((data) => {
                 console.log(data);
-                alert("Tipo de licitacion creado exitosamente!");
-                // location.reload();
+                if (data.errors != undefined) {
+                    imprimirErrores(data);
+                } else {
+                    swal({
+                        title: "Tipo de licitacion creado exitosamente!",
+                        icon: "success",
+                        buttons: "OK",
+                    })
+                    .then((value) => {
+                        location.reload();
+                    });
+                }
+            }).catch((error) => {
+                console.log(error);
             });
         }else{
             //Si viene con id, va a editar
             postData(ruta_editar, objeto)
             .then((data) => {
                 console.log(data);
-                alert("Tipo de licitacion editado exitosamente!");
                 objeto = data;
-                // location.reload();
+                swal({
+                    title: "Tipo de licitacion editado exitosamente!",
+                    icon: "success",
+                    buttons: "OK",
+                })
+                .then((willDelete) => {
+                    location.reload();
+                });
             });
         }
     }
