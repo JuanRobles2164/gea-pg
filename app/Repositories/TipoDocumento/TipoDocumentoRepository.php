@@ -26,15 +26,26 @@ class TipoDocumentoRepository extends BaseRepository{
         
     }
 
-    public function toggleState($clienteId){
-        $cliente = $this->find($clienteId);
-        if($cliente->estado == 1){
-            $cliente->estado = 2;
+    public function toggleState($tipoDocId){
+        $tipoDoc = $this->find($tipoDocId);
+        if($tipoDoc->estado == 1){
+            $tipoDoc->estado = 2;
         }else{
-            $cliente->estado = 1;
+            $tipoDoc->estado = 1;
         }
         
-        $cliente->save();
-        return $cliente;
+        $tipoDoc->save();
+        return $tipoDoc;
+    }
+
+    public function obtenerTipoDocumentosByFase($idFase, $estado = 3){
+        $tiposDoc = DB::table('fase_tipo_documento')
+        ->join('tipo_documento', 'tipo_documento.id', '=', 'fase_tipo_documento.tipo_documento')
+        ->where('fase_tipo_documento.fase', '=', $idFase)
+        ->where('tipo_documento.estado','<>',$estado)
+        ->where('fase_tipo_documento.estado','<>',$estado)
+        ->select('tipo_documento.*')
+        ->get();
+        return $tiposDoc;
     }
 }

@@ -181,7 +181,7 @@ class TipoLicitacionController extends Controller
             array_push($retorno['fase_tipo_licitacion'],  $this->repo->updateftl($dataFaseTipoLicitacion));
         }
 
-        if(count($fasesModificadas) != 0){
+        if(count($fasesModificadas) != 0 || $array_num == 0){
             foreach($fasestl as $ftl){
                 if(!(in_array($ftl->id,$fasesModificadas))){
                     $dataFaseTipoLicitacion['fase'] = $ftl->fase;

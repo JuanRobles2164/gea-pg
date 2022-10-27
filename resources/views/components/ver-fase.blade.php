@@ -21,6 +21,21 @@
             </div>
         </div>
     </div>
+    <div class="row" style="display:none">
+        <div class="col-md-10">  
+            <select id="select_tdocs-view" class="custom-select form-control-alternative" name="tDocs">
+                <option id="option_select-view" value="0">Seleccione un tipo de documento...</option>
+            </select>
+        </div> 
+        <div class="col-md-2">
+            <button type="button"  class="btn btn-primary btn-sm" style="float: right;"> Agregar</button>
+        </div>
+    </div>
+    <br>
+    <div class="form-group" style="pointer-events: none;">
+        <label id="label_tdocs-view" for="tDocs"></label>
+        <ul class="draggable-list form-control-alternative" id="draggable-list-view"></ul>
+    </div>
     
 </form>
 

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Fase;
 use App\Http\Requests\StorefaseRequest;
 use App\Http\Requests\UpdatefaseRequest;
+use App\Models\FaseTipoDocumento;
 use App\Repositories\Fase\FaseRepository;
+use App\Repositories\FaseTipoDocumento\FaseTipoDocumentoRepository;
 use Illuminate\Http\Request;
 
 class FaseController extends Controller
@@ -34,7 +36,7 @@ class FaseController extends Controller
     public function listar(Request $request){
         $num_rows = $request->cantidad != null ? $request->cantidad : 15;
         $this->repo = FaseRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
+        $lista = $this->repo->getAllEstado($num_rows);
         $this->repo = null;
         return json_encode($lista);
     }
@@ -74,9 +76,25 @@ class FaseController extends Controller
         $validated = $request->validate($this->validationRules);
         $this->repo = FaseRepository::GetInstance();
         $data = $request->all();
-        $data = $this->repo->create($data);
+        $retorno = [];
+
+        $dataFase = [];
+        $dataFase['nombre'] = $data['nombre'];
+        $dataFase['descripcion'] = $data['descripcion'];
+        $entidad = $this->repo->create($dataFase);
+        $retorno['fase'] = $entidad;
+        $retorno['fase_tipo_documento'] = [];
         $this->repo = null;
-        return json_encode($data);
+
+        $this->repo = FaseTipoDocumentoRepository::GetInstance();
+        $array_num = count($data['tdocs']);
+        for ($i = 0; $i < $array_num; ++$i){
+            $dataFaseTipoDocumento['fase'] = $entidad->id;
+            $dataFaseTipoDocumento['tipo_documento'] =  $data['tdocs'][$i]['idTDocs'];
+            array_push($retorno['fase_tipo_documento'], $this->repo->create($dataFaseTipoDocumento));
+        }
+
+        return json_encode($retorno);
     }
 
     /**
@@ -114,9 +132,43 @@ class FaseController extends Controller
         $this->repo = FaseRepository::GetInstance();
         $data = $request->all();
         $fase = $this->repo->find($data["id"]);
-        $this->repo->update($fase, $data);
+        $entidad = $this->repo->update($fase, $data);
+        $retorno['fase'] = $entidad;
+        $retorno['fase_tipo_documento'] = [];
         $this->repo = null;
-        return json_encode($fase);
+
+        $this->repo = FaseTipoDocumentoRepository::GetInstance();
+        $faseTipoDocs = $this->repo->obtenerTiposDocsByFase($data["id"]); 
+        $array_num = count($data['tdocs']);
+        $tdocsModificadas = [];
+        for ($i = 0; $i < $array_num; ++$i){          
+            $dataFaseTipoDocumento['tipo_documento'] = $data['tdocs'][$i]['idTDocs'];
+            $dataFaseTipoDocumento['fase'] = $entidad->id;    
+            $dataFaseTipoDocumento['estado'] = '1';
+            if($faseTipoDocs != null){
+                foreach($faseTipoDocs as $ftd){
+                    if($ftd->tipo_documento == $data['tdocs'][$i]['idTDocs']){     
+                        array_push($tdocsModificadas,$ftd->id);            
+                        break;
+                    }
+                }
+            }
+            array_push($retorno['fase_tipo_documento'],  $this->repo->updateftd($dataFaseTipoDocumento));
+        }
+        
+        if(count($tdocsModificadas) != 0 || $array_num == 0){
+            foreach($faseTipoDocs as $ftl){
+                if(!(in_array($ftl->id,$tdocsModificadas))){
+                    $dataFaseTipoDocumento['fase'] = $entidad->id;
+                    $dataFaseTipoDocumento['tipo_documento'] = $ftl->tipo_documento;    
+                    $dataFaseTipoDocumento['estado'] = '3';
+                }
+                array_push($retorno['fase_tipo_documento'],  $this->repo->updateftd($dataFaseTipoDocumento));
+            }
+        }
+
+        $this->repo = null;
+        return json_encode($retorno);
     }
 
     /**
