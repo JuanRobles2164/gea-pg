@@ -165,11 +165,11 @@ class TipoLicitacionController extends Controller
         $this->repo = FaseTipoLicitacionRepository::GetInstance();
         $fasestl = $this->repo->obtenerFasesTLByTipoLicitacion($data["id"]);
         $array_num = count($data['fases']);
-        for ($i = 0; $i < $array_num; ++$i){
-            $fasesModificadas = [];
+        $fasesModificadas = [];
+        for ($i = 0; $i < $array_num; ++$i){          
             $dataFaseTipoLicitacion['orden'] = $data['fases'][$i]['index'];
             $dataFaseTipoLicitacion['fase'] = $data['fases'][$i]['idFase'];
-            $dataFaseTipoLicitacion['tipo_licitacion'] = $entidad->id;     
+            $dataFaseTipoLicitacion['tipo_licitacion'] = $entidad->id;    
             if($fasestl != null){
                 foreach($fasestl as $ftl){
                     if($ftl->fase == $data['fases'][$i]['idFase']){     
@@ -178,14 +178,18 @@ class TipoLicitacionController extends Controller
                     }
                 }
             }
-            if(count($fasesModificadas) != 0){
-                foreach($fasestl as $ftl){
-                    if(!(in_array($ftl->id,$fasesModificadas))){
-                        $dataFaseTipoLicitacion['estado'] = '3';
-                    }
-                }
-            }
             array_push($retorno['fase_tipo_licitacion'],  $this->repo->updateftl($dataFaseTipoLicitacion));
+        }
+
+        if(count($fasesModificadas) != 0){
+            foreach($fasestl as $ftl){
+                if(!(in_array($ftl->id,$fasesModificadas))){
+                    $dataFaseTipoLicitacion['fase'] = $ftl->fase;
+                    $dataFaseTipoLicitacion['tipo_licitacion'] = $entidad->id;    
+                    $dataFaseTipoLicitacion['estado'] = '3';
+                }
+                array_push($retorno['fase_tipo_licitacion'],  $this->repo->updateftl($dataFaseTipoLicitacion));
+            }
         }
 
         $this->repo = null;
