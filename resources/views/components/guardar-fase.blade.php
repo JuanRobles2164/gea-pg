@@ -70,38 +70,60 @@
             }
             if(id == undefined || id == null || id == ''){
                 //si viene vacío, va a crear
+                objeto.id = null;
                 postData(ruta_crear, objeto)
                 .then((data) => {
                     console.log(data);
-                    alert("Fase creada exitosamente!");
-                    objeto = data;
-                    //Devuelve una NodeList
-                    let tiposDocumentoNodeList = document.querySelectorAll("input[name=tipo_documento_select_modal_create]:checked");
-                    let tiposDocumentos = [];
-                    tiposDocumentoNodeList.forEach(element => {
-                        let objTemporal = {
-                            tipo_documento: element.value,
-                            fase: objeto.id
-                        };
-                        tiposDocumentos.push(element.value)
-                    });
-                    objeto.fase_tipo_documentos = tiposDocumentos;
-                    postData(ruta_crear_fases_tipo_documento, objeto)
-                    .then((data) => {
-                        console.log(data);
-                        alert("Tipos de documentos asociados con éxito!");
-
-
-                    });
+                    if (data.errors != undefined){
+                        imprimirErrores(data);
+                    } else{
+                        swal({
+                            title: "Fase creada exitosamente!",
+                            icon: "success",
+                            buttons: "OK",
+                        })
+                        .then((value) => {
+                            objeto = data;
+                            //Devuelve una NodeList
+                            let tiposDocumentoNodeList = document.querySelectorAll("input[name=tipo_documento_select_modal_create]:checked");
+                            let tiposDocumentos = [];
+                            tiposDocumentoNodeList.forEach(element => {
+                                let objTemporal = {
+                                    tipo_documento: element.value,
+                                    fase: objeto.id
+                                };
+                                tiposDocumentos.push(element.value)
+                            });
+                            objeto.fase_tipo_documentos = tiposDocumentos;
+                            postData(ruta_crear_fases_tipo_documento, objeto)
+                            .then((data) => {
+                                console.log(data);
+                                swal({
+                                    title: "Tipos de documentos asociados con éxito!",
+                                    icon: "success",
+                                    buttons: "OK",
+                                })
+                                .then((value) => {
+                                    location.reload();
+                                });
+                            });
+                        });
+                    }
                 });
             }else{
                 //Si viene con id, va a editar
                 postData(ruta_editar, objeto)
                 .then((data) => {
                     console.log(data);
-                    alert("Fase editada exitosamente!");
                     objeto = data;
-                    limpiarForm{{$modal_id}}();
+                    swal({
+                        title: "Fase editada exitosamente!",
+                        icon: "success",
+                        buttons: "OK",
+                    })
+                    .then((value) => {
+                        location.reload();
+                    });
                 });
             }
             //Inserta las relaciones con el tipo de documento
@@ -109,7 +131,7 @@
                 
             }
         }
-        function limpiarForm{{$modal_id}}(){
+        function {{$modal_id}}Limpiar(){
             document.getElementById("id_fase_modal_create_id").value = "";
             document.getElementById("nombre_fase_modal_create_id").value = "";
             document.getElementById("descripcion_fase_modal_create_id").value = "";

@@ -179,11 +179,27 @@ use App\Enums\UnidadValidezEnum;
             let data = {
                 id: idObjeto
             }
-            postData(ruta_eliminar_tipo_documento, data)
-            .then((data) => {
-                console.log(data);
-                alert("Licitación eliminada exitosamente!");
-                location.reload();
+            swal({
+                title: "¿Está seguro que desea eliminar el registro?",
+                icon: "warning",
+                buttons: ["Cancelar", "OK"],
+                dangerMode: true,
+            })
+            .then((result) => {
+                if (result) {
+                    swal("Tipo de Licitación eliminada exitosamente!", {
+                        icon: "success",
+                    })
+                    .then((result) => {
+                        postData(ruta_eliminar_tipo_documento, data)
+                        .then((data) =>{
+                            console.log(data);
+                            location.reload();
+                        });
+                    });
+                } else {
+                    swal("Acción cancelada");
+                }
             });
         }
 

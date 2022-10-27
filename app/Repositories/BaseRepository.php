@@ -31,7 +31,7 @@ abstract class BaseRepository{
         return $this->getModel()->find($id);
     }
     public function getAll($paginate = 15){
-        return $this->getModel()->paginate($paginate);
+        return $this->getModel()->where('estado', '!=', '3')->paginate($paginate);
     }
     //Trae un listado de todos las entidades no eliminadas
     public function getAllEstado($paginate = 15, $estado = 3){
@@ -50,6 +50,7 @@ abstract class BaseRepository{
 
     //Delete Operations
     public function delete($object){
-        $object->delete();
+        $object->estado = 3;
+        $object->save();
     }
 }

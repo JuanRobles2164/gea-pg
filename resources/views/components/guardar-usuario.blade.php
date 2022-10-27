@@ -172,7 +172,6 @@
         postData(ruta_crear_roles_usuario, nuevoObjetoUsuario)
         .then((data) => {
             console.log(data);
-            console.log(data);
             swal({
                 title: "Roles asignados satisfactoriamente",
                 icon: "success",

@@ -138,13 +138,30 @@
         let data = {
             id: idObjeto
         }
-        postData(ruta_eliminar_tipo_licitacion, data)
-            .then((data) => {
-                console.log(data);
-                alert("Tipo Licitación eliminada exitosamente!");
-                location.reload();
-            });
+        swal({
+            title: "Esta seguro que desea eliminar el registro ?",
+            icon: "warning",
+            buttons: ["Cancelar", "OK"],
+            dangerMode: true,
+        })
+        .then((result) => {
+            if (result) {
+                swal("Tipo Licitación eliminada exitosamente!", {
+                    icon: "success",
+                })
+                .then((result) => {
+                    postData(ruta_eliminar_tipo_licitacion, data)
+                    .then((data) =>{
+                        console.log(data);
+                        location.reload();
+                    });
+                });
+            } else {
+                swal("Acción cancelada");
+            }
+        });
     }
+
     async function obtenerDataFase(data) {
         const response = await fetch(ruta_consultar_fases);
         return await response.json();

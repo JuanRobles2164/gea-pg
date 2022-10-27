@@ -38,16 +38,34 @@
                 postData(ruta_crear, objeto)
                 .then((data) => {
                     console.log(data);
-                    alert("Tipo de documento creado exitosamente!");
-                    location.reload();
+                    if (data.errors != undefined) {
+                        imprimirErrores(data);
+                    } else {
+                        swal({
+                            title: "Tipo de documento creado exitosamente!",
+                            icon: "success",
+                            buttons: "OK",
+                        })
+                        .then((willDelete) => {
+                            location.reload();
+                        });
+                    }
+                }).catch((error) => {
+                    console.log(error);
                 });
             }else{
                 //Si viene con id, va a editar
                 postData(ruta_editar, objeto)
                 .then((data) => {
                     console.log(data);
-                    alert("Tipo de documento editado exitosamente!");
-                    location.reload();
+                    swal({
+                        title: "Tipo de documento editado exitosamente!",
+                        icon: "success",
+                        buttons: "OK",
+                    })
+                    .then((willDelete) => {
+                        location.reload();
+                    });
                 });
             }
         }

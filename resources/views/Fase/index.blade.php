@@ -136,12 +136,28 @@
         let data = {
             id: idObjeto
         }
-        postData(ruta_eliminar_fase, data)
-            .then((data) => {
-                console.log(data);
-                alert("Fase eliminada exitosamente!");
-                location.reload();
-            });
+        swal({
+            title: "Esta seguro que desea eliminar el registro ?",
+            icon: "warning",
+            buttons: ["Cancelar", "OK"],
+            dangerMode: true,
+        })
+        .then((result) => {
+            if (result) {
+                swal("Fase eliminada exitosamente!", {
+                    icon: "success",
+                })
+                .then((result) => {
+                    postData(ruta_eliminar_fase, data)
+                    .then((data) =>{
+                        console.log(data);
+                        location.reload();
+                    });
+                });
+            } else {
+                swal("Acción cancelada");
+            }
+        });
     }
 </script>
 @endpush
