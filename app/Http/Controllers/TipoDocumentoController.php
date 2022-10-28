@@ -128,6 +128,7 @@ class TipoDocumentoController extends Controller
         $this->repo = TipoDocumentoRepository::GetInstance();
         $data = $request->all();
         $tipoDocumento = $this->repo->find($data["id"]);
+        $data['indicativo'] = Utilidades::obtenerInicial(strtoupper($data['nombre']));
         $this->repo->update($tipoDocumento, $data);
         $this->repo = null;
         return json_encode($tipoDocumento);

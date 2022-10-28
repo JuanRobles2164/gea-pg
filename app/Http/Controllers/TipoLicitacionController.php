@@ -165,6 +165,7 @@ class TipoLicitacionController extends Controller
         $dataTipoLicitacion = [];
         $dataTipoLicitacion['nombre'] = $data['nombre'];
         $dataTipoLicitacion['descripcion'] = $data['descripcion'];
+        $dataTipoLicitacion['indicativo'] = Utilidades::obtenerInicial(strtoupper($data['nombre']));
         $tipoLicitacion = $this->repo->find($data["id"]);
         $entidad = $this->repo->update($tipoLicitacion, $dataTipoLicitacion);
         $retorno['tipo_licitacion'] = $entidad;
