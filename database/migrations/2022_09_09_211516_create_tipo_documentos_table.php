@@ -17,6 +17,8 @@ class CreateTipoDocumentosTable extends Migration
             $table->id();
             $table->string("nombre");
             $table->string("descripcion");
+            $table->integer("valor_actual")->default(0);
+            $table->string("indicativo");
             $table->unsignedBigInteger('estado')->default(1);
             $table->timestamps();
         });
