@@ -22,15 +22,16 @@ class FaseRepository extends BaseRepository{
         return new Fase;
     }
 
-    public function findByParams($idTipoLicitacion) {
+    public function findByParams($idTipoLicitacion, $estado = 3) {
        $fases = DB::table('fase')
        ->join('fase_tipo_documento', 'fase.id','=','fase_tipo_documento.fase')
+       ->where('fase.estado','<>',$estado)
        ->select('fase.*')
        ->get();
        return $fases;
     }
 
-    public function obtenerFasesDocumentosByTipoLicitacion($idTipoLicitacion,  $estado = 3){
+    public function obtenerFasesByTipoLicitacion($idTipoLicitacion,  $estado = 3){
         $fases = DB::table('fase_tipo_licitacion')
         ->join('fase', 'fase.id', '=', 'fase_tipo_licitacion.fase')
         ->where('fase_tipo_licitacion.tipo_licitacion', '=', $idTipoLicitacion)
@@ -39,16 +40,5 @@ class FaseRepository extends BaseRepository{
         ->select('fase.*')
         ->get();
         return $fases;
-    }
-
-    public function obtenerDocumentosByFaseId($idFase) {
-        $documentos = DB::table('documento')
-        ->join('tipo_documento', 'documento.tipo_documento', '=', 'tipo_documento.id')
-        ->join('fase_tipo_documento', 'tipo_documento.id', '=', 'fase_tipo_documento.tipo_documento')
-        ->where('fase_tipo_documento.fase', $idFase)
-        ->select('documento.*', 'tipo_documento.*')
-        ->get();
-        
-        return $documentos;
     }
 }

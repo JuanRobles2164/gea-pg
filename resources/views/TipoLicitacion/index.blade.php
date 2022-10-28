@@ -111,6 +111,7 @@
             document.getElementById("descripcion_tipo_licitacion_modal_details_id").value = tipoLicitacionData.descripcion;
             document.getElementById("descripcion_tipo_licitacion_modal_details_id").readOnly = true;
 
+            obtenerDatos(idObjeto, false);
 
             $('#id_modal_view_tipo_licitacion').modal('show');
         });
@@ -128,7 +129,7 @@
             document.getElementById("nombre_tipo_licitacion_modal_create_id").value = tipoLicitacionData.nombre;
             document.getElementById("descripcion_tipo_licitacion_modal_create_id").value = tipoLicitacionData.descripcion;
             console.log(idObjeto);
-            obtenerDatos(idObjeto);
+            obtenerDatos(idObjeto, true);
 
             $('#id_modal_tipo_licitacion').modal('show');
         });
@@ -181,77 +182,93 @@
         return objetoBusqueda != undefined;
     }
 
-    function obtenerDatos(idObjeto = null){
-        let fases = [];
-        let fasesAsociadas  = [];
-        dataToSet = obtenerDataFase();
-        dataToSet.then((data) => {
-            console.log(data.data);
-            fases = data.data;
-            if(idObjeto == null){
-                listItems = [];
-                document.getElementById('label_fases').innerHTML = '';
-                document.getElementById('draggable-list').innerHTML = '';
-                let selectFases =  document.getElementById("select_fases");
-                let option = document.getElementById("option_select");
-                selectFases.innerHTML = '';
-                selectFases.appendChild(option);   
-                fases.forEach((el) => {
-                    const option = document.createElement('option');
-                    option.value = el.id;
-                    option.text = el.nombre;
-                    selectFases.appendChild(option);
-                });
-            }
-        });
-        if(idObjeto != null){
-            dataToSet = obtenerDataFaseAsociadas(idObjeto);
+    const  obtenerDatos = async (idObjeto = null, isEditar) => {
+        try {
+            let fases = [];
+            let fasesAsociadas  = [];
+            dataToSet = obtenerDataFase();
             dataToSet.then((data) => {
-                console.log(data);
-                fasesAsociadas = data;
-
-                if(fases !=  null && fasesAsociadas != null){
+                console.log(data.data);
+                fases = data.data;
+                if(idObjeto == null){
                     listItems = [];
                     document.getElementById('label_fases').innerHTML = '';
                     document.getElementById('draggable-list').innerHTML = '';
-                    fasesAsociadas.forEach((el) => {
-                        if(buscarFaseEntreFasesAsociadas(el, fases)){
-                            let index = fases.findIndex(function(item){
-                                return item.id == el.id;
-                            });
-                            if(index != -1){
-                                console.log('eliminado', fases.splice(index, 1), index);
-                            }
-                        }
-                        crearListaFase(el);
-                    });
                     let selectFases =  document.getElementById("select_fases");
                     let option = document.getElementById("option_select");
                     selectFases.innerHTML = '';
-                    selectFases.appendChild(option);     
+                    selectFases.appendChild(option);   
                     fases.forEach((el) => {
                         const option = document.createElement('option');
                         option.value = el.id;
                         option.text = el.nombre;
                         selectFases.appendChild(option);
                     });
-                    
-                    console.log(fases);
-                    console.log(fasesAsociadas);
                 }
-                
             });
+            if(idObjeto != null){
+                dataToSet = obtenerDataFaseAsociadas(idObjeto);
+                dataToSet.then((data) => {
+                    console.log(data);
+                    fasesAsociadas = data;
+
+                    if(fases !=  null && fasesAsociadas != null){
+                        listItems = [];
+                        document.getElementById('label_fases').innerHTML = '';
+                        document.getElementById('draggable-list').innerHTML = '';
+                        fasesAsociadas.forEach((el) => {
+                            if(buscarFaseEntreFasesAsociadas(el, fases)){
+                                let index = fases.findIndex(function(item){
+                                    return item.id == el.id;
+                                });
+                                if(index != -1){
+                                    console.log('eliminado', fases.splice(index, 1), index);
+                                }
+                            }
+                            crearListaFase(el, isEditar);
+                        });
+                        let selectFases =  document.getElementById("select_fases");
+                        let option = document.getElementById("option_select");
+                        selectFases.innerHTML = '';
+                        selectFases.appendChild(option);     
+                        fases.forEach((el) => {
+                            const option = document.createElement('option');
+                            option.value = el.id;
+                            option.text = el.nombre;
+                            selectFases.appendChild(option);
+                        });
+                        
+                        console.log(fases);
+                        console.log(fasesAsociadas);
+                    }
+                    
+                });
+            }
+        }catch (err) {
+         console.error(err);
         }
     }
 
-    function crearListaFase(fase){
-        const draggable_list = document.getElementById('draggable-list');
-        const select = document.getElementById('select_fases');
+    function crearListaFase(fase, isEditar){
+        let draggable_list = null;
+        let select = null ;
+        let lab_text = 'Fases:';
+        if(isEditar){
+            draggable_list = document.getElementById('draggable-list');
+            select  = document.getElementById('select_fases');
+            if(fase.id != 0){
+                document.getElementById('label_fases').innerHTML = lab_text;
+            }
+        }else{
+            draggable_list = document.getElementById('draggable-list-view');
+            select  = document.getElementById('select_fases-view');
+            if(fase.id != 0){
+                document.getElementById('label_fases-view').innerHTML = lab_text;
+            }
+        }
+
         if(fase.id != 0){
             index = listItems.length;
-            let lab_text = 'Fases:';
-            document.getElementById('label_fases').innerHTML = lab_text;
-            
             var nombrefase = fase.nombre;
             const listItem = document.createElement('li');
             listItem.setAttribute('data-index', index);

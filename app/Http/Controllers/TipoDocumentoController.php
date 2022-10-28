@@ -51,6 +51,13 @@ class TipoDocumentoController extends Controller
         return json_encode($modelo);
     }
 
+    public function detailsbyfase(Request $request){
+        $this->repo = TipoDocumentoRepository::GetInstance();
+        $lista = $this->repo->obtenerTipoDocumentosByFase($request->fase);
+        $this->repo = null;
+        return json_encode($lista);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
