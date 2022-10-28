@@ -25,4 +25,10 @@ class TipoLicitacionRepository extends BaseRepository{
     public function findByParams($params){
         
     }
+    public function toggleState($tipoLicId){
+        $tipoLic = $this->find($tipoLicId);
+        $tipoLic->estado = ($tipoLic->estado - 3)*(-1);
+        $tipoLic->save();
+        return $tipoLic;
+    }
 }

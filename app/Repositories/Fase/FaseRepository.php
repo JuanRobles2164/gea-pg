@@ -41,4 +41,11 @@ class FaseRepository extends BaseRepository{
         ->get();
         return $fases;
     }
+
+    public function toggleState($faseId){
+        $fase = $this->find($faseId);
+        $fase->estado = ($fase->estado - 3)*(-1);
+        $fase->save();
+        return $fase;
+    }
 }

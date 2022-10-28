@@ -21,13 +21,8 @@ class ClienteController extends Controller
         $this->repo = ClienteRepository::GetInstance();
         $lista = $this->repo->getAllEstado();
         $this->repo = null;
-
-        $this->repo = EstadoRepository::GetInstance();
-        $listaEstados = $this->repo->getAll();
-        $this->repo = null;
-        $allData = ['clientes' => $lista,
-                    'estados' => $listaEstados
-        ];
+        
+        $allData = ['clientes' => $lista];
         return view('Cliente.index', $allData);
     }
 

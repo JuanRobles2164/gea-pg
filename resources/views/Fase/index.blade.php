@@ -38,6 +38,7 @@
                                 <th scope="col">Id</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Descripcion</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -52,6 +53,19 @@
                                 <th scope="row">{{$td->id}}</th>
                                 <th scope="row">{{$td->nombre}}</th>
                                 <th scope="row">{{$td->descripcion}}</th>
+                                @if($td->estado == 1)
+                                <td scope="row">
+                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateFase({{$td->id}})">
+                                        Activo
+                                    </a>
+                                </td>
+                                @else
+                                <td scope="row">
+                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateFase({{$td->id}})">
+                                        Inactivo
+                                    </a>
+                                </td>
+                                @endif
                                 <th scope="row">
                                     <a href="#" class="btn btn-default btn-sm" onclick="setDataToFaseModalEdit({{$td->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-user-edit"></i>
@@ -91,6 +105,7 @@
     var ruta_eliminar_fase = "{{route('fase.eliminar')}}";
     var ruta_consultar_tDocs = "{{route('tipo_documento.listar')}}";
     var ruta_consultar_tDocs_asociados = "{{route('tipo_documento.encontrar_por_fase')}}";
+    var ruta_alternar_estado_fase = "{{route('fase.toggle_fase_state')}}";
 
     async function obtenerDataFase(data) {
         const response = await fetch(ruta_encontrar_fase + "?id=" + data.id);
@@ -291,5 +306,16 @@
             draggable_list.appendChild(listItem);
         }
     }
+    function toggleStateFase(idFase){
+            let objeto = {
+                id: idFase
+            }
+
+            postData(ruta_alternar_estado_fase, objeto)
+            .then((data) => {
+                console.log(data);
+                location.reload();
+            });   
+        }
 </script>
 @endpush
