@@ -96,7 +96,7 @@
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
                                                 <input type="hidden" name="documentosAsociadosFases[]" value=':doc_json_data'>
-                                                <button class="btn btn-danger" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="fas fa-trash"></i> </button>
+                                                <button type="button" class="btn btn-danger" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="fas fa-trash"></i> </button>
                                             </td>
                                         </tr>
                                         `;
@@ -104,7 +104,7 @@
                                                                         .replace(":doc_numero", documento.numero)
                                                                         .replace(":doc_nombre", documento.tipo_documento_nombre)
                                                                         .replace(":doc_json_data", JSON.stringify(documento))
-                                                                        .replace(":componenteDestinoElementosChequeadosModalFases", idElementoRetorno);
+                                                                        .replace(/:componenteDestinoElementosChequeadosModalFases/g, idElementoRetorno);
             elementoRetorno.innerHTML += elementoDocumentoTablaPlantilla;
             cerrarModalCargarArchivo();
         }
