@@ -17,6 +17,7 @@ class CreateDocumentosTable extends Migration
             $table->id();
             $table->string("numero");
             $table->string("nombre");
+            $table->string('nombre_archivo');
             $table->string("descripcion")->nullable();
             $table->boolean("recurrente")->nullable();
             $table->boolean("constante")->nullable();
