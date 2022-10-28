@@ -16,8 +16,19 @@ class DatabaseSeeder extends Seeder
         $this->call([
             EstadoSeeder::class,
             UsersTableSeeder::class,
-            RolSeeder::class,
+            ClienteSeeder::class,
+            TipoLicitacionSeeder::class,
             CategoriaSeeder::class,
+            LicitacionSeeder::class,
+            FaseSeeder::class,
+            FaseTipoLicitacionSeeder::class,
+            LicitacionFaseSeeder::class,
+            TipoDocumentoSeeder::class,
+            FaseTipoDocumentoSeeder::class,
+            DocumentoSeeder::class,
+            DocumentoLicitacionSeeder::class,
+            RolSeeder::class,
+            RolUsuarioSeeder::class
         ]);
     }
 }
