@@ -19,7 +19,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($licitaciones as $li)
+                                @foreach ($creadasMes as $li)
                                 <tr>
                                     <td scope="row">{{$li->nombre}}</td>
                                     <td scope="row">{{$li->fecha_inicio}}</td>
@@ -50,7 +50,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($licitaciones as $li)
+                                @foreach ($vencerMes as $li)
                                 <tr>
                                     <td scope="row">{{$li->nombre}}</td>
                                     <td scope="row">{{$li->fecha_inicio}}</td>

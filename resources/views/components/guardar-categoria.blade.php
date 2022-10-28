@@ -6,7 +6,7 @@
     <input type="hidden" class="form-control form-control-alternative" name="id_categoria_modal_create" id="id_tipo_documento_modal_create_id" value="{{isset($modelo->id) ? $modelo->id : ''}}">
     <div class="form-group">
         <label for="nombre_categoria_modal_create_id">Nombre:</label>
-        <input class="form-control form-control-alternative" id="nombre_categoria_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre:''}}" autocomplete="disabled">
+        <input class="form-control form-control-alternative" type="number" id="nombre_categoria_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre:''}}" autocomplete="disabled" min="2000" max="2100">
     </div>
     <div class="form-group">
         <label for="descripcion_categoria_modal_create_id">Descripcion:</label>
