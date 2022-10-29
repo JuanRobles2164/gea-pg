@@ -107,6 +107,22 @@
         <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
         <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
+        <script>
+            function ellipsis_box(elemento, max_chars){
+                let listadoElementos = document.querySelectorAll(elemento);
+                listadoElementos.forEach((el) => {
+                    limite_text = el.innerText;
+
+                    if (limite_text.length > max_chars){
+                        limite = limite_text.substr(0, max_chars)+" ...";
+                        el.innerText = limite;
+                    }
+                });
+            }
+
+            ellipsis_box(".table tbody tr td", 35);
+        </script>
+
         <!-- Filepond Library JS -->
         <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 

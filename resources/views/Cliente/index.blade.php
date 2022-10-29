@@ -84,7 +84,7 @@
                             @foreach ($clientes as $cli)
                             <tr>
                                 <td scope="row">
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="eliminarObjetoClienteModalEdit({{$cli->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                    <a type="button" style="color: white;" class="btn btn-danger btn-sm" onclick="eliminarObjetoClienteModalEdit({{$cli->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>
@@ -94,23 +94,23 @@
                                 <td scope="row">{{$cli->identificacion}}</td>
                                 @if($cli->estado == 1)
                                 <td scope="row">
-                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateCliente({{$cli->id}})">
+                                    <a type="button" style="color: white;" class="btn btn-success  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateCliente({{$cli->id}})">
                                         Activo
                                     </a>
                                 </td>
                                 @else
                                 <td scope="row">
-                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateCliente({{$cli->id}})">
+                                    <a type="button" style="color: white;" class="btn btn-warning  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateCliente({{$cli->id}})">
                                         Inactivo
                                     </a>
                                 </td>
                                 @endif
                                 <td scope="row">
-                                    <a href="#" class="btn btn-info btn-sm" onclick="setDataToClienteModal({{$cli->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-eye"></i>
+                                    <a type="button" class="btn btn-info btn-sm" onclick="setDataToClienteModal({{$cli->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-eye" style="color: white;"></i>
                                     </a>
-                                    <a href="#" class="btn btn-default btn-sm" onclick="setDataToClienteModalEdit({{$cli->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-user-edit"></i>
+                                    <a type="button" class="btn btn-default btn-sm" onclick="setDataToClienteModalEdit({{$cli->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-user-edit" style="color: white;"></i>
                                     </a>
                                 </td>
                             </tr>

@@ -26,30 +26,27 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-12">
-
-                    </div>
                     <div class="card-body border-0">
+                        <label class="col-form-label-sm">Los campos con el carácter (*) son obligatorios</label>
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label for="numero">Numero:</label>
+                                <label for="numero">Numero*:</label>
                                 <input type="text" class="form-control form-control-alternative" id="numeroComponenteInput" placeholder="hacer funcion asignar numero" readonly 
                                         name="numero" value="{{ old('numero') != null ? old('numero') : $numero_documento}}">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="nombre">Nombre:</label>
+                                <label for="nombre">Nombre*:</label>
                                 <input type="text" class="form-control form-control-alternative" id="nombreComponenteInput" name="nombre" placeholder="Nombre licitacion" value="{{old('nombre')}}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="nombre">Descripcion:</label>
+                            <label for="nombre">Descripcion*:</label>
                             <textarea class="form-control form-control-alternative" id="descripcionComponenteInput" name="descripcion" placeholder="descripcion licitacion"> {{old('descripcion')}} </textarea>
                         </div>
                         <div class="input-daterange datepicker row align-items-center">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="nombre">Fecha Inicio:</label>
+                                    <label for="nombre">Fecha Inicio*:</label>
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
@@ -60,7 +57,7 @@
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="nombre">Fecha Fin:</label>
+                                    <label for="nombre">Fecha Fin*:</label>
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
@@ -71,7 +68,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="nombre">Cliente:</label>
+                            <label for="nombre">Cliente*:</label>
                             <select class="form-control" value="{{old('cliente')}}" name="cliente">
                                 <option value="-1">Seleccione un cliente...</option>
                                 @foreach ($clientes as $cli)
@@ -80,7 +77,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="nombre">Tipo Licitacion:</label>
+                            <label for="nombre">Tipo Licitacion*:</label>
                             <select class="form-control" value="{{old('tipo_licitacion')}}" name="tipo_licitacion" id="tipo_licitacion_select_id">
                                 <option value="-1">Seleccione un tipo de licitacion...</option>
                                 @foreach ($tiposLics as $tl)
@@ -99,7 +96,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="nombre">Categoria:</label>
+                            <label for="nombre">Categoria*:</label>
                             <select class="form-control" value="{{old('categoria')}}" name="categoria">
                                 <option value="-1">Seleccione una categoria...</option>
                                 @foreach ($categorias as $c)

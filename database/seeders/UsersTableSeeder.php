@@ -60,17 +60,6 @@ class UsersTableSeeder extends Seeder
         ],
         [
             'id' => 5,
-            'name' => 'Angie Nurley',
-            'email' => 'nacosta1@udi.edu.co',
-            'email_verified_at' => now(),
-            'password' => Hash::make('123456'),
-            'identificacion' => '1005336798',
-            'estado' => '1',
-            'created_at' => now(),
-            'updated_at' => now()
-        ],
-        [
-            'id' => 6,
             'name' => 'Rafael Ricardo Mantilla',
             'email' => 'rmantillaDocente@udi.edu.co',
             'email_verified_at' => now(),

@@ -45,35 +45,35 @@
                         <tbody>
                             @foreach ($fases as $td)
                             <tr>
-                                <th scope="row">
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="eliminarObjetoFaseModal({{$td->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="far fa-trash-alt"></i>
+                                <td scope="row">
+                                    <a type="button" class="btn btn-danger btn-sm" onclick="eliminarObjetoFaseModal({{$td->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="far fa-trash-alt" style="color: white;"></i>
                                     </a>
-                                </th>
-                                <th scope="row">{{$td->id}}</th>
-                                <th scope="row">{{$td->nombre}}</th>
-                                <th scope="row">{{$td->descripcion}}</th>
+                                </td>
+                                <td scope="row">{{$td->id}}</td>
+                                <td scope="row">{{$td->nombre}}</td>
+                                <td scope="row">{{$td->descripcion}}</td>
                                 @if($td->estado == 1)
                                 <td scope="row">
-                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateFase({{$td->id}})">
+                                    <a type="button" style="color: white;" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateFase({{$td->id}})">
                                         Activo
                                     </a>
                                 </td>
                                 @else
                                 <td scope="row">
-                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateFase({{$td->id}})">
+                                    <a type="button" style="color: white;" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateFase({{$td->id}})">
                                         Inactivo
                                     </a>
                                 </td>
                                 @endif
-                                <th scope="row">
-                                    <a href="#" class="btn btn-default btn-sm" onclick="setDataToFaseModalEdit({{$td->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-user-edit"></i>
+                                <td scope="row">
+                                    <a type="button" class="btn btn-info btn-sm" onclick="setDataToFaseModal({{$td->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-eye" style="color: white;"></i>
                                     </a>
-                                    <a href="#" class="btn btn-info btn-sm" onclick="setDataToFaseModal({{$td->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-eye"></i>
+                                    <a type="button" class="btn btn-default btn-sm" onclick="setDataToFaseModalEdit({{$td->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-pencil-alt" style="color: white;"></i>
                                     </a>
-                                </th>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
