@@ -101,7 +101,7 @@
                         </div>
                     </div>
                     <div class="card-footer py-3">
-                        <button type="submit" class="btn btn-primary" style="float: right;">Editar</button>
+                        <button type="submit" class="btn btn-primary" style="float: right;">Guardar</button>
                     </div>
                 </div>
             </div>

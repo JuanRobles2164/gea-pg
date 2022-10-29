@@ -1,33 +1,34 @@
-<div class="modal" tabindex="-1" id="modalFases">
-    <div class="modal-dialog">
+<div class="modal fade" tabindex="-1" id="modalFases">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Documentos fase</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModalFases()">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <table class="table align-items-center">
-                <input type="hidden" name="modalFasesDestinoChequeados" id="componenteDestinoElementosChequeadosModalFases">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Tipo Documento</th>
-                        <th scope="col">Numero</th>
-                        <th scope="col">Nombre Documento</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                
-                <tbody id="bodyModalFases">
-
-                </tbody>
-            </table>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ocultarModalFases()">Cerrar</button>
-            <button type="button" class="btn btn-primary" id="btnGuardarModalFasesTipoLicitacion">Guardar</button>
-        </div>
+            <div class="modal-header">
+                <h5 class="modal-title">Documentos fase</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModalFases()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="table-responsive">
+                        <table class="table align-items-center">
+                            <input type="hidden" name="modalFasesDestinoChequeados" id="componenteDestinoElementosChequeadosModalFases">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Tipo Documento</th>
+                                    <th scope="col">Numero</th>
+                                    <th scope="col">Nombre Documento</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodyModalFases"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ocultarModalFases()">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarModalFasesTipoLicitacion">Guardar</button>
+            </div>
         </div>
     </div>
 </div>
@@ -53,7 +54,9 @@
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
-                                                <input type="checkbox" name="documentoFromModalFases[]" value=':doc_id,,:doc_numero,,:doc_nombre'/>
+                                                <div class="custom-control custom-checkbox mb-3"">
+                                                    <input type="checkbox" class="custom-control-inputname="documentoFromModalFases[]" value=':doc_id,,:doc_numero,,:doc_nombre'>
+                                                </div>
                                             </td>
                                         </tr>
                                         `;                                        
@@ -92,7 +95,7 @@
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
                                                 <input type="hidden" name="documentosAsociadosFases[]" value=':doc_json_data'>
-                                                <button class="btn btn-danger" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="fas fa-trash"></i> </button>
+                                                <button class="btn btn-danger btn-sm" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="fas fa-trash"></i> </button>
                                             </td>
                                         </tr>
                                         `;  

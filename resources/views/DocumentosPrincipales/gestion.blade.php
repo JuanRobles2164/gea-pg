@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="nombre">Descripcion:</label>
+                            <label for="nombre">Descripcion*:</label>
                             <textarea class="form-control form-control-alternative" id="descripcionComponenteInput" name="descripcion" placeholder="Descripcion documento"> {{old('descripcion')}} </textarea>
                         </div>
                         <div class="form-group">
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <div class="card-footer py-3">
-                        <button type="submit" class="btn btn-primary" style="float: right;">Enviar</button>
+                        <button type="submit" class="btn btn-primary" style="float: right;">Guardar</button>
                     </div>
                 </div>
             </div>
