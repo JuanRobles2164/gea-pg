@@ -203,11 +203,11 @@
                                 </h6>
                                 <div class="float-right">
                                     <button type="button" class="btn btn-primary btn-sm" onclick="mostrarModalDocumentosAsociadosFase(:fase_id)">
-                                        <i class="fas fa-plus"></i>
+                                        <i class="fa fa-file"></i>
                                     </button>
 
                                     <button type="button" class="btn btn-primary btn-sm" onclick="abrirModalCargarArchivo('tbodyDocumentosFaseTipoLicitacion:fase_id')">
-                                        <i class="fa fa-file"></i>
+                                        <i class="fas fa-plus"></i>
                                     </button>
                                 </div>                            
                             </div>
@@ -219,6 +219,7 @@
                                         <thead class="thead-light">
                                             <tr>
                                                 <th scope="col" style="display:none;">Tipo Documento</th>
+                                                <th scope="col" style="display:none;">Documento</th>
                                                 <th scope="col">Tipo Documento</th>
                                                 <th scope="col">Numero</th>
                                                 <th scope="col">Nombre Documento</th>
@@ -239,7 +240,8 @@
         //dento del elemento con id = tbodyDocumentosFaseTipoLicitacion:id_tipo_licitacion
         let elementoDocumentoTabla = `
                                         <tr>
-                                            <td scope="row">:doc_id</td>
+                                            <td scope="row" style="display:none;">:doc_id</td>
+                                            <td scope="row" style="display:none;">:tdoc_id</td>
                                             <td scope="row">:nom_doc_id</td>
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
@@ -263,6 +265,7 @@
             console.log(documentos);
             documentos.forEach((el) => {
                 htmlElementosTabla += htmlElementoTablaTemplate.replace(":doc_id", el.id)
+                    .replace(":tdoc_id", el.id_tdoc)
                     .replace(":nom_doc_id", el.nombre_tipdoc)
                     .replace(":doc_numero", el.numero)
                     .replace(":doc_nombre", el.nombre);

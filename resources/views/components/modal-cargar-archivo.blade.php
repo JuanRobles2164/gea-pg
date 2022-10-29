@@ -114,6 +114,7 @@
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
                                                 <input type="hidden" name="documentosAsociadosFases[]" value=':doc_json_data'>
+                                                <a href="{{route('archivos.ver_archivo_temporal')}}?path_file=:ruta_doc_temporal" class="btn btn-info btn-sm" target="_blank" title="Ver Documento" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-file-import"></i></a>                                                
                                                 <button type="button" class="btn btn-danger btn-sm" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="far fa-trash-alt"></i> </button>
                                             </td>
                                         </tr>
@@ -121,6 +122,7 @@
             elementoDocumentoTablaPlantilla = elementoDocumentoTablaPlantilla.replace(/:doc_id/g, timestamp)
                                                                         .replace(/:doc_numero/g, documento.numero)
                                                                         .replace(/:doc_nombre/g, documento.tipo_documento_nombre)
+                                                                        .replace(":ruta_doc_temporal", documento.path_file)
                                                                         .replace(":doc_json_data", JSON.stringify(documento))
                                                                         .replace(/:componenteDestinoElementosChequeadosModalFases/g, idElementoRetorno);
             elementoRetorno.innerHTML += elementoDocumentoTablaPlantilla;
