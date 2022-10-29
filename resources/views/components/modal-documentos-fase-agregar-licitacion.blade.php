@@ -55,7 +55,10 @@
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
-                                                <input type="checkbox" name="documentoFromModalFases[]" value=':doc_id,,:nom_doc_id,,:doc_numero,,:doc_nombre'>
+                                                <input type="checkbox" name="documentoFromModalFases[]"  value=':doc_id,,:tdoc_id,,:nom_doc_id,,:doc_numero,,:doc_nombre'>
+                                                <a href="{{route('archivos.ver_archivo')}}?id=:doc_id" class="btn btn-info btn-sm" target="_blank" title="Ver Documento" data-toggle="tooltip" data-placement="bottom">
+                                                        <i class="fas fa-file-import"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                         `;                                        
@@ -64,6 +67,7 @@
                 let elementoDocumentoTablaPlantillaUnidad = ""+elementoDocumentoTablaPlantilla;
 
                 elementoDocumentoTabla += elementoDocumentoTablaPlantillaUnidad.replace(/:doc_id/g, el.id)
+                                                                                    .replace(/:tdoc_id/g ,el.id_tdoc)
                                                                                     .replace(/:nom_doc_id/g, el.nombre_tipdoc)
                                                                                     .replace(/:doc_numero/g, el.numero)
                                                                                     .replace(/:doc_nombre/g, el.nombre);
@@ -81,9 +85,10 @@
                 console.log(valores);
                 let objeto = {
                     id: valores[0],
-                    nombre_tipdoc: valores[1],
-                    numero: valores[2],
-                    nombre: valores[3]
+                    id_tdoc: valores[1],
+                    nombre_tipdoc: valores[2],
+                    numero: valores[3],
+                    nombre: valores[4]
                 };
                 valoresProcesados.push(objeto);
             });
@@ -93,12 +98,16 @@
             let elementoDocumentoTablaPlantilla = `
                                         <tr id=":doc_id_:componenteDestinoElementosChequeadosModalFases">
                                             <td scope="row" style="display:none;">:doc_id</td>
+                                            <td scope="row" style="display:none;">:tdoc_id</td>
                                             <td scope="row">:nom_doc_id</td>
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
                                                 <input type="hidden" name="documentosAsociadosFases[]" value=':doc_json_data'>
-                                                <button class="btn btn-danger btn-sm" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="far fa-trash-alt"></i> </button>
+                                                <a href="{{route('archivos.ver_archivo')}}?id=:doc_id" class="btn btn-info btn-sm" target="_blank" title="Ver Documento" data-toggle="tooltip" data-placement="bottom">
+                                                        <i class="fas fa-file-import"></i>
+                                                </a>
+                                                <button class="btn btn-danger btn-sm" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="fas fa-trash-alt"></i> </button>
                                             </td>
                                         </tr>
                                         `;  
@@ -106,6 +115,7 @@
             valoresProcesados.forEach((e) => {
                 let objetoPushear = {
                     id: e.id,
+                    id_tdoc: e.id_tdoc,
                     numero: e.numero,
                     nombre: e.nombre,
                     path_file: "",
@@ -114,6 +124,7 @@
                 let cadenaObjeto = JSON.stringify(objetoPushear);
                 let elementoDocumentoTablaPlantillaUnidad = ""+elementoDocumentoTablaPlantilla;
                 elementoDocumentoTablaPlantillaUnidad = elementoDocumentoTablaPlantillaUnidad.replace(/:doc_id/g, e.id)
+                                                                                 .replace(/:tdoc_id/g, e.id_tdoc)
                                                                                  .replace(/:doc_numero/g, e.numero)
                                                                                  .replace(/:nom_doc_id/g, e.nombre_tipdoc)
                                                                                  .replace(/:doc_nombre/g, e.nombre)

@@ -202,8 +202,8 @@ class FaseController extends Controller
         $this->repo = FaseRepository::GetInstance();
         
         $fases = $this->repo->obtenerFasesByTipoLicitacion($request->id);
-        $this->repo = DocumentoRepository::GetInstance();
         foreach($fases as $f){
+            $this->repo = DocumentoRepository::GetInstance();
             $documentos = $this->repo->obtenerDocumentosByFaseId($f->id);
             foreach($documentos as $doc){
                 $this->repo = TipoDocumentoRepository::GetInstance();
@@ -211,6 +211,7 @@ class FaseController extends Controller
                 $this->repo =  null;
                 $doc->numero = $tipoDoc->indicativo . '' . str_pad($doc->numero,6,"0",STR_PAD_LEFT); 
                 $doc->nombre_tipdoc = $tipoDoc->nombre;
+                $doc->id_tdoc = $tipoDoc->id;
             }
             $arrTemp = [
                 'fase' => $f,
@@ -232,6 +233,7 @@ class FaseController extends Controller
             $this->repo =  null;
             $doc->numero = $tipoDoc->indicativo . '' . str_pad($doc->numero,6,"0",STR_PAD_LEFT); 
             $doc->nombre_tipdoc = $tipoDoc->nombre;
+            $doc->id_tdoc = $tipoDoc->id;
         }
         return json_encode($documentos);
     }
