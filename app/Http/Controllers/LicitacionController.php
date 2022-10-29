@@ -59,8 +59,10 @@ class LicitacionController extends Controller
         $obj = $this->repo->find($request->id);
         $this->repo = null;
 
-        $this->repo = FaseRepository::GetInstance();
-        $fases = $this->repo->findByParams($request->tipo_licitacion);
+        $this->repo = LicitacionFaseRepository::GetInstance();
+        $fases = $this->repo->findByParams([
+            'licitacion' => $obj->id,
+        ]);
 
         $allData = ['licitacion' => $obj, 'fases' => $fases];
         return view('Licitacion.gestion_documentos', $allData);

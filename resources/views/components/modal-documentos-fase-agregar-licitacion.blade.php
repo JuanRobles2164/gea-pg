@@ -1,5 +1,5 @@
-<div class="modal" tabindex="-1" id="modalFases">
-    <div class="modal-dialog">
+<div class="modal fade" tabindex="-1" id="modalFases">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">Documentos fase</h5>
@@ -55,7 +55,9 @@
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
-                                                <input type="checkbox" name="documentoFromModalFases[]" value=':doc_id,,:nom_doc_id,,:doc_numero,,:doc_nombre'/>
+                                                <div class="custom-control custom-checkbox mb-3"">
+                                                    <input type="checkbox" class="custom-control-inputname="documentoFromModalFases[]" value=':doc_id,,:nom_doc_id,,:doc_numero,,:doc_nombre'>
+                                                </div>
                                             </td>
                                         </tr>
                                         `;                                        
@@ -98,7 +100,7 @@
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
                                                 <input type="hidden" name="documentosAsociadosFases[]" value=':doc_json_data'>
-                                                <button class="btn btn-danger" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="fas fa-trash"></i> </button>
+                                                <button class="btn btn-danger btn-sm" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="fas fa-trash"></i> </button>
                                             </td>
                                         </tr>
                                         `;  
