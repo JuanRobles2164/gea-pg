@@ -111,7 +111,7 @@
                                 </td>
                                 @endif
                                 <td scope="row">
-                                    <a href="#" class="btn btn-info btn-sm" onclick="" title="Ver Informacion" data-toggle="tooltip" data-placement="bottom">
+                                    <a href="#" class="btn btn-info btn-sm"  onclick="setDataToDocumentoModal({{$d->id}})" data-target="#id_modal_view_documento"  title="Ver Informacion" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <a href="#" class="btn btn-default btn-sm" onclick="" title="Editar Informacion" data-toggle="tooltip" data-placement="bottom">
@@ -136,6 +136,7 @@
             </div>
         </div>
     </div>
+    <x-ver-documento-principal modalId="id_modal_view_documento" modalTitle="Ver documento" />
 
 @include('layouts.footers.auth')
     
@@ -144,7 +145,7 @@
 
 @push('js')
     <script>
-        
+        var ruta_encontrar_documento = "{{route('documento_principal.encontrar')}}";
         var ruta_alternar_estado_documento = "{{route('documento_principal.toggle_documento_state')}}";
         var ruta_eliminar_documento = "{{route('documento_principal.eliminar')}}";
 
@@ -185,6 +186,54 @@
                 } else {
                     swal("Acción cancelada");
                 }
+            });
+        }
+
+        async function obtenerDataDocumento(data) {
+            const response = await fetch(ruta_encontrar_documento + "?id=" + data.id);
+            return await response.json();
+        }
+
+        function setDataToDocumentoModal(idObjeto) {
+            let objeto = {
+                id: idObjeto
+            };
+            dataToSet = obtenerDataDocumento(objeto);
+            dataToSet.then((data) => {
+                console.log(data);
+
+                let dataDoc = data;
+
+                document.getElementById("tipo_documento_modal_view").value = dataDoc.tipo_documento;
+                document.getElementById("tipo_documento_modal_view").readOnly = true;
+
+                document.getElementById("numero_modal_view").value = dataDoc.numero;
+                document.getElementById("numero_modal_view").readOnly = true;
+
+                document.getElementById("nombre_modal_view").value = dataDoc.nombre;
+                document.getElementById("nombre_modal_view").readOnly = true;
+
+                document.getElementById("descripcion_modal_view").value = dataDoc.descripcion;
+                document.getElementById("descripcion_modal_view").readOnly = true;
+
+                document.getElementById("nombre_archivo_modal_view").value = dataDoc.nombre_archivo;
+                document.getElementById("nombre_archivo_modal_view").readOnly = true;
+                
+                document.getElementById("fecha_vencimiento_modal_view").value = dataDoc.fecha_vencimiento;
+                document.getElementById("fecha_vencimiento_modal_view").readOnly = true;
+                if(dataDoc.recurrente == 1){
+                    document.getElementById("documento_recurrente_constante1_modal_view").checked = true;
+                    document.getElementById("documento_recurrente_constante2_modal_view").checked = false;
+                }else{
+                    document.getElementById("documento_recurrente_constante2_modal_view").checked = true;
+                    document.getElementById("documento_recurrente_constante1_modal_view").checked = false;
+                }
+                document.getElementById("documento_recurrente_constante1_modal_view").disabled = true;
+                document.getElementById("documento_recurrente_constante2_modal_view").disabled = true;
+
+                //funcionalidad seleccionar si es constante o recurrente
+
+                $('#id_modal_view_documento').modal('show');
             });
         }
     </script>

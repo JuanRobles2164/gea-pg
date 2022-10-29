@@ -48,6 +48,18 @@ class DocumentoPrincipalController extends Controller
         return view('DocumentosPrincipales.gestion',  $allData);
     }
 
+    public function details(Request $request){
+        $this->repo = DocumentoRepository::GetInstance();
+        $objeto = $this->repo->find($request->id);
+        $this->repo = null;
+        $this->repo = TipoDocumentoRepository::GetInstance();
+        $tipoDoc = $this->repo->find($objeto->tipo_documento);
+        $this->repo = null;
+        $objeto->numero = $tipoDoc->indicativo . '' . str_pad($objeto->numero,6,"0",STR_PAD_LEFT); 
+        $objeto->tipo_documento = $tipoDoc->nombre;
+        return json_encode($objeto);
+    }
+
     public function subirDocTemporal(Request $request){
         if($request->hasFile('data_file')){
             $file = $request->file('data_file');
