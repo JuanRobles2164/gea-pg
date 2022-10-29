@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTipoDocumentoRequest;
 use App\Http\Requests\UpdateTipoDocumentoRequest;
 use App\Repositories\TipoDocumento\TipoDocumentoRepository;
 use Illuminate\Http\Request;
+use App\Http\Util\Utilidades;
 
 class TipoDocumentoController extends Controller
 {
@@ -79,6 +80,7 @@ class TipoDocumentoController extends Controller
         $request->validate($this->validationRules);
         $this->repo = TipoDocumentoRepository::GetInstance();
         $data = $request->all();
+        $data['indicativo'] = Utilidades::obtenerInicial(strtoupper($data['nombre']));
         $data = $this->repo->create($data);
         $this->repo = null;
         return json_encode($data);
@@ -107,11 +109,10 @@ class TipoDocumentoController extends Controller
     }
 
     public function toggleTipoDocState(Request $request){
-        $request->validate($this->validationRules);
         $this->repo = TipoDocumentoRepository::GetInstance();
-        $cliente = $this->repo->toggleState($request->id);
+        $tipoDocumento = $this->repo->toggleState($request->id);
         $this->repo = null;
-        return json_encode($cliente);
+        return json_encode($tipoDocumento);
     }
 
     /**
@@ -126,6 +127,7 @@ class TipoDocumentoController extends Controller
         $this->repo = TipoDocumentoRepository::GetInstance();
         $data = $request->all();
         $tipoDocumento = $this->repo->find($data["id"]);
+        $data['indicativo'] = Utilidades::obtenerInicial(strtoupper($data['nombre']));
         $this->repo->update($tipoDocumento, $data);
         $this->repo = null;
         return json_encode($tipoDocumento);

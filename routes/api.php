@@ -44,7 +44,10 @@ Route::name("archivos.")->group(function(){
 
 Route::name("documento_principal.")->group(function(){
     Route::controller(DocumentoPrincipalController::class)->group(function(){
+        Route::get('/documento_principal/find', 'details')->name("encontrar");
         Route::post('/documento_principal/guardar_documento', 'guardarDocumento')->name("guardar_documento");
+        Route::post('/documento_principal/toggle_documento_state', 'toggleDocumentoState')->name("toggle_documento_state");
+        Route::post('/documento_principal/destroy', 'destroy')->name("eliminar");
     });
 });
 
@@ -117,6 +120,7 @@ Route::name("tipo_licitacion.")->group(function(){
         Route::post('/tipo_licitacion/store', 'store')->name("guardar");
         Route::post('/tipo_licitacion/update', 'update')->name("actualizar");
         Route::post('/tipo_licitacion/destroy', 'destroy')->name("eliminar");
+        Route::post('/tipo_licitacion/toggle_tipo_licitacion_state', 'toggleTipoLicState')->name("toggle_tipo_licitacion_state");
     });
 });
 
@@ -149,6 +153,7 @@ Route::name("fase.")->group(function(){
         Route::get('/fase/obtener_documentos_por_fase_id', 'obtenerDocumentosByFaseId')->name("obtener_documentos_por_fase_id");
         Route::get('/fase/obtener_documentos_y_fases_by_tipo_licitacion_id', 'obtenerDocumentosYFasesByTipoLicitacionId')
                 ->name("obtener_documentos_y_fases_by_tipo_licitacion_id");
+        Route::post('/fase/toggle_fase_state', 'toggleFaseState')->name("toggle_fase_state");
     });
 });
 

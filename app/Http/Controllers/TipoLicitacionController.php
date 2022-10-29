@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TipoLicitacion;
 use App\Http\Requests\StoreTipoLicitacionRequest;
 use App\Http\Requests\UpdateTipoLicitacionRequest;
+use App\Http\Util\Utilidades;
 use App\Models\FaseTipoLicitacion;
 use App\Repositories\FaseTipoLicitacion\FaseTipoLicitacionRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
@@ -49,6 +50,13 @@ class TipoLicitacionController extends Controller
         return json_encode($objeto);
     }
 
+    public function toggleTipoLicState(Request $request){
+        $this->repo = TipoLicitacionRepository::GetInstance();
+        $tipo_lic = $this->repo->toggleState($request->id);
+        $this->repo = null;
+        return json_encode($tipo_lic);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -75,6 +83,7 @@ class TipoLicitacionController extends Controller
         $dataTipoLicitacion = [];
         $dataTipoLicitacion['nombre'] = $data['nombre'];
         $dataTipoLicitacion['descripcion'] = $data['descripcion'];
+        $dataTipoLicitacion['indicativo'] = Utilidades::obtenerInicial(strtoupper($data['nombre']));
         $entidad = $this->repo->create($dataTipoLicitacion);
         $retorno['tipo_licitacion'] = $entidad;
         $retorno['fase_tipo_licitacion'] = [];
@@ -156,6 +165,7 @@ class TipoLicitacionController extends Controller
         $dataTipoLicitacion = [];
         $dataTipoLicitacion['nombre'] = $data['nombre'];
         $dataTipoLicitacion['descripcion'] = $data['descripcion'];
+        $dataTipoLicitacion['indicativo'] = Utilidades::obtenerInicial(strtoupper($data['nombre']));
         $tipoLicitacion = $this->repo->find($data["id"]);
         $entidad = $this->repo->update($tipoLicitacion, $dataTipoLicitacion);
         $retorno['tipo_licitacion'] = $entidad;
@@ -202,14 +212,14 @@ class TipoLicitacionController extends Controller
      * @param  \App\Models\TipoLicitacion  $tipoLicitacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $tipoLicitacion)
+    public function destroy(Request $request)
     {
-        $objeto = new TipoLicitacion($tipoLicitacion->all());
-        $objeto->id = $tipoLicitacion->id;
         $this->repo = TipoLicitacionRepository::GetInstance();
-        $objeto = $this->repo->find($objeto->id);
-        $this->repo->delete($objeto);
+        $data = $request->all();
+        $data["estado"] = '3';
+        $tipoLic = $this->repo->find($data["id"]);
+        $this->repo->update($tipoLic, $data);
         $this->repo = null;
-        return json_encode($objeto);
+        return json_encode($tipoLic);
     }
 }

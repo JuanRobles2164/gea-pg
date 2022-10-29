@@ -38,28 +38,42 @@
                                 <th scope="col">Id</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Descripcion</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($fases as $td)
                             <tr>
-                                <th scope="row">
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="eliminarObjetoFaseModal({{$td->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="far fa-trash-alt"></i>
+                                <td scope="row">
+                                    <a type="button" class="btn btn-danger btn-sm" onclick="eliminarObjetoFaseModal({{$td->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="far fa-trash-alt" style="color: white;"></i>
                                     </a>
-                                </th>
-                                <th scope="row">{{$td->id}}</th>
-                                <th scope="row">{{$td->nombre}}</th>
-                                <th scope="row">{{$td->descripcion}}</th>
-                                <th scope="row">
-                                    <a href="#" class="btn btn-default btn-sm" onclick="setDataToFaseModalEdit({{$td->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-user-edit"></i>
+                                </td>
+                                <td scope="row">{{$td->id}}</td>
+                                <td scope="row">{{$td->nombre}}</td>
+                                <td scope="row">{{$td->descripcion}}</td>
+                                @if($td->estado == 1)
+                                <td scope="row">
+                                    <a type="button" style="color: white;" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateFase({{$td->id}})">
+                                        Activo
                                     </a>
-                                    <a href="#" class="btn btn-info btn-sm" onclick="setDataToFaseModal({{$td->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-eye"></i>
+                                </td>
+                                @else
+                                <td scope="row">
+                                    <a type="button" style="color: white;" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateFase({{$td->id}})">
+                                        Inactivo
                                     </a>
-                                </th>
+                                </td>
+                                @endif
+                                <td scope="row">
+                                    <a type="button" class="btn btn-info btn-sm" onclick="setDataToFaseModal({{$td->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-eye" style="color: white;"></i>
+                                    </a>
+                                    <a type="button" class="btn btn-default btn-sm" onclick="setDataToFaseModalEdit({{$td->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-pencil-alt" style="color: white;"></i>
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -91,6 +105,7 @@
     var ruta_eliminar_fase = "{{route('fase.eliminar')}}";
     var ruta_consultar_tDocs = "{{route('tipo_documento.listar')}}";
     var ruta_consultar_tDocs_asociados = "{{route('tipo_documento.encontrar_por_fase')}}";
+    var ruta_alternar_estado_fase = "{{route('fase.toggle_fase_state')}}";
 
     async function obtenerDataFase(data) {
         const response = await fetch(ruta_encontrar_fase + "?id=" + data.id);
@@ -291,5 +306,16 @@
             draggable_list.appendChild(listItem);
         }
     }
+    function toggleStateFase(idFase){
+            let objeto = {
+                id: idFase
+            }
+
+            postData(ruta_alternar_estado_fase, objeto)
+            .then((data) => {
+                console.log(data);
+                location.reload();
+            });   
+        }
 </script>
 @endpush

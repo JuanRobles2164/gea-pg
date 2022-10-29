@@ -3,17 +3,18 @@
 @section('modal-content')
 <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
 <form>
+    <label class="col-form-label-sm">Los campos con el carácter (*) son obligatorios</label>
     <input type="hidden" class="form-control form-control-alternative" name="id_categoria_modal_create" id="id_tipo_documento_modal_create_id" value="{{isset($modelo->id) ? $modelo->id : ''}}">
     <div class="form-group">
-        <label for="nombre_categoria_modal_create_id">Nombre:</label>
-        <input class="form-control form-control-alternative" id="nombre_categoria_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre:''}}" autocomplete="disabled">
+        <label for="nombre_categoria_modal_create_id">Nombre*:</label>
+        <input class="form-control form-control-alternative" type="number" id="nombre_categoria_modal_create_id" value="{{isset($modelo->id) ? $modelo->nombre:''}}" autocomplete="disabled" min="2000" max="2100">
     </div>
     <div class="form-group">
-        <label for="descripcion_categoria_modal_create_id">Descripcion:</label>
+        <label for="descripcion_categoria_modal_create_id">Descripcion*:</label>
         <textarea class="form-control form-control-alternative" id="descripcion_categoria_modal_create_id" rows="3" value="{{isset($modelo->id) ? $modelo->descripcion:''}}" autocomplete="disabled"></textarea>
     </div>
     <div class="form-group">
-        <label for="color_categoria_modal_create_id">Color:</label>
+        <label for="color_categoria_modal_create_id">Color*:</label>
         <input type="color" class="form-control form-control-alternative" id="color_categoria_modal_create_id" rows="3" value="{{isset($modelo->id) ? $modelo->css_style:''}}"></textarea>
     </div>
 </form>

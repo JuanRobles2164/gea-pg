@@ -49,4 +49,11 @@ class DocumentoRepository extends BaseRepository{
         
         return $documentos;
     }
+
+    public function toggleState($documentoId){
+        $documento = $this->find($documentoId);
+        $documento->estado = ($documento->estado - 3)*(-1);
+        $documento->save();
+        return $documento;
+    }
 }

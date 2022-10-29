@@ -38,29 +38,45 @@
                                 <th scope="col">Id</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Descripción</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($tipos_licitacion as $tl)
                             <tr>
-                                <th scope="row">
+                                <td>
                                     <a type="button" class="btn btn-danger btn-sm" onclick="eliminarObjetoTipoLicitacionModal({{$tl->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="far fa-trash-alt"></i>
+                                        <i class="far fa-trash-alt" style="color: white;"></i>
                                     </a>
-                                </th>
-                                <th scope="row">{{$tl->id}}</th>
-                                <th scope="row">{{$tl->nombre}}</th>
-                                <th scope="row">{{$tl->descripcion}}</th>
-                                <th scope="row">
+                                </td>
+                                <td>{{$tl->id}}</td>
+                                <td>{{$tl->nombre}}</td>
+                                <td>
+                                    {{$tl->descripcion}}
+                                </td>
+                                @if($tl->estado == 1)
+                                <td>
+                                    <a type="button" style="color: white;" class="btn btn-success  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoLic({{$tl->id}})">
+                                        Activo
+                                    </a>
+                                </td>
+                                @else
+                                <td>
+                                    <a type="button" style="color: white;" class="btn btn-warning  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoLic({{$tl->id}})">
+                                        Inactivo
+                                    </a>
+                                </td>
+                                @endif
+                                <td>
                                     <!-- Aquí van los botones para editar-visualizar y eso xd -->
-                                    <a type="button"class="btn btn-default btn-sm" onclick="setDataToTipoLicitacionModalEdit({{$tl->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-user-edit"></i>
-                                    </a>
                                     <a type="button" class="btn btn-info btn-sm" onclick="setDataToTipoLicitacionModal({{$tl->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-eye"></i>
+                                        <i class="fas fa-eye" style="color: white;"></i>
                                     </a>
-                                </th>
+                                    <a type="button"class="btn btn-default btn-sm" onclick="setDataToTipoLicitacionModalEdit({{$tl->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-pencil-alt" style="color: white;"></i>
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -89,6 +105,7 @@
     var ruta_eliminar_tipo_licitacion = "{{route('tipo_licitacion.eliminar')}}";
     var ruta_consultar_fases = "{{route('fase.listar')}}";
     var ruta_consultar_fases_asociadas = "{{route('fase.encontrar_por_tipolic')}}";
+    var ruta_alternar_estado_tipolic = "{{route('tipo_licitacion.toggle_tipo_licitacion_state')}}"
 
     async function obtenerDataTipoLicitacion(data) {
         const response = await fetch(ruta_encontrar_tipo_licitacion + "?id=" + data.id);
@@ -289,6 +306,17 @@
             draggable_list.appendChild(listItem);
             addEventListeners();
         }
+    }
+    function toggleStateTipoLic(idTipoLic){
+        let objeto = {
+            id: idTipoLic
+        }
+
+        postData(ruta_alternar_estado_tipolic, objeto)
+        .then((data) => {
+            console.log(data);
+            location.reload();
+        });   
     }
 </script>
 @endpush
