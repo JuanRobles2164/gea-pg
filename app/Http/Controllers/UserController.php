@@ -117,22 +117,42 @@ class UserController extends Controller
         return json_encode($user);
     }
 
-    public function destroy(Request $user)
+    public function destroy(Request $request)
     {
-        $objeto = new User($user->all());
-        $objeto->id = $user->id;
-        $this->repo = UserRepository::GetInstance();
-        $objeto = $this->repo->find($objeto->id);
-
+        $data = $request->all();
+        $retorno = [];
+        $retorno['roles_usuario'] = [];
         $this->repo = RolUsuarioRepository::GetInstance();
-        $roles_usuario = $this->repo->findByUser($objeto->id);
+        $roles_usuario = $this->repo->findByUser($data["id"]);
         foreach($roles_usuario as $ru){
-            $this->repo->delete($ru);
+            $dataRolesUsr = [
+                'id' => $ru->id,
+                'usuario' => $data['id'],
+                'rol' => $ru->rol,
+                'estado' => 3,
+                'created_at' => now(),
+                'updated_at' => now()
+            ];
+            array_push($retorno['roles_usuario'], $this->repo->update($ru, $dataRolesUsr));
         }
+        $this->repo = null;
 
         $this->repo = UserRepository::GetInstance();
-        $this->repo->delete($objeto);
+        $usuario = $this->repo->find($data["id"]);
+        $dataUsuario = [
+            'id' => $data["id"],
+            'name' => $usuario->name,
+            'email' => $usuario->email,
+            'email_verified_at' => $usuario->email_verified_at,
+            'password' => $usuario->password,
+            'identificacion' => $usuario->identificacion,
+            'estado' => 3,
+            'created_at' => now(),
+            'updated_at' => now()
+        ];
+        $this->repo->update($usuario, $dataUsuario);
         $this->repo = null;
-        return json_encode($objeto);
+        $retorno['usuario'] = $usuario;
+        return json_encode($retorno);
     }
 }
