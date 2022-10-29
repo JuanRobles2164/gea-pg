@@ -3,11 +3,12 @@
 @section('modal-content')
 <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
 <input type="hidden" class="form-control form-control-alternative" name="id_tipo_licitacion_modal_create" id="id_tipo_licitacion_modal_create_id">
-<form action="">
+<form>
+    <label class="col-form-label-sm">Los campos con el carácter (*) son obligatorios</label>
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <label class="form-label" for="nombre_tipo_licitacion_modal_create_id">Nombre:</label>
+                <label class="form-label" for="nombre_tipo_licitacion_modal_create_id">Nombre*:</label>
                 <br>
                 <input type="text" class="form-control form-control-alternative" id="nombre_tipo_licitacion_modal_create_id" autocomplete="disabled">
             </div>
@@ -16,7 +17,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <label class="form-label" for="descripcion_tipo_licitacion_modal_create_id">Descripción:</label>
+                <label class="form-label" for="descripcion_tipo_licitacion_modal_create_id">Descripción*:</label>
                 <textarea name="" class="form-control form-control-alternative" id="descripcion_tipo_licitacion_modal_create_id" rows="5" autocomplete="disabled"></textarea>
             </div>
         </div>

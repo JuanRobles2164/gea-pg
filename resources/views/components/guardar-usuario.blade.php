@@ -2,25 +2,26 @@
 
 @section('modal-content')
 <form>
+    <label class="col-form-label-sm">Los campos con el carácter (*) son obligatorios</label>
     <div class="row">
         <div class="col-md-6">
             <input type="hidden" name="id_usuario_modal_create_id" id="id_usuario_modal_create_id">
             <div class="form-group">
-                <label class="form-label" for="nombre_user_modal_create_id">Nombre completo:</label>
+                <label class="form-label" for="nombre_user_modal_create_id">Nombre completo*:</label>
                 <input type="text" class="form-control form-control-alternative" id="nombre_user_modal_create_id" value="{{isset($model->id) ? $model->name : ''}}" autocomplete="disabled">
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
-                <label class="form-label" for="identificacion_user_modal_create_id">Identificacion:</label>
+                <label class="form-label" for="identificacion_user_modal_create_id">Identificacion*:</label>
                 <input type="text" class="form-control form-control-alternative" id="identificacion_user_modal_create_id" value="{{isset($model->id) ? $model->identificacion : ''}}" autocomplete="disabled">
             </div>
         </div>
 
         <div class="col">
             <div class="form-group">
-                <label class="form-label" for="email_user_modal_create_id">Email:</label>
+                <label class="form-label" for="email_user_modal_create_id">Email*:</label>
                 <input type="email" class="form-control form-control-alternative" id="email_user_modal_create_id" value="{{isset($model->id) ? $model->email : ''}}" autocomplete="disabled">
             </div>
         </div>
@@ -28,15 +29,15 @@
     </div>
     
     <div class="form-group">
-        <label class="form-label" for="password_user_modal_create_id">Contraseña:</label>
+        <label class="form-label" for="password_user_modal_create_id">Contraseña*:</label>
         <input type="password" class="form-control form-control-alternative" id="password_user_modal_create_id" placeholder="Si no quieres cambiar la contraseña, deja el campo vacío" autocomplete="disabled">
     </div>
     <div class="form-group">
-        <label class="form-label" for="confirm_password_user_modal_create_id">Confirmar contraseña:</label>
+        <label class="form-label" for="confirm_password_user_modal_create_id">Confirmar contraseña*:</label>
         <input type="password" class="form-control form-control-alternative" id="confirm_password_user_modal_create_id" autocomplete="disabled">
     </div>
     <div class="form-group">
-        <label class="form-label">Rol:</label>
+        <label class="form-label">Rol*:</label>
         <div class="form-row form-control form-control-alternative">
         @foreach ($roles as $r)
             <div class="custom-control custom-control-alternative custom-radio mb-3">

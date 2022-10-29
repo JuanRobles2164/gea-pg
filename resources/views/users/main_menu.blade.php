@@ -84,8 +84,8 @@
                             @foreach ($users as $u)
                             <tr>
                                 <td scope="row">
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="eliminarObjetoUsuarioModalEdit({{$u->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="far fa-trash-alt"></i>
+                                    <a type="button" class="btn btn-danger btn-sm" onclick="eliminarObjetoUsuarioModalEdit({{$u->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="far fa-trash-alt" style="color: white;"></i>
                                     </a>
                                 </td>
                                 <td scope="row">{{$u->id}}</td>
@@ -93,26 +93,26 @@
                                 <td scope="row">{{$u->email}}</td>
                                 @if($u->estado == 1)
                                 <td scope="row">
-                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateUsuario({{$u->id}})">
+                                    <a type="button" style="color: white;" class="btn btn-success  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateUsuario({{$u->id}})">
                                         Activo
                                     </a>
                                 </td>
                                 @else
                                 <td scope="row">
-                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateUsuario({{$u->id}})">
+                                    <a type="button" style="color: white;" class="btn btn-warning  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateUsuario({{$u->id}})">
                                         Inactivo
                                     </a>
                                 </td>
                                 @endif
                                 <td scope="row">
-                                    <a href="#" class="btn btn-info btn-sm" onclick="setDataToUsuarioModal({{$u->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-eye"></i>
+                                    <a type="button" class="btn btn-info btn-sm" onclick="setDataToUsuarioModal({{$u->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-eye" style="color: white;" ></i>
                                     </a>
-                                    <a href="#" class="btn btn-default btn-sm" onclick="setDataToUsuarioModalEdit({{$u->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-user-edit"></i>
+                                    <a type="button" class="btn btn-default btn-sm" onclick="setDataToUsuarioModalEdit({{$u->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-user-edit" style="color: white;" ></i>
                                     </a>
-                                    <a href="#" class="btn btn-primary btn-sm" onclick="resetPasswordRequest({{$u->id}})" title="Restaurar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-sync-alt"></i>
+                                    <a type="button" class="btn btn-primary btn-sm" onclick="resetPasswordRequest({{$u->id}})" title="Restaurar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-sync-alt" style="color: white;" ></i>
                                     </a>
                                 </td>
                             </tr>

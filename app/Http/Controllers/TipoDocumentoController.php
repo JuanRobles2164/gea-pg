@@ -107,11 +107,10 @@ class TipoDocumentoController extends Controller
     }
 
     public function toggleTipoDocState(Request $request){
-        $request->validate($this->validationRules);
         $this->repo = TipoDocumentoRepository::GetInstance();
-        $cliente = $this->repo->toggleState($request->id);
+        $tipoDocumento = $this->repo->toggleState($request->id);
         $this->repo = null;
-        return json_encode($cliente);
+        return json_encode($tipoDocumento);
     }
 
     /**
