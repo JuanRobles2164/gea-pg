@@ -48,4 +48,12 @@ class TipoDocumentoRepository extends BaseRepository{
         ->get();
         return $tiposDoc;
     }
+
+    public function obtenerNumeracionActual($idTipoDoc){
+        $numeracion = DB::table('tipo_documento')
+        ->where('tipo_documento.id',$idTipoDoc)
+        ->select('tipo_documento.valor_actual as valor')
+        ->get();
+        return $numeracion;
+    }
 }
