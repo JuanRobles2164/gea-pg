@@ -8,6 +8,7 @@ use App\Http\Controllers\TipoDocumentoController;
 use App\Http\Controllers\TipoLicitacionController;
 use App\Http\Controllers\LicitacionController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\DocumentoPrincipalController;
 use App\Http\Controllers\UserController;
 use App\Repositories\Estado\EstadoRepository;
@@ -92,6 +93,12 @@ Route::name("tipo_documento.")->group(function(){
     });
 });
 
+Route::name("documento.")->group(function(){
+    Route::controller(DocumentoController::class)->group(function(){
+        Route::get('/documento/index', 'index')->name("index");
+        Route::post('/documento/store_in_component', 'storeInComponent')->name("guardar_en_componente");
+    });
+});
 
 Route::name("tipo_licitacion.")->group(function(){
     Route::controller(TipoLicitacionController::class)->group(function(){
