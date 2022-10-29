@@ -14,7 +14,7 @@
                 <input type="hidden" name="rutaArchivoTemporalCreado" id="rutaArchivoTemporalCreadoId">
                 <div class="form-group">
                     <label for="selectTipoDocumentoNuevoModalId">Tipo documento</label>
-                    <select name="selectTipoDocumentoNuevoModal" id="selectTipoDocumentoNuevoModalId" class="form-input">
+                    <select name="selectTipoDocumentoNuevoModal" id="selectTipoDocumentoNuevoModalId" class="form-control form-control-alternative">
                         <option value="-1">Seleccione una opción</option>
                         @foreach ($tipos_documentos as $td)
                             <option value="{{$td->id}}">{{$td->nombre}}</option>
@@ -23,15 +23,13 @@
                 </div>
                 <div class="form-group">
                     <label for="nombreArchivoNuevoDocumentoModalId">Nombre:</label>
-                    <input type="text" name="nombreArchivoNuevoDocumentoModal" id="nombreArchivoNuevoDocumentoModalId" class="form-input">
+                    <input type="text" name="nombreArchivoNuevoDocumentoModal" id="nombreArchivoNuevoDocumentoModalId" class="form-control form-control-alternative">
                 </div>
                 <div class="form-group">
                     <label for="">Subir archivo:</label>
                     <input type="file" name="data_file" id="archivoNuevoDocumentoModal" class="filepond form-input">
                 </div>
             </div>
-
-
         </div>
 
         <div class="modal-footer">

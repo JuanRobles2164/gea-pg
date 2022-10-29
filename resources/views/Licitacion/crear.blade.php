@@ -100,7 +100,9 @@
                         <div id="accordion_fases_documentos"></div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <div class="card-footer py-3">
+                    <button type="submit" class="btn btn-primary" style="float: right;">Guardar</button>
+                </div>
             </div>
         </div>
     </div>
