@@ -6,7 +6,11 @@ use App\Models\Documento;
 use App\Http\Requests\StoreDocumentoRequest;
 use App\Http\Requests\UpdateDocumentoRequest;
 use App\Repositories\Documento\DocumentoRepository;
+use App\Repositories\DocumentoLicitacion\DocumentoLicitacionRepository;
+use App\Repositories\LicitacionFase\LicitacionFaseRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentoController extends Controller
 {
@@ -121,5 +125,48 @@ class DocumentoController extends Controller
         $this->repo->delete($objeto);
         $this->repo = null;
         return json_encode($objeto);
+    }
+
+    public function storeInComponent(Request $request){
+        $validated = $request->validate([
+            'data_file' => ['required'],
+            'nombre_archivo' => ['required'],
+            'licitacion' => ['required'],
+            'fase' => ['required'],
+            'tipo_documento' => ['required']
+        ]);
+        //Mover el archivo
+        $final_path = "documentos_licitaciones/".now()->timestamp.$request->nombre_archivo;
+        Storage::disk('local')->move($request->data_file, $final_path);
+        //Crear el archivo
+        $documentoData = [
+            'numero' => now()->timestamp,
+            'nombre' => $request->nombre,
+            'nombre_archivo' => $request->nombre_archivo,
+            'path_file' => $final_path,
+            'estado' => 1,
+            'tipo_documento' => $request->tipo_documento,
+            'created_at' => now(),
+            'updated_at' => now()
+        ];
+
+        $this->repo = DocumentoRepository::GetInstance();
+        $documentoEntidad = $this->repo->create($documentoData);
+        $this->repo = LicitacionFaseRepository::GetInstance();
+        $licitacionFase = $this->repo->findByParams([
+            'unico_registro' => true,
+            'licitacion' => $request->licitacion,
+            'fase' => $request->fase
+        ]);
+        $documentoLicitacionArr = [
+            'documento' => $documentoEntidad->id,
+            'licitacion_fase' => $licitacionFase->id,
+            'revisado' => true,
+            'estado' => 1,
+        ];
+        $this->repo = DocumentoLicitacionRepository::GetInstance();
+        $this->repo->create($documentoLicitacionArr);
+        $this->repo = null;
+        return Redirect::back();
     }
 }

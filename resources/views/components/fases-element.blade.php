@@ -1,13 +1,17 @@
 <div class="card">
-    <div class="card-header" id="headingOne">
+    <div class="card-header" id="headingOne{{$modelo->id}}">
         <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$modelo->id}}" aria-expanded="true" aria-controls="collapse{{$modelo->id}}">
                 {{$modelo->nombre}}
+            </button>
+
+            <button class="btn btn-primary" type="button" onclick="abrirModalNuevoArchivo({{$modelo->id}}, {{$licitacion}})">
+                +
             </button>
         </h5>
     </div>
 
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+    <div id="collapse{{$modelo->id}}" class="collapse show" aria-labelledby="headingOne{{$modelo->id}}" data-parent="#accordion">
         <div class="card-body">
         <div class="table-responsive">
                     <table class="table align-items-center">
@@ -33,10 +37,10 @@
                                 <td scope="row">{{$doc->nombre}}</td>
                                 <td scope="row">
                                     @if ($doc->path_file != null || $doc->data_file != null) 
-                                        <a href="#" class="btn btn-primary btn-sm" onclick="" title="Visualizar" data-toggle="tooltip" data-placement="bottom">
+                                        <a href="{{route('archivos.descargar_archivo', ['id' => $doc->id])}}" class="btn btn-primary btn-sm" title="Descargar" data-toggle="tooltip" data-placement="bottom">
                                             <i class="fas fa-sync-alt"></i>
                                         </a>
-                                        <a href="#" class="btn btn-info btn-sm" onclick="" title="Descargar" data-toggle="tooltip" data-placement="bottom">
+                                        <a href="{{route('archivos.ver_archivo', ['id' => $doc->id])}}" target="_blank" class="btn btn-info btn-sm" onclick="" title="Visualizar" data-toggle="tooltip" data-placement="bottom">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <a href="#" class="btn btn-default btn-sm" onclick="" title="Reemplazar" data-toggle="tooltip" data-placement="bottom">
@@ -56,7 +60,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <script>
 

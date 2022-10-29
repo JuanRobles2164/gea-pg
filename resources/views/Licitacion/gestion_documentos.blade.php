@@ -38,22 +38,25 @@
 
     @endif
 
-    <div class="row">
-        <div class="col">
-            <div class="card shadow">
-                <div class="card-header border-0">
-                    <br><br><br><br>
-                    <!-- informacion de la licitacion para editar -->
-                    <div id="accordion">
-                        @foreach ($fases as $fase)
-                            <x-fases-element componentId="{{$fase->id}}" componentTitle="{{$fase->nombre}}" licitacion="{{$licitacion->id}}" :modelo="$fase" />
-                        @endforeach
-                    </div>
+    <div class="col">
+        <div class="card shadow">
+            <div class="card-header border-0">
+                <br><br><br><br>
+                <!-- informacion de la licitacion para editar -->
+                <div id="accordion">
+                    @foreach ($fases as $fase)
+                        <x-fases-element componentId="{{$fase->id}}" componentTitle="{{$fase->nombre}}" licitacion="{{$licitacion->id}}" :modelo="$fase" />
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<x-reemplazar-archivo-modal />
+
+<x-nuevo-archivo-fase-licitacion-modal />
+
 
 @include('layouts.footers.auth')
 
