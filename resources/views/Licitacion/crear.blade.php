@@ -203,11 +203,11 @@
                                 </h6>
                                 <div class="float-right">
                                     <button type="button" class="btn btn-primary btn-sm" onclick="mostrarModalDocumentosAsociadosFase(:fase_id)">
-                                        <i class="fas fa-plus"></i>
+                                        <i class="fa fa-file"></i>
                                     </button>
 
                                     <button type="button" class="btn btn-primary btn-sm" onclick="abrirModalCargarArchivo('tbodyDocumentosFaseTipoLicitacion:fase_id')">
-                                        <i class="fa fa-file"></i>
+                                        <i class="fas fa-plus"></i>
                                     </button>
                                 </div>                            
                             </div>
