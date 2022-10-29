@@ -127,6 +127,7 @@
 
             document.getElementById("descripcion_fase_modal_details_id").value = faseData.descripcion;
             document.getElementById("descripcion_fase_modal_details_id").readOnly = true;
+
            
             obtenerDatos(idObjeto, false);
 
@@ -298,7 +299,7 @@
                         ${nombreTDocs} 
                     </p>
                     <a type="button" id="boton" class="btn btn-danger btn-sm justify-content-center" onclick="quitarDeLista(${index})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
-                        <i class="far fa-trash-alt"></i>
+                        <i class="far fa-trash-alt" style="color: white;"></i>
                     </a>
                 </div>
             `;
@@ -306,7 +307,7 @@
             draggable_list.appendChild(listItem);
         }
     }
-    function toggleStateFase(idFase){
+        function toggleStateFase(idFase){
             let objeto = {
                 id: idFase
             }
