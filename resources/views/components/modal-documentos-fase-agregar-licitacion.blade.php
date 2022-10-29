@@ -1,34 +1,34 @@
 <div class="modal fade" tabindex="-1" id="modalFases">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Documentos fase</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModalFases()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="table-responsive">
-                        <table class="table align-items-center">
-                            <input type="hidden" name="modalFasesDestinoChequeados" id="componenteDestinoElementosChequeadosModalFases">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Tipo Documento</th>
-                                    <th scope="col">Numero</th>
-                                    <th scope="col">Nombre Documento</th>
-                                    <th scope="col">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="bodyModalFases"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ocultarModalFases()">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="btnGuardarModalFasesTipoLicitacion">Guardar</button>
-            </div>
+        <div class="modal-header">
+            <h5 class="modal-title">Documentos fase</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModalFases()">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <table class="table align-items-center">
+                <input type="hidden" name="modalFasesDestinoChequeados" id="componenteDestinoElementosChequeadosModalFases">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col" style="display: none;">Tipo Documento</th>
+                        <th scope="col">Tipo Documento</th>
+                        <th scope="col">Numero</th>
+                        <th scope="col">Nombre Documento</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                
+                <tbody id="bodyModalFases">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ocultarModalFases()">Cerrar</button>
+            <button type="button" class="btn btn-primary" id="btnGuardarModalFasesTipoLicitacion">Guardar</button>
+        </div>
         </div>
     </div>
 </div>
@@ -50,11 +50,12 @@
 
             let elementoDocumentoTablaPlantilla = `
                                         <tr>
-                                            <td scope="row">:doc_id</td>
+                                            <td scope="row" style="display:none;">:doc_id</td>
+                                            <td scope="row">:nom_doc_id</td>
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
-                                                <input type="checkbox" name="documentoFromModalFases[]" value=':doc_id,,:doc_numero,,:doc_nombre'>
+                                                <input type="checkbox" name="documentoFromModalFases[]" value=':doc_id,,:nom_doc_id,,:doc_numero,,:doc_nombre'>
                                             </td>
                                         </tr>
                                         `;                                        
@@ -63,6 +64,7 @@
                 let elementoDocumentoTablaPlantillaUnidad = ""+elementoDocumentoTablaPlantilla;
 
                 elementoDocumentoTabla += elementoDocumentoTablaPlantillaUnidad.replace(/:doc_id/g, el.id)
+                                                                                    .replace(/:nom_doc_id/g, el.nombre_tipdoc)
                                                                                     .replace(/:doc_numero/g, el.numero)
                                                                                     .replace(/:doc_nombre/g, el.nombre);
 
@@ -76,10 +78,12 @@
             let valoresProcesados = [];
             els.forEach((e) => {
                 let valores = e.value.split(",,");
+                console.log(valores);
                 let objeto = {
                     id: valores[0],
-                    numero: valores[1],
-                    nombre: valores[2]
+                    nombre_tipdoc: valores[1],
+                    numero: valores[2],
+                    nombre: valores[3]
                 };
                 valoresProcesados.push(objeto);
             });
@@ -88,7 +92,8 @@
             document.getElementById("componenteDestinoElementosChequeadosModalFases").value = "";
             let elementoDocumentoTablaPlantilla = `
                                         <tr id=":doc_id_:componenteDestinoElementosChequeadosModalFases">
-                                            <td scope="row">:doc_id</td>
+                                            <td scope="row" style="display:none;">:doc_id</td>
+                                            <td scope="row">:nom_doc_id</td>
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
@@ -110,6 +115,7 @@
                 let elementoDocumentoTablaPlantillaUnidad = ""+elementoDocumentoTablaPlantilla;
                 elementoDocumentoTablaPlantillaUnidad = elementoDocumentoTablaPlantillaUnidad.replace(/:doc_id/g, e.id)
                                                                                  .replace(/:doc_numero/g, e.numero)
+                                                                                 .replace(/:nom_doc_id/g, e.nombre_tipdoc)
                                                                                  .replace(/:doc_nombre/g, e.nombre)
                                                                                  .replace(/:componenteDestinoElementosChequeadosModalFases/g, idElementoDestino)
                                                                                  .replace(/:fase_id/g, idFase)

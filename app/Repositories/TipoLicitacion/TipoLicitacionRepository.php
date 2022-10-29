@@ -31,4 +31,11 @@ class TipoLicitacionRepository extends BaseRepository{
         $tipoLic->save();
         return $tipoLic;
     }
+    public function obtenerNumeracionActual($idTipoLic){
+        $numeracion = DB::table('tipo_licitacion')
+        ->where('tipo_licitacion.id',$idTipoLic)
+        ->select('tipo_licitacion.valor_actual as valor')
+        ->get();
+        return $numeracion;
+    }
 }
