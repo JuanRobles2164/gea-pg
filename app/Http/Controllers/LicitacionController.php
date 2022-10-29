@@ -13,6 +13,7 @@ use App\Repositories\Fase\FaseRepository;
 use App\Repositories\FaseTipoLicitacion\FaseTipoLicitacionRepository;
 use App\Repositories\Licitacion\LicitacionRepository;
 use App\Repositories\LicitacionFase\LicitacionFaseRepository;
+use App\Repositories\TipoDocumento\TipoDocumentoRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -98,12 +99,10 @@ class LicitacionController extends Controller
         $this->repo = null;
         $this->repo = CategoriaRepository::GetInstance();
         $listaCategorias = $this->repo->getAllActivos();
-        $numeroDocumento = Carbon::now()->getTimestamp();
         $allData = [
             'clientes' => $listaClientes, 
             'tiposLics' => $listaTiposLicitaciones, 
-            'categorias' => $listaCategorias,
-            'numero_documento' => $numeroDocumento,
+            'categorias' => $listaCategorias
         ];
         return view('Licitacion.crear', $allData);
     }
@@ -124,6 +123,9 @@ class LicitacionController extends Controller
         ]);
         $this->repo = null;
 
+
+
+
         $this->repo = LicitacionRepository::GetInstance();
         $data = $request->all();
         $data["categoria"] = $categoria->id;
@@ -135,8 +137,27 @@ class LicitacionController extends Controller
 
     public function storeInView(Request $request)
     {
-        //$validated = $request->validate($this->validationRules);
         $data = $request->all();
+        //consultar numero actual, sumarle uno y guardar en numeracion 
+        $this->repo = TipoLicitacionRepository::GetInstance();
+        $tipoLic = $this->repo->find($data['tipo_licitacion']);
+        $valor = $tipoLic->valor_actual;
+        $tipoLic->valor_actual = $valor + 1;
+        // return $tipoDoc;
+        $objeto = $this->repo->find($data["tipo_licitacion"]);
+        $tipoLicArr = [
+            'valor_actual' => $tipoLic->valor_actual,
+            'nombre' => $tipoLic->nombre,
+            'descripcion' => $tipoLic->descripcion,
+            'indicativo' => $tipoLic->indicativo,
+            "estado" => 1,
+            "updated_at" => now()
+        ];
+
+        $this->repo->update($objeto, $tipoLicArr);
+        $this->repo = null;
+        //$validated = $request->validate($this->validationRules);
+        $data['numero'] = $tipoLic->valor_actual;
         $copiaDocsAsociados = [];
         foreach($data['documentosAsociadosFases'] as $doc){
             array_push($copiaDocsAsociados, json_decode($doc));
@@ -202,12 +223,29 @@ class LicitacionController extends Controller
         $documentosAsociadosLicitacion = [];
         $documentosLicitacionArr = [];
         foreach($documentosAsociadosFases as $daf){
-            $this->repo = DocumentoRepository::GetInstance();
             $documentoObjetoTemporal = null;
             //Si es un documento nuevo, debe crearlo
             if(isset($daf->tipo_documento)){
+                $this->repo = TipoDocumentoRepository::GetInstance();
+                $tipoDoc = $this->repo->find($daf->tipo_documento);
+                $valor = $tipoDoc->valor_actual;
+                $tipoDoc->valor_actual = $valor + 1;
+                $objeto = $this->repo->find($daf->tipo_documento);
+                $tipoDocArr = [
+                    'valor_actual' => $tipoDoc->valor_actual,
+                    'nombre' => $tipoDoc->nombre,
+                    'descripcion' => $tipoDoc->descripcion,
+                    'indicativo' => $tipoDoc->indicativo,
+                    "estado" => 1,
+                    "updated_at" => now()
+                ];
+    
+                $this->repo->update($objeto, $tipoDocArr);
+                $this->repo = null;
+    
+                $daf->numero = $tipoDoc->valor_actual;
                 $arrayDatos = [
-                    'numero' => now()->timestamp,
+                    'numero' => $daf->numero,
                     'nombre' => $daf->documento_nombre,
                     'nombre_archivo' => $daf->path_file,
                     'path_file' => $daf->path_file,
@@ -221,8 +259,11 @@ class LicitacionController extends Controller
                 $extension = substr(".", strpos($daf->path_file, "."));
                 $newPathFile = "documentos_licitaciones/".now()->timestamp."".$whatIWant.$extension;
                 Storage::disk('local')->move($daf->path_file, $newPathFile);
+
+                $this->repo = DocumentoRepository::GetInstance();
                 $documentoObjetoTemporal = $this->repo->create($arrayDatos);
             }else{
+                $this->repo = DocumentoRepository::GetInstance();
                 $documentoObjetoTemporal = $this->repo->find($daf->id);
             }
             //Construye los objetos de la tabla Documento_licitacion

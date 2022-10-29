@@ -1,5 +1,5 @@
-<div class="modal" tabindex="-1" id="modalFases">
-    <div class="modal-dialog">
+<div class="modal fade" tabindex="-1" id="modalFases">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">Documentos fase</h5>
@@ -12,6 +12,7 @@
                 <input type="hidden" name="modalFasesDestinoChequeados" id="componenteDestinoElementosChequeadosModalFases">
                 <thead class="thead-light">
                     <tr>
+                        <th scope="col" style="display: none;">Tipo Documento</th>
                         <th scope="col">Tipo Documento</th>
                         <th scope="col">Numero</th>
                         <th scope="col">Nombre Documento</th>
@@ -49,11 +50,14 @@
 
             let elementoDocumentoTablaPlantilla = `
                                         <tr>
-                                            <td scope="row">:doc_id</td>
+                                            <td scope="row" style="display:none;">:doc_id</td>
+                                            <td scope="row">:nom_doc_id</td>
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
-                                                <input type="checkbox" name="documentoFromModalFases[]" value=':doc_id,,:doc_numero,,:doc_nombre'/>
+                                                <div class="custom-control custom-checkbox mb-3"">
+                                                    <input type="checkbox" class="custom-control-inputname="documentoFromModalFases[]" value=':doc_id,,:nom_doc_id,,:doc_numero,,:doc_nombre'>
+                                                </div>
                                             </td>
                                         </tr>
                                         `;                                        
@@ -62,6 +66,7 @@
                 let elementoDocumentoTablaPlantillaUnidad = ""+elementoDocumentoTablaPlantilla;
 
                 elementoDocumentoTabla += elementoDocumentoTablaPlantillaUnidad.replace(/:doc_id/g, el.id)
+                                                                                    .replace(/:nom_doc_id/g, el.nombre_tipdoc)
                                                                                     .replace(/:doc_numero/g, el.numero)
                                                                                     .replace(/:doc_nombre/g, el.nombre);
 
@@ -75,10 +80,12 @@
             let valoresProcesados = [];
             els.forEach((e) => {
                 let valores = e.value.split(",,");
+                console.log(valores);
                 let objeto = {
                     id: valores[0],
-                    numero: valores[1],
-                    nombre: valores[2]
+                    nombre_tipdoc: valores[1],
+                    numero: valores[2],
+                    nombre: valores[3]
                 };
                 valoresProcesados.push(objeto);
             });
@@ -87,12 +94,13 @@
             document.getElementById("componenteDestinoElementosChequeadosModalFases").value = "";
             let elementoDocumentoTablaPlantilla = `
                                         <tr id=":doc_id_:componenteDestinoElementosChequeadosModalFases">
-                                            <td scope="row">:doc_id</td>
+                                            <td scope="row" style="display:none;">:doc_id</td>
+                                            <td scope="row">:nom_doc_id</td>
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
                                                 <input type="hidden" name="documentosAsociadosFases[]" value=':doc_json_data'>
-                                                <button class="btn btn-danger" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="fas fa-trash"></i> </button>
+                                                <button class="btn btn-danger btn-sm" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="fas fa-trash"></i> </button>
                                             </td>
                                         </tr>
                                         `;  
@@ -109,6 +117,7 @@
                 let elementoDocumentoTablaPlantillaUnidad = ""+elementoDocumentoTablaPlantilla;
                 elementoDocumentoTablaPlantillaUnidad = elementoDocumentoTablaPlantillaUnidad.replace(/:doc_id/g, e.id)
                                                                                  .replace(/:doc_numero/g, e.numero)
+                                                                                 .replace(/:nom_doc_id/g, e.nombre_tipdoc)
                                                                                  .replace(/:doc_nombre/g, e.nombre)
                                                                                  .replace(/:componenteDestinoElementosChequeadosModalFases/g, idElementoDestino)
                                                                                  .replace(/:fase_id/g, idFase)
