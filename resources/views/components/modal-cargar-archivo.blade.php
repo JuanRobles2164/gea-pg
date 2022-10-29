@@ -72,14 +72,6 @@
             let rutaTemporalArchivo = document.getElementById("rutaArchivoTemporalCreadoId").value;
             let elementoDocumento = document.getElementById("selectTipoDocumentoNuevoModalId");
 
-            let documento = {
-                id: "",
-                path_file: rutaTemporalArchivo,
-                tipo_documento: elementoDocumento.value,
-                tipo_documento_nombre: elementoDocumento.options[elementoDocumento.selectedIndex].text,
-                numero: "",
-            };
-            let documentoString = JSON.stringify(documento);
             let elementoOrigenLlamadoModalId = document.getElementById("elementoOrigenLlamadoModalId");
             let idElementoRetorno = elementoOrigenLlamadoModalId.value;
 
@@ -88,10 +80,22 @@
             const currentDate = new Date();
             const timestamp = currentDate.getTime();
 
+            
+            let idFase = idElementoRetorno.replace(/\D/g,'');
+
+            let documento = {
+                id: "",
+                path_file: rutaTemporalArchivo,
+                tipo_documento: elementoDocumento.value,
+                tipo_documento_nombre: elementoDocumento.options[elementoDocumento.selectedIndex].text,
+                numero: "",
+                fase: idFase
+            };
+            let documentoString = JSON.stringify(documento);
 
             let elementoDocumentoTablaPlantilla = `
                                         <tr id=":doc_id_:componenteDestinoElementosChequeadosModalFases">
-                                            <td scope="row">######</td>
+                                            <td scope="row">:doc_nombre</td>
                                             <td scope="row">######</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
@@ -101,8 +105,8 @@
                                         </tr>
                                         `;
             elementoDocumentoTablaPlantilla = elementoDocumentoTablaPlantilla.replace(/:doc_id/g, timestamp)
-                                                                        .replace(":doc_numero", documento.numero)
-                                                                        .replace(":doc_nombre", documento.tipo_documento_nombre)
+                                                                        .replace(/:doc_numero/g, documento.numero)
+                                                                        .replace(/:doc_nombre/g, documento.tipo_documento_nombre)
                                                                         .replace(":doc_json_data", JSON.stringify(documento))
                                                                         .replace(":componenteDestinoElementosChequeadosModalFases", idElementoRetorno);
             elementoRetorno.innerHTML += elementoDocumentoTablaPlantilla;

@@ -30,6 +30,7 @@ class FaseTipoLicitacionRepository extends BaseRepository{
         $fasestl = DB::table('fase_tipo_licitacion')
         ->where('fase_tipo_licitacion.tipo_licitacion', '=', $idTipoLicitacion)
         ->where('fase_tipo_licitacion.estado','<>', $estado)
+        ->orderBy('fase_tipo_licitacion.orden', "asc")
         ->select('fase_tipo_licitacion.*')
         ->get();
         return $fasestl;

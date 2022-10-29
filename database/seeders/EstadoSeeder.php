@@ -35,6 +35,55 @@ class EstadoSeeder extends Seeder
                 'descripcion' => 'Estado eliminado',
                 'updated_at' => now(),
                 'created_at' => now()
+            ],
+            [
+                'id' => 4,
+                'nombre' => 'En Desarrollo',
+                'descripcion' => 'Una entidad que está en desarrollo. Puede ser una licitacion o una fase',
+                'updated_at' => now(),
+                'created_at' => now()
+            ],
+            [
+                'id' => 5,
+                'nombre' => 'Finalizada',
+                'descripcion' => 'Estado Finalizada',
+                'updated_at' => now(),
+                'created_at' => now()
+            ],
+            [
+                'id' => 6,
+                'nombre' => 'Deshabilitada',
+                'descripcion' => 'Estado deshabilitada',
+                'updated_at' => now(),
+                'created_at' => now()
+            ],
+            [
+                'id' => 7,
+                'nombre' => 'Estado inicial',
+                'descripcion' => 'Estado por definir',
+                'updated_at' => now(),
+                'created_at' => now()
+            ],
+            [
+                'id' => 8,
+                'nombre' => 'Ganada',
+                'descripcion' => 'Estado ganada, por definir',
+                'updated_at' => now(),
+                'created_at' => now()
+            ],
+            [
+                'id' => 9,
+                'nombre' => 'Clausurada',
+                'descripcion' => 'Estado clausurada',
+                'updated_at' => now(),
+                'created_at' => now()
+            ],
+            [
+                'id' => 10,
+                'nombre' => 'Terminada',
+                'descripcion' => 'Estado terminada',
+                'updated_at' => now(),
+                'created_at' => now()
             ]
         ];
         DB::table('estado')

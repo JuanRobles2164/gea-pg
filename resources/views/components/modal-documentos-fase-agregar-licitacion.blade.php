@@ -54,7 +54,7 @@
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
-                                                <input type="checkbox" name="documentoFromModalFases[]" value=":doc_id,,:doc_numero,,:doc_nombre"/>
+                                                <input type="checkbox" name="documentoFromModalFases[]" value=':doc_id,,:doc_numero,,:doc_nombre'/>
                                             </td>
                                         </tr>
                                         `;                                        
@@ -93,11 +93,11 @@
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
-                                                <input type="hidden" name="documentosAsociadosFases[]" value=":doc_json_data">
+                                                <input type="hidden" name="documentosAsociadosFases[]" value=':doc_json_data'>
                                                 <button class="btn btn-danger" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="fas fa-trash"></i> </button>
                                             </td>
                                         </tr>
-                                        `;    
+                                        `;  
             let elementos = "";
             valoresProcesados.forEach((e) => {
                 let objetoPushear = {

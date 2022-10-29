@@ -79,6 +79,17 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="form-group">
+                            <label for="nombre">Categoria:</label>
+                            <select class="form-control" value="{{old('categoria')}}" name="categoria">
+                                <option value="-1">Seleccione una categoria...</option>
+                                @foreach ($categorias as $c)
+                                    <option value="{{$c->id}}">{{$c->nombre}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <label for="nombre">Tipo Licitacion:</label>
                             <select class="form-control" value="{{old('tipo_licitacion')}}" name="tipo_licitacion" id="tipo_licitacion_select_id">
@@ -98,15 +109,7 @@
 
                         </div>
 
-                        <div class="form-group">
-                            <label for="nombre">Categoria:</label>
-                            <select class="form-control" value="{{old('categoria')}}" name="categoria">
-                                <option value="-1">Seleccione una categoria...</option>
-                                @foreach ($categorias as $c)
-                                    <option value="{{$c->id}}">{{$c->nombre}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <button type="submit" class="btn btn-primary">Crear licitacion</button>
                     </div>
                 </div>
             </div>
