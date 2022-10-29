@@ -31,7 +31,7 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="nombre">Nombre:</label>
-                                <input type="text" class="form-control form-control-alternative" id="nombreComponenteInput" name="nombre" placeholder="Nombre documento" value="{{old('nombre')}}" readonly>
+                                <input type="text" class="form-control form-control-alternative" id="nombreComponenteInput" name="nombre" placeholder="Nombre documento" value="{{old('nombre')}}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="tipo_documento_select">Tipo documento*:</label>

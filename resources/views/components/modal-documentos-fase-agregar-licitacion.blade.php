@@ -46,7 +46,6 @@
             let elementoHidden = document.getElementById("componenteDestinoElementosChequeadosModalFases");
             elementoHidden.value = idElementoOrigen;
             let lienzo = document.getElementById("bodyModalFases");
-            lienzo.innerHTML = "";
 
             let elementoDocumentoTablaPlantilla = `
                                         <tr>
@@ -85,7 +84,6 @@
             });
             let idElementoDestino = document.getElementById("componenteDestinoElementosChequeadosModalFases").value;
             let idFase = idElementoDestino.replace(/\D/g,'');
-            console.log(idElementoDestino);
             document.getElementById("componenteDestinoElementosChequeadosModalFases").value = "";
             let elementoDocumentoTablaPlantilla = `
                                         <tr id=":doc_id_:componenteDestinoElementosChequeadosModalFases">
@@ -118,7 +116,7 @@
                 elementos += elementoDocumentoTablaPlantillaUnidad;
             });
             let lienzo = document.getElementById(idElementoDestino);
-            lienzo.innerHTML = elementos;
+            lienzo.innerHTML += elementos;
             ocultarModalFases();
         }
         document.getElementById("btnGuardarModalFasesTipoLicitacion").addEventListener("click", retornarDocumentosFromModalSeleccionados);

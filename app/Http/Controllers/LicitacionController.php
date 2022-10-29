@@ -206,7 +206,7 @@ class LicitacionController extends Controller
             if(isset($daf->tipo_documento)){
                 $arrayDatos = [
                     'numero' => now()->timestamp,
-                    'nombre' => $daf->tipo_documento_nombre,
+                    'nombre' => $daf->documento_nombre,
                     'nombre_archivo' => $daf->path_file,
                     'path_file' => $daf->path_file,
                     'estado' => 1,
@@ -214,7 +214,10 @@ class LicitacionController extends Controller
                     'created_at' => now(),
                     'updated_at' => now()
                 ];
-                $newPathFile = "documentos_principales/".now()->timestamp."".$daf->tipo_documento_nombre;
+                $cadenaBuscar = "documentos_temporales//";
+                $whatIWant = substr($daf->path_file, strpos($daf->path_file, $cadenaBuscar)+1);
+                $extension = substr(".", strpos($daf->path_file, "."));
+                $newPathFile = "documentos_licitaciones/".now()->timestamp."".$whatIWant.$extension;
                 Storage::disk('local')->move($daf->path_file, $newPathFile);
                 $documentoObjetoTemporal = $this->repo->create($arrayDatos);
             }else{

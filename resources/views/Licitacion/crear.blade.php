@@ -148,7 +148,6 @@
                 let dataToSet = obtenerDocumentosTipoLicitacion(idTipoLicitacionSelected);
                 dataToSet
                 .then((data) => {
-                    console.log(data);
                     //Estructura de la data
                     /*0 => {
                         'fase' => obj,
@@ -164,7 +163,34 @@
             let response = obtenerDocumentosFase(idFase);
             response
                 .then((data) => {
-                    renderizarDocumentosFasesModal(data, "tbodyDocumentosFaseTipoLicitacion"+idFase);
+                    let els = document.querySelectorAll("input[type=hidden]");
+                    let elementosJson = [];
+                    let elementos = data.filter((e) => {
+                        let encontrado = undefined;
+                        els.forEach((el) => {
+                            try{
+                                let valorJson = JSON.parse(el.value);
+                                if(valorJson.id != undefined){
+                                    elementosJson.push(valorJson);
+                                }
+                            }catch(error){
+
+                            }
+                        });
+                        return true;
+                    });
+                    let nuevosElementos = elementos.filter((el, indexEl) => {
+                        let encontrado = elementosJson.find((elJson, indexElJson) => {
+                            if(elJson.id == el.id){
+                                return true;
+                            }
+                        });
+                        if(encontrado == undefined){
+                            return true;
+                        }
+                    });
+                    console.log(nuevosElementos);
+                    renderizarDocumentosFasesModal(nuevosElementos, "tbodyDocumentosFaseTipoLicitacion"+idFase);
                     $('#modalFases').modal('show');
                 });
         }

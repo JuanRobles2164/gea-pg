@@ -22,6 +22,10 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="nombreArchivoNuevoDocumentoModalId">Nombre:</label>
+                    <input type="text" name="nombreArchivoNuevoDocumentoModal" id="nombreArchivoNuevoDocumentoModalId" class="form-input">
+                </div>
+                <div class="form-group">
                     <label for="">Subir archivo:</label>
                     <input type="file" name="data_file" id="archivoNuevoDocumentoModal" class="filepond form-input">
                 </div>
@@ -45,8 +49,6 @@
         const pond = FilePond.create(inputElement);
         pond.onprocessfile = (error, file) => {
             document.getElementById("rutaArchivoTemporalCreadoId").value = file.serverId;
-            console.log("Archivo subido con éxito")
-            console.log(file.serverId);
         };
 
         FilePond.setOptions({
@@ -59,6 +61,18 @@
         });
 
         function cerrarModalCargarArchivo(){
+            let rutaTemporalArchivo = document.getElementById("rutaArchivoTemporalCreadoId");
+            rutaTemporalArchivo.value = "";
+            let elementoDocumento = document.getElementById("selectTipoDocumentoNuevoModalId");
+            elementoDocumento.value = "-1";
+
+            let elementoOrigenLlamadoModalId = document.getElementById("elementoOrigenLlamadoModalId");
+            elementoOrigenLlamadoModalId.value = "";
+            let nombreDocumento = document.getElementById("nombreArchivoNuevoDocumentoModalId");
+            nombreDocumento.value = "";
+
+            pond.removeFiles();
+
             $('#modalCrearArchivosTemporales').modal('hide');
         }
 
@@ -73,6 +87,7 @@
             let elementoDocumento = document.getElementById("selectTipoDocumentoNuevoModalId");
 
             let elementoOrigenLlamadoModalId = document.getElementById("elementoOrigenLlamadoModalId");
+            let nombreDocumento = document.getElementById("nombreArchivoNuevoDocumentoModalId").value;
             let idElementoRetorno = elementoOrigenLlamadoModalId.value;
 
             let elementoRetorno = document.getElementById(idElementoRetorno);
@@ -85,6 +100,7 @@
 
             let documento = {
                 id: "",
+                documento_nombre: nombreDocumento,
                 path_file: rutaTemporalArchivo,
                 tipo_documento: elementoDocumento.value,
                 tipo_documento_nombre: elementoDocumento.options[elementoDocumento.selectedIndex].text,
