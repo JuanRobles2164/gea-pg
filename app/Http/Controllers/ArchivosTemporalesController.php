@@ -50,8 +50,6 @@ class ArchivosTemporalesController extends Controller
             $filename = $file->getClientOriginalName();
             $folder = uniqid() . '-' . now()->timestamp;
             $file_path = Storage::disk('local')->put('documentos_temporales/', $file);
-            $request->session()->put('file_path', $file_path);
-            $request->session()->put('file_name', $filename);
             return $file_path;
         }
         return "";

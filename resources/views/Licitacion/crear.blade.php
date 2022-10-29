@@ -111,7 +111,8 @@
 
     </form>
 
-    <x-modal-documentos-fase-agregar-licitacion/>
+    <x-modal-documentos-fase-agregar-licitacion />
+    <x-modal-cargar-archivo />
 
 @include('layouts.footers.auth')
 
@@ -160,7 +161,7 @@
             let response = obtenerDocumentosFase(idFase);
             response
                 .then((data) => {
-                    renderizarDocumentosFasesModal(data);
+                    renderizarDocumentosFasesModal(data, "tbodyDocumentosFaseTipoLicitacion"+idFase);
                     $('#modalFases').modal('show');
                 });
         }
@@ -183,7 +184,7 @@
                                 <i class="fas fa-plus"></i>
                             </button>
 
-                            <button type="button" onclick="">
+                            <button type="button" onclick="abrirModalCargarArchivo('tbodyDocumentosFaseTipoLicitacion:fase_id')">
                                 <i class="fa fa-file"></i>
                             </button>
                         </div>
@@ -201,7 +202,7 @@
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbodyDocumentosFaseTipoLicitacion:id_tipo_licitacion">
+                                    <tbody id="tbodyDocumentosFaseTipoLicitacion:fase_id">
                                         
                                     </tbody>
                                 </table>
@@ -256,6 +257,11 @@
                 }  
             }
             return opt;  
+        }
+
+        function removerElemento(elementoId){
+            let elementoRemover = document.getElementById(elementoId);
+            elementoRemover.remove();
         }
     </script>
 @endpush
