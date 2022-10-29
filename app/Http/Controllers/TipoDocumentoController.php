@@ -39,16 +39,9 @@ class TipoDocumentoController extends Controller
     }
 
     public function details(Request $request){
-        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
-        $this->repo = TipoDocumentoRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
-        $this->repo = null;
-        return json_encode($lista);
-    }
-
-    public function find(Request $request){
         $this->repo = TipoDocumentoRepository::GetInstance();
         $modelo = $this->repo->find($request->id);
+        $this->repo = null;
         return json_encode($modelo);
     }
 

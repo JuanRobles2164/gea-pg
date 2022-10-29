@@ -201,7 +201,6 @@ class DocumentoPrincipalController extends Controller
             $tipoDoc = $this->repo->find($data['tipo_documento']);
             $valor = $tipoDoc->valor_actual;
             $tipoDoc->valor_actual = $valor + 1;
-            // return $tipoDoc;
             $objeto = $this->repo->find($data["tipo_documento"]);
             $tipoDocArr = [
                 'valor_actual' => $tipoDoc->valor_actual,

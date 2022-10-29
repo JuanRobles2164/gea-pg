@@ -30,12 +30,17 @@
                     <label class="col-form-label-sm">Los campos con el carácter (*) son obligatorios</label>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label for="numero">Numero*:</label>
-                            <input type="text" class="form-control form-control-alternative" id="numeroComponenteInput" placeholder="hacer funcion asignar numero" readonly name="numero" value="{{ old('numero') != null ? old('numero') : $numero_documento}}">
-                        </div>
-                        <div class="form-group col-md-6">
                             <label for="nombre">Nombre*:</label>
                             <input type="text" class="form-control form-control-alternative" id="nombreComponenteInput" name="nombre" placeholder="Nombre licitacion" value="{{old('nombre')}}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="nombre">Tipo Licitacion*:</label>
+                            <select class="form-control form-control-alternative" value="{{old('tipo_licitacion')}}" name="tipo_licitacion" id="tipo_licitacion_select_id">
+                                <option value="-1">Seleccione un tipo de licitacion...</option>
+                                @foreach ($tiposLics as $tl)
+                                <option value="{{$tl->id}}">{{$tl->nombre}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -87,15 +92,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="nombre">Tipo Licitacion*:</label>
-                        <select class="form-control form-control-alternative" value="{{old('tipo_licitacion')}}" name="tipo_licitacion" id="tipo_licitacion_select_id">
-                            <option value="-1">Seleccione un tipo de licitacion...</option>
-                            @foreach ($tiposLics as $tl)
-                            <option value="{{$tl->id}}">{{$tl->nombre}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="">Configuración de fases</label>
                         <div id="accordion_fases_documentos"></div>
                     </div>
@@ -140,6 +136,7 @@
             let dataToSet = obtenerDocumentosTipoLicitacion(idTipoLicitacionSelected);
             dataToSet
                 .then((data) => {
+                    console.log(data);
                     //Estructura de la data
                     /*0 => {
                         'fase' => obj,
@@ -155,6 +152,7 @@
         let response = obtenerDocumentosFase(idFase);
         response
             .then((data) => {
+                console.log(data);
                 let els = document.querySelectorAll("input[type=hidden]");
                 let elementosJson = [];
                 let elementos = data.filter((e) => {
@@ -218,6 +216,7 @@
                                     <table class="table align-items-center">
                                         <thead class="thead-light">
                                             <tr>
+                                                <th scope="col" style="display:none;">Tipo Documento</th>
                                                 <th scope="col">Tipo Documento</th>
                                                 <th scope="col">Numero</th>
                                                 <th scope="col">Nombre Documento</th>
@@ -239,6 +238,7 @@
         let elementoDocumentoTabla = `
                                         <tr>
                                             <td scope="row">:doc_id</td>
+                                            <td scope="row">:nom_doc_id</td>
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">       
@@ -258,8 +258,10 @@
                 .replace(":id_tipo_licitacion", idTipoLicitacion);
             let htmlElementoTablaTemplate = "" + elementoDocumentoTabla;
             let documentos = data[elemento].documentos;
+            console.log(documentos);
             documentos.forEach((el) => {
                 htmlElementosTabla += htmlElementoTablaTemplate.replace(":doc_id", el.id)
+                    .replace(":nom_doc_id", el.nombre_tipdoc)
                     .replace(":doc_numero", el.numero)
                     .replace(":doc_nombre", el.nombre);
             });
