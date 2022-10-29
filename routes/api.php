@@ -45,6 +45,8 @@ Route::name("archivos.")->group(function(){
 Route::name("documento_principal.")->group(function(){
     Route::controller(DocumentoPrincipalController::class)->group(function(){
         Route::post('/documento_principal/guardar_documento', 'guardarDocumento')->name("guardar_documento");
+        Route::post('/documento_principal/toggle_documento_state', 'toggleDocumentoState')->name("toggle_documento_state");
+        Route::post('/documento_principal/destroy', 'destroy')->name("eliminar");
     });
 });
 

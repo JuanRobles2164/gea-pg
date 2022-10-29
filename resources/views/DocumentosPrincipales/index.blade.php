@@ -87,25 +87,25 @@
                             @foreach ($documentos as $d)
                             <tr>
                                 <td scope="row">
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                    <a href="#" class="btn btn-danger btn-sm" onclick="eliminarDocumento({{$d->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>
                                 <td scope="row">{{$d->id}}</td>
-                                <td scope="row">{{$d->numero}}</td>
+                                <td scope="row">{{$d->tipo_documento()->indicativo}}{{$d->numero}}</td>
                                 <td scope="row">{{$d->nombre}}</td>
-                                <td scope="row">{{$d->recurrente}}</td>
-                                <td scope="row">{{$d->constante}}</td>
+                                <td scope="row">@if($d->recurrente == 1) Si @else  No @endif</td>
+                                <td scope="row">@if($d->constante == 1) Si @else  No @endif</td>
                                 <td scope="row">{{$d->fecha_vencimiento}}</td>
                                 @if($d->estado == 1)
                                 <td scope="row">
-                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="">
+                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateDocumento({{$d->id}})">
                                         Activo
                                     </a>
                                 </td>
                                 @else
                                 <td scope="row">
-                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="">
+                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateDocumento({{$d->id}})">
                                         Inactivo
                                     </a>
                                 </td>
@@ -114,14 +114,14 @@
                                     <a href="#" class="btn btn-info btn-sm" onclick="" title="Ver Informacion" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="#" class="btn btn-default btn-sm" onclick="" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                    <a href="#" class="btn btn-default btn-sm" onclick="" title="Editar Informacion" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-file-signature"></i>
                                     </a>
                                     <a href="{{route('archivos.ver_archivo', ['id' => $d->id])}}" class="btn btn-info btn-sm" target="_blank" onclick="" title="Ver Documento" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-eye"></i>
+                                    <i class="fas fa-file-import"></i>
                                     </a>
                                     <a href="{{route('archivos.descargar_archivo', ['id' => $d->id])}}" class="btn btn-default btn-sm" title="Descargar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fa fa-download"></i>
+                                        <i class="fas fa-download"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -145,5 +145,47 @@
 @push('js')
     <script>
         
+        var ruta_alternar_estado_documento = "{{route('documento_principal.toggle_documento_state')}}";
+        var ruta_eliminar_documento = "{{route('documento_principal.eliminar')}}";
+
+        function toggleStateDocumento(idDocumento){
+            let objeto = {
+                id: idDocumento
+            }
+
+            postData(ruta_alternar_estado_documento, objeto)
+            .then((data) => {
+                console.log(data);
+                location.reload();
+            });   
+        }
+
+        function eliminarDocumento(idDocumento) {
+            let data = {
+                id: idDocumento
+            }
+            swal({
+                title: "Esta seguro que desea eliminar el registro ?",
+                icon: "warning",
+                buttons: ["Cancelar", "OK"],
+                dangerMode: true,
+            })
+            .then((result) => {
+                if (result) {
+                    swal("Documento eliminado exitosamente!", {
+                        icon: "success",
+                    })
+                    .then((result) => {
+                        postData(ruta_eliminar_documento, data)
+                        .then((data) =>{
+                            console.log(data);
+                            location.reload();
+                        });
+                    });
+                } else {
+                    swal("Acción cancelada");
+                }
+            });
+        }
     </script>
 @endpush

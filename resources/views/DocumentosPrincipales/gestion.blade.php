@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Gestion Documentos')])
+@extends('layouts.app', ['title' => __('Crear Documentos')])
 
 @section("content")
 
@@ -22,7 +22,7 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">Gestion Documento</h3>
+                                <h3 class="mb-0">Creacion Documento</h3>
                             </div>
                         </div>
                     </div>
@@ -33,9 +33,8 @@
                     <div class="card-body border-0">
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label for="numero">Numero:</label>
-                                <input type="text" class="form-control form-control-alternative" id="numeroComponenteInput" placeholder="hacer funcion asignar numero" readonly 
-                                    name="numero" value="{{$numero}}">
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" class="form-control form-control-alternative" id="nombreComponenteInput" name="nombre" placeholder="Nombre documento" value="{{old('nombre')}}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="tipo_documento_select">Tipo documento:</label>
@@ -49,10 +48,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="nombre">Nombre:</label>
-                            <input type="text" class="form-control form-control-alternative" id="nombreComponenteInput" name="nombre" placeholder="Nombre documento" value="{{old('nombre')}}">
-                        </div>
-                        <div class="form-group">
                             <label for="nombre">Descripcion:</label>
                             <textarea class="form-control form-control-alternative" id="descripcionComponenteInput" name="descripcion" placeholder="Descripcion documento"> {{old('descripcion')}} </textarea>
                         </div>
@@ -64,7 +59,7 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="form-label">?:</label>
-                                <div class="form-row form-control form-control-alternative">
+                                <div class="form-row form-control form-control-alternative" onclick="mostrarFecha()">
                                     <div class="custom-control custom-control-alternative custom-radio mb-3">
                                         <input type="radio" name="recurrente_constante" class="custom-control-input" id="documento_recurrente_constante1" value="recurrente">
                                         <label class="custom-control-label" for="documento_recurrente_constante1">Recurrente </label>
@@ -76,7 +71,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-6" id="fecha_vencimiento" style="display: none;">
                                 <label for="tipo_documento_principal_fecha_fin_create_id" class="form-label">Fecha Vencimiento:</label>
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
@@ -116,6 +111,10 @@
                 }
             }
         });
+
+        function mostrarFecha(){
+            document.getElementById("fecha_vencimiento").style = '';
+        }
 
     </script>
 @endpush
