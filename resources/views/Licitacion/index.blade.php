@@ -121,17 +121,17 @@
                                 </td>
                                 @endif
                                 <td scope="row">
-                                    <a href="#" class="btn btn-primary btn-sm" onclick="" title="Clonar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-sync-alt"></i>
-                                    </a>
                                     <a href="#" class="btn btn-info btn-sm" onclick="" title="Ver" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{route('licitacion.gestion_documentos_index', ['id' => $lic->id])}}" class="btn btn-default btn-sm" onclick="" title="Editar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-user-edit"></i>
+                                    <a href="" class="btn btn-default btn-sm" onclick="" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <a href="" class="btn btn-primary btn-sm" onclick="" title="Restaurar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-sync-alt"></i>
+                                    <a href="#" class="btn btn-warning btn-sm" onclick="" title="Clonar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-clone"></i>
+                                    </a>
+                                    <a href="{{route('licitacion.gestion_documentos_index', ['id' => $lic->id])}}" class="btn btn-primary btn-sm" onclick="" title="asociar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-link"></i>
                                     </a>
                                 </td>
                             </tr>

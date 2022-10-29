@@ -54,9 +54,7 @@
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
-                                                <div class="custom-control custom-checkbox mb-3"">
-                                                    <input type="checkbox" class="custom-control-inputname="documentoFromModalFases[]" value=':doc_id,,:doc_numero,,:doc_nombre'>
-                                                </div>
+                                                <input type="checkbox" name="documentoFromModalFases[]" value=':doc_id,,:doc_numero,,:doc_nombre'>
                                             </td>
                                         </tr>
                                         `;                                        
@@ -95,7 +93,7 @@
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
                                                 <input type="hidden" name="documentosAsociadosFases[]" value=':doc_json_data'>
-                                                <button class="btn btn-danger btn-sm" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="fas fa-trash"></i> </button>
+                                                <button class="btn btn-danger btn-sm" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="far fa-trash-alt"></i> </button>
                                             </td>
                                         </tr>
                                         `;  
