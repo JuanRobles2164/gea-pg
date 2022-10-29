@@ -39,6 +39,7 @@ Route::name("archivos.")->group(function(){
         Route::post('/archivos_temporales/subir', 'subirArchivoTemporal')->name("subir_archivo");
         Route::get('/archivos_temporales/descargar', 'descargarArchivos')->name("descargar_archivo");
         Route::get('/archivos_temporales/visualizar', 'verArchivoNavegador')->name("ver_archivo");
+        Route::get('/archivos_temporales/visualizar_temporal', 'verArchivoTemporal')->name("ver_archivo_temporal");
     });
 });
 
