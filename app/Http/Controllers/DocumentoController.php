@@ -11,6 +11,7 @@ use App\Repositories\LicitacionFase\LicitacionFaseRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class DocumentoController extends Controller
 {
@@ -167,6 +168,18 @@ class DocumentoController extends Controller
         $this->repo = DocumentoLicitacionRepository::GetInstance();
         $this->repo->create($documentoLicitacionArr);
         $this->repo = null;
+        return Redirect::back();
+    }
+
+    public function reemplazarDocumento(Request $request){
+        $data = $request->all();
+        $this->repo = DocumentoRepository::GetInstance();
+        $documento = $this->repo->find($data['documento']);
+        $pathFileTemporal = $data['data_file'];
+        $newPathFile = "documentos_licitacion/".now()->timestamp.$documento->nombre_archivo;
+        Storage::move($pathFileTemporal, $newPathFile);
+        $documento->path_file = $newPathFile;
+        $documento->save();
         return Redirect::back();
     }
 }
