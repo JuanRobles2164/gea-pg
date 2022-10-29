@@ -66,26 +66,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="nombre">Cliente*:</label>
-                        <select class="form-control form-control-alternative" value="{{old('cliente')}}" name="cliente">
-                            <option value="-1">Seleccione un cliente...</option>
-                            @foreach ($clientes as $cli)
-                            <option value="{{$cli->id}}">{{$cli->identificacion}} - {{$cli->razon_social}} </option>
-                            @endforeach
-                        </select>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="nombre">Cliente*:</label>
+                            <select class="form-control form-control-alternative" value="{{old('cliente')}}" name="cliente">
+                                <option value="-1">Seleccione un cliente...</option>
+                                @foreach ($clientes as $cli)
+                                <option value="{{$cli->id}}">{{$cli->identificacion}} - {{$cli->razon_social}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="nombre">Categoria*:</label>
+                            <select class="form-control form-control-alternative" value="{{old('categoria')}}" name="categoria">
+                                <option value="-1">Seleccione una categoria...</option>
+                                @foreach ($categorias as $c)
+                                <option value="{{$c->id}}">{{$c->nombre}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="nombre">Categoria*:</label>
-                        <select class="form-control form-control-alternative" value="{{old('categoria')}}" name="categoria">
-                            <option value="-1">Seleccione una categoria...</option>
-                            @foreach ($categorias as $c)
-                            <option value="{{$c->id}}">{{$c->nombre}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
                     <div class="form-group">
                         <label for="nombre">Tipo Licitacion*:</label>
                         <select class="form-control form-control-alternative" value="{{old('tipo_licitacion')}}" name="tipo_licitacion" id="tipo_licitacion_select_id">
@@ -97,10 +97,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Configuración de fases</label>
-
-                        <div id="accordion_fases_documentos">
-
-                        </div>
+                        <div id="accordion_fases_documentos"></div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
