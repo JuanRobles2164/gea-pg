@@ -72,7 +72,6 @@
                                 <th scope="col">Número</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Duracion</th>
-                                <th scope="col">Fecha de fin</th>
                                 <th scope="col">Cliente</th>
                                 <th scope="col">Tipo Licitacion</th>
                                 @if(isset($categoria))
@@ -96,7 +95,6 @@
                                 <td scope="row">{{$lic->tipo_licitacion()->indicativo}}{{$lic->numero}}</td>
                                 <td scope="row">{{$lic->nombre}}</td>
                                 <td scope="row">{{$lic->duracion}}</td>
-                                <td scope="row">{{$lic->fecha_fin}}</td>
                                 <td scope="row">{{$lic->cliente()->razon_social}}</td>
                                 <td scope="row">{{$lic->tipo_licitacion()->nombre}}</td>
                                 @if(isset($categoria))
