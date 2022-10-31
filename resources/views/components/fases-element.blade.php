@@ -28,7 +28,7 @@
                             @foreach ($documentos as $doc)
                             <tr>
                                 <td scope="row">
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                    <a href="{{route('documento.eliminar_documento_licitacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm" onclick="" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>
@@ -43,7 +43,7 @@
                                         <a href="{{route('archivos.ver_archivo', ['id' => $doc->id])}}" target="_blank" class="btn btn-info btn-sm" onclick="" title="Visualizar" data-toggle="tooltip" data-placement="bottom">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="#" class="btn btn-default btn-sm" onclick="abrirModalReemplazarArchivos({{$doc->id}})" title="Reemplazar" data-toggle="tooltip" data-placement="bottom">
+                                        <a href="#" class="btn btn-default btn-sm" onclick="abrirModalReemplazarArchivos({{$doc->id}}, {{$modelo->id}})" title="Reemplazar" data-toggle="tooltip" data-placement="bottom">
                                             <i class="fas fa-user-edit"></i>
                                         </a>
                                     @else

@@ -14,8 +14,7 @@
         <form action="{{route('documento.guardar_en_componente')}}" method="post">
             <div class="modal-body">
                 @csrf
-                <input type="hidden" name="licitacion" id="licitacion_id_nuevo_archivo_fase_licitacion_modal">
-                <input type="hidden" name="fase" id="fase_id_nuevo_archivo_fase_licitacion_modal">
+                <input type="hidden" name="fase_licitacion" id="fase_id_nuevo_archivo_fase_licitacion_modal">
                 <div class="form-group">
                     <label for="">Tipo de documento:</label>
                     <select name="tipo_documento" id="tipoDocumentoNuevoArchivoFaseLicitacionId" class="form-control">
@@ -33,7 +32,7 @@
                 <div class="form-group">
                     <label for="">Archivo</label>
                     <input type="hidden" name="nombre_archivo" id="nombreArchivoNuevoFaseLicitacion">
-                    <input type="file" name="data_file" class="filepond " id="controlSubi">
+                    <input type="file" name="data_file" class="filepond " id="controlSubidaArchivo">
                 </div>
                 
             </div>
@@ -49,8 +48,8 @@
 
 @push('js')
     <script>
-        const inputElement = document.querySelector('input[type="file"]');
-        const pond = FilePond.create(inputElement);
+        let inputElement = document.querySelector('#controlSubidaArchivo');
+        let pond = FilePond.create(inputElement);
 
         FilePond.setOptions({
             server: {
@@ -67,12 +66,10 @@
             document.getElementById("nombreArchivoNuevoFaseLicitacion").value = file.serverId;
         };
 
-        function abrirModalNuevoArchivo(idFase, idLicitacion){
+        function abrirModalNuevoArchivo(idFaseLicitacion, idLicitacion){
             let hFase = document.getElementById("fase_id_nuevo_archivo_fase_licitacion_modal");
-            hFase.value = idFase;
+            hFase.value = idFaseLicitacion;
 
-            let hLicitacion = document.getElementById("licitacion_id_nuevo_archivo_fase_licitacion_modal");
-            hLicitacion.value = idLicitacion;
             $('#modalNuevoArchivoFaseLicitacionId').modal('show');
         }
     </script>
