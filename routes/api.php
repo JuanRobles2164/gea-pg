@@ -39,6 +39,7 @@ Route::name("archivos.")->group(function(){
         Route::post('/archivos_temporales/subir', 'subirArchivoTemporal')->name("subir_archivo");
         Route::get('/archivos_temporales/descargar', 'descargarArchivos')->name("descargar_archivo");
         Route::get('/archivos_temporales/visualizar', 'verArchivoNavegador')->name("ver_archivo");
+        Route::get('/archivos_temporales/visualizar_temporal', 'verArchivoTemporal')->name("ver_archivo_temporal");
     });
 });
 
@@ -197,7 +198,7 @@ Route::name("tipo_documento.")->group(function(){
     Route::controller(TipoDocumentoController::class)->group(function(){
         Route::get('/tipo_documento/listar', 'listar')->name("listar");
         Route::get('/tipo_documento/detailsbyfase', 'detailsByFase')->name("encontrar_por_fase");
-        Route::get('/tipo_documento/find', 'find')->name("encontrar");
+        Route::get('/tipo_documento/find', 'details')->name("encontrar");
         Route::post('/tipo_documento/store', 'store')->name("guardar");
         Route::post('/tipo_documento/update', 'update')->name("actualizar");
         Route::post('/tipo_documento/destroy', 'destroy')->name("eliminar");

@@ -9,6 +9,7 @@ use App\Models\FaseTipoDocumento;
 use App\Repositories\Documento\DocumentoRepository;
 use App\Repositories\Fase\FaseRepository;
 use App\Repositories\FaseTipoDocumento\FaseTipoDocumentoRepository;
+use App\Repositories\TipoDocumento\TipoDocumentoRepository;
 use Illuminate\Http\Request;
 
 class FaseController extends Controller
@@ -201,9 +202,17 @@ class FaseController extends Controller
         $this->repo = FaseRepository::GetInstance();
         
         $fases = $this->repo->obtenerFasesByTipoLicitacion($request->id);
-        $this->repo = DocumentoRepository::GetInstance();
         foreach($fases as $f){
+            $this->repo = DocumentoRepository::GetInstance();
             $documentos = $this->repo->obtenerDocumentosByFaseId($f->id);
+            foreach($documentos as $doc){
+                $this->repo = TipoDocumentoRepository::GetInstance();
+                $tipoDoc = $this->repo->find($doc->tipo_documento);
+                $this->repo =  null;
+                $doc->numero = $tipoDoc->indicativo . '' . str_pad($doc->numero,6,"0",STR_PAD_LEFT); 
+                $doc->nombre_tipdoc = $tipoDoc->nombre;
+                $doc->id_tdoc = $tipoDoc->id;
+            }
             $arrTemp = [
                 'fase' => $f,
                 'documentos' => $documentos
@@ -218,6 +227,14 @@ class FaseController extends Controller
         $this->repo = DocumentoRepository::GetInstance();
         $documentos = $this->repo->obtenerDocumentosByFaseId($request->id);
         $this->repo = null;
+        foreach($documentos as $doc){
+            $this->repo = TipoDocumentoRepository::GetInstance();
+            $tipoDoc = $this->repo->find($doc->tipo_documento);
+            $this->repo =  null;
+            $doc->numero = $tipoDoc->indicativo . '' . str_pad($doc->numero,6,"0",STR_PAD_LEFT); 
+            $doc->nombre_tipdoc = $tipoDoc->nombre;
+            $doc->id_tdoc = $tipoDoc->id;
+        }
         return json_encode($documentos);
     }
 

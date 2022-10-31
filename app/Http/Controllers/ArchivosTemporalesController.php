@@ -64,6 +64,11 @@ class ArchivosTemporalesController extends Controller
         return Storage::download($documentoInstance->path_file);
     }
 
+    public function verArchivoTemporal(Request $request){
+        $path_file = $request->path_file;
+        return Storage::response($path_file);
+    }
+
     public function verArchivoNavegador(Request $request){
         $request->validate([
             'id' => ['required', 'exists:documento']

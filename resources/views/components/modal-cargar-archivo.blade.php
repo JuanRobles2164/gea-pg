@@ -14,7 +14,7 @@
                 <input type="hidden" name="rutaArchivoTemporalCreado" id="rutaArchivoTemporalCreadoId">
                 <div class="form-group">
                     <label for="selectTipoDocumentoNuevoModalId">Tipo documento</label>
-                    <select name="selectTipoDocumentoNuevoModal" id="selectTipoDocumentoNuevoModalId" class="form-input">
+                    <select name="selectTipoDocumentoNuevoModal" id="selectTipoDocumentoNuevoModalId" class="form-control form-control-alternative">
                         <option value="-1">Seleccione una opción</option>
                         @foreach ($tipos_documentos as $td)
                             <option value="{{$td->id}}">{{$td->nombre}}</option>
@@ -23,15 +23,13 @@
                 </div>
                 <div class="form-group">
                     <label for="nombreArchivoNuevoDocumentoModalId">Nombre:</label>
-                    <input type="text" name="nombreArchivoNuevoDocumentoModal" id="nombreArchivoNuevoDocumentoModalId" class="form-input">
+                    <input type="text" name="nombreArchivoNuevoDocumentoModal" id="nombreArchivoNuevoDocumentoModalId" class="form-control form-control-alternative">
                 </div>
                 <div class="form-group">
                     <label for="">Subir archivo:</label>
                     <input type="file" name="data_file" id="archivoNuevoDocumentoModal" class="filepond form-input">
                 </div>
             </div>
-
-
         </div>
 
         <div class="modal-footer">
@@ -116,13 +114,15 @@
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
                                                 <input type="hidden" name="documentosAsociadosFases[]" value=':doc_json_data'>
-                                                <button type="button" class="btn btn-danger" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="fas fa-trash"></i> </button>
+                                                <a href="{{route('archivos.ver_archivo_temporal')}}?path_file=:ruta_doc_temporal" class="btn btn-info btn-sm" target="_blank" title="Ver Documento" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-file-import"></i></a>                                                
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="removerElemento(':doc_id_:componenteDestinoElementosChequeadosModalFases')"/> <i class="far fa-trash-alt"></i> </button>
                                             </td>
                                         </tr>
                                         `;
             elementoDocumentoTablaPlantilla = elementoDocumentoTablaPlantilla.replace(/:doc_id/g, timestamp)
                                                                         .replace(/:doc_numero/g, documento.numero)
                                                                         .replace(/:doc_nombre/g, documento.tipo_documento_nombre)
+                                                                        .replace(":ruta_doc_temporal", documento.path_file)
                                                                         .replace(":doc_json_data", JSON.stringify(documento))
                                                                         .replace(/:componenteDestinoElementosChequeadosModalFases/g, idElementoRetorno);
             elementoRetorno.innerHTML += elementoDocumentoTablaPlantilla;

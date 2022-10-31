@@ -3,7 +3,7 @@
 @section('content')
 
 @include('layouts.headers.cards')
-<div class="container-fluid mt--1">
+<div class="container-fluid mt--2">
     <div class="row align-items-center">
         <div class="col pt-4">
             <div style="width: 18rem;">
@@ -12,7 +12,7 @@
                         <div class="row">
                             <div class="col" style="position: relative; display: inline-block; text-align: center;">
                                 <div class="dropdown" style="position: absolute; top: 0px; left: 0px;">
-                                    <a class="btn btn-sm text-default" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a type="button" class="btn btn-sm text-default" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-bars"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
@@ -42,10 +42,12 @@
         </div>
         @endforeach
     </div>
-    <div class="col justify-content-end text-start">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_create_categoria" style="width: 45px;height: 45px;padding: 6px 0px;border-radius: 22px;text-align: center;font-size: 12px;line-height: 1.42857;">
-            <i class="fas fa-plus"></i>
-        </button>
+    <div class="container-fluid">
+        <div class="row justify-content-end">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#id_modal_create_categoria" style="width: 45px;height: 45px;padding: 6px 0px;border-radius: 22px;text-align: center;font-size: 12px;line-height: 1.42857;">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
     </div>
     <x-guardar-categoria modalId="id_modal_create_categoria" modalTitle="Formulario de categorias" />
 </div>

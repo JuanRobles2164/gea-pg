@@ -62,9 +62,11 @@ Route::name("documento_principal.")->group(function(){
     Route::controller(DocumentoPrincipalController::class)->group(function(){
         Route::get('/documento_principal/index', 'index')->name("index");
         Route::get('/documento_principal/gestion', 'gestion')->name("gestion");
+        Route::get('/documento_principal/editar', 'editar')->name("editar");
 
         Route::post('/documento_principal/guardar_documento/sube_doc_temporal', 'subirDocTemporal')->name('doc_temporal');
         Route::post('/documento_principal/guardar_documento', 'guardarDocumento')->name("guardar_documento_no_api");
+        Route::post('/documento_principal/editar_documento', 'editarDocumento')->name("editar_documento_no_api");
     });
 });
 
@@ -97,6 +99,7 @@ Route::name("documento.")->group(function(){
     Route::controller(DocumentoController::class)->group(function(){
         Route::get('/documento/index', 'index')->name("index");
         Route::post('/documento/store_in_component', 'storeInComponent')->name("guardar_en_componente");
+        Route::post('/documento/replace_in_component', 'reemplazarDocumento')->name("reemplazar_en_componente");
     });
 });
 
@@ -115,7 +118,7 @@ Route::name("categoria.")->group(function(){
 Route::name("licitacion.")->group(function(){
     Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/index', 'index')->name("index");
-        Route::get('/licitacion/gestionar_documentos_licitacion', 'gestionDocumentosIndex')->name("gestion_documentos_index");
+        Route::get('/licitacion/gestionar_documentos_licitacion/{id}', 'gestionDocumentosIndex')->name("gestion_documentos_index");
         Route::get('/licitacion/create', 'create')->name("create");
         Route::post('/licitacion/create_entity', 'storeInView')->name("crear_post");
     });

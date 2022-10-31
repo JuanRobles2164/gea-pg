@@ -28,12 +28,7 @@ class TipoDocumentoRepository extends BaseRepository{
 
     public function toggleState($tipoDocId){
         $tipoDoc = $this->find($tipoDocId);
-        if($tipoDoc->estado == 1){
-            $tipoDoc->estado = 2;
-        }else{
-            $tipoDoc->estado = 1;
-        }
-        
+        $tipoDoc->estado = ($tipoDoc->estado - 3)*(-1);
         $tipoDoc->save();
         return $tipoDoc;
     }

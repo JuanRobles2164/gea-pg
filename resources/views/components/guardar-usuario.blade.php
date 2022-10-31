@@ -191,6 +191,9 @@
         document.getElementById("identificacion_user_modal_create_id").value = '';
         document.getElementById("password_user_modal_create_id").value = '';
         document.getElementById("confirm_password_user_modal_create_id").value = '';
+        if(document.querySelectorAll('input[name="rolCheck"]:checked').length > 0){
+            document.querySelectorAll('input[name="rolCheck"]:checked')[0].checked = false;
+        }
     }
     </script>
 @endsection

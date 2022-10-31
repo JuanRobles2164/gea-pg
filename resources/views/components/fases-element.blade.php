@@ -43,7 +43,7 @@
                                         <a href="{{route('archivos.ver_archivo', ['id' => $doc->id])}}" target="_blank" class="btn btn-info btn-sm" onclick="" title="Visualizar" data-toggle="tooltip" data-placement="bottom">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="#" class="btn btn-default btn-sm" onclick="" title="Reemplazar" data-toggle="tooltip" data-placement="bottom">
+                                        <a href="#" class="btn btn-default btn-sm" onclick="abrirModalReemplazarArchivos({{$doc->id}})" title="Reemplazar" data-toggle="tooltip" data-placement="bottom">
                                             <i class="fas fa-user-edit"></i>
                                         </a>
                                     @else
