@@ -92,11 +92,10 @@ class LicitacionController extends Controller
     }
 
     public function details(Request $request){
-        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
         $this->repo = LicitacionRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
+        $modelo = $this->repo->find($request->id);
         $this->repo = null;
-        return json_encode($lista);
+        return json_encode($modelo);
     }
 
     /**
@@ -359,14 +358,14 @@ class LicitacionController extends Controller
      * @param  \App\Models\Licitacion  $licitacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $licitacion)
+    public function destroy(Request $request,  Licitacion $licitacion)
     {
-        $objeto = new Licitacion($licitacion->all());
-        $objeto->id = $licitacion->id;
         $this->repo = LicitacionRepository::GetInstance();
-        $objeto = $this->repo->find($objeto->id);
-        $this->repo->delete($objeto);
+        $data = $request->all();
+        $data["estado"] = '3';
+        $licitacion = $this->repo->find($data["id"]);
+        $this->repo->update($licitacion, $data);
         $this->repo = null;
-        return json_encode($objeto);
+        return json_encode($licitacion);
     }
 }

@@ -59,7 +59,7 @@ class EstadoSeeder extends Seeder
             ],
             [
                 'id' => 7,
-                'nombre' => 'Estado inicial',
+                'nombre' => 'Planificacion',
                 'descripcion' => 'Estado por definir',
                 'updated_at' => now(),
                 'created_at' => now()
