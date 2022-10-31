@@ -45,14 +45,14 @@ class EstadoSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'nombre' => 'Finalizada',
+                'nombre' => 'Finalizado',
                 'descripcion' => 'Estado Finalizada',
                 'updated_at' => now(),
                 'created_at' => now()
             ],
             [
                 'id' => 6,
-                'nombre' => 'Deshabilitada',
+                'nombre' => 'Deshabilitado',
                 'descripcion' => 'Estado deshabilitada',
                 'updated_at' => now(),
                 'created_at' => now()
@@ -66,22 +66,15 @@ class EstadoSeeder extends Seeder
             ],
             [
                 'id' => 8,
-                'nombre' => 'Ganada',
+                'nombre' => 'Aprobado',
                 'descripcion' => 'Estado ganada, por definir',
                 'updated_at' => now(),
                 'created_at' => now()
             ],
             [
                 'id' => 9,
-                'nombre' => 'Clausurada',
+                'nombre' => 'Rechazado',
                 'descripcion' => 'Estado clausurada',
-                'updated_at' => now(),
-                'created_at' => now()
-            ],
-            [
-                'id' => 10,
-                'nombre' => 'Terminada',
-                'descripcion' => 'Estado terminada',
                 'updated_at' => now(),
                 'created_at' => now()
             ]

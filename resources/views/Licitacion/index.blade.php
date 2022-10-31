@@ -93,12 +93,12 @@
                                     </a>
                                 </td>
                                 <td scope="row">{{$lic->id}}</td>
-                                <td scope="row">{{$lic->numero}}</td>
+                                <td scope="row">{{$lic->tipo_licitacion()->indicativo}}{{$lic->numero}}</td>
                                 <td scope="row">{{$lic->nombre}}</td>
                                 <td scope="row">{{$lic->fecha_inicio}}</td>
                                 <td scope="row">{{$lic->fecha_fin}}</td>
-                                <td scope="row">{{$lic->cliente}}</td>
-                                <td scope="row">{{$lic->tipo_licitacion}}</td>
+                                <td scope="row">{{$lic->cliente()->razon_social}}</td>
+                                <td scope="row">{{$lic->tipo_licitacion()->nombre}}</td>
                                 @if(isset($categoria))
                                 
                                 @else
