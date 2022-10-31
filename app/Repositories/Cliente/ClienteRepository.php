@@ -28,12 +28,7 @@ class ClienteRepository extends BaseRepository{
 
     public function toggleState($clienteId){
         $cliente = $this->find($clienteId);
-        if($cliente->estado == 1){
-            $cliente->estado = 2;
-        }else{
-            $cliente->estado = 1;
-        }
-        
+        $cliente->estado = ($cliente->estado - 3)*(-1);
         $cliente->save();
         return $cliente;
     }

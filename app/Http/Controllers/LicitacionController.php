@@ -18,6 +18,7 @@ use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Nette\Utils\DateTime;
 
 class LicitacionController extends Controller
 {
@@ -46,12 +47,20 @@ class LicitacionController extends Controller
             $lista = $this->repo->getAllEstadosCategoria($request->categoria);
             foreach($lista as $l){
                 $l->numero = str_pad($l->numero,6,"0",STR_PAD_LEFT); 
+                $datetime1 = new DateTime($l->fecha_inicio);
+                $datetime2 = new DateTime($l->fecha_fin);
+                $interval = $datetime1->diff($datetime2);
+                $l->duracion = $interval->y . " años, " . $interval->m." meses y ".$interval->d." dias"; 
             }
             $allData = ['licitaciones' => $lista, 'categoria' => $request->categoria];
         }else{
             $lista = $this->repo->getAllEstado();
             foreach($lista as $l){
                 $l->numero = str_pad($l->numero,6,"0",STR_PAD_LEFT); 
+                $datetime1 = new DateTime($l->fecha_inicio);
+                $datetime2 = new DateTime($l->fecha_fin);
+                $interval = $datetime1->diff($datetime2);
+                $l->duracion = $interval->y . " años, " . $interval->m." meses y ".$interval->d." dias"; 
             }
             $allData = ['licitaciones' => $lista];
         }

@@ -30,15 +30,15 @@ abstract class BaseRepository{
     public function find($id){
         return $this->getModel()->find($id);
     }
-    public function getAll($paginate = 15){
+    public function getAll($paginate = 10){
         return $this->getModel()->where('estado', '!=', '3')->paginate($paginate);
     }
     //Trae un listado de todos las entidades no eliminadas
-    public function getAllEstado($paginate = 15, $estado = 3){
+    public function getAllEstado($paginate = 10, $estado = 3){
         return $this->getModel()->where("estado", "!=", $estado)->paginate($paginate);
     }
     //Trae un listado de todos las entidades activas
-    public function getAllActivos($paginate = 15, $estado = 1){
+    public function getAllActivos($paginate = 10, $estado = 1){
         return $this->getModel()->where("estado", $estado)->paginate($paginate);
     }
     //Update Operations
