@@ -73,7 +73,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col"></th>
-                                <th scope="col">Id</th>
+                                <th scope="col" style="display: none;">Id</th>
                                 <th scope="col">Numero</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Recurrente</th>
@@ -91,7 +91,7 @@
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>
-                                <td scope="row">{{$d->id}}</td>
+                                <td scope="row" style="display: none;">{{$d->id}}</td>
                                 <td scope="row">{{$d->tipo_documento()->indicativo}}{{$d->numero}}</td>
                                 <td scope="row">{{$d->nombre}}</td>
                                 <td scope="row">@if($d->recurrente == 1) Si @else  No @endif</td>

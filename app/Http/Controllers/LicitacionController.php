@@ -18,6 +18,7 @@ use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Nette\Utils\DateTime;
 
 class LicitacionController extends Controller
 {
@@ -44,9 +45,23 @@ class LicitacionController extends Controller
         $allData = [];
         if(isset($request->categoria)){
             $lista = $this->repo->getAllEstadosCategoria($request->categoria);
+            foreach($lista as $l){
+                $l->numero = str_pad($l->numero,6,"0",STR_PAD_LEFT); 
+                $datetime1 = new DateTime($l->fecha_inicio);
+                $datetime2 = new DateTime($l->fecha_fin);
+                $interval = $datetime1->diff($datetime2);
+                $l->duracion = $interval->y . " años, " . $interval->m." meses y ".$interval->d." dias"; 
+            }
             $allData = ['licitaciones' => $lista, 'categoria' => $request->categoria];
         }else{
             $lista = $this->repo->getAllEstado();
+            foreach($lista as $l){
+                $l->numero = str_pad($l->numero,6,"0",STR_PAD_LEFT); 
+                $datetime1 = new DateTime($l->fecha_inicio);
+                $datetime2 = new DateTime($l->fecha_fin);
+                $interval = $datetime1->diff($datetime2);
+                $l->duracion = $interval->y . " años, " . $interval->m." meses y ".$interval->d." dias"; 
+            }
             $allData = ['licitaciones' => $lista];
         }
         $this->repo = null;
@@ -77,11 +92,10 @@ class LicitacionController extends Controller
     }
 
     public function details(Request $request){
-        $num_rows = $request->cantidad != null ? $request->cantidad : 15;
         $this->repo = LicitacionRepository::GetInstance();
-        $lista = $this->repo->getAll($num_rows);
+        $modelo = $this->repo->find($request->id);
         $this->repo = null;
-        return json_encode($lista);
+        return json_encode($modelo);
     }
 
     /**
@@ -344,14 +358,14 @@ class LicitacionController extends Controller
      * @param  \App\Models\Licitacion  $licitacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $licitacion)
+    public function destroy(Request $request,  Licitacion $licitacion)
     {
-        $objeto = new Licitacion($licitacion->all());
-        $objeto->id = $licitacion->id;
         $this->repo = LicitacionRepository::GetInstance();
-        $objeto = $this->repo->find($objeto->id);
-        $this->repo->delete($objeto);
+        $data = $request->all();
+        $data["estado"] = '3';
+        $licitacion = $this->repo->find($data["id"]);
+        $this->repo->update($licitacion, $data);
         $this->repo = null;
-        return json_encode($objeto);
+        return json_encode($licitacion);
     }
 }

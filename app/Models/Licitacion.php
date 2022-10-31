@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Repositories\Categoria\CategoriaRepository;
+use App\Repositories\Cliente\ClienteRepository;
+use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use PhpParser\Node\Expr\Cast\Double;
@@ -15,6 +17,16 @@ class Licitacion extends Model
 
     public function categoria(){
         $this->repo = CategoriaRepository::GetInstance();
+        return $this->repo->find($this->categoria);
+    }
+
+    public function cliente(){
+        $this->repo = ClienteRepository::GetInstance();
+        return $this->repo->find($this->categoria);
+    }
+
+    public function tipo_licitacion(){
+        $this->repo = TipoLicitacionRepository::GetInstance();
         return $this->repo->find($this->categoria);
     }
 }

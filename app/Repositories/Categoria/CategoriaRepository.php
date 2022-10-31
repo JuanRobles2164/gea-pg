@@ -24,7 +24,7 @@ class CategoriaRepository extends BaseRepository{
         return new Categoria;
     }
     public function findByParams($params){
-        $paginado = 15;
+        $paginado = 10;
         $consulta = Categoria::where('nombre', '=', $params["nombre"]);
         if(!empty($params["created_at"])){            
             $consulta->where("created_at", "<=", Carbon::parse($params["created_at"]));

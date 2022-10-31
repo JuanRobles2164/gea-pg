@@ -68,11 +68,10 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col"></th>
-                                <th scope="col">Id</th>
+                                <th scope="col" style="display: none;">Id</th>
                                 <th scope="col">Número</th>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Fecha de inicio</th>
-                                <th scope="col">Fecha de fin</th>
+                                <th scope="col">Duracion</th>
                                 <th scope="col">Cliente</th>
                                 <th scope="col">Tipo Licitacion</th>
                                 @if(isset($categoria))
@@ -88,35 +87,46 @@
                             @foreach ($licitaciones as $lic)
                             <tr>
                                 <td scope="row">
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                    <a href="#" class="btn btn-danger btn-sm" onclick="eliminarObjetLicitacion({{$lic->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>
-                                <td scope="row">{{$lic->id}}</td>
-                                <td scope="row">{{$lic->numero}}</td>
+                                <td scope="row" style="display: none;">{{$lic->id}}</td>
+                                <td scope="row">{{$lic->tipo_licitacion()->indicativo}}{{$lic->numero}}</td>
                                 <td scope="row">{{$lic->nombre}}</td>
-                                <td scope="row">{{$lic->fecha_inicio}}</td>
-                                <td scope="row">{{$lic->fecha_fin}}</td>
-                                <td scope="row">{{$lic->cliente}}</td>
-                                <td scope="row">{{$lic->tipo_licitacion}}</td>
+                                <td scope="row">{{$lic->duracion}}</td>
+                                <td scope="row">{{$lic->cliente()->razon_social}}</td>
+                                <td scope="row">{{$lic->tipo_licitacion()->nombre}}</td>
                                 @if(isset($categoria))
                                 
                                 @else
                                 <td scope="row">{{$lic->categoria()->nombre}}</td>
                                 @endif
-                                <!-- @if($lic->estado == 1)
+                                @if($lic->estado == 4)
                                 <td scope="row">
-                                    <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="">
-                                        Activo
-                                    </a>
+                                    <span class="badge badge-pill badge-defaults">
+                                        En Desarrollo
+                                    </span>
+                                </td>
+                                @elseif($lic->estado == 8)
+                                <td scope="row">
+                                    <span class="badge badge-pill badge-success">
+                                        Aprobado
+                                    </span>
+                                </td>
+                                @elseif($lic->estado == 9)
+                                <td scope="row">
+                                    <span class="badge badge-pill badge-danger">
+                                        Rechazado
+                                    </span>
                                 </td>
                                 @else
                                 <td scope="row">
-                                    <a class="btn btn-warning  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="">
-                                        Inactivo
-                                    </a>
+                                    <span class="badge badge-pill badge-info">
+                                        Finalizado
+                                    </span>
                                 </td>
-                                @endif -->
+                                @endif
                                 <td scope="row">
                                     <a href="#" class="btn btn-info btn-sm" onclick="" title="Ver" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-eye"></i>
@@ -144,10 +154,90 @@
             </div>
         </div>
     </div>
+
 @include('layouts.footers.auth')
 
 @endsection
 
 @push('js')
+    <script>
+        var ruta_encontrar_licitacion = "{{route('licitacion.encontrar')}}";
+        var ruta_editar_licitacion = "{{route('licitacion.actualizar')}}";
+        var ruta_eliminar_licitacion = "{{route('licitacion.eliminar')}}";
+
+        async function obtenerDataLicitacion(data) {
+            const response = await fetch(ruta_encontrar_licitacion + "?id=" + data.id);
+            return await response.json();
+        }
+        
+        function setDataToLicitacionModal(idObjeto) {
+            let objeto = {
+                id: idObjeto
+            };
+            dataToSet = obtenerDataLicitacion(objeto);
+            dataToSet.then((data) => {
+                console.log(data);
+
+                let userData = data.user;
+                let rolesData = data.roles;
+
+                document.getElementById("nombre_user_modal_view_id").value = userData.name;
+                document.getElementById("nombre_user_modal_view_id").readOnly = true;
+
+                document.getElementById("email_user_modal_view_id").value = userData.email;
+                document.getElementById("email_user_modal_view_id").readOnly = true;
+
+                document.getElementById("identificacion_user_modal_view_id").value = userData.identificacion;
+                document.getElementById("identificacion_user_modal_view_id").readOnly = true;
+
+                $('#id_modal_view_user').modal('show');
+            });
+        }
+
+        function setDataToLicitacionModalEdit(idObjeto) {
+            let objeto = {
+                id: idObjeto
+            };
+            dataToSet = obtenerDataLicitacion(objeto);
+            dataToSet.then((data) => {
+                let userData = data.user;
+                let rolesData = data.roles;
+                document.getElementById("id_usuario_modal_create_id").value = userData.id;
+                document.getElementById("nombre_user_modal_create_id").value = userData.name;
+                document.getElementById("email_user_modal_create_id").value = userData.email;
+                document.getElementById("identificacion_user_modal_create_id").value = userData.identificacion;
+
+                $('#id_modal_create_user').modal('show');
+            });
+        }
+
+        function eliminarObjetLicitacion(idObjeto) {
+            let data = {
+                id: idObjeto
+            }
+            swal({
+                title: "Esta seguro que desea eliminar el registro ?",
+                icon: "warning",
+                buttons: ["Cancelar", "OK"],
+                dangerMode: true,
+            })
+            .then((result) => {
+                if (result) {
+                    swal("Licitacion eliminada exitosamente!", {
+                        icon: "success",
+                    })
+                    .then((result) => {
+                        postData(ruta_eliminar_licitacion, data)
+                        .then((data) =>{
+                            console.log(data);
+                            location.reload();
+                        });
+                    });
+                } else {
+                    swal("Acción cancelada");
+                }
+            });
+        }
+</script>
     
 @endpush

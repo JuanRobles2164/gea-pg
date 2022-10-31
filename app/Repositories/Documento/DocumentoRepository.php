@@ -24,7 +24,7 @@ class DocumentoRepository extends BaseRepository{
         return new Documento;
     }
     public function findByParams($params){
-        $paginado = 15;
+        $paginado = 10;
         $acumulado = Documento::where('nombre', '=', $params["nombre"]);
         if(!empty($params["created_at"])){            
             $acumulado->where("created_at", "<=", Carbon::parse($params["created_at"]));
@@ -35,7 +35,7 @@ class DocumentoRepository extends BaseRepository{
         $acumulado->paginate($paginado);
         return $acumulado;
     }
-    public function getAllPrincipales($paginate = 15, $estado = 3){
+    public function getAllPrincipales($paginate = 10, $estado = 3){
         return $this->getModel()->where("estado", "!=", $estado)->where("constante", true)->orWhere("recurrente", true)->paginate($paginate);
     }
 

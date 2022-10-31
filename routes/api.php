@@ -179,6 +179,7 @@ Route::name("fase_tipo_licitacion.")->group(function(){
 Route::name("licitacion.")->group(function(){
     Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/listar', 'listar')->name("listar");
+        Route::get('/licitacion/find', 'details')->name("encontrar");
         Route::post('/licitacion/store', 'store')->name("guardar");
         Route::post('/licitacion/update', 'update')->name("actualizar");
         Route::post('/licitacion/destroy', 'destroy')->name("eliminar");

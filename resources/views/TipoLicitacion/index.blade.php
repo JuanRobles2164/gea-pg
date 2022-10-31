@@ -35,7 +35,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col"></th>
-                                <th scope="col">Id</th>
+                                <th scope="col" style="display: none;">Id</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Descripción</th>
                                 <th scope="col">Estado</th>
@@ -50,7 +50,7 @@
                                         <i class="far fa-trash-alt" style="color: white;"></i>
                                     </a>
                                 </td>
-                                <td>{{$tl->id}}</td>
+                                <td style="display: none;">{{$tl->id}}</td>
                                 <td>{{$tl->nombre}}</td>
                                 <td>
                                     {{$tl->descripcion}}

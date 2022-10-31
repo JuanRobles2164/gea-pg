@@ -72,7 +72,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col"></th>
-                                <th scope="col">Id</th>
+                                <th scope="col" style="display: none;">Id</th>
                                 <th scope="col">Razon Social</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Identificacion</th>
@@ -88,7 +88,7 @@
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>
-                                <td scope="row">{{$cli->id}}</td>
+                                <td scope="row" style="display: none;">{{$cli->id}}</td>
                                 <td scope="row">{{$cli->razon_social}}</td>
                                 <td scope="row">{{$cli->email}}</td>
                                 <td scope="row">{{$cli->identificacion}}</td>
