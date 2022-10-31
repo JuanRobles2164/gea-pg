@@ -68,7 +68,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col"></th>
-                                <th scope="col">Id</th>
+                                <th scope="col" style="display: none;">Id</th>
                                 <th scope="col">Número</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Duracion</th>
@@ -91,7 +91,7 @@
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>
-                                <td scope="row">{{$lic->id}}</td>
+                                <td scope="row" style="display: none;">{{$lic->id}}</td>
                                 <td scope="row">{{$lic->tipo_licitacion()->indicativo}}{{$lic->numero}}</td>
                                 <td scope="row">{{$lic->nombre}}</td>
                                 <td scope="row">{{$lic->duracion}}</td>
@@ -102,17 +102,29 @@
                                 @else
                                 <td scope="row">{{$lic->categoria()->nombre}}</td>
                                 @endif
-                                @if($u->estado == 1)
+                                @if($lic->estado == 4)
                                 <td scope="row">
-                                    <a type="button" style="color: white;" class="btn btn-success  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateUsuario({{$u->id}})">
-                                        Activo
-                                    </a>
+                                    <span class="badge badge-pill badge-defaults">
+                                        En Desarrollo
+                                    </span>
+                                </td>
+                                @elseif($lic->estado == 8)
+                                <td scope="row">
+                                    <span class="badge badge-pill badge-success">
+                                        Aprobado
+                                    </span>
+                                </td>
+                                @elseif($lic->estado == 9)
+                                <td scope="row">
+                                    <span class="badge badge-pill badge-danger">
+                                        Rechazado
+                                    </span>
                                 </td>
                                 @else
                                 <td scope="row">
-                                    <a type="button" style="color: white;" class="btn btn-warning  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateUsuario({{$u->id}})">
-                                        Inactivo
-                                    </a>
+                                    <span class="badge badge-pill badge-info">
+                                        Finalizado
+                                    </span>
                                 </td>
                                 @endif
                                 <td scope="row">

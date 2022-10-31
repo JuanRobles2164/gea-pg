@@ -70,7 +70,7 @@ use App\Enums\UnidadValidezEnum;
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col"></th>
-                                <th scope="col">Id</th>
+                                <th scope="col" style="display: none;">Id</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Descripcion</th>
                                 <th scope="col">Estado</th>
@@ -85,7 +85,7 @@ use App\Enums\UnidadValidezEnum;
                                         <i class="far fa-trash-alt" style="color: white;"></i>
                                     </a>
                                 </td>
-                                <td scope="row">{{$td->id}}</td>
+                                <td scope="row" style="display: none;">{{$td->id}}</td>
                                 <td scope="row">{{$td->nombre}}</td>
                                 <td scope="row">{{$td->descripcion}}</td>
                                 @if($td->estado == 1)

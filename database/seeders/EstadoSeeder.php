@@ -59,20 +59,13 @@ class EstadoSeeder extends Seeder
             ],
             [
                 'id' => 7,
-                'nombre' => 'Planificacion',
-                'descripcion' => 'Estado por definir',
-                'updated_at' => now(),
-                'created_at' => now()
-            ],
-            [
-                'id' => 8,
                 'nombre' => 'Aprobado',
                 'descripcion' => 'Estado ganada, por definir',
                 'updated_at' => now(),
                 'created_at' => now()
             ],
             [
-                'id' => 9,
+                'id' => 8,
                 'nombre' => 'Rechazado',
                 'descripcion' => 'Estado clausurada',
                 'updated_at' => now(),
