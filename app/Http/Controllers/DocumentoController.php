@@ -132,8 +132,7 @@ class DocumentoController extends Controller
         $validated = $request->validate([
             'data_file' => ['required'],
             'nombre_archivo' => ['required'],
-            'licitacion' => ['required'],
-            'fase' => ['required'],
+            'fase_licitacion' => ['required'],
             'tipo_documento' => ['required']
         ]);
         //Mover el archivo
@@ -154,14 +153,9 @@ class DocumentoController extends Controller
         $this->repo = DocumentoRepository::GetInstance();
         $documentoEntidad = $this->repo->create($documentoData);
         $this->repo = LicitacionFaseRepository::GetInstance();
-        $licitacionFase = $this->repo->findByParams([
-            'unico_registro' => true,
-            'licitacion' => $request->licitacion,
-            'fase' => $request->fase
-        ]);
         $documentoLicitacionArr = [
             'documento' => $documentoEntidad->id,
-            'licitacion_fase' => $licitacionFase->id,
+            'licitacion_fase' => $request->fase_licitacion,
             'revisado' => true,
             'estado' => 1,
         ];
@@ -171,15 +165,58 @@ class DocumentoController extends Controller
         return Redirect::back();
     }
 
+    //Aún falta terminar la funcionalidad
     public function reemplazarDocumento(Request $request){
         $data = $request->all();
         $this->repo = DocumentoRepository::GetInstance();
+        //obtiene el documento actualmente asociado
         $documento = $this->repo->find($data['documento']);
         $pathFileTemporal = $data['data_file'];
         $newPathFile = "documentos_licitacion/".now()->timestamp.$documento->nombre_archivo;
+        //Mueve el nuevo documento
         Storage::move($pathFileTemporal, $newPathFile);
-        $documento->path_file = $newPathFile;
-        $documento->save();
+        //Construye el nuevo objeto con los viejos datos del documento asociado
+        $nuevaDataDocumento = [
+            'numero' => now()->timestamp,
+            //Meter la funcionalidad del número acá
+            'nombre' => $documento->nombre,
+            'nombre_archivo' => $documento->nombre_archivo,
+            'descripcion' => $documento->descripcion,
+            'recurrente' => $documento->recurrente,
+            'constante' => $documento->constante,
+            'fecha_vencimiento' => $documento->fecha_vencimiento,
+            'data_file' => $documento->data_file,
+            'path_file' => $newPathFile,
+            'estado' => $documento->estado,
+            'tipo_documento' => $documento->tipo_documento,
+            'created_at' => now(),
+            'updated_at' => now()
+        ];
+        $nuevoDocumento = $this->repo->create($nuevaDataDocumento);
+        $this->repo = DocumentoLicitacionRepository::GetInstance();
+        $documentoLicitacion = $this->repo->findByParams([
+            'registro_unico' => true,
+            'licitacion_fase' => $data['fase_licitacion'],
+            'documento' => $data['documento']
+        ]);
+        $documentoLicitacion->documento = $nuevoDocumento->id;
+        $documentoLicitacion->save();
+        $this->repo = null;
+        return Redirect::back();
+    }
+
+    //Elimina el documento asociado a una licitación, pero no elimina el documento
+    public function eliminarDocumentoLicitacion(Request $request){
+        $data = $request->all();
+        $this->repo = DocumentoLicitacionRepository::GetInstance();
+        $documentoLicitacion = $this->repo->findByParams([
+            'registro_unico' => true,
+            'licitacion_fase' => $data['fase_licitacion'],
+            'documento' => $data['documento']
+        ]);
+        //Cambiar el estado a eliminado, pero sólo en la asociación del documento
+        $documentoLicitacion->estado = 3;
+        $documentoLicitacion->save();
         return Redirect::back();
     }
 }

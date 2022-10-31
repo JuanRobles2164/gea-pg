@@ -44,7 +44,7 @@
                 <br><br><br><br>
                 <!-- informacion de la licitacion para editar -->
                 <div id="accordion">
-                    @foreach ($fases as $fase)
+                    @foreach ($fases_licitacion as $fase)
                         <x-fases-element componentId="{{$fase->id}}" componentTitle="{{$fase->nombre}}" licitacion="{{$licitacion->id}}" :modelo="$fase" />
                     @endforeach
                 </div>

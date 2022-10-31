@@ -11,7 +11,7 @@
         <form action="{{route('documento.reemplazar_en_componente')}}" method="post">
             @csrf
             <input type="hidden" name="documento" id="documentoIdmodalReemplazarArchivoModal">
-            <input type="hidden" name="fase" id="faseModalReemplazarArchivoModal">
+            <input type="hidden" name="fase_licitacion" id="faseModalReemplazarArchivoModal">
             <div class="modal-body">
                 <div class="form-input">
                     <label for="">Subir archivo</label>
@@ -30,10 +30,22 @@
 
 @push('js')
     <script>
-        function abrirModalReemplazarArchivos(idDocumento){
-            let elDoc = document.getElementById("documentoIdmodalReemplazarArchivoModal");
-            elDoc.value = idDocumento;
-            $('#modalReemplazarArchivoModal').modal('show');
-        }
+      const inputElementModalReemplazarArchivoModalArchivo = document.querySelector('#modalReemplazarArchivoModalArchivo');
+      const pondModalReemplazarArchivoModalArchivo = FilePond.create(inputElementModalReemplazarArchivoModalArchivo);
+
+      //nombreArchivoNuevoFaseLicitacion
+
+      pondModalReemplazarArchivoModalArchivo.onprocessfile = (error, file) => {
+          document.getElementById("nombreArchivoNuevoFaseLicitacion").value = file.serverId;
+      };
+
+      function abrirModalReemplazarArchivos(idDocumento, idFaseLicitacion){
+          let elDoc = document.getElementById("documentoIdmodalReemplazarArchivoModal");
+          elDoc.value = idDocumento;
+          let elFase = document.getElementById("faseModalReemplazarArchivoModal");
+          elFase.value = idFaseLicitacion;
+
+          $('#modalReemplazarArchivoModal').modal('show');
+      }
     </script>
 @endpush

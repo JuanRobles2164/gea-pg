@@ -28,11 +28,7 @@ class FasesElement extends Component
         $this->component_id = $componentId;
         $this->component_title = $componentTitle;
         $this->repo = LicitacionFaseRepository::GetInstance();
-        $this->licitacion_fase = $this->repo->findByParams([
-            'licitacion' => $licitacion,
-            'fase' => $modelo->id,
-            'unico_registro' => true,
-        ]);
+        $this->licitacion_fase = $this->repo->find($modelo->id);
         if($this->licitacion_fase != null){
             $docs_array = [];
             //Log::debug((array) $this->licitacion_fase);

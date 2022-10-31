@@ -23,9 +23,15 @@ class DocumentoLicitacionRepository extends BaseRepository{
         return new DocumentoLicitacion;
     }
     public function findByParams($params){
-        $listado = $this->getModel();
+        $listado = $this->getModel()->where('estado', '!=', 3);
         if(isset($params['licitacion_fase'])){
             $listado = $listado->where('licitacion_fase', $params['licitacion_fase']);
+        }
+        if(isset($params['documento'])){
+            $listado = $listado->where('documento', $params['documento']);
+        }
+        if(isset($params['registro_unico'])){
+            return $listado->first();
         }
         return $listado->get();
     }

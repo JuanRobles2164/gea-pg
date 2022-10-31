@@ -79,7 +79,7 @@ class LicitacionController extends Controller
         ]);
         $this->repo = null;
 
-        $allData = ['licitacion' => $obj, 'fases' => $fases];
+        $allData = ['licitacion' => $obj, 'fases_licitacion' => $fases];
         return view('Licitacion.gestion_documentos', $allData);
     }
 
