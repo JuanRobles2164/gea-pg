@@ -21,10 +21,11 @@ class TipoDocumentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $criterio = $request->criterio;
         $this->repo = TipoDocumentoRepository::GetInstance();
-        $lista = $this->repo->getAllEstado();
+        $lista = $this->repo->getAllPersonalizado($criterio);
         $this->repo = null;
         $allData = ['tipos_documento' => $lista];
         return view('TipoDocumento.index', $allData);

@@ -38,6 +38,7 @@
                                 <th scope="col" style="display: none;">Id</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Descripción</th>
+                                <th scope="col">Indicativo</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
@@ -52,9 +53,8 @@
                                 </td>
                                 <td style="display: none;">{{$tl->id}}</td>
                                 <td>{{$tl->nombre}}</td>
-                                <td>
-                                    {{$tl->descripcion}}
-                                </td>
+                                <td> {{$tl->descripcion}}</td>
+                                <td> {{$tl->indicativo}}</td>
                                 @if($tl->estado == 1)
                                 <td>
                                     <a type="button" style="color: white;" class="btn btn-success  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoLic({{$tl->id}})">
@@ -318,5 +318,17 @@
             location.reload();
         });   
     }
+    var elInput = document.getElementById('criterio');
+        elInput.addEventListener('keyup', function(e) {
+            var keycode = e.keyCode || e.which;
+            if (keycode == 13) {
+                let href = `{{route('tipo_licitacion.index')}}?criterio=:valor_cri`;
+                let criterio = elInput.value;
+                let final = ""+href;
+                final = final.replace(":valor_cri", criterio);
+                window.location.href = final;
+            }
+        });
+
 </script>
 @endpush

@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table align-items-center">
+                    <table class="table align-items-center" id="tablaFase">
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col"></th>
@@ -307,16 +307,29 @@
             draggable_list.appendChild(listItem);
         }
     }
-        function toggleStateFase(idFase){
-            let objeto = {
-                id: idFase
-            }
-
-            postData(ruta_alternar_estado_fase, objeto)
-            .then((data) => {
-                console.log(data);
-                location.reload();
-            });   
+    function toggleStateFase(idFase){
+        let objeto = {
+            id: idFase
         }
+
+        postData(ruta_alternar_estado_fase, objeto)
+        .then((data) => {
+            console.log(data);
+            location.reload();
+        });   
+    }
+
+    var elInput = document.getElementById('criterio');
+    elInput.addEventListener('keyup', function(e) {
+        var keycode = e.keyCode || e.which;
+        if (keycode == 13) {
+            let href = `{{route('fase.index')}}?criterio=:valor_cri`;
+            let criterio = elInput.value;
+            let final = ""+href;
+            final = final.replace(":valor_cri", criterio);
+            window.location.href = final;
+        }
+    });
+
 </script>
 @endpush

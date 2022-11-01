@@ -24,10 +24,11 @@ class FaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $criterio = $request->criterio;
         $this->repo = FaseRepository::GetInstance();
-        $lista = $this->repo->getAll();
+        $lista = $this->repo->getAllPersonalizado($criterio);
         $this->repo = null;
 
         $allData = ['fases' => $lista

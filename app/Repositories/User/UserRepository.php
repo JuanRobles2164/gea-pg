@@ -34,6 +34,14 @@ class UserRepository extends BaseRepository{
         return $usuarioActualizar;
     }
 
+    public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
+        return $this->getModel()
+        ->nombre($criterio)
+        ->email($criterio)
+        ->where("estado", "!=", $estado)
+        ->paginate($paginate);
+    }
+
     //Si es Activo (1), al restarle 3 quedará -2 (Inexistente)
     //Y al aplicar Valor absoluto, quedará 2 (Inactivo)
     //TREMENDO MINDFUCK HOLY SHIET :o

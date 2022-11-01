@@ -72,6 +72,7 @@
                                 <th scope="col">Número</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Duracion</th>
+                                <th scope="col">Fecha Fin</th>
                                 <th scope="col">Cliente</th>
                                 <th scope="col">Tipo Licitacion</th>
                                 @if(isset($categoria))
@@ -95,6 +96,7 @@
                                 <td scope="row">{{$lic->tipo_licitacion()->indicativo}}{{$lic->numero}}</td>
                                 <td scope="row">{{$lic->nombre}}</td>
                                 <td scope="row">{{$lic->duracion}}</td>
+                                <td scope="row">{{$lic->fecha_fin}}</td>
                                 <td scope="row">{{$lic->cliente()->razon_social}}</td>
                                 <td scope="row">{{$lic->tipo_licitacion()->nombre}}</td>
                                 @if(isset($categoria))
@@ -261,6 +263,18 @@
                 }
             });
         }
+
+        var elInput = document.getElementById('criterio');
+        elInput.addEventListener('keyup', function(e) {
+            var keycode = e.keyCode || e.which;
+            if (keycode == 13) {
+                let href = `{{route('licitacion.index')}}?criterio=:valor_cri`;
+                let criterio = elInput.value;
+                let final = ""+href;
+                final = final.replace(":valor_cri", criterio);
+                window.location.href = final;
+            }
+        });
 </script>
     
 @endpush

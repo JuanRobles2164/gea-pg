@@ -42,6 +42,14 @@ class FaseRepository extends BaseRepository{
         return $fases;
     }
 
+    public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
+        return $this->getModel()
+        ->descripcion($criterio)
+        ->nombre($criterio)
+        ->where("estado", "!=", $estado)
+        ->paginate($paginate);
+    }
+
     public function toggleState($faseId){
         $fase = $this->find($faseId);
         $fase->estado = ($fase->estado - 3)*(-1);
