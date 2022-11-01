@@ -104,7 +104,7 @@
                                 @endif
                                 @if($lic->estado == 4)
                                 <td scope="row">
-                                    <span class="badge badge-pill badge-defaults">
+                                    <span class="badge badge-pill badge-default">
                                         En Desarrollo
                                     </span>
                                 </td>
