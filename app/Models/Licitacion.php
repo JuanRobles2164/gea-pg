@@ -22,11 +22,11 @@ class Licitacion extends Model
 
     public function cliente(){
         $this->repo = ClienteRepository::GetInstance();
-        return $this->repo->find($this->categoria);
+        return $this->repo->find($this->cliente);
     }
 
     public function tipo_licitacion(){
         $this->repo = TipoLicitacionRepository::GetInstance();
-        return $this->repo->find($this->categoria);
+        return $this->repo->find($this->tipo_licitacion);
     }
 }

@@ -225,6 +225,7 @@
                     document.getElementById("documento_recurrente_constante1_modal_view").checked = true;
                     document.getElementById("documento_recurrente_constante2_modal_view").checked = false;
                 }else{
+                    
                     document.getElementById("documento_recurrente_constante2_modal_view").checked = true;
                     document.getElementById("documento_recurrente_constante1_modal_view").checked = false;
                 }
