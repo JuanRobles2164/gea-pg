@@ -219,4 +219,23 @@ class DocumentoController extends Controller
         $documentoLicitacion->save();
         return Redirect::back();
     }
+
+    /**
+     * Requiere:
+     * documento -> id del documento a reemplazar
+     * file_name -> nombre del archivo 
+     * data_file -> ruta del archivo temporal
+     */
+    public function reemplazarDocumentoPlantilla(Request $request){
+        $data = $request->all();
+        $this->repo = DocumentoRepository::GetInstance();
+        //Obtengo la instancia original
+        $documento = $this->repo->find($data['documento']);
+
+        $newPathFile = "documentos_principales/".now()->timestamp.$data['file_name'];
+        Storage::disk('local')->move($data['data_file'], $newPathFile);
+
+        $documento->path_file = $newPathFile;
+        $documento->save();
+    }
 }
