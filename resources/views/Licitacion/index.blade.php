@@ -128,7 +128,7 @@
                                 </td>
                                 @endif
                                 <td scope="row">
-                                    <a href="#" class="btn btn-info btn-sm" onclick="" title="Ver" data-toggle="tooltip" data-placement="bottom">
+                                    <a href="#" class="btn btn-info btn-sm" onclick="setDataToLicitacionModal({{$lic->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <a href="#" class="btn btn-default btn-sm" onclick="setDataToLicitacionModalEdit({{$lic->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
@@ -157,7 +157,7 @@
 
 <x-guardar-licitacion modalTitle="Formulario de Licitaciones" modalId="id_modal_create_licitacion" />
 
-<x-ver-tipo-documento modalTitle="Visualizador de Licitaciones" modalId="id_modal_licitacion_viewer" />
+<x-ver-licitacion modalTitle="Visualizador de Licitaciones" modalId="id_modal_licitacion_viewer" />
 
 @include('layouts.footers.auth')
 
@@ -180,9 +180,9 @@
             };
             dataToSet = obtenerDataLicitacion(objeto);
             dataToSet.then((data) => {
-                console.log(data);
-
                 let licData = data;
+
+                console.log(licData);
 
                 document.getElementById("numero_licitacion_view_modal_id").value = licData.numero;
                 document.getElementById("numero_licitacion_view_modal_id").readOnly = true;
