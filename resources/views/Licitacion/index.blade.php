@@ -131,7 +131,7 @@
                                     <a href="#" class="btn btn-info btn-sm" onclick="" title="Ver" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="" class="btn btn-default btn-sm" onclick="" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                    <a href="#" class="btn btn-default btn-sm" onclick="setDataToLicitacionModalEdit({{$lic->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
                                     <a href="#" class="btn btn-warning btn-sm" onclick="" title="Clonar" data-toggle="tooltip" data-placement="bottom">
@@ -154,6 +154,10 @@
             </div>
         </div>
     </div>
+
+<x-guardar-licitacion modalTitle="Formulario de Licitaciones" modalId="id_modal_create_licitacion" />
+
+<x-ver-tipo-documento modalTitle="Visualizador de Licitaciones" modalId="id_modal_licitacion_viewer" />
 
 @include('layouts.footers.auth')
 
@@ -178,19 +182,33 @@
             dataToSet.then((data) => {
                 console.log(data);
 
-                let userData = data.user;
-                let rolesData = data.roles;
+                let licData = data;
 
-                document.getElementById("nombre_user_modal_view_id").value = userData.name;
-                document.getElementById("nombre_user_modal_view_id").readOnly = true;
+                document.getElementById("numero_licitacion_view_modal_id").value = licData.numero;
+                document.getElementById("numero_licitacion_view_modal_id").readOnly = true;
 
-                document.getElementById("email_user_modal_view_id").value = userData.email;
-                document.getElementById("email_user_modal_view_id").readOnly = true;
+                document.getElementById("categoria_licitacion_view_modal_id").value = licData.categoria;
+                document.getElementById("categoria_licitacion_view_modal_id").readOnly = true;
 
-                document.getElementById("identificacion_user_modal_view_id").value = userData.identificacion;
-                document.getElementById("identificacion_user_modal_view_id").readOnly = true;
+                document.getElementById("nombre_licitacion_view_modal_id").value = licData.nombre;
+                document.getElementById("nombre_licitacion_view_modal_id").readOnly = true;
 
-                $('#id_modal_view_user').modal('show');
+                document.getElementById("descripcion_licitacion_view_modal_id").value = licData.descripcion;
+                document.getElementById("descripcion_licitacion_view_modal_id").readOnly = true;
+
+                document.getElementById("fecha_inicio_licitacion_view_modal_id").value = licData.fecha_inicio;
+                document.getElementById("fecha_inicio_licitacion_view_modal_id").readOnly = true;
+
+                document.getElementById("fecha_fin_licitacion_view_modal_id").value = licData.fecha_fin;
+                document.getElementById("fecha_fin_licitacion_view_modal_id").readOnly = true;
+
+                document.getElementById("cliente_licitacion_view_modal_id").value = licData.cliente;
+                document.getElementById("cliente_licitacion_view_modal_id").readOnly = true;
+
+                document.getElementById("tipo_licitacion_licitacion_view_modal_id").value = licData.tipo_licitacion;
+                document.getElementById("tipo_licitacion_licitacion_view_modal_id").readOnly = true;
+
+                $('#id_modal_licitacion_viewer').modal('show');
             });
         }
 
@@ -200,14 +218,19 @@
             };
             dataToSet = obtenerDataLicitacion(objeto);
             dataToSet.then((data) => {
-                let userData = data.user;
-                let rolesData = data.roles;
-                document.getElementById("id_usuario_modal_create_id").value = userData.id;
-                document.getElementById("nombre_user_modal_create_id").value = userData.name;
-                document.getElementById("email_user_modal_create_id").value = userData.email;
-                document.getElementById("identificacion_user_modal_create_id").value = userData.identificacion;
-
-                $('#id_modal_create_user').modal('show');
+                let licData = data;
+                console.log(data);
+                document.getElementById("numero_licitacion_crear_modal_id").value = licData.numero;
+                document.getElementById("categoria_licitacion_crear_modal_id").value = licData.categoria;
+                document.getElementById("nombre_licitacion_crear_modal_id").value = licData.nombre;
+                document.getElementById("descripcion_licitacion_crear_modal_id").value = licData.descripcion;
+                document.getElementById("fecha_inicio_licitacion_crear_modal_id").value = licData.fecha_inicio;
+                document.getElementById("fecha_fin_licitacion_crear_modal_id").value = licData.fecha_fin;
+                document.getElementById("cliente_licitacion_crear_modal_id").value = licData.cliente;
+                document.getElementById("tipo_licitacion_licitacion_crear_modal_id").value = licData.tipo_licitacion;
+                document.getElementById("id_licitacion_crear_modal_id").value = licData.id;
+                
+                $('#id_modal_create_licitacion').modal('show');
             });
         }
 

@@ -94,6 +94,7 @@ class LicitacionController extends Controller
     public function details(Request $request){
         $this->repo = LicitacionRepository::GetInstance();
         $modelo = $this->repo->find($request->id);
+        $modelo->numero = $modelo->tipo_licitacion()->indicativo . '' .  str_pad($modelo->numero,6,"0",STR_PAD_LEFT); 
         $this->repo = null;
         return json_encode($modelo);
     }
@@ -343,10 +344,10 @@ class LicitacionController extends Controller
     public function update(Request $request, Licitacion $licitacion)
     {
         $validated = $request->validate($this->validationRules);
-        
         $this->repo = LicitacionRepository::GetInstance();
         $data = $request->all();
         $licitacion = $this->repo->find($data["id"]);
+        $data['numero'] = $licitacion->numero;
         $this->repo->update($licitacion, $data);
         $this->repo = null;
         return json_encode($licitacion);
