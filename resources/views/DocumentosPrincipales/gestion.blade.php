@@ -110,7 +110,11 @@
         });
 
         function mostrarFecha(){
-            document.getElementById("fecha_vencimiento").style = '';
+            if(document.getElementById("documento_recurrente_constante1").checked == true) {
+                document.getElementById("fecha_vencimiento").style = '';
+            }else{
+                document.getElementById("fecha_vencimiento").style = 'display: none;';
+            }
         }
 
     </script>
