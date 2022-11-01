@@ -17,13 +17,13 @@ class DocumentoPrincipalController extends Controller
         'nombre' => 'required',
         'tipo_documento' => 'required|numeric|min:1',
         'recurrente_constante' => 'required',
-        'fecha_vencimiento' => ['required']
+        'fecha_vencimiento' => 'exclude_unless:recurrente_constante,recurrente|required'
     ];
     private $validationRulesEdit = [
         'nombre' => 'required',
         'tipo_documento' => 'required|numeric|min:1',
         'recurrente_constante' => 'required',
-        'fecha_vencimiento' => ['required']
+        'fecha_vencimiento' => ['exclude_unless:recurrente_constante,recurrente|required']
     ];
     public function index(){
         $this->repo = DocumentoRepository::GetInstance();
@@ -136,7 +136,7 @@ class DocumentoPrincipalController extends Controller
                 'descripcion' => isset($data['descripcion']) ? $data['descripcion'] : "N/A",
                 'recurrente' => $data['recurrente'],
                 'constante' => $data['constante'],
-                'fecha_vencimiento' => Carbon::parse($data['fecha_vencimiento']),
+                'fecha_vencimiento' => isset($data['fecha_vencimiento']) ? Carbon::parse($data['fecha_vencimiento']) : null ,
                 'path_file' => $data['path_file'],
                 'estado' => 1,
                 'tipo_documento' => $data['tipo_documento'],
@@ -155,7 +155,7 @@ class DocumentoPrincipalController extends Controller
                 'descripcion' => isset($data['descripcion']) ? $data['descripcion'] : "N/A",
                 'recurrente' => $data['recurrente'],
                 'constante' => $data['constante'],
-                'fecha_vencimiento' => Carbon::parse($data['fecha_vencimiento']),
+                'fecha_vencimiento' => isset($data['fecha_vencimiento']) ? Carbon::parse($data['fecha_vencimiento']) : null ,
                 'path_file' => $documento['path_file'],
                 'estado' => 1,
                 'tipo_documento' => $data['tipo_documento'],
@@ -224,7 +224,7 @@ class DocumentoPrincipalController extends Controller
                 'descripcion' => isset($data['descripcion']) ? $data['descripcion'] : "N/A",
                 'recurrente' => $data['recurrente'],
                 'constante' => $data['constante'],
-                'fecha_vencimiento' => Carbon::parse($data['fecha_vencimiento']),
+                'fecha_vencimiento' => isset($data['fecha_vencimiento']) ? Carbon::parse($data['fecha_vencimiento']) : null ,
                 'path_file' => $data['path_file'],
                 'estado' => 1,
                 'tipo_documento' => $data['tipo_documento'],
