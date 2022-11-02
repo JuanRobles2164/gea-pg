@@ -51,10 +51,10 @@ class DocumentoLicitacionRepository extends BaseRepository{
 
     public function getDocumentosAsociadosFasesPorLicitacionFase($idLicitacionFase){
         $results = DB::table('documento_licitacion')
-                        ->join('documento', 'documento_licitacion.documento', '')
+                        ->join('documento', 'documento_licitacion.documento', 'documento.id')
                         ->whereNotNull('documento.recurrente')
                         ->where('documento_licitacion.licitacion_fase', $idLicitacionFase)
-                        ->select('documento_licitacion')
+                        ->select('documento_licitacion.*')
                         ->get();
         return $results;
     }

@@ -17,6 +17,7 @@ use App\Repositories\TipoDocumento\TipoDocumentoRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Nette\Utils\DateTime;
 
@@ -382,24 +383,35 @@ class LicitacionController extends Controller
         $licitacion = $this->repo->create($licitacion);
         //Clonar las fases asociadas
         $this->repo = LicitacionFaseRepository::GetInstance();
+        $iteradorFases = 0;
         $licitacion_fases = $this->repo->findByParams(['licitacion' => $request->id]);
         foreach($licitacion_fases as $lf){
             $this->repo = LicitacionFaseRepository::GetInstance();
-            $idLicitacionFaseOriginal = $lf;
+            $idLicitacionFaseOriginal = $lf->id;
+            $lf->licitacion = $licitacion->id;
+            if($iteradorFases == 0){
+                $lf->estado = 4;
+            }else{
+                $lf->estado = 6;
+            }
             $nuevoLF = $lf->toArray();
-            unset($nuevoLF->id);
-            
-            $this->repo->create($nuevoLF);
+            unset($nuevoLF['id']);
+            $licitacion_fase_nuevo = $this->repo->create($nuevoLF);
 
             $this->repo = DocumentoLicitacionRepository::GetInstance();
             //Obtiene los documentos asociados a esa fase
             $documentos_licitacion = $this->repo->getDocumentosAsociadosFasesPorLicitacionFase($lf->id);
             foreach($documentos_licitacion as $dl){
                 $idOriginalDL = $dl->id;
-                
+                $dl->revisado = false;
+                $dl->licitacion_fase = $licitacion_fase_nuevo->id;
+                $doc_licitacion_nuevo_data = json_decode(json_encode($dl), true);
+                unset($doc_licitacion_nuevo_data['id']);
+                $doc_licitacion_nuevo = $this->repo->create($doc_licitacion_nuevo_data);
             }
+            $iteradorFases++;
         }
         $this->repo = null;
-        return $licitacion;
+        return Redirect::back();
     }
 }
