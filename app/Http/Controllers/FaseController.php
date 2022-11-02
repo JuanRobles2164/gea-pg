@@ -230,11 +230,11 @@ class FaseController extends Controller
         foreach($documentos as $doc){
             $this->repo = TipoDocumentoRepository::GetInstance();
             $tipoDoc = $this->repo->find($doc->tipo_documento);
-            $this->repo =  null;
             $doc->numero = $tipoDoc->indicativo . '' . str_pad($doc->numero,6,"0",STR_PAD_LEFT); 
             $doc->nombre_tipdoc = $tipoDoc->nombre;
             $doc->id_tdoc = $tipoDoc->id;
         }
+        $this->repo =  null;
         return json_encode($documentos);
     }
 

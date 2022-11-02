@@ -369,4 +369,37 @@ class LicitacionController extends Controller
         $this->repo = null;
         return json_encode($licitacion);
     }
+
+    //licitacion -> licitacion_fase -> documento_licitacion -> documento.
+    public function clonarLicitacion(Request $request){
+        $this->repo = LicitacionRepository::GetInstance();
+        //Clonar la licitacion
+        $licitacion = $this->repo->find($request->id);
+        $licitacion = $licitacion->toArray();
+        unset($licitacion['id']);
+
+        //Crea la nueva licitacion
+        $licitacion = $this->repo->create($licitacion);
+        //Clonar las fases asociadas
+        $this->repo = LicitacionFaseRepository::GetInstance();
+        $licitacion_fases = $this->repo->findByParams(['licitacion' => $request->id]);
+        foreach($licitacion_fases as $lf){
+            $this->repo = LicitacionFaseRepository::GetInstance();
+            $idLicitacionFaseOriginal = $lf;
+            $nuevoLF = $lf->toArray();
+            unset($nuevoLF->id);
+            
+            $this->repo->create($nuevoLF);
+
+            $this->repo = DocumentoLicitacionRepository::GetInstance();
+            //Obtiene los documentos asociados a esa fase
+            $documentos_licitacion = $this->repo->getDocumentosAsociadosFasesPorLicitacionFase($lf->id);
+            foreach($documentos_licitacion as $dl){
+                $idOriginalDL = $dl->id;
+                
+            }
+        }
+        $this->repo = null;
+        return $licitacion;
+    }
 }

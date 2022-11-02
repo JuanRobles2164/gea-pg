@@ -7,7 +7,7 @@ use App\Http\Requests\StoreDocumentoLicitacionRequest;
 use App\Http\Requests\UpdateDocumentoLicitacionRequest;
 use App\Repositories\DocumentoLicitacion\DocumentoLicitacionRepository;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Redirect;
 
 class DocumentoLicitacionController extends Controller
 {
@@ -124,6 +124,35 @@ class DocumentoLicitacionController extends Controller
         $this->repo->delete($objeto);
         $this->repo = null;
         return json_encode($objeto);
+    }
+
+    public function asociarDocumentosFromComponent(Request $request){
+        $data = $request->all();
+        $dfmfJsons = [];
+        $this->repo = DocumentoLicitacionRepository::GetInstance();
+        foreach($data['documentoFromModalFases'] as $dfmf){
+            $objetoJson = json_decode($dfmf);
+            $documentoLicitacion = $this->repo->findByParamsWithOutState([
+                'registro_unico' => true,
+                'documento' => $objetoJson->id,
+                'licitacion_fase' => $data['licitacion_fase']
+            ]);
+            if($documentoLicitacion == null){
+                //si no encontró ningún registro, deberá crearlo
+                $retorno = $this->repo->create([
+                    'documento' => $objetoJson->id,
+                    'licitacion_fase' => $data['licitacion_fase'],
+                    'revisado' => true,
+                    'estado' => 1
+                ]);
+            }else{
+                //si encontró algún registro, deberá actualizar el estado a 1 (Activo)
+                $documentoLicitacion->estado = 1;
+                $documentoLicitacion->save();
+            }
+        }
+        $this->repo = null;
+        return Redirect::back();
     }
     
 }

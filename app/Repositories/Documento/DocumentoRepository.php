@@ -44,7 +44,10 @@ class DocumentoRepository extends BaseRepository{
         ->join('tipo_documento', 'fase_tipo_documento.tipo_documento', '=', 'tipo_documento.id')
         ->join('documento', 'tipo_documento.id', '=', 'documento.tipo_documento')
         ->where('fase_tipo_documento.fase', $idFase)
-        ->where('documento.fecha_vencimiento', '>=', now())
+        ->where(function($query){
+            $query->where('documento.fecha_vencimiento', '>=', now())
+                  ->orWhereNull('documento.fecha_vencimiento');
+        })
         ->where('documento.estado', 1)
         ->select('tipo_documento.*','documento.*')
         ->get();
@@ -58,4 +61,6 @@ class DocumentoRepository extends BaseRepository{
         $documento->save();
         return $documento;
     }
+
+    
 }

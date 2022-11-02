@@ -57,11 +57,15 @@
 
 <x-nuevo-archivo-fase-licitacion-modal />
 
+<x-modal-agregar-documentos-to-fase-licitacion-form />
+
 
 @include('layouts.footers.auth')
 
 @endsection
 
 @push('js')
-
+<script>
+    
+</script>
 @endpush

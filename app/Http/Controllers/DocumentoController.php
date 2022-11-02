@@ -220,6 +220,24 @@ class DocumentoController extends Controller
         return Redirect::back();
     }
 
+    //Elimina el documento asociado a una licitación (Relacion), y deja en estado 3 el documento
+    public function eliminarDocumentoLicitacionRelacion(Request $request){
+        $data = $request->all();
+        $this->repo = DocumentoLicitacionRepository::GetInstance();
+        $documentoLicitacion = $this->repo->findByParams([
+            'registro_unico' => true,
+            'licitacion_fase' => $data['fase_licitacion'],
+            'documento' => $data['documento']
+        ]);
+        //Cambiar el estado a eliminado, pero sólo en la asociación del documento
+        $documentoLicitacion->delete();
+        $this->repo = DocumentoRepository::GetInstance();
+        $documento = $this->repo->find($data['documento']);
+        $documento->estado = 3;
+        $documento->save();
+        return Redirect::back();
+    }
+
     /**
      * Requiere:
      * documento -> id del documento a reemplazar

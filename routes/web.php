@@ -9,6 +9,7 @@ use App\Http\Controllers\TipoLicitacionController;
 use App\Http\Controllers\LicitacionController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\DocumentoLicitacionController;
 use App\Http\Controllers\DocumentoPrincipalController;
 use App\Http\Controllers\UserController;
 use App\Repositories\Estado\EstadoRepository;
@@ -101,6 +102,13 @@ Route::name("documento.")->group(function(){
         Route::post('/documento/store_in_component', 'storeInComponent')->name("guardar_en_componente");
         Route::post('/documento/replace_in_component', 'reemplazarDocumento')->name("reemplazar_en_componente");
         Route::get('/documento/eliminar_documento_licitacion', 'eliminarDocumentoLicitacion')->name("eliminar_documento_licitacion");
+        Route::get('/documento/eliminar_documento_licitacion_relacion', 'eliminarDocumentoLicitacionRelacion')->name("eliminar_documento_licitacion_relacion");
+    });
+});
+
+Route::name("documento_licitacion.")->group(function(){
+    Route::controller(DocumentoLicitacionController::class)->group(function(){
+        Route::post('/documento_licitacion/asociar_documentos_from_component', 'asociarDocumentosFromComponent')->name("asociar_documentos_from_component");
     });
 });
 

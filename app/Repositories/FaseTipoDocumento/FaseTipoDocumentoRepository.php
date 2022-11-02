@@ -22,6 +22,11 @@ class FaseTipoDocumentoRepository extends BaseRepository{
     {
         return new FaseTipoDocumento;
     }
+
+    public function findByFaseId($idFase){
+        $response = $this->getModel()->where('fase', $idFase)->get();
+        return $response;
+    }
     public function findByParams($params){
         
     }

@@ -134,7 +134,7 @@
                                     <a href="#" class="btn btn-default btn-sm" onclick="setDataToLicitacionModalEdit({{$lic->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <a href="#" class="btn btn-warning btn-sm" onclick="" title="Clonar" data-toggle="tooltip" data-placement="bottom">
+                                    <a href="#" class="btn btn-warning btn-sm" onclick="clonarLicitacion({{$lic->id}})" title="Clonar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-clone"></i>
                                     </a>
                                     <a href="{{route('licitacion.gestion_documentos_index', ['id' => $lic->id])}}" class="btn btn-primary btn-sm" onclick="" title="asociar" data-toggle="tooltip" data-placement="bottom">
@@ -168,6 +168,7 @@
         var ruta_encontrar_licitacion = "{{route('licitacion.encontrar')}}";
         var ruta_editar_licitacion = "{{route('licitacion.actualizar')}}";
         var ruta_eliminar_licitacion = "{{route('licitacion.eliminar')}}";
+        var ruta_clonar_licitacion = "{{route('licitacion.clonar')}}";
 
         async function obtenerDataLicitacion(data) {
             const response = await fetch(ruta_encontrar_licitacion + "?id=" + data.id);
@@ -260,6 +261,31 @@
                     swal("Acción cancelada");
                 }
             });
+        }
+
+        function clonarLicitacion(idLicitacion){
+            let data = {
+                id: idLicitacion
+            };
+
+            swal({
+                title: "¿Esta seguro que desea clonar el registro?",
+                icon: "warning",
+                buttons: ["Cancelar", "OK"],
+                dangerMode: true,
+            })
+            .then((result) => {
+                if (result) {
+                    postData(ruta_clonar_licitacion, data)
+                    .then((data) =>{
+                        console.log(data);
+                        //location.reload();
+                    });
+                } else {
+                    swal("Acción cancelada");
+                }
+            });
+            
         }
 </script>
     

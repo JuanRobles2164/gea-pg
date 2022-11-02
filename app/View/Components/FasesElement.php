@@ -8,7 +8,7 @@ use Illuminate\View\Component;
 
 class FasesElement extends Component
 {
-    public $modelo, $licitacion, $documentos;
+    public $modelo, $licitacion, $documentos, $documentos_licitacion;
     private $repo;
     public $licitacion_fase;
 
@@ -31,14 +31,21 @@ class FasesElement extends Component
         $this->licitacion_fase = $this->repo->find($modelo->id);
         if($this->licitacion_fase != null){
             $docs_array = [];
+            $docs_lic_array = [];
             //Log::debug((array) $this->licitacion_fase);
             $documentos_licitacion = $this->licitacion_fase->documentoLicitacion();
             foreach($documentos_licitacion as $dl){
                 array_push($docs_array, $dl->documento());
             }
+            $tipo_documentos = $this->licitacion_fase->fase()->faseTipoDocumento();
+            foreach($tipo_documentos as $td){
+                array_push($docs_lic_array, $td->tipoDocumento());
+            }
             $this->documentos = collect($docs_array);
+            $this->documentos_licitacion = collect($docs_lic_array);
         }else{
             $this->documentos = collect([]);
+            $this->documentos_licitacion = collect([]);
         }
         $this->repo = null;
     }
