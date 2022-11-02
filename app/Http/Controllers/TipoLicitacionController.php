@@ -84,7 +84,7 @@ class TipoLicitacionController extends Controller
         $dataTipoLicitacion = [];
         $dataTipoLicitacion['nombre'] = $data['nombre'];
         $dataTipoLicitacion['descripcion'] = $data['descripcion'];
-        $dataTipoLicitacion['indicativo'] = Utilidades::obtenerInicial(strtoupper($data['nombre']));
+        $dataTipoLicitacion['indicativo'] = Utilidades::obtenerIndicativo(strtoupper($data['nombre']));
         $entidad = $this->repo->create($dataTipoLicitacion);
         $retorno['tipo_licitacion'] = $entidad;
         $retorno['fase_tipo_licitacion'] = [];
@@ -166,7 +166,7 @@ class TipoLicitacionController extends Controller
         $dataTipoLicitacion = [];
         $dataTipoLicitacion['nombre'] = $data['nombre'];
         $dataTipoLicitacion['descripcion'] = $data['descripcion'];
-        $dataTipoLicitacion['indicativo'] = Utilidades::obtenerInicial(strtoupper($data['nombre']));
+        $dataTipoLicitacion['indicativo'] = Utilidades::obtenerIndicativo(strtoupper($data['nombre']));
         $tipoLicitacion = $this->repo->find($data["id"]);
         $entidad = $this->repo->update($tipoLicitacion, $dataTipoLicitacion);
         $retorno['tipo_licitacion'] = $entidad;

@@ -74,7 +74,7 @@ class TipoDocumentoController extends Controller
         $request->validate($this->validationRules);
         $this->repo = TipoDocumentoRepository::GetInstance();
         $data = $request->all();
-        $data['indicativo'] = Utilidades::obtenerInicial(strtoupper($data['nombre']));
+        $data['indicativo'] = Utilidades::obtenerIndicativo(strtoupper($data['nombre']));
         $data = $this->repo->create($data);
         $this->repo = null;
         return json_encode($data);
@@ -121,7 +121,7 @@ class TipoDocumentoController extends Controller
         $this->repo = TipoDocumentoRepository::GetInstance();
         $data = $request->all();
         $tipoDocumento = $this->repo->find($data["id"]);
-        $data['indicativo'] = Utilidades::obtenerInicial(strtoupper($data['nombre']));
+        $data['indicativo'] = Utilidades::obtenerIndicativo(strtoupper($data['nombre']));
         $this->repo->update($tipoDocumento, $data);
         $this->repo = null;
         return json_encode($tipoDocumento);
