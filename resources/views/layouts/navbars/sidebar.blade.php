@@ -122,11 +122,6 @@ use App\Http\Util\Utilidades;
                             </li>
                         </ul>
                     </div>
-                    <li class="nav-item " >
-                        <a class="nav-link text-mg5" href="{{ route('table') }}" target="_blank">
-                            <i class="ni ni-building"></i> {{ __('Nosotros') }}
-                        </a>
-                    </li>
                 </li>
             </ul>
         </div>

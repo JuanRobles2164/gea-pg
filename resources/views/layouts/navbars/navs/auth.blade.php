@@ -27,6 +27,10 @@ use App\Http\Util\Utilidades;
                         <i class="ni ni-single-02"></i>
                         <span>{{ __('Perfil') }}</span>
                     </a>
+                    <a href="{{ route('empresa.index') }}" class="dropdown-item">
+                        <i class="ni ni-building"></i>
+                        <span>{{ __('Nosotros') }}</span>
+                    </a>
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">

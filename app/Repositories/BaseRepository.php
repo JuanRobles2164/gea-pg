@@ -18,6 +18,10 @@ abstract class BaseRepository{
      * @return Illuminate\Database\Eloquent\Collection
      */
     abstract public function findByParams($params);
+
+    public function firstRecord(){
+        return $this->getModel()->first();
+    }
     
     public function firstOrCreate($params){
         return $this->getModel()->firstOrCreate($params);

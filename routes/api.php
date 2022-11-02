@@ -43,6 +43,7 @@ Route::name("archivos.")->group(function(){
     });
 });
 
+
 Route::name("documento_principal.")->group(function(){
     Route::controller(DocumentoPrincipalController::class)->group(function(){
         Route::get('/documento_principal/find', 'details')->name("encontrar");

@@ -6,7 +6,7 @@
 'class' => 'col-lg-12'
 ])
 
-<div class="container-fluid mt--7">
+<div class="container mt--7">
     <div class="row">
         <div class="col-xl-12">
             <div class="card bg-secondary shadow">
