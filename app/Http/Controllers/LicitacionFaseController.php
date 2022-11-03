@@ -120,6 +120,19 @@ class LicitacionFaseController extends Controller
         return json_encode($objeto);
     }
 
+    public function reabrirFase(Request $request){
+        $this->repo = LicitacionFaseRepository::GetInstance();
+        $licitacion_fase = $this->repo->find($request->licitacion_fase);
+        $licitacion_fase->observacion = $request->observacion;
+        $licitacion_fase->estado = 4;
+        $licitacion_fase->save();
+        $this->repo = LicitacionRepository::GetInstance();
+        $licitacion = $this->repo->find($licitacion_fase->licitacion);
+        $licitacion->estado = 4;
+        $licitacion->save();
+        return Redirect::back();
+    }
+
     public function cambiarEstado(Request $request){
         $this->repo = LicitacionFaseRepository::GetInstance();
         $licitacion_fase = $this->repo->find($request->id);
@@ -133,12 +146,17 @@ class LicitacionFaseController extends Controller
         $iterador = 0;
         $encontrado = false;
         $editado = false;
+        $licitaciones_activas = 0;
         foreach($licitaciones_fase as $lf){
+            if($lf->estado == 4){
+                $licitaciones_activas++;
+            }
             if($encontrado){
                 $entidadLf = $this->repo->find($lf->id);
                 $entidadLf->estado = 4;
                 $entidadLf->save();
                 $editado = true;
+                $licitaciones_activas--;
                 break;
             }
             if($lf->id == $request->id){
@@ -147,13 +165,14 @@ class LicitacionFaseController extends Controller
             $iterador++;
         }
         //Si no editó la siguiente fase, entonces debe modificar la licitación
-        if(!$editado){
+        if(!$editado && $licitaciones_activas == 0){
+            //Verifica que no queden licitaciones activas
             $this->repo = LicitacionRepository::GetInstance();
             $licitacion = $this->repo->find($licitacion_fase->licitacion);
             $licitacion->estado = 5;
             $licitacion->save();
         }
         $this->repo = null;
-        return Redirect::back();
+        return json_encode($licitacion_fase);
     }
 }

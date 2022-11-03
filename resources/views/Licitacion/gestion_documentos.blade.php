@@ -59,6 +59,8 @@
 
 <x-modal-agregar-documentos-to-fase-licitacion-form />
 
+<x-modal-reabrir-fase/>
+
 
 @include('layouts.footers.auth')
 

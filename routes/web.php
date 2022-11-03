@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ArchivosTemporalesController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\FaseController;
@@ -12,6 +11,7 @@ use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\DocumentoLicitacionController;
 use App\Http\Controllers\DocumentoPrincipalController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\LicitacionFaseController;
 use App\Http\Controllers\UserController;
 use App\Repositories\Estado\EstadoRepository;
 use Illuminate\Support\Facades\Auth;
@@ -102,6 +102,12 @@ Route::name("fase.")->group(function(){
 Route::name("tipo_documento.")->group(function(){
     Route::controller(TipoDocumentoController::class)->group(function(){
         Route::get('/tipo_documento/index', 'index')->name("index");
+    });
+});
+
+Route::name("licitacion_fase.")->group(function(){
+    Route::controller(LicitacionFaseController::class)->group(function(){
+        Route::post('/licitacion_fase/reabrirFase', 'reabrirFase')->name("reabrir_fase");
     });
 });
 

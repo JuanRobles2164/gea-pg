@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Licitacion;
 use App\Repositories\Licitacion\LicitacionRepository;
+use App\Repositories\RolUsuario\RolUsuarioRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,6 +27,19 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        //Asigna los roles al usuario, alv
+        if(!$request->session()->has('roles_usuario')){
+            $usuario = Auth::user();
+            $this->repo = RolUsuarioRepository::GetInstance();
+            $roles_ids = [];
+            foreach($this->repo->obtenerRolesPorUsuario($usuario->id) as $rol_user){
+                array_push($roles_ids, $rol_user->rol);
+            }
+            $request->session()->put('roles_usuario', $roles_ids);
+        }
+        //return $request->session()->get('roles_usuario');
+
+        //Setea la información de la pantalla
         $this->repo = LicitacionRepository::GetInstance();
         $creadasMes = null;
         $creadasMes = $this->repo->getLicitacionesCreadasMes();

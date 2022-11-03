@@ -1,5 +1,6 @@
 @php
 use App\Http\Util\Utilidades;
+use App\Models\Rol;
 @endphp
 <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
@@ -72,57 +73,66 @@ use App\Http\Util\Utilidades;
                         <i class="fas fa-tv"></i> {{ __('Inicio') }}
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-mg5" href="{{ route('licitacion.create') }}">
-                        <i class="fas fa-plus"></i> {{ __('Nueva Licitación') }}
-                    </a>
-                </li>
+                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE, Rol::IS_OPERARIO]))
+                    <li class="nav-item">
+                        <a class="nav-link text-mg5" href="{{ route('licitacion.create') }}">
+                            <i class="fas fa-plus"></i> {{ __('Nueva Licitación') }}
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link text-mg5" href="{{ route('categoria.index') }}">
                         <i class="fas fa-gavel"></i> {{ __('Licitaciones') }}
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link text-mg5" href="{{ route('cliente.index') }}">
-                        <i class="fas fa-address-book"></i> {{ __('Clientes') }}
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link text-mg5" href="{{ route('usuario.index') }}">
-                        <i class="fas fa-users"></i> {{ __('Usuarios') }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active text-mg5" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fas fa-shapes"></i>
-                        <span class="nav-link-text">{{ __('Configuración') }}</span>
-                    </a>
-                    <div class="collapse show" id="navbar-examples">
-                        <ul class="nav nav-sm flex-column">
-                            
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('documento_principal.index') }}">
-                                    {{ __('Cargar documentos') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tipo_documento.index') }}">
-                                    {{ __('Tipos de documentos') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('fase.index') }}">
-                                    {{ __('Fases') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tipo_licitacion.index') }}">
-                                    {{ __('Tipos de licitaciones') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE, Rol::IS_OPERARIO]))
+                    <li class="nav-item ">
+                        <a class="nav-link text-mg5" href="{{ route('cliente.index') }}">
+                            <i class="fas fa-address-book"></i> {{ __('Clientes') }}
+                        </a>
+                    </li>
+                @endif
+
+                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_ADMIN]))
+                    <li class="nav-item ">
+                        <a class="nav-link text-mg5" href="{{ route('usuario.index') }}">
+                            <i class="fas fa-users"></i> {{ __('Usuarios') }}
+                        </a>
+                    </li>
+                @endif
+                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE, Rol::IS_OPERARIO]))
+                    <li class="nav-item">
+                        <a class="nav-link active text-mg5" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                            <i class="fas fa-shapes"></i>
+                            <span class="nav-link-text">{{ __('Configuración') }}</span>
+                        </a>
+                        <div class="collapse show" id="navbar-examples">
+                            <ul class="nav nav-sm flex-column">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('documento_principal.index') }}">
+                                        {{ __('Cargar documentos') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('tipo_documento.index') }}">
+                                        {{ __('Tipos de documentos') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('fase.index') }}">
+                                        {{ __('Fases') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('tipo_licitacion.index') }}">
+                                        {{ __('Tipos de licitaciones') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
