@@ -11,6 +11,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\DocumentoLicitacionController;
 use App\Http\Controllers\DocumentoPrincipalController;
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\UserController;
 use App\Repositories\Estado\EstadoRepository;
 use Illuminate\Support\Facades\Auth;
@@ -56,6 +57,14 @@ Route::group(['middleware' => 'auth'], function () {
 Route::name("estado.")->group(function(){
     Route::controller(EstadoController::class)->group(function(){
         Route::get('/estado/index', 'index')->name("index");
+    });
+});
+
+Route::name("empresa.")->group(function(){
+    Route::controller(EmpresaController::class)->group(function(){
+        Route::get('/empresa/index', 'index')->name("index");
+        Route::post('/empresa/update', 'update')->name("actualizar");
+        Route::post('/empresa/crear', 'store')->name("crear");
     });
 });
 

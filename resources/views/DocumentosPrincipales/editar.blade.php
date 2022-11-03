@@ -64,7 +64,7 @@
                             <a href="{{route('archivos.ver_archivo', ['id' => $documento->id])}}" class="btn btn-default btn-sm" target="_blank" onclick="" title="Ver Documento" data-toggle="tooltip" data-placement="bottom">
                                  <i class="fas fa-file-import"></i>
                             </a>
-                            <a onclick="habilitarFilePond()" class="btn btn-default btn-sm" title="Descargar" data-toggle="tooltip" data-placement="bottom">
+                            <a onclick="habilitarFilePond()" class="btn btn-default btn-sm" style="color: white;" title="Descargar" data-toggle="tooltip" data-placement="bottom">
                                 <i class="fas fa-sync-alt"></i>
                             </a>
                             <input type="hidden" id="carga" name="cargo_archivo" value="false">
