@@ -190,9 +190,11 @@ Route::name("licitacion.")->group(function(){
 Route::name("licitacion_fase.")->group(function(){
     Route::controller(LicitacionFaseController::class)->group(function(){
         Route::get('/licitacion_fase/listar', 'listar')->name("listar");
+        Route::post('/licitacion_fase/cambiar_estado', 'cambiarEstado')->name("cambiar_estado");
         Route::post('/licitacion_fase/store', 'store')->name("guardar");
         Route::post('/licitacion_fase/update', 'update')->name("actualizar");
         Route::post('/licitacion_fase/destroy', 'destroy')->name("eliminar");
+
     });
 });
 

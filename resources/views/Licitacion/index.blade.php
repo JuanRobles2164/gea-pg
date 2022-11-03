@@ -279,7 +279,7 @@
                     postData(ruta_clonar_licitacion, data)
                     .then((data) =>{
                         console.log(data);
-                        //location.reload();
+                        location.reload();
                     });
                 } else {
                     swal("Acción cancelada");

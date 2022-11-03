@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\LicitacionFase;
 use App\Http\Requests\StoreLicitacionFaseRequest;
 use App\Http\Requests\UpdateLicitacionFaseRequest;
+use App\Repositories\Licitacion\LicitacionRepository;
 use App\Repositories\LicitacionFase\LicitacionFaseRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class LicitacionFaseController extends Controller
 {
@@ -116,5 +118,42 @@ class LicitacionFaseController extends Controller
         $this->repo->delete($objeto);
         $this->repo = null;
         return json_encode($objeto);
+    }
+
+    public function cambiarEstado(Request $request){
+        $this->repo = LicitacionFaseRepository::GetInstance();
+        $licitacion_fase = $this->repo->find($request->id);
+        $licitacion_fase->estado = 6;
+        $licitacion_fase->save();
+        
+        $licitaciones_fase = $this->repo->findByParams([
+            'licitacion' => $licitacion_fase->licitacion
+        ]);
+        $max_iterador = $licitaciones_fase->count();
+        $iterador = 0;
+        $encontrado = false;
+        $editado = false;
+        foreach($licitaciones_fase as $lf){
+            if($encontrado){
+                $entidadLf = $this->repo->find($lf->id);
+                $entidadLf->estado = 4;
+                $entidadLf->save();
+                $editado = true;
+                break;
+            }
+            if($lf->id == $request->id){
+                $encontrado = true;
+            }
+            $iterador++;
+        }
+        //Si no editó la siguiente fase, entonces debe modificar la licitación
+        if(!$editado){
+            $this->repo = LicitacionRepository::GetInstance();
+            $licitacion = $this->repo->find($licitacion_fase->licitacion);
+            $licitacion->estado = 5;
+            $licitacion->save();
+        }
+        $this->repo = null;
+        return Redirect::back();
     }
 }

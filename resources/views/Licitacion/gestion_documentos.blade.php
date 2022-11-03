@@ -66,6 +66,34 @@
 
 @push('js')
 <script>
-    
+
+    var ruta_cambiar_estado_fase_licitacion = "{{route('licitacion_fase.cambiar_estado')}}";
+    $(document).ready(function(){
+        $('.collapse').collapse('hide');
+    });
+
+    function completarFase(idFase){
+        let data = {
+            id: idFase
+        };
+        swal({
+            title: "¿Esta seguro que cerrar esta fase?",
+            icon: "warning",
+            buttons: ["Cancelar", "OK"],
+            dangerMode: true,
+        })
+        .then((result) => {
+            if (result) {
+                postData(ruta_cambiar_estado_fase_licitacion, data)
+                .then((data) =>{
+                    console.log(data);
+                    location.reload();
+                });
+            } else {
+                swal("Acción cancelada");
+            }
+        });       
+    }
 </script>
+
 @endpush

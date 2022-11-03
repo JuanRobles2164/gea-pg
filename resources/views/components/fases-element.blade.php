@@ -1,19 +1,25 @@
 <div class="card">
     <div class="card-header" id="headingOne{{$modelo->id}}">
         <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$modelo->id}}" aria-expanded="true" aria-controls="collapse{{$modelo->id}}">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$modelo->id}}" aria-expanded="true" aria-controls="collapse{{$modelo->id}}" {{$modelo->estado == 6 ? 'disabled' : ''}}>
                 {{$modelo->fase()->nombre}}
             </button>
 
-            <div class="float-right">
-                <button type="button" class="btn btn-primary btn-sm" onclick="mostrarModalDocumentosAsociadosFase({{$modelo->id}}, {{$modelo->fase}})">
-                    <i class="fa fa-file"></i>
-                </button>
+            @if ($modelo->estado != 6)
+                <div class="float-right">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="completarFase({{$modelo->id}})">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </button>
 
-                <button class="btn btn-primary btn-sm" type="button" onclick="abrirModalNuevoArchivo({{$modelo->id}}, {{$licitacion}})">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </div>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="mostrarModalDocumentosAsociadosFase({{$modelo->id}}, {{$modelo->fase}})">
+                        <i class="fa fa-file"></i>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm" type="button" onclick="abrirModalNuevoArchivo({{$modelo->id}}, {{$licitacion}})">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            @endif
         </h5>
     </div>
 
@@ -96,6 +102,6 @@
         </div>
     </div>
 
-<script>
-
-</script>
+@push('js')
+    
+@endpush
