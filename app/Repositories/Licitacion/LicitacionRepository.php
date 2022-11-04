@@ -27,6 +27,8 @@ class LicitacionRepository extends BaseRepository{
     }
     public function getAllEstadosCategoria($idCategoria, $criterio, $estado = 3, $paginate = 10){
         return $this->getModel()->where("estado", "!=", $estado)
+            ->nombre($criterio)
+            ->numero($criterio)
             ->where("categoria", $idCategoria)
             ->paginate($paginate);
     }
