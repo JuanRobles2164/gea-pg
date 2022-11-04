@@ -17,7 +17,7 @@ class CreateLicitacionsTable extends Migration
             $table->id();
             $table->string("numero");
             $table->string("nombre");
-            $table->string("descripcion");
+            $table->longText("descripcion");
             $table->date("fecha_inicio");
             $table->date("fecha_fin")->nullable();
             $table->string("observacion")->nullable();
