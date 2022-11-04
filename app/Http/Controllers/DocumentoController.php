@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documento;
-use App\Http\Requests\StoreDocumentoRequest;
-use App\Http\Requests\UpdateDocumentoRequest;
 use App\Repositories\Documento\DocumentoRepository;
 use App\Repositories\DocumentoLicitacion\DocumentoLicitacionRepository;
 use App\Repositories\LicitacionFase\LicitacionFaseRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
 
 class DocumentoController extends Controller
 {

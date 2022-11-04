@@ -8,7 +8,6 @@ use App\Repositories\TipoDocumento\TipoDocumentoRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use League\CommonMark\Node\Block\Document;
 
 class DocumentoPrincipalController extends Controller
 {

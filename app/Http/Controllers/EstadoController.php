@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estado;
-use App\Http\Requests\StoreestadoRequest;
-use App\Http\Requests\UpdateestadoRequest;
 use App\Repositories\Estado\EstadoRepository;
 use Illuminate\Http\Request;
 

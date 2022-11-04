@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Licitacion;
 use App\Repositories\Licitacion\LicitacionRepository;
 use App\Repositories\RolUsuario\RolUsuarioRepository;
 use Illuminate\Http\Request;
