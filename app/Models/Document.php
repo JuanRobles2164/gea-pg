@@ -6,9 +6,10 @@ use App\Repositories\TipoDocumento\TipoDocumentoRepository;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Documento extends Model
+class Document extends Model
 {
     use HasFactory;
+
     protected $table = 'documento';
     protected $fillable = ["numero", "nombre", "nombre_archivo", "descripcion", "recurrente", "constante", "fecha_vencimiento", "path_file", "data_file", "estado", "tipo_documento"];
 

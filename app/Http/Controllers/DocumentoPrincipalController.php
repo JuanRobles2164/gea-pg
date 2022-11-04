@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Documento;
+use App\Models\Document;
 use App\Repositories\Documento\DocumentoRepository;
 use App\Repositories\TipoDocumento\TipoDocumentoRepository;
 use Carbon\Carbon;
@@ -238,7 +238,7 @@ class DocumentoPrincipalController extends Controller
         return redirect(route('documento_principal.gestion'));
     }
 
-    public function destroy(Request $request, Documento $documento)
+    public function destroy(Request $request, Document $documento)
     {
         $this->repo = DocumentoRepository::GetInstance();
         $data = $request->all();

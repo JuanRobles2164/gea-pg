@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Documento;
 
-use App\Models\Documento;
+use App\Models\Document;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -21,11 +21,11 @@ class DocumentoRepository extends BaseRepository{
     }
     public function getModel()
     {
-        return new Documento();
+        return new Document;
     }
     public function findByParams($params){
         $paginado = 10;
-        $acumulado = Documento::where('nombre', '=', $params["nombre"]);
+        $acumulado = Document::where('nombre', '=', $params["nombre"]);
         if(!empty($params["created_at"])){            
             $acumulado->where("created_at", "<=", Carbon::parse($params["created_at"]));
         }
