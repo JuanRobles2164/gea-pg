@@ -108,6 +108,9 @@ Route::name("cliente.")->group(function(){
 
 Route::name("documento.")->group(function(){
     Route::controller(DocumentoController::class)->group(function(){
+        Route::get('/documento/listar', 'listar')->name("listar");
+        Route::post('/documento/store', 'store')->name("guardar");
+        Route::post('/documento/update', 'update')->name("actualizar");
         Route::post('/documento/destroy', 'destroy')->name("eliminar");
     });
 });

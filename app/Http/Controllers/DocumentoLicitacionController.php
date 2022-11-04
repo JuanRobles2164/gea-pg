@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\DocumentoLicitacion;
+use App\Http\Requests\StoreDocumentoLicitacionRequest;
+use App\Http\Requests\UpdateDocumentoLicitacionRequest;
 use App\Repositories\DocumentoLicitacion\DocumentoLicitacionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;

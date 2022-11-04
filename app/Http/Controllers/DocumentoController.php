@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Documento;
+use App\Http\Requests\StoreDocumentoRequest;
+use App\Http\Requests\UpdateDocumentoRequest;
 use App\Repositories\Documento\DocumentoRepository;
 use App\Repositories\DocumentoLicitacion\DocumentoLicitacionRepository;
 use App\Repositories\LicitacionFase\LicitacionFaseRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class DocumentoController extends Controller
 {
@@ -39,6 +43,16 @@ class DocumentoController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreDocumentoRequest  $request
@@ -58,6 +72,61 @@ class DocumentoController extends Controller
         return json_encode($data);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Documento  $documento
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Documento $documento)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Documento  $documento
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Documento $documento)
+    {
+       //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\UpdateDocumentoRequest  $request
+     * @param  \App\Models\Documento  $documento
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Documento $documento)
+    {
+        $this->repo = DocumentoRepository::GetInstance();
+        $data = $request->all();
+        $documento = $this->repo->find($data["id"]);
+        $this->repo->update($documento, $data);
+        $this->repo = null;
+        return json_encode($documento);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Documento  $documento
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $documento)
+    {
+        $objeto = new Documento($documento->all());
+        $objeto->id = $documento->id;
+        $this->repo = DocumentoRepository::GetInstance();
+        $objeto = $this->repo->find($objeto->id);
+        $this->repo->delete($objeto);
+        $this->repo = null;
+        return json_encode($objeto);
+    }
 
     public function storeInComponent(Request $request){
         $validated = $request->validate([
