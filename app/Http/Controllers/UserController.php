@@ -16,10 +16,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $criterio = $request->criterio;
         $this->repo = UserRepository::GetInstance();
-        $lista = $this->repo->getAll();
+        $lista = $this->repo->getAllPersonalizado($criterio);
         $this->repo = null;
         $allData = ['users' => $lista];
         return view('users.main_menu', $allData);

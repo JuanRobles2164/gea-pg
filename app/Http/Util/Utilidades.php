@@ -20,5 +20,14 @@ class Utilidades{
         }
         return $permiso;
     }
+    public static function obtenerIndicativo($nombre){
+        $iniciales = '';
+        $explode = explode(' ',$nombre);
+        foreach($explode as $x){
+            $iniciales .=  $x[0];
+            $iniciales .=  $x[1];
+        }
+        return $iniciales;
+    }
 
 }

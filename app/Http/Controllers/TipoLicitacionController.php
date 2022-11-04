@@ -24,10 +24,11 @@ class TipoLicitacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $criterio = $request->criterio;
         $this->repo = TipoLicitacionRepository::GetInstance();
-        $lista = $this->repo->getAll();
+        $lista = $this->repo->getAllPersonalizado($criterio);
         $this->repo = null;
 
         $allData = ['tipos_licitacion' => $lista,
@@ -83,7 +84,7 @@ class TipoLicitacionController extends Controller
         $dataTipoLicitacion = [];
         $dataTipoLicitacion['nombre'] = $data['nombre'];
         $dataTipoLicitacion['descripcion'] = $data['descripcion'];
-        $dataTipoLicitacion['indicativo'] = Utilidades::obtenerInicial(strtoupper($data['nombre']));
+        $dataTipoLicitacion['indicativo'] = Utilidades::obtenerIndicativo(strtoupper($data['nombre']));
         $entidad = $this->repo->create($dataTipoLicitacion);
         $retorno['tipo_licitacion'] = $entidad;
         $retorno['fase_tipo_licitacion'] = [];
@@ -165,7 +166,7 @@ class TipoLicitacionController extends Controller
         $dataTipoLicitacion = [];
         $dataTipoLicitacion['nombre'] = $data['nombre'];
         $dataTipoLicitacion['descripcion'] = $data['descripcion'];
-        $dataTipoLicitacion['indicativo'] = Utilidades::obtenerInicial(strtoupper($data['nombre']));
+        $dataTipoLicitacion['indicativo'] = Utilidades::obtenerIndicativo(strtoupper($data['nombre']));
         $tipoLicitacion = $this->repo->find($data["id"]);
         $entidad = $this->repo->update($tipoLicitacion, $dataTipoLicitacion);
         $retorno['tipo_licitacion'] = $entidad;

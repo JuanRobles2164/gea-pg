@@ -35,8 +35,17 @@ class DocumentoRepository extends BaseRepository{
         $acumulado->paginate($paginado);
         return $acumulado;
     }
-    public function getAllPrincipales($paginate = 10, $estado = 3){
-        return $this->getModel()->where("estado", "!=", $estado)->where("constante", true)->orWhere("recurrente", true)->paginate($paginate);
+    
+    public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
+        return $this->getModel()
+        ->where("estado", "!=", $estado)
+        ->numero($criterio)
+        ->nombre($criterio)
+        ->where(function ($query) {
+            $query->where("constante", true)
+                  ->orWhere("recurrente", true);
+        })
+        ->paginate($paginate);
     }
 
     public function obtenerDocumentosByFaseId($idFase) {
