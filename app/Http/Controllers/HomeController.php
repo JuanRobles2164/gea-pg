@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Util\Utilidades;
+use App\Models\Rol;
 use App\Repositories\Licitacion\LicitacionRepository;
 use App\Repositories\RolUsuario\RolUsuarioRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {
@@ -35,6 +38,9 @@ class HomeController extends Controller
                 array_push($roles_ids, $rol_user->rol);
             }
             $request->session()->put('roles_usuario', $roles_ids);
+        }
+        if(Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_ADMIN])){
+            return Redirect::route('usuario.index');
         }
         //return $request->session()->get('roles_usuario');
 
