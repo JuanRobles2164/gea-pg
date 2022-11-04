@@ -1,4 +1,4 @@
-@extends('templates.templateComponentes')
+@extends('Templates.templateComponentes')
 
 @section('modal-content')
 <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->

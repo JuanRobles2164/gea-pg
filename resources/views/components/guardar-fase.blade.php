@@ -1,4 +1,4 @@
-@extends('templates.templateComponentes')
+@extends('Templates.templateComponentes')
 
 @section('modal-content')
 

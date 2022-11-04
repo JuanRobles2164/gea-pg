@@ -1,4 +1,4 @@
-@extends('templates.templateModalVisualizar')
+@extends('Templates.templateModalVisualizar')
 
 @section('modal-visualizer')    
 <form>
