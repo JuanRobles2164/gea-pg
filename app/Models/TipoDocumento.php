@@ -21,4 +21,9 @@ class TipoDocumento extends Model
         return $query->orWhere('nombre','LIKE', "%$nombre%");
     }
 
+    public function scopeIndicativo($query, $indicativo)
+    {
+        return $query->orWhere('indicativo','LIKE', "%$indicativo%");
+    }
+
 }

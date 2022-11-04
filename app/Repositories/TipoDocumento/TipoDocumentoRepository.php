@@ -48,6 +48,7 @@ class TipoDocumentoRepository extends BaseRepository{
         return $this->getModel()
         ->nombre($criterio)
         ->descripcion($criterio)
+        ->indicativo($criterio)
         ->where("estado", "!=", $estado)
         ->paginate($paginate);
     }
