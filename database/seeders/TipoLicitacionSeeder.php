@@ -17,7 +17,7 @@ class TipoLicitacionSeeder extends Seeder
         DB::table('tipo_licitacion')->insert([[
             'id' => 1,
             'nombre' => 'Licitación Pública',
-            'descripcion' => 'Donde una entidad estatal realiza una convocatoria pública para que, en igualdad de oportunidades.',
+            'descripcion' => 'Donde una entidad estatal realiza una convocatoria pública para que, en igualdad de oportunidades, los interesados presenten sus ofertas y el ente adjudique el contrato a la propuesta más acorde.',
             'estado' => '1',
             'indicativo' => 'LPU',
             'created_at' => now(),
@@ -26,7 +26,7 @@ class TipoLicitacionSeeder extends Seeder
         [
             'id' => 2,
             'nombre' => 'Licitación Privada',
-            'descripcion' => 'Conllevan un proceso similar al de las licitaciones públicas, pero privadas',
+            'descripcion' => 'Conllevan un proceso similar al de las licitaciones públicas, pero las invitaciones se hacen en forma expresa a determinadas empresas y no por anuncio público.',
             'estado' => '1',
             'indicativo' => 'LPR',
             'created_at' => now(),
