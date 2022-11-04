@@ -239,7 +239,7 @@ class DocumentoPrincipalController extends Controller
         return redirect(route('documento_principal.gestion'));
     }
 
-    public function destroy(Request $request, Documento $documento)
+    public function destroy(Request $request)
     {
         $this->repo = DocumentoRepository::GetInstance();
         $data = $request->all();

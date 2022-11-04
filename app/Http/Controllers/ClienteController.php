@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
-use App\Http\Requests\UpdateClienteRequest;
 use App\Repositories\Cliente\ClienteRepository;
-use App\Repositories\Estado\EstadoRepository;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
