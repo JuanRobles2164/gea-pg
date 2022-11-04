@@ -49,6 +49,7 @@ class EmpresaController extends Controller
         
         $this->repo = EmpresaRepository::GetInstance();
         $data = $request->all();
+        unset($data['id']);
         $data = $this->repo->create($data);
         $this->repo = null;
         return json_encode($data);

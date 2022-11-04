@@ -21,7 +21,7 @@ class DocumentoRepository extends BaseRepository{
     }
     public function getModel()
     {
-        return new Documento;
+        return new Documento();
     }
     public function findByParams($params){
         $paginado = 10;
