@@ -1,3 +1,8 @@
+@php
+use App\Http\Util\Utilidades;
+use App\Models\Rol;
+@endphp
+
 <div class="card">
     <div class="card-header" id="headingOne{{$modelo->id}}">
         <h5 class="mb-0">
