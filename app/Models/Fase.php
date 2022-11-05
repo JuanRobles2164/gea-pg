@@ -19,4 +19,14 @@ class Fase extends Model
         $this->repo = null;
         return $response;
     }
+    
+    public function scopeDescripcion($query, $descripcion)
+    {
+        return $query->orWhere('descripcion','LIKE', "%$descripcion%");
+    }
+
+    public function scopeNombre($query, $nombre)
+    {
+        return $query->orWhere('nombre','LIKE', "%$nombre%");
+    }
 }

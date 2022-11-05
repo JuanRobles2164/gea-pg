@@ -43,9 +43,10 @@ class LicitacionController extends Controller
     {
         $this->repo = LicitacionRepository::GetInstance();
         $lista = null;
+        $criterio = $request->criterio;
         $allData = [];
         if(isset($request->categoria)){
-            $lista = $this->repo->getAllEstadosCategoria($request->categoria);
+            $lista = $this->repo->getAllEstadosCategoria($request->categoria, $criterio);
             foreach($lista as $l){
                 $l->numero = str_pad($l->numero,6,"0",STR_PAD_LEFT); 
                 $datetime1 = new DateTime($l->fecha_inicio);
@@ -55,7 +56,7 @@ class LicitacionController extends Controller
             }
             $allData = ['licitaciones' => $lista, 'categoria' => $request->categoria];
         }else{
-            $lista = $this->repo->getAllEstado();
+            $lista = $this->repo->getAllPersonalizado($criterio);
             foreach($lista as $l){
                 $l->numero = str_pad($l->numero,6,"0",STR_PAD_LEFT); 
                 $datetime1 = new DateTime($l->fecha_inicio);

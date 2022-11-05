@@ -16,10 +16,11 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $criterio = $request->criterio;
         $this->repo = ClienteRepository::GetInstance();
-        $lista = $this->repo->getAllEstado();
+        $lista = $this->repo->getAllPersonalizado($criterio);
         $this->repo = null;
         
         $allData = ['clientes' => $lista];

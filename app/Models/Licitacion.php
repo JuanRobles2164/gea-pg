@@ -29,4 +29,15 @@ class Licitacion extends Model
         $this->repo = TipoLicitacionRepository::GetInstance();
         return $this->repo->find($this->tipo_licitacion);
     }
+
+    public function scopeNombre($query, $nombre)
+    {
+        return $query->orWhere('nombre','LIKE', "%$nombre%");
+    }
+
+    public function scopeNumero($query, $numero)
+    {
+        return $query->orWhere('numero','LIKE', "%$numero%");
+    }
+
 }

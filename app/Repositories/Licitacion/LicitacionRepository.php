@@ -25,10 +25,20 @@ class LicitacionRepository extends BaseRepository{
     public function findByParams($params){
         
     }
-    public function getAllEstadosCategoria($idCategoria, $estado = 3, $paginate = 10){
+    public function getAllEstadosCategoria($idCategoria, $criterio, $estado = 3, $paginate = 10){
         return $this->getModel()->where("estado", "!=", $estado)
+            ->nombre($criterio)
+            ->numero($criterio)
             ->where("categoria", $idCategoria)
             ->paginate($paginate);
+    }
+
+    public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
+        return $this->getModel()
+        ->nombre($criterio)
+        ->numero($criterio)
+        ->where("estado", "!=", $estado)
+        ->paginate($paginate);
     }
 
     public function getLicitacionesPorVencer($estado = 3, $paginate = 10){

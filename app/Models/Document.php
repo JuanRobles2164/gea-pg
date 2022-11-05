@@ -17,4 +17,15 @@ class Document extends Model
         $this->repo = TipoDocumentoRepository::GetInstance();
         return $this->repo->find($this->tipo_documento);
     }
+
+    public function scopeNumero($query, $numero)
+    {
+        return $query->orWhere('numero','LIKE', "%$numero%");
+    }
+
+    public function scopeNombre($query, $nombre)
+    {
+        return $query->orWhere('nombre','LIKE', "%$nombre%");
+    }
+
 }

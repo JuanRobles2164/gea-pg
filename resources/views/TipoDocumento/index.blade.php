@@ -73,6 +73,7 @@ use App\Enums\UnidadValidezEnum;
                                 <th scope="col" style="display: none;">Id</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Descripcion</th>
+                                <th scope="col">Indicativo</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
@@ -88,6 +89,7 @@ use App\Enums\UnidadValidezEnum;
                                 <td scope="row" style="display: none;">{{$td->id}}</td>
                                 <td scope="row">{{$td->nombre}}</td>
                                 <td scope="row">{{$td->descripcion}}</td>
+                                <td scope="row">{{$td->indicativo}}</td>
                                 @if($td->estado == 1)
                                 <td scope="row">
                                     <a type="button" style="color: white;" class="btn btn-success  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoDoc({{$td->id}})">
@@ -213,6 +215,19 @@ use App\Enums\UnidadValidezEnum;
                 location.reload();
             });   
         }
+
+        var elInput = document.getElementById('criterio');
+        elInput.addEventListener('keyup', function(e) {
+            var keycode = e.keyCode || e.which;
+            if (keycode == 13) {
+                let href = `{{route('tipo_documento.index')}}?criterio=:valor_cri`;
+                let criterio = elInput.value;
+                let final = ""+href;
+                final = final.replace(":valor_cri", criterio);
+                window.location.href = final;
+            }
+        });
+
     </script>
 
  @endpush

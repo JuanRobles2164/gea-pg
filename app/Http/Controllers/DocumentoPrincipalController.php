@@ -24,9 +24,10 @@ class DocumentoPrincipalController extends Controller
         'recurrente_constante' => 'required',
         'fecha_vencimiento' => ['exclude_unless:recurrente_constante,recurrente|required']
     ];
-    public function index(){
+    public function index(Request $request){
+        $criterio = $request->criterio;
         $this->repo = DocumentoRepository::GetInstance();
-        $documentos = $this->repo->getAllPrincipales();
+        $documentos = $this->repo->getAllPersonalizado($criterio);
         foreach($documentos as $doc){
             $doc->numero = str_pad($doc->numero,6,"0",STR_PAD_LEFT); 
         }
