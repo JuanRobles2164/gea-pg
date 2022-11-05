@@ -36,8 +36,8 @@ class TipoLicitacionRepository extends BaseRepository{
         ->nombre($criterio)
         ->descripcion($criterio)
         ->indicativo($criterio)
-        ->paginate($paginate)
-        ->where("estado", "!=", $estado);
+        ->where("estado", "!=", $estado)
+        ->paginate($paginate);
     }
     public function obtenerNumeracionActual($idTipoLic){
         $numeracion = DB::table('tipo_licitacion')
