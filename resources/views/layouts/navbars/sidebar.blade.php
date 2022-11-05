@@ -73,12 +73,14 @@ use App\Models\Rol;
                         <i class="fas fa-tv"></i> {{ __('Inicio') }}
                     </a>
                 </li>
-                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE, Rol::IS_OPERARIO]))
+                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_OPERARIO]))
                     <li class="nav-item">
                         <a class="nav-link text-mg5" href="{{ route('licitacion.create') }}">
                             <i class="fas fa-plus"></i> {{ __('Nueva Licitación') }}
                         </a>
                     </li>
+                @endif
+                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE, Rol::IS_OPERARIO]))
                     <li class="nav-item">
                         <a class="nav-link text-mg5" href="{{ route('categoria.index') }}">
                             <i class="fas fa-gavel"></i> {{ __('Licitaciones') }}

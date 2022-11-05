@@ -31,11 +31,14 @@ class TipoLicitacionRepository extends BaseRepository{
         $tipoLic->save();
         return $tipoLic;
     }
-    public function getAllPersonalizado($criterio, $paginate = 10, $estado = 1){
-        return $this->getModel()
-        ->nombre($criterio)
-        ->descripcion($criterio)
-        ->indicativo($criterio)
+    public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
+        $response = $this->getModel();
+        if($criterio != ''){
+            $response = $response->nombre($criterio)
+            ->descripcion($criterio)
+            ->indicativo($criterio);
+        }
+        return $response
         ->where("estado", "!=", $estado)
         ->paginate($paginate);
     }

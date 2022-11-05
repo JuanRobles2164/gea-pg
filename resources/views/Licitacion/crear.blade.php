@@ -82,9 +82,9 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="nombre">Categoria*:</label>
+                            <label for="nombre">Periodo*:</label>
                             <select class="form-control form-control-alternative" value="{{old('categoria')}}" name="categoria">
-                                <option value="-1">Seleccione una categoria...</option>
+                                <option value="-1">Seleccione un periodo...</option>
                                 @foreach ($categorias as $c)
                                 <option value="{{$c->id}}">{{$c->nombre}}</option>
                                 @endforeach

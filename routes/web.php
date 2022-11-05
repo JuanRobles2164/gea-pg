@@ -145,5 +145,6 @@ Route::name("licitacion.")->group(function(){
         Route::get('/licitacion/gestionar_documentos_licitacion', 'gestionDocumentosIndex')->name("gestion_documentos_index");
         Route::get('/licitacion/create', 'create')->name("create");
         Route::post('/licitacion/create_entity', 'storeInView')->name("crear_post");
+        Route::post('/licitacion/reabrir_licitacion', 'reabrirLicitacion')->name("reabrir_licitacion");
     });
 });
