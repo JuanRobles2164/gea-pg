@@ -97,6 +97,7 @@ use App\Models\Rol;
                         </a>
                     </li>
                 @endif
+                
                 @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE]))
                     <li class="nav-item">
                         <a class="nav-link active text-mg5" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
