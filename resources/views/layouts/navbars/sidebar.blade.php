@@ -84,12 +84,16 @@ use App\Models\Rol;
                             <i class="fas fa-gavel"></i> {{ __('Licitaciones') }}
                         </a>
                     </li>
+                @endif
+                
+                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE]))
                     <li class="nav-item ">
                         <a class="nav-link text-mg5" href="{{ route('cliente.index') }}">
                             <i class="fas fa-address-book"></i> {{ __('Clientes') }}
                         </a>
                     </li>
                 @endif
+
                 @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_ADMIN]))
                     <li class="nav-item ">
                         <a class="nav-link text-mg5" href="{{ route('usuario.index') }}">
@@ -97,7 +101,7 @@ use App\Models\Rol;
                         </a>
                     </li>
                 @endif
-                
+
                 @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE]))
                     <li class="nav-item">
                         <a class="nav-link active text-mg5" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
