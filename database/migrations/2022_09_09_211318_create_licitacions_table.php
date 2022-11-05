@@ -16,8 +16,8 @@ class CreateLicitacionsTable extends Migration
         Schema::create('licitacion', function (Blueprint $table) {
             $table->id();
             $table->string("numero");
-            $table->string("nombre");
-            $table->longText("descripcion");
+            $table->string("nombre")->nullable();
+            $table->longText("descripcion")->nullable();
             $table->date("fecha_inicio");
             $table->date("fecha_fin")->nullable();
             $table->string("observacion")->nullable();
