@@ -303,7 +303,7 @@ class LicitacionController extends Controller
             array_push($documentosAsociadosLicitacion, $documentoObjetoTemporal);
         }
         $this->repo = null;
-        return redirect(route('licitacion.create'));
+        return redirect(route('licitacion.index'));
     }
 
     /**

@@ -35,8 +35,7 @@ class ClienteRepository extends BaseRepository{
                 ->identificacion($criterio);
             });
         }
-        $response->paginate($paginate);
-        return $response;
+        return $response->paginate($paginate);
     }
 
     public function toggleState($clienteId){

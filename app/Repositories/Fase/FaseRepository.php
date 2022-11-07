@@ -50,9 +50,7 @@ class FaseRepository extends BaseRepository{
                          ->nombre($criterio);
             });
         }
-        $response->paginate($paginate);
-        
-        return $response;
+        return $response->paginate($paginate);
     }
 
     public function toggleState($faseId){
