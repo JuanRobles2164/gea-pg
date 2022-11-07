@@ -32,14 +32,15 @@ class TipoLicitacionRepository extends BaseRepository{
         return $tipoLic;
     }
     public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
-        $response = $this->getModel();
-        if($criterio != ''){
-            $response = $response->nombre($criterio)
-            ->descripcion($criterio)
-            ->indicativo($criterio);
+        $response = $this->getModel()->where("estado", "!=", $estado);
+        if($criterio != '' && $criterio != null){
+            $response->where(function($query) use ($criterio){
+                $query->nombre($criterio)
+                ->descripcion($criterio)
+                ->indicativo($criterio);
+            });
         }
         return $response
-        ->where("estado", "!=", $estado)
         ->paginate($paginate);
     }
     public function obtenerNumeracionActual($idTipoLic){

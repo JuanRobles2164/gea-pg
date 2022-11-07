@@ -43,11 +43,16 @@ class FaseRepository extends BaseRepository{
     }
 
     public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
-        return $this->getModel()
-        ->descripcion($criterio)
-        ->nombre($criterio)
-        ->where("estado", "!=", $estado)
-        ->paginate($paginate);
+        $response = $this->getModel()->where("estado", "!=", $estado);
+        if($criterio != null && $criterio != ''){
+            $response->where(function($query) use ($criterio){
+                $query->descripcion($criterio)
+                         ->nombre($criterio);
+            });
+        }
+        $response->paginate($paginate);
+        
+        return $response;
     }
 
     public function toggleState($faseId){

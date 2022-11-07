@@ -37,15 +37,20 @@ class DocumentoRepository extends BaseRepository{
     }
     
     public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
-        return $this->getModel()
-        ->where("estado", "!=", $estado)
-        ->numero($criterio)
-        ->nombre($criterio)
-        ->where(function ($query) {
+        $response = $this->getModel()
+        ->where("estado", "!=", $estado);
+        if($criterio != null && $criterio != ''){
+            $response->where(function($query) use ($criterio){
+                $query->numero($criterio)
+                ->nombre($criterio);
+            });
+        }
+        $response->where(function ($query) {
             $query->where("constante", true)
                   ->orWhere("recurrente", true);
         })
         ->paginate($paginate);
+        return $response;
     }
 
     public function obtenerDocumentosByFaseId($idFase) {

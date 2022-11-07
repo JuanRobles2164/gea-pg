@@ -26,11 +26,16 @@ class LicitacionRepository extends BaseRepository{
         
     }
     public function getAllEstadosCategoria($idCategoria, $criterio, $estado = 3, $paginate = 10){
-        return $this->getModel()->where("estado", "!=", $estado)
-            ->nombre($criterio)
-            ->numero($criterio)
-            ->where("categoria", $idCategoria)
-            ->paginate($paginate);
+        $response = $this->getModel()->where("estado", "!=", $estado);
+        if($criterio != null && $criterio != ''){
+            $response->where(function($query) use ($criterio){
+                $query->nombre($criterio)
+                ->numero($criterio);
+            });
+        }
+        $response->where("categoria", $idCategoria)
+                 ->paginate($paginate);
+        return $response;
     }
 
     public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){

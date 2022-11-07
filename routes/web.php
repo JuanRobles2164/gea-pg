@@ -11,6 +11,7 @@ use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\DocumentoLicitacionController;
 use App\Http\Controllers\DocumentoPrincipalController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LicitacionFaseController;
 use App\Http\Controllers\UserController;
 use App\Repositories\Estado\EstadoRepository;
@@ -51,6 +52,12 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 
+
+Route::name('errores.')->group(function(){
+    Route::controller(HomeController::class)->group(function(){
+        Route::get('/error/403', 'forbiddenPage')->name('403');
+    });
+});
 
 //Como seguiremos usando sólo la API, entonces dejaremos sólo las rutas que devuelvan las vistas en este archivo
 
