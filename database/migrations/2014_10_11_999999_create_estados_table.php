@@ -17,7 +17,6 @@ class CreateEstadosTable extends Migration
             $table->id();
             $table->string("nombre");
             $table->longText("descripcion");
-            $table->unsignedBigInteger('estado')->default(1);
             $table->timestamps();
         });
     }

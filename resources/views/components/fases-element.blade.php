@@ -82,7 +82,7 @@ use App\Models\Rol;
                                             <i class="fa fa-upload" aria-hidden="true"></i>
                                         </button>
                                     @endif
-                                    <!-- Si no un documento constante ni recurrente-->
+                                    <!-- Si no es un documento ni constante ni recurrente-->
                                     @if ($doc->constante == null && $doc->recurrente == null)
                                         
                                     @endif

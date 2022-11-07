@@ -15,6 +15,7 @@ use App\Repositories\Licitacion\LicitacionRepository;
 use App\Repositories\LicitacionFase\LicitacionFaseRepository;
 use App\Repositories\TipoDocumento\TipoDocumentoRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
+use App\Rules\ArrayNotNull;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -24,14 +25,14 @@ use Nette\Utils\DateTime;
 class LicitacionController extends Controller
 {
     private $validationRules = [
-        'numero' => 'required',
         'nombre' => 'required',
         'descripcion' => 'required',
         'fecha_inicio' => ['required'],
         'fecha_fin' => ['required'],
         'cliente' => ['required', 'exists:cliente,id'],
         'tipo_licitacion' => ['required', 'exists:tipo_licitacion,id'],
-        'categoria' => ['required', 'exists:categoria,id']
+        'categoria' => ['required', 'exists:categoria,id'],
+        'documentosAsociadosFases' => ['filled'],
     ];
     private $repo = null;
     /**
@@ -153,7 +154,17 @@ class LicitacionController extends Controller
     }
 
     public function storeInView(Request $request)
-    {
+    {   
+        $validated = $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'fecha_inicio' => ['required'],
+            'fecha_fin' => ['required'],
+            'cliente' => ['required', 'exists:cliente,id'],
+            'tipo_licitacion' => ['required', 'exists:tipo_licitacion,id'],
+            'categoria' => ['required', 'exists:categoria,id'],
+            'documentosAsociadosFases' => ['required', new ArrayNotNull],
+        ]);
         $data = $request->all();
         //consultar numero actual, sumarle uno y guardar en numeracion 
         $this->repo = TipoLicitacionRepository::GetInstance();

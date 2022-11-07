@@ -6,6 +6,7 @@ use App\Models\DocumentoLicitacion;
 use App\Http\Requests\StoreDocumentoLicitacionRequest;
 use App\Http\Requests\UpdateDocumentoLicitacionRequest;
 use App\Repositories\DocumentoLicitacion\DocumentoLicitacionRepository;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -130,6 +131,7 @@ class DocumentoLicitacionController extends Controller
         $data = $request->all();
         $dfmfJsons = [];
         $this->repo = DocumentoLicitacionRepository::GetInstance();
+        $arregloRetorno = [];
         foreach($data['documentoFromModalFases'] as $dfmf){
             $objetoJson = json_decode($dfmf);
             $documentoLicitacion = $this->repo->findByParamsWithOutState([
@@ -143,7 +145,9 @@ class DocumentoLicitacionController extends Controller
                     'documento' => $objetoJson->id,
                     'licitacion_fase' => $data['licitacion_fase'],
                     'revisado' => true,
-                    'estado' => 1
+                    'estado' => 1,
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]);
             }else{
                 //si encontró algún registro, deberá actualizar el estado a 1 (Activo)
