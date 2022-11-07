@@ -25,9 +25,6 @@
                                     <td scope="row">{{$li->fecha_inicio}}</td>
                                     <td scope="row">{{$li->fecha_fin}}</td>
                                     <td scope="row">
-                                        <a href="#" class="btn btn-info btn-sm" onclick="setDataToClienteModal({{$li->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
                                         <a href="{{route('licitacion.gestion_documentos_index', ['id' => $li->id])}}" class="btn btn-primary btn-sm" title="Asociar" data-toggle="tooltip" data-placement="bottom">
                                             <i class="fas fa-link"></i>
                                         </a>
@@ -59,9 +56,6 @@
                                     <td scope="row">{{$li->fecha_inicio}}</td>
                                     <td scope="row">{{$li->fecha_fin}}</td>
                                     <td scope="row">
-                                        <a href="#" class="btn btn-info btn-sm" onclick="setDataToClienteModal({{$li->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
                                         <a href="{{route('licitacion.gestion_documentos_index', ['id' => $li->id])}}" class="btn btn-primary btn-sm" title="Asociar" data-toggle="tooltip" data-placement="bottom">
                                             <i class="fas fa-link"></i>
                                         </a>

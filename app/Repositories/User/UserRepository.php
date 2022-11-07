@@ -35,11 +35,15 @@ class UserRepository extends BaseRepository{
     }
 
     public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
-        return $this->getModel()
-        ->nombre($criterio)
-        ->email($criterio)
-        ->where("estado", "!=", $estado)
-        ->paginate($paginate);
+        $response = $this->getModel()->where("estado", "!=", $estado);
+        if($criterio != '' && $criterio != null){
+            $response = $response->where(function($query) use ($criterio) {
+                $query->nombre($criterio)
+                      ->email($criterio);
+            });
+        }
+        $response = $response->paginate($paginate);
+        return $response;
     }
 
     //Si es Activo (1), al restarle 3 quedará -2 (Inexistente)

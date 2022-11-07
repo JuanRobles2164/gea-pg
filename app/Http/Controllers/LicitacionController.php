@@ -303,7 +303,7 @@ class LicitacionController extends Controller
             array_push($documentosAsociadosLicitacion, $documentoObjetoTemporal);
         }
         $this->repo = null;
-        return redirect(route('licitacion.create'));
+        return redirect(route('licitacion.index'));
     }
 
     /**
@@ -413,6 +413,15 @@ class LicitacionController extends Controller
             $iteradorFases++;
         }
         $this->repo = null;
+        return json_encode(['msg' => 'Operacion exitosa', 'status' => 200]);
+    }
+
+    public function reabrirLicitacion(Request $request){
+        $this->repo = LicitacionRepository::GetInstance();
+        $licitacion = $this->repo->find($request->licitacion);
+        $licitacion->estado = 4;
+        $licitacion->observacion = $request->observacion;
+        $licitacion->save();
         return Redirect::back();
     }
 }

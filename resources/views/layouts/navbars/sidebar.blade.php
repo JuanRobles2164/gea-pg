@@ -73,19 +73,22 @@ use App\Models\Rol;
                         <i class="fas fa-tv"></i> {{ __('Inicio') }}
                     </a>
                 </li>
-                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE, Rol::IS_OPERARIO]))
+                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_OPERARIO]))
                     <li class="nav-item">
                         <a class="nav-link text-mg5" href="{{ route('licitacion.create') }}">
                             <i class="fas fa-plus"></i> {{ __('Nueva Licitación') }}
                         </a>
                     </li>
                 @endif
-                <li class="nav-item">
-                    <a class="nav-link text-mg5" href="{{ route('categoria.index') }}">
-                        <i class="fas fa-gavel"></i> {{ __('Licitaciones') }}
-                    </a>
-                </li>
                 @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE, Rol::IS_OPERARIO]))
+                    <li class="nav-item">
+                        <a class="nav-link text-mg5" href="{{ route('categoria.index') }}">
+                            <i class="fas fa-gavel"></i> {{ __('Licitaciones') }}
+                        </a>
+                    </li>
+                @endif
+                
+                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE]))
                     <li class="nav-item ">
                         <a class="nav-link text-mg5" href="{{ route('cliente.index') }}">
                             <i class="fas fa-address-book"></i> {{ __('Clientes') }}
@@ -100,7 +103,8 @@ use App\Models\Rol;
                         </a>
                     </li>
                 @endif
-                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE, Rol::IS_OPERARIO]))
+
+                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE]))
                     <li class="nav-item">
                         <a class="nav-link active text-mg5" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                             <i class="fas fa-shapes"></i>

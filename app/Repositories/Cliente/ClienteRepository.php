@@ -27,12 +27,15 @@ class ClienteRepository extends BaseRepository{
     }
 
     public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
-        return $this->getModel()
-        ->razon($criterio)
-        ->email($criterio)
-        ->identificacion($criterio)
-        ->where("estado", "!=", $estado)
-        ->paginate($paginate);
+        $response = $this->getModel()->where("estado", "!=", $estado);
+        if($criterio != null && $criterio != ''){
+            $response->where(function($query) use ($criterio){
+                $query->razon($criterio)
+                ->email($criterio)
+                ->identificacion($criterio);
+            });
+        }
+        return $response->paginate($paginate);
     }
 
     public function toggleState($clienteId){

@@ -117,10 +117,10 @@
                                     <a  href="{{ route('documento_principal.editar', ['id' => $d->id]) }}" class="btn btn-default btn-sm" onclick="" title="Editar Informacion" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-file-signature"></i>
                                     </a>
-                                    <a href="{{route('archivos.ver_archivo', ['id' => $d->id])}}" class="btn btn-info btn-sm" target="_blank" onclick="" title="Ver Documento" data-toggle="tooltip" data-placement="bottom">
+                                    <a href="{{route('archivos.ver_archivo', ['id' => $d->id])}}" class="btn btn-primary btn-sm" target="_blank" onclick="" title="Ver Documento" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-file-import"></i>
                                     </a>
-                                    <a href="{{route('archivos.descargar_archivo', ['id' => $d->id])}}" class="btn btn-default btn-sm" title="Descargar" data-toggle="tooltip" data-placement="bottom">
+                                    <a href="{{route('archivos.descargar_archivo', ['id' => $d->id])}}" class="btn btn-warning btn-sm" title="Descargar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-download"></i>
                                     </a>
                                 </td>

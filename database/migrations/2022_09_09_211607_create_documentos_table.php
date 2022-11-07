@@ -18,12 +18,12 @@ class CreateDocumentosTable extends Migration
             $table->string("numero");
             $table->string("nombre");
             $table->string('nombre_archivo');
-            $table->string("descripcion")->nullable();
+            $table->longText("descripcion")->nullable();
             $table->boolean("recurrente")->nullable();
             $table->boolean("constante")->nullable();
             $table->date("fecha_vencimiento")->nullable();
             $table->binary("data_file")->nullable();
-            $table->string("path_file")->nullable();
+            $table->longText("path_file")->nullable();
             $table->unsignedBigInteger('estado')->default(1);
             $table->unsignedBigInteger("tipo_documento");
             $table->timestamps();

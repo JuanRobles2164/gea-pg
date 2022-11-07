@@ -45,12 +45,15 @@ class TipoDocumentoRepository extends BaseRepository{
     }
 
     public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
-        return $this->getModel()
-        ->nombre($criterio)
-        ->descripcion($criterio)
-        ->indicativo($criterio)
-        ->where("estado", "!=", $estado)
-        ->paginate($paginate);
+        $response = $this->getModel()->where("estado", "!=", $estado);
+        if($criterio != null && $criterio != ''){
+            $response->where(function($query) use ($criterio){
+                $query->nombre($criterio)
+                ->descripcion($criterio)
+                ->indicativo($criterio);
+            });
+        }
+        return $response->paginate($paginate);;
     }
 
     public function obtenerNumeracionActual($idTipoDoc){

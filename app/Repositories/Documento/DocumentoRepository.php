@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Documento;
 
-use App\Models\Documento;
+use App\Models\Document;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -21,31 +21,33 @@ class DocumentoRepository extends BaseRepository{
     }
     public function getModel()
     {
-        return new Documento;
+        return new Document;
     }
     public function findByParams($params){
         $paginado = 10;
-        $acumulado = Documento::where('nombre', '=', $params["nombre"]);
+        $acumulado = Document::where('nombre', '=', $params["nombre"]);
         if(!empty($params["created_at"])){            
             $acumulado->where("created_at", "<=", Carbon::parse($params["created_at"]));
         }
         if(!empty($params["nombre"])){
             $acumulado->where("nombre", 'LIKE', "%".$params["nombre"]."%");
         }
-        $acumulado->paginate($paginado);
-        return $acumulado;
+        return $acumulado->paginate($paginado);
     }
     
     public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
-        return $this->getModel()
-        ->where("estado", "!=", $estado)
-        ->numero($criterio)
-        ->nombre($criterio)
-        ->where(function ($query) {
+        $response = $this->getModel()
+        ->where("estado", "!=", $estado);
+        if($criterio != null && $criterio != ''){
+            $response->where(function($query) use ($criterio){
+                $query->numero($criterio)
+                ->nombre($criterio);
+            });
+        }
+        return $response->where(function ($query) {
             $query->where("constante", true)
                   ->orWhere("recurrente", true);
-        })
-        ->paginate($paginate);
+        })->paginate($paginate);
     }
 
     public function obtenerDocumentosByFaseId($idFase) {

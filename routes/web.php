@@ -11,6 +11,7 @@ use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\DocumentoLicitacionController;
 use App\Http\Controllers\DocumentoPrincipalController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LicitacionFaseController;
 use App\Http\Controllers\UserController;
 use App\Repositories\Estado\EstadoRepository;
@@ -51,6 +52,12 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 
+
+Route::name('errores.')->group(function(){
+    Route::controller(HomeController::class)->group(function(){
+        Route::get('/error/403', 'forbiddenPage')->name('403');
+    });
+});
 
 //Como seguiremos usando sólo la API, entonces dejaremos sólo las rutas que devuelvan las vistas en este archivo
 
@@ -145,5 +152,6 @@ Route::name("licitacion.")->group(function(){
         Route::get('/licitacion/gestionar_documentos_licitacion', 'gestionDocumentosIndex')->name("gestion_documentos_index");
         Route::get('/licitacion/create', 'create')->name("create");
         Route::post('/licitacion/create_entity', 'storeInView')->name("crear_post");
+        Route::post('/licitacion/reabrir_licitacion', 'reabrirLicitacion')->name("reabrir_licitacion");
     });
 });

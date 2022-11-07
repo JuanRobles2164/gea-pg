@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Documento;
+use App\Models\Document;
 use App\Repositories\Documento\DocumentoRepository;
 use App\Repositories\DocumentoLicitacion\DocumentoLicitacionRepository;
 use App\Repositories\LicitacionFase\LicitacionFaseRepository;
@@ -69,27 +69,6 @@ class DocumentoController extends Controller
         return json_encode($data);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Documento  $documento
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Documento $documento)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Documento  $documento
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Documento $documento)
-    {
-       //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -98,7 +77,7 @@ class DocumentoController extends Controller
      * @param  \App\Models\Documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Documento $documento)
+    public function update(Request $request, Document $documento)
     {
         $this->repo = DocumentoRepository::GetInstance();
         $data = $request->all();
@@ -116,7 +95,7 @@ class DocumentoController extends Controller
      */
     public function destroy(Request $documento)
     {
-        $objeto = new Documento($documento->all());
+        $objeto = new Document($documento->all());
         $objeto->id = $documento->id;
         $this->repo = DocumentoRepository::GetInstance();
         $objeto = $this->repo->find($objeto->id);

@@ -1,3 +1,8 @@
+@php
+use App\Http\Util\Utilidades;
+use App\Models\Rol;
+@endphp
+
 @extends('layouts.app', ['title' => __('Licitaciones')])
 
 @section('content')
@@ -78,7 +83,7 @@
                                 @if(isset($categoria))
                                 
                                 @else
-                                <th scope="col">Categoria</th>
+                                <th scope="col">Periodo</th>
                                 @endif
                                 <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
@@ -136,6 +141,13 @@
                                     <a href="#" class="btn btn-default btn-sm" onclick="setDataToLicitacionModalEdit({{$lic->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
+                                    @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE]))
+                                        @if ($lic->estado == 9)
+                                        <a href="#" class="btn btn-outline-warning btn-sm" onclick="abrirModalReabrirLicitacion({{$lic->id}})" title="Reabrir licitacion" data-toggle="tooltip" data-placement="bottom">
+                                            <i class="fa fa-bolt" aria-hidden="true"></i>
+                                        </a>
+                                        @endif
+                                    @endif
                                     <a href="#" class="btn btn-warning btn-sm" onclick="clonarLicitacion({{$lic->id}})" title="Clonar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-clone"></i>
                                     </a>
@@ -161,6 +173,34 @@
 
 <x-ver-licitacion modalTitle="Visualizador de Licitaciones" modalId="id_modal_licitacion_viewer" />
 
+<!-- Modal -->
+<div class="modal fade" id="modalReabrirLicitacionJustifiacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Reabrir licitacion</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{{route('licitacion.reabrir_licitacion')}}" method="post">
+            @csrf
+            <input type="hidden" name="licitacion" id="idLicitacionHiddenModal">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Justificacion:</label>
+                    <textarea class="form-control" name="observacion" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
 @include('layouts.footers.auth')
 
 @endsection
@@ -171,6 +211,12 @@
         var ruta_editar_licitacion = "{{route('licitacion.actualizar')}}";
         var ruta_eliminar_licitacion = "{{route('licitacion.eliminar')}}";
         var ruta_clonar_licitacion = "{{route('licitacion.clonar')}}";
+
+        function abrirModalReabrirLicitacion(idLicitacion){
+            let elModal = document.getElementById("idLicitacionHiddenModal");
+            elModal.value = idLicitacion;
+            $('#modalReabrirLicitacionJustifiacion').modal('show');
+        }
 
         async function obtenerDataLicitacion(data) {
             const response = await fetch(ruta_encontrar_licitacion + "?id=" + data.id);
