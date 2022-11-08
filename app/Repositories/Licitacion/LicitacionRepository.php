@@ -4,6 +4,7 @@ namespace App\Repositories\Licitacion;
 
 use App\Models\Licitacion;
 use App\Repositories\BaseRepository;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -50,13 +51,20 @@ class LicitacionRepository extends BaseRepository{
     public function getLicitacionesPorVencer($estado = 3, $paginate = 10){
         return $this->getModel()->where("estado", "!=", $estado)
             ->where("estado","<>","3")
-            ->where('fecha_fin', '>=', now()->subDays(10))
+            ->where('fecha_fin', '>=', Carbon::now()->timestamp)
+            ->where("fecha_fin", '<=', Carbon::now()->addMonth(1))
             ->paginate($paginate);
     }
     public function getLicitacionesCreadasMes($estado = 3, $paginate = 10){
         return $this->getModel()->where("estado", "!=", $estado)
             ->where("estado","<>","3")
             ->where('created_at', '>=', now()->subDays(30))
+            ->paginate($paginate);
+    }
+    public function getLicitacionesCreadasAnual($estado = 3, $paginate = 10){
+        return $this->getModel()->where("estado", "!=", $estado)
+            ->where("estado","<>","3")
+            ->where('created_at', '>=', Carbon::today()->year()->timestamp)
             ->paginate($paginate);
     }
 }

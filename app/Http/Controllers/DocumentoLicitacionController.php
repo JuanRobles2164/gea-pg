@@ -129,9 +129,7 @@ class DocumentoLicitacionController extends Controller
 
     public function asociarDocumentosFromComponent(Request $request){
         $data = $request->all();
-        $dfmfJsons = [];
         $this->repo = DocumentoLicitacionRepository::GetInstance();
-        $arregloRetorno = [];
         foreach($data['documentoFromModalFases'] as $dfmf){
             $objetoJson = json_decode($dfmf);
             $documentoLicitacion = $this->repo->findByParamsWithOutState([
@@ -141,7 +139,7 @@ class DocumentoLicitacionController extends Controller
             ]);
             if($documentoLicitacion == null){
                 //si no encontró ningún registro, deberá crearlo
-                $retorno = $this->repo->create([
+                $this->repo->create([
                     'documento' => $objetoJson->id,
                     'licitacion_fase' => $data['licitacion_fase'],
                     'revisado' => true,

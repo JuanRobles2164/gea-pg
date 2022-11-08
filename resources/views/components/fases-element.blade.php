@@ -44,6 +44,7 @@ use App\Models\Rol;
                             <tr>
                                 <th scope="col"></th>
                                 <th scope="col">Tipo Documento</th>
+                                <th scope="col">R/C</th>
                                 <th scope="col">Numero</th>
                                 <th scope="col">Nombre Documento</th>
                                 <th scope="col">Acciones</th>
@@ -64,6 +65,16 @@ use App\Models\Rol;
                                             <i class="far fa-trash-alt"></i>
                                         </a>
                                     </td>
+                                @endif
+                                <td scope="row">{{$doc->numero}}</td>
+                                @if ($doc->constante == null)
+                                    <td scope="row">N</td>
+                                @else
+                                    @if ($doc->recurrente == true)
+                                        <td scope="row">R</td>
+                                    @else
+                                        <td scope="row">C</td>
+                                    @endif
                                 @endif
                                 <td scope="row">{{$doc->tipo_documento()->nombre}}</td>
                                 <td scope="row">{{$doc->numero}}</td>

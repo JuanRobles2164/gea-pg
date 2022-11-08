@@ -16,6 +16,7 @@
                         <tr>
                             <th scope="col" style="display: none;">Tipo Documento</th>
                             <th scope="col">Tipo Documento</th>
+                            <th>R/C</th>
                             <th scope="col">Numero</th>
                             <th scope="col">Nombre Documento</th>
                             <th scope="col">Acciones</th>
@@ -87,7 +88,7 @@
                         }
                     });
                     console.log(nuevosElementos);
-                    renderizarDocumentosFasesModal(nuevosElementos, idFase);
+                    renderizarDocumentosFasesModal(nuevosElementos, idLicitacionFase);
                     $('#modalFasesAgregarDocumentosToFaseLicitacionForm').modal('show');
             });
         }
@@ -105,6 +106,7 @@
                                         <tr>
                                             <td scope="row" style="display:none;">:doc_id</td>
                                             <td scope="row">:nom_doc_id</td>
+                                            <td scope="row">:r_c_doc</td>
                                             <td scope="row">:doc_numero</td>
                                             <td scope="row">:doc_nombre</td>
                                             <td scope="row">
@@ -118,9 +120,17 @@
             let elementoDocumentoTabla = "";
             docs.forEach((el) => {
                 let elementoDocumentoTablaPlantillaUnidad = ""+elementoDocumentoTablaPlantilla;
-
+                let reemplazarRecurrente = "";
+                if(el.recurrente == null){
+                    reemplazarRecurrente = "";
+                }else if(el.recurrente == 1){
+                    reemplazarRecurrente = "R";
+                }else{
+                    reemplazarRecurrente = "C";
+                }
                 elementoDocumentoTabla += elementoDocumentoTablaPlantillaUnidad.replace(/:doc_id/g, el.id)
                                                                                     .replace(/:tdoc_id/g ,el.id_tdoc)
+                                                                                    .replace(/:r_c_doc/g, reemplazarRecurrente)
                                                                                     .replace(/:nom_doc_id/g, el.nombre_tipdoc)
                                                                                     .replace(/:doc_numero/g, el.numero)
                                                                                     .replace(/:doc_nombre/g, el.nombre)

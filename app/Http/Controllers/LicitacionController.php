@@ -163,7 +163,7 @@ class LicitacionController extends Controller
             'cliente' => ['required', 'exists:cliente,id'],
             'tipo_licitacion' => ['required', 'exists:tipo_licitacion,id'],
             'categoria' => ['required', 'exists:categoria,id'],
-            'documentosAsociadosFases' => ['required', new ArrayNotNull],
+            //'documentosAsociadosFases' => ['required', new ArrayNotNull],
         ]);
         $data = $request->all();
         //consultar numero actual, sumarle uno y guardar en numeracion 

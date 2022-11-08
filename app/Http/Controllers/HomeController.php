@@ -64,7 +64,7 @@ class HomeController extends Controller
         //Setea la información de la pantalla
         $this->repo = LicitacionRepository::GetInstance();
         $creadasMes = null;
-        $creadasMes = $this->repo->getLicitacionesCreadasMes();
+        $creadasMes = $this->repo->getLicitacionesCreadasAnual();
         $vencerMes = null;
         $vencerMes = $this->repo->getLicitacionesPorVencer();
         
