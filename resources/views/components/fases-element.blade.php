@@ -44,7 +44,7 @@ use App\Models\Rol;
                             <tr>
                                 <th scope="col"></th>
                                 <th scope="col">Tipo Documento</th>
-                                <th scope="col">R/C</th>
+                                <th scope="col">Tipo de recurso</th>
                                 <th scope="col">Numero</th>
                                 <th scope="col">Nombre Documento</th>
                                 <th scope="col">Acciones</th>
@@ -66,7 +66,7 @@ use App\Models\Rol;
                                         </a>
                                     </td>
                                 @endif
-                                <td scope="row">{{$doc->numero}}</td>
+                                <td scope="row">{{$doc->tipo_documento}}</td>
                                 @if ($doc->constante == null)
                                     <td scope="row">N</td>
                                 @else
@@ -76,7 +76,6 @@ use App\Models\Rol;
                                         <td scope="row">C</td>
                                     @endif
                                 @endif
-                                <td scope="row">{{$doc->tipo_documento()->nombre}}</td>
                                 <td scope="row">{{$doc->numero}}</td>
                                 <td scope="row">{{$doc->nombre}}</td>
                                 <td scope="row">
@@ -88,7 +87,7 @@ use App\Models\Rol;
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <!-- Si es un documento recurrente -->
-                                    @if ($doc->recurrente != null && $doc->recurrente)
+                                    @if ($doc->recurrente != null && $doc->recurrente == true)
                                         <button type="button" class="btn btn-default btn-sm" onclick="abrirModalReemplazarArchivos({{$doc->id}}, {{$modelo->id}})" title="Reemplazar" data-toggle="tooltip" data-placement="bottom">
                                             <i class="fa fa-upload" aria-hidden="true"></i>
                                         </button>
@@ -107,13 +106,13 @@ use App\Models\Rol;
                                                 console.log("Ya subiste {{$doc_fue_subido->nombre}}");
                                             </script>
                                         @else
-                                            <button type="button" class="btn btn-default btn-sm" onclick="abrirModalReemplazarArchivos({{$doc->id}}, {{$modelo->id}})" title="Reemplazar" data-toggle="tooltip" data-placement="bottom">
-                                                <i class="fa fa-upload" aria-hidden="true"></i>
-                                            </button>
+                                            <script>
+                                                console.log("Debes subir este doc{{$doc->tipo_documento}}");
+                                            </script>
                                         @endif
                                     @else
                                         <script>
-                                            console.log("No necesitas subir:  {{$doc->tipo_documento()->nombre}}");
+                                            console.log("No necesitas subir:  {{$doc->tipo_documento}}");
                                         </script>
                                     @endif
                                 </td>

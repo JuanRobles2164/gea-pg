@@ -47,7 +47,11 @@ use App\Models\Rol;
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">Licitaciones</h3>
+                            @if (isset($categoria))
+                                <h3 class="mb-0">Licitaciones - {{$categoria->nombre}}</h3>
+                            @else
+                                <h3 class="mb-0">Licitaciones</h3>
+                            @endif
                         </div>
                         <div class="col">
                             <div class="row align-items-center">

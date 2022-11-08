@@ -55,7 +55,9 @@ class LicitacionController extends Controller
                 $interval = $datetime1->diff($datetime2);
                 $l->duracion = $interval->y . " años, " . $interval->m." meses y ".$interval->d." dias"; 
             }
-            $allData = ['licitaciones' => $lista, 'categoria' => $request->categoria];
+            $this->repo = CategoriaRepository::GetInstance();
+            $categoria = $this->repo->find($request->categoria);
+            $allData = ['licitaciones' => $lista, 'categoria' => $categoria];
         }else{
             $lista = $this->repo->getAllPersonalizado($criterio);
             foreach($lista as $l){

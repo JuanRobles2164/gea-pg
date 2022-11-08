@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Http\Util\Utilidades;
 use App\Repositories\LicitacionFase\LicitacionFaseRepository;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\Component;
@@ -32,11 +33,12 @@ class FasesElement extends Component
         if($this->licitacion_fase != null){
             $docs_array = [];
             $docs_lic_array = [];
-            //Log::debug((array) $this->licitacion_fase);
             $documentos_licitacion = $this->licitacion_fase->documentoLicitacion();
             foreach($documentos_licitacion as $dl){
-                array_push($docs_array, $dl->documento());
+                $objDocumento = Utilidades::completarNumeracionDocumento($dl->documento()->tipo_documento, $dl->documento());
+                array_push($docs_array, $objDocumento);
             }
+            //Log::debug((array)$docs_array);
             $tipo_documentos = $this->licitacion_fase->fase()->faseTipoDocumento();
             foreach($tipo_documentos as $td){
                 array_push($docs_lic_array, $td->tipoDocumento());

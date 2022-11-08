@@ -1,5 +1,9 @@
 <?php
 namespace App\Http\Util;
+
+use App\Repositories\Documento\DocumentoRepository;
+use App\Repositories\TipoDocumento\TipoDocumentoRepository;
+
 class Utilidades{
     public static function obtenerInicial($nombre){
         $iniciales = '';
@@ -28,6 +32,16 @@ class Utilidades{
             $iniciales .=  $x[1];
         }
         return $iniciales;
+    }
+
+    public static function completarNumeracionDocumento($idTipoDocumento, $objeto){
+        $repo = null;
+        $repo = TipoDocumentoRepository::GetInstance();
+        $tipoDoc = $repo->find($idTipoDocumento);
+        $repo = null;
+        $objeto->numero = $tipoDoc->indicativo . '' . str_pad($objeto->numero, 6, "0", STR_PAD_LEFT);
+        $objeto->tipo_documento = $tipoDoc->nombre;
+        return $objeto;
     }
 
 }
