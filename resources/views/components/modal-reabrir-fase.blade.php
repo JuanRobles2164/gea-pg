@@ -15,7 +15,7 @@
                     <input type="hidden" name="licitacion_fase" id="faseLicitacionReabrirModalId">
                     <div class="form-group">
                         <label for="nombreArchivoNuevoDocumentoModalId">Observación:</label>
-                        <textarea name="observacion" id="observacionLicitacionReabrirModalId" cols="30" rows="10"></textarea>
+                        <textarea name="observacion" class="form-control" id="observacionLicitacionReabrirModalId" cols="30" rows="10"></textarea>
                     </div>
                 </div>
             </div>

@@ -6,7 +6,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Cargar nuevo archivo</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -17,7 +17,7 @@
                 <input type="hidden" name="fase_licitacion" id="fase_id_nuevo_archivo_fase_licitacion_modal">
                 <div class="form-group">
                     <label for="">Tipo de documento:</label>
-                    <select name="tipo_documento" id="tipoDocumentoNuevoArchivoFaseLicitacionId" class="form-control">
+                    <select name="tipo_documento" id="tipoDocumentoNuevoArchivoFaseLicitacionId" class="form-control form-control-alternative">
                         @foreach ($tipos_doc as $fd)
                             <option value="{{$fd->id}}">{{$fd->nombre}}</option>
                         @endforeach
@@ -25,8 +25,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="">Nombre:</label>
-                    <input type="text" name="nombre" id="nombreNuevoArchivoFaseLicitacion">
+                    <label for="" >Nombre:</label>
+                    <input type="text" name="nombre" id="nombreNuevoArchivoFaseLicitacion" class="form-control form-control-alternative">
                 </div>
                 
                 <div class="form-group">
