@@ -38,15 +38,22 @@
 
     @endif
 
-    <div class="col">
-        <div class="card shadow">
-            <div class="card-header border-0">
-                <br><br><br><br>
-                <!-- informacion de la licitacion para editar -->
-                <div id="accordion">
-                    @foreach ($fases_licitacion as $fase)
-                        <x-fases-element componentId="{{$fase->id}}" componentTitle="{{$fase->nombre}}" licitacion="{{$licitacion->id}}" :modelo="$fase" />
-                    @endforeach
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">       
+                <div class="card-header border-0">
+                    <div class="align-items-center col-8">
+                        <br>
+                        <h3 class="mb-0">Gestionando licitacion: {{$licitacion->nombre}}</h3>
+                    </div>
+                </div>
+                <div class="card-body border-0">
+                    <!-- informacion de la licitacion para editar -->
+                    <div id="accordion">
+                        @foreach ($fases_licitacion as $fase)
+                            <x-fases-element componentId="{{$fase->id}}" componentTitle="{{$fase->nombre}}" licitacion="{{$licitacion->id}}" :modelo="$fase" />
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
