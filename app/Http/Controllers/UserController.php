@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Repositories\RolUsuario\RolUsuarioRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -58,6 +59,13 @@ class UserController extends Controller
     }
 
     public function toggleUserState(Request $request){
+        $usuario = $request->header('usuario_sesion');
+        //Reglar para que no se afecte a si mismo ni al usuario maestro
+        $request->validate([
+            'id' => ['required', 'gt:1', 
+            Rule::notIn([$usuario])]
+        ]);
+
         $this->repo = UserRepository::GetInstance();
         $usuario = $this->repo->toggleState($request->id);
         $this->repo = null;
@@ -120,6 +128,13 @@ class UserController extends Controller
 
     public function destroy(Request $request)
     {
+        $usuario = $request->header('usuario_sesion');
+        //Reglar para que no se afecte a si mismo ni al usuario maestro
+        $request->validate([
+            'id' => ['required', 'gt:1', 
+            Rule::notIn([$usuario])]
+        ]);
+        //Si está intentando eliminarse a sí mismo
         $data = $request->all();
         $retorno = [];
         $retorno['roles_usuario'] = [];

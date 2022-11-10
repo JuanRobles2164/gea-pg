@@ -202,11 +202,11 @@
                                     </button>
                                 </h6>
                                 <div class="float-right">
-                                    <button type="button" class="btn btn-primary btn-sm" onclick="mostrarModalDocumentosAsociadosFase(:fase_id)">
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="mostrarModalDocumentosAsociadosFase(:fase_id)" title="Asociar documentos" data-toggle="tooltip" data-placement="top">
                                         <i class="fa fa-file"></i>
                                     </button>
 
-                                    <button type="button" class="btn btn-primary btn-sm" onclick="abrirModalCargarArchivo('tbodyDocumentosFaseTipoLicitacion:fase_id')">
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="abrirModalCargarArchivo('tbodyDocumentosFaseTipoLicitacion:fase_id')" title="Agregar documentos" data-toggle="tooltip" data-placement="top">
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>                            

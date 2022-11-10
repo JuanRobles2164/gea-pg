@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="usuario_sesion" content="{{ Auth::user() != null ? Auth::user()->id : 0 }}">
 
         <title>{{ config('app.name', 'Argon Dashboard') }}</title>
         <!-- Favicon -->
@@ -25,6 +26,7 @@
 
         <script>
             var csrf_token = document.getElementsByName("csrf-token")[0].attributes.content.value;
+            var usuario_sesion = document.getElementsByName("usuario_sesion")[0].attributes.content.value;
     
             async function postData(url = '', data = {}) {
             // Esta función en realidad es genérica, sirve para cualquier método que requiera hacer alguna petición al servidor
@@ -36,7 +38,8 @@
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrf_token
+                        'X-CSRF-TOKEN': csrf_token,
+                        'usuario_sesion': usuario_sesion
                         // 'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     redirect: 'follow', // manual, *follow, error
@@ -55,7 +58,8 @@
                     credentials: 'same-origin', // include, *same-origin, omit
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        'X-CSRF-TOKEN': csrf_token
+                        'X-CSRF-TOKEN': csrf_token,
+                        'usuario_sesion': usuario_sesion
                         // 'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -73,7 +77,8 @@
                     credentials: 'same-origin', // include, *same-origin, omit
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrf_token
+                        'X-CSRF-TOKEN': csrf_token,
+                        'usuario_sesion': usuario_sesion
                         // 'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     redirect: 'follow', // manual, *follow, error

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="usuario_sesion" content="{{ Auth::user() != null ? Auth::user()->id : 0 }}">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.18.9/package/dist/xlsx.zahl.js"></script>
@@ -16,6 +17,7 @@
 
     <script>
         var csrf_token = document.getElementsByName("csrf-token")[0].attributes.content.value;
+        var usuario_sesion = document.getElementsByName("usuario_sesion")[0].attributes.content.value;
 
         async function postData(url = '', data = {}) {
         // Esta función en realidad es genérica, sirve para cualquier método que requiera hacer alguna petición al servidor
@@ -26,7 +28,8 @@
             credentials: 'same-origin', // include, *same-origin, omit
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrf_token
+                'X-CSRF-TOKEN': csrf_token,
+                'usuario_sesion': usuario_sesion
                 // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             redirect: 'follow', // manual, *follow, error
