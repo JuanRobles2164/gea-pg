@@ -1,3 +1,8 @@
+@php
+use App\Http\Util\Utilidades;
+use App\Models\Rol;
+@endphp
+
 @extends('layouts.app', ['title' => __('Nosotros')])
 
 @section('content')
@@ -14,6 +19,8 @@
           </div>
         </div>
         <div class="card-body">
+
+          @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE, Rol::IS_ADMIN]))
           <form action="{{isset($empresa->id) ? route('empresa.actualizar') : route('empresa.crear')}}" method="POST">
             @csrf
             <input type="hidden" name="id" id="idEmpresaInput" value="{{isset($empresa->id) ? $empresa->id : ''}}">
@@ -81,6 +88,69 @@
               <button type="submit" class="btn btn-success mt-4">{{ __('Guardar') }}</button>
             </div>
           </form>
+          @else
+          <form action="{{isset($empresa->id) ? route('empresa.actualizar') : route('empresa.crear')}}" method="POST">
+            @csrf
+            <input type="hidden" name="id" id="idEmpresaInput" value="{{isset($empresa->id) ? $empresa->id : ''}}">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-razon_social">{{ __('Razon Social') }}</label>
+                  <input type="text" class="form-control form-control-alternative" name="razon_social" id="id_input_razon_social" value="{{isset($empresa->id) ? $empresa->razon_social : ''}}" disabled>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-email">{{ __('Email') }}</label>
+                  <input type="email" class="form-control form-control-alternative" name="email" id="id_input_email" value="{{isset($empresa->id) ? $empresa->email : ''}}" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-telefono">{{ __('Teléfono') }}</label>
+                  <input type="number" class="form-control form-control-alternative" name="telefono" id="id_input_telefono" value="{{isset($empresa->id) ? $empresa->telefono : ''}}" disabled>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-identificacion">{{ __('Identificación') }}</label>
+                  <input type="number" class="form-control form-control-alternative" name="identificacion" id="id_input_identificacion" value="{{isset($empresa->id) ? $empresa->identificacion : ''}}" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-direccion">{{ __('Dirección') }}</label>
+                  <input type="text" class="form-control form-control-alternative" name="direccion" id="id_input_direccion" value="{{isset($empresa->id) ? $empresa->direccion : ''}}" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label class="form-control-label" for="input-logo">{{ __('Logo') }}</label>
+                <div class="card mb-3" style="max-width: 700px;">
+                  <div class="row no-gutters">
+                    <div class="col-md-4">
+                      <img src="{{isset($empresa->id) ? route('archivos.ver_archivo_temporal', ['path_file' => $empresa->logo]) : ''}}" class="card-img-top" alt="logo">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-mas_info">{{ __('Más Información') }}</label>
+                  <textarea class="form-control form-control-alternative" name="mas_info" rows="5" id="id_textarea_mas_info" disabled>{{isset($empresa->id) ? $empresa->mas_info : ''}}</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-success mt-4" disabled>{{ __('Guardar') }}</button>
+            </div>
+          </form>
+          @endif
         </div>
       </div>
     </div>

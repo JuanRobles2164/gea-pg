@@ -28,12 +28,12 @@ use App\Models\Rol;
                         <i class="ni ni-single-02"></i>
                         <span>{{ __('Perfil') }}</span>
                     </a>
-                    @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_ADMIN]))
+                    
                         <a href="{{ route('empresa.index') }}" class="dropdown-item">
                             <i class="ni ni-building"></i>
                             <span>{{ __('Nosotros') }}</span>
                         </a>
-                    @endif
+                    
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
