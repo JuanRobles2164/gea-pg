@@ -146,7 +146,7 @@ use App\Models\Rol;
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
                                     @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE]))
-                                        @if ($lic->estado == 9)
+                                        @if ($lic->estado == 5)
                                         <a href="#" class="btn btn-outline-warning btn-sm" onclick="abrirModalReabrirLicitacion({{$lic->id}})" title="Reabrir licitacion" data-toggle="tooltip" data-placement="bottom">
                                             <i class="fa fa-bolt" aria-hidden="true"></i>
                                         </a>
