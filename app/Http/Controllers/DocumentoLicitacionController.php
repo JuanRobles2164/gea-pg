@@ -109,12 +109,7 @@ class DocumentoLicitacionController extends Controller
         return json_encode($documentoLicitacion);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\DocumentoLicitacion  $documentoLicitacion
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(Request $documentoLicitacion)
     {
         $objeto = new DocumentoLicitacion($documentoLicitacion->all());

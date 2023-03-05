@@ -18,6 +18,11 @@ class CreateEmpresasTable extends Migration
             $table->string("razon_social");
             $table->binary("logo");
             $table->string("email");
+            
+            $table->string('nit');
+            $table->string('digito_verificacion');
+            $table->string('representante_legal');
+
             $table->string("direccion");
             $table->string("identificacion");
             $table->string("telefono");
