@@ -126,7 +126,10 @@
         <!-- Filepond Library JS -->
         <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 
-
+        <link href="https://cdn.datatables.net/v/bs4/dt-1.13.2/datatables.min.css"/>
+ 
+        <script src="https://cdn.datatables.net/v/bs4/dt-1.13.2/datatables.min.js"></script>
+        
         <script>
             function imprimirErrores(data){
                 //limpiar el componente

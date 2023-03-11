@@ -1977,7 +1977,7 @@ pre code
 
 .table-striped tbody tr:nth-of-type(odd)
 {
-    background-color: rgba(0, 0, 0, .05);
+    background-color: rgba(167, 160, 160, 0.05);
 }
 
 .table-hover tbody tr:hover
@@ -20324,12 +20324,12 @@ textarea[resize='horizontal']
 
     display: flex;
 
-    width: 36px;
+    /* width: 36px; */
     height: 36px;
-    margin: 0 3px;
-    padding: 0;
+    margin: 10px 3px;
+    padding: 3px 3px;
 
-    border-radius: 50% !important;
+    border-radius: 15% !important;
 
     align-items: center;
     justify-content: center;
@@ -20340,7 +20340,7 @@ textarea[resize='horizontal']
 {
     line-height: 46px; 
 
-    width: 46px;
+    /* width: 46px; */
     height: 46px;
 }
 
@@ -20349,7 +20349,7 @@ textarea[resize='horizontal']
 {
     line-height: 30px; 
 
-    width: 30px;
+    /* width: 30px; */
     height: 30px;
 }
 
@@ -22054,4 +22054,29 @@ background-color: #eaeaea;
     background-color: #8ea8c3;
     align-items: center;
     justify-content: center;
+}
+
+.table-responsive {
+    /* display: block; */
+    overflow-x: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.dataTables_length{
+
+}
+.dataTables_filter{
+
+}
+
+.dataTables_info{
+
+}
+
+.dataTables_wrapper {
+
 }

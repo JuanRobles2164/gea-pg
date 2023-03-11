@@ -50,12 +50,6 @@ use App\Enums\UnidadValidezEnum;
                         </div>
                         <div class="col">
                             <div class="row align-items-center">
-                                <div class="col">
-
-                                </div>
-                                <div class="col-6 justify-content-end text-right">
-                                    <input class="form-control form-control-sm" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search">
-                                </div>
                                 <div class="col justify-content-end text-right">
                                     <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_create_tipo_documento">
                                         Crear <i class="fas fa-plus"></i>
@@ -66,7 +60,7 @@ use App\Enums\UnidadValidezEnum;
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table align-items-center">
+                    <table class="table align-items-center" id="tipoDocs">
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col"></th>
@@ -133,6 +127,16 @@ use App\Enums\UnidadValidezEnum;
 
 @push('js')
     <script>
+        $(document).ready(function () {
+            $('#tipoDocs').DataTable({
+                language: {
+                    url: '{{ asset('argon') }}/es-ES.json',
+                },
+                responsive: true,
+
+            });
+        });
+
         var ruta_encontrar_tipo_documento = "{{route('tipo_documento.encontrar')}}";
         var ruta_editar_tipo_documento = "{{route('tipo_documento.actualizar')}}";
         var ruta_eliminar_tipo_documento = "{{route('tipo_documento.eliminar')}}";
