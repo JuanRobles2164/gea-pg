@@ -32,22 +32,16 @@ class DocumentoRepository extends BaseRepository{
         if(!empty($params["nombre"])){
             $acumulado->where("nombre", 'LIKE', "%".$params["nombre"]."%");
         }
-        return $acumulado->paginate($paginado);
+        return $acumulado->get();
     }
     
-    public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
+    public function getAllPersonalizado($paginate = 10, $estado = 3){
         $response = $this->getModel()
         ->where("estado", "!=", $estado);
-        if($criterio != null && $criterio != ''){
-            $response->where(function($query) use ($criterio){
-                $query->numero($criterio)
-                ->nombre($criterio);
-            });
-        }
         return $response->where(function ($query) {
             $query->where("constante", true)
                   ->orWhere("recurrente", true);
-        })->paginate($paginate);
+        })->get();
     }
 
     public function obtenerDocumentosByFaseId($idFase) {

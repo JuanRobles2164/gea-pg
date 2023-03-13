@@ -23,13 +23,11 @@ class FaseController extends Controller
      */
     public function index(Request $request)
     {
-        $criterio = $request->criterio;
         $this->repo = FaseRepository::GetInstance();
-        $lista = $this->repo->getAllPersonalizado($criterio);
+        $lista = $this->repo->getAllEstado();
         $this->repo = null;
 
-        $allData = ['fases' => $lista
-        ];
+        $allData = ['fases' => $lista];
         return view('Fase.index', $allData);
     }
 

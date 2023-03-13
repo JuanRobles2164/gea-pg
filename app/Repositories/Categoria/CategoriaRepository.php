@@ -34,9 +34,8 @@ class CategoriaRepository extends BaseRepository{
         }
         if(!empty($params['unico_registro'])){
             $consulta->first();
-            return $consulta;
+            return $consulta->get();
         }
-        $consulta->paginate($paginado);
         return $consulta;
     }
 }

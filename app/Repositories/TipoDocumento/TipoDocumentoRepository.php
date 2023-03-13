@@ -44,16 +44,9 @@ class TipoDocumentoRepository extends BaseRepository{
         return $tiposDoc;
     }
 
-    public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
-        $response = $this->getModel()->where("estado", "!=", $estado);
-        if($criterio != null && $criterio != ''){
-            $response->where(function($query) use ($criterio){
-                $query->nombre($criterio)
-                ->descripcion($criterio)
-                ->indicativo($criterio);
-            });
-        }
-        return $response->paginate($paginate);;
+    public function getAllPersonalizado($paginate = 10, $estado = 3){
+        $response = $this->getModel()->where("estado", "!=", $estado)->get();
+        return $response;
     }
 
     public function obtenerNumeracionActual($idTipoDoc){

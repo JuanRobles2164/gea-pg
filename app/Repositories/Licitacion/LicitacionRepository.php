@@ -25,38 +25,24 @@ class LicitacionRepository extends BaseRepository{
     public function findByParams($params){
         
     }
-    public function getAllEstadosCategoria($idCategoria, $criterio, $estado = 3, $paginate = 10){
+    public function getAllEstadosCategoria($idCategoria, $estado = 3, $paginate = 10){
         $response = $this->getModel()->where("estado", "!=", $estado)->where("categoria", $idCategoria);
-        if($criterio != null && $criterio != ''){
-            $response->where(function($query) use ($criterio){
-                $query->nombre($criterio)
-                ->numero($criterio);
-            });
-        }
-        return $response->paginate($paginate);;
+        return $response->get();
     }
 
-    public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
+    public function getAllPersonalizado($paginate = 10, $estado = 3){
         $response = $this->getModel()->where("estado", "!=", $estado);
-        if($criterio != null && $criterio != ''){
-            $response->where(function($query) use ($criterio){
-                $query->nombre($criterio)
-                    ->numero($criterio);
-            });
-        }
-        return $response->paginate($paginate);
+        return $response->get();
     }
 
     public function getLicitacionesPorVencer($estado = 3, $paginate = 10){
         return $this->getModel()->where("estado", "!=", $estado)
             ->where("estado","<>","3")
-            ->where('fecha_fin', '>=', now()->subDays(10))
-            ->paginate($paginate);
+            ->where('fecha_fin', '>=', now()->subDays(10))->get();
     }
     public function getLicitacionesCreadasMes($estado = 3, $paginate = 10){
         return $this->getModel()->where("estado", "!=", $estado)
             ->where("estado","<>","3")
-            ->where('created_at', '>=', now()->subDays(30))
-            ->paginate($paginate);
+            ->where('created_at', '>=', now()->subDays(30))->get();
     }
 }

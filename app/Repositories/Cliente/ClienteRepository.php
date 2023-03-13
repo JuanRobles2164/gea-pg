@@ -26,16 +26,9 @@ class ClienteRepository extends BaseRepository{
         
     }
 
-    public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
-        $response = $this->getModel()->where("estado", "!=", $estado);
-        if($criterio != null && $criterio != ''){
-            $response->where(function($query) use ($criterio){
-                $query->razon($criterio)
-                ->email($criterio)
-                ->identificacion($criterio);
-            });
-        }
-        return $response->paginate($paginate);
+    public function getAllPersonalizado($paginate = 10, $estado = 3){
+        $response = $this->getModel()->where("estado", "!=", $estado)->get();
+        return $response;
     }
 
     public function toggleState($clienteId){

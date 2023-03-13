@@ -26,9 +26,8 @@ class TipoLicitacionController extends Controller
      */
     public function index(Request $request)
     {
-        $criterio = $request->criterio;
         $this->repo = TipoLicitacionRepository::GetInstance();
-        $lista = $this->repo->getAllPersonalizado($criterio);
+        $lista = $this->repo->getAllEstado();
         $this->repo = null;
 
         $allData = ['tipos_licitacion' => $lista,

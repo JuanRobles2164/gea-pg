@@ -18,9 +18,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $criterio = $request->criterio;
         $this->repo = UserRepository::GetInstance();
-        $lista = $this->repo->getAllPersonalizado($criterio);
+        $lista = $this->repo->getAllEstado();
         $this->repo = null;
         $allData = ['users' => $lista];
         return view('users.main_menu', $allData);

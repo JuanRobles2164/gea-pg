@@ -5750,7 +5750,7 @@ input[type='button'].btn-block
 
 .card-body
 {
-    padding: 1.5rem; 
+    padding: 1rem; 
 
     flex: 1 1 auto;
 }
@@ -20327,7 +20327,7 @@ textarea[resize='horizontal']
     /* width: 36px; */
     height: 36px;
     margin: 10px 3px;
-    padding: 3px 3px;
+    /* padding: 3px 3px; */
 
     border-radius: 15% !important;
 
@@ -22057,7 +22057,6 @@ background-color: #eaeaea;
 }
 
 .table-responsive {
-    /* display: block; */
     overflow-x: auto;
     width: 100%;
     display: flex;
@@ -22066,17 +22065,39 @@ background-color: #eaeaea;
     flex-direction: row;
 }
 
-.dataTables_length{
+.card {
+    
+}
 
+.dataTables_length{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    vertical-align: middle;
+}
+
+label {
+    display: flex !important;
+    align-items: center;
+    font-size: 90%;
 }
 .dataTables_filter{
-
+    width: 40%;
+    margin-left: auto;
 }
 
 .dataTables_info{
+    margin: 15px;
+    font-size: 80%;
+}
 
+.dataTable{
+    width: 100% !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
 }
 
 .dataTables_wrapper {
-
+    width: 100%;
 }

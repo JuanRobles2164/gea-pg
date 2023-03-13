@@ -34,15 +34,8 @@ class UserRepository extends BaseRepository{
         return $usuarioActualizar;
     }
 
-    public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
-        $response = $this->getModel()->where("estado", "!=", $estado);
-        if($criterio != '' && $criterio != null){
-            $response = $response->where(function($query) use ($criterio) {
-                $query->nombre($criterio)
-                      ->email($criterio);
-            });
-        }
-        $response = $response->paginate($paginate);
+    public function getAllPersonalizado($paginate = 10, $estado = 3){
+        $response = $this->getModel()->where("estado", "!=", $estado)->get();
         return $response;
     }
 

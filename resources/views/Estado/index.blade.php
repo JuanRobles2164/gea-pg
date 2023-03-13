@@ -40,8 +40,6 @@
                 @endforeach
             </tbody>
         </table>
-
-        {{ $estados->links('components.paginador') }}
     </div>
 
 @endsection

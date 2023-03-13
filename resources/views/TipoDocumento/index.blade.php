@@ -40,81 +40,73 @@ use App\Enums\UnidadValidezEnum;
         </button>
     </div>
     @endif
-    <div class="row">
-        <div class="col">
-            <div class="card shadow">
-                <div class="card-header border-0">
+    <div class="card shadow">
+        <div class="card-header border-1">
+            <div class="row align-items-center">
+                <div class="col-8">
+                    <h3 class="mb-0">Tipos de documentos</h3>
+                </div>
+                <div class="col">
                     <div class="row align-items-center">
-                        <div class="col-8">
-                            <h3 class="mb-0">Tipos de documentos</h3>
-                        </div>
-                        <div class="col">
-                            <div class="row align-items-center">
-                                <div class="col justify-content-end text-right">
-                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_create_tipo_documento">
-                                        Crear <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="col justify-content-end text-right">
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_create_tipo_documento">
+                                Crear <i class="fas fa-plus"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table align-items-center" id="tipoDocs">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col" style="display: none;">Id</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Descripcion</th>
-                                <th scope="col">Indicativo</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($tipos_documento as $td)
-                            <tr>
-                                <td scope="row">
-                                    <a type="button" class="btn btn-danger btn-sm" onclick="eliminarObjetoTipoDocumentoModalEdit({{$td->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="far fa-trash-alt" style="color: white;"></i>
-                                    </a>
-                                </td>
-                                <td scope="row" style="display: none;">{{$td->id}}</td>
-                                <td scope="row">{{$td->nombre}}</td>
-                                <td scope="row">{{$td->descripcion}}</td>
-                                <td scope="row">{{$td->indicativo}}</td>
-                                @if($td->estado == 1)
-                                <td scope="row">
-                                    <a type="button" style="color: white;" class="btn btn-success  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoDoc({{$td->id}})">
-                                        Activo
-                                    </a>
-                                </td>
-                                @else
-                                <td scope="row">
-                                    <a type="button" style="color: white;" class="btn btn-warning  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoDoc({{$td->id}})">
-                                        Inactivo
-                                    </a>
-                                </td>
-                                @endif
-                                <td scope="row">
-                                    <a type="button" class="btn btn-info btn-sm" onclick="setDataToTipoDocumentoModal({{$td->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-eye" style="color: white;"></i>
-                                    </a>
-                                    <a type="button" class="btn btn-default btn-sm" onclick="setDataToTipoDocumentoModalEdit({{$td->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-pencil-alt" style="color: white;"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer py-4">
-                    <!--paginacion-->
-                    {{$tipos_documento->links('components.paginador')}}
-                </div>
             </div>
+        </div>
+        <div class="card-body table-responsive">
+            <table class="table align-items-center" id="tableinclude">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col" style="display: none;">Id</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Indicativo</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($tipos_documento as $td)
+                    <tr>
+                        <td scope="row">
+                            <a type="button" class="btn btn-danger btn-sm" onclick="eliminarObjetoTipoDocumentoModalEdit({{$td->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                <i class="far fa-trash-alt" style="color: white;"></i>
+                            </a>
+                        </td>
+                        <td scope="row" style="display: none;">{{$td->id}}</td>
+                        <td scope="row">{{$td->nombre}}</td>
+                        <td scope="row">{{$td->descripcion}}</td>
+                        <td scope="row">{{$td->indicativo}}</td>
+                        @if($td->estado == 1)
+                        <td scope="row">
+                            <a type="button" style="color: white;" class="btn btn-success  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoDoc({{$td->id}})">
+                                Activo
+                            </a>
+                        </td>
+                        @else
+                        <td scope="row">
+                            <a type="button" style="color: white;" class="btn btn-warning  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoDoc({{$td->id}})">
+                                Inactivo
+                            </a>
+                        </td>
+                        @endif
+                        <td scope="row">
+                            <a type="button" class="btn btn-info btn-sm" onclick="setDataToTipoDocumentoModal({{$td->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
+                                <i class="fas fa-eye" style="color: white;"></i>
+                            </a>
+                            <a type="button" class="btn btn-default btn-sm" onclick="setDataToTipoDocumentoModalEdit({{$td->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                <i class="fas fa-pencil-alt" style="color: white;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
     <x-guardar-tipo-documento modalTitle="Formulario de Tipos de documento" modalId="id_modal_create_tipo_documento" />
@@ -128,7 +120,7 @@ use App\Enums\UnidadValidezEnum;
 @push('js')
     <script>
         $(document).ready(function () {
-            $('#tipoDocs').DataTable({
+            $('#tableinclude').DataTable({
                 language: {
                     url: '{{ asset('argon') }}/es-ES.json',
                 },
