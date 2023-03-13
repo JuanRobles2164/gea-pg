@@ -58,7 +58,7 @@ use App\Models\Rol;
             </div>
         </div>
         <div class="card-body table-responsive">
-            <table class="table align-items-center">
+            <table class="table align-items-center" id="tableinclude">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col"></th>
@@ -189,6 +189,15 @@ use App\Models\Rol;
 
 @push('js')
     <script>
+        $(document).ready(function () {
+            $('#tableinclude').DataTable({
+                language: {
+                    url: '{{ asset('argon') }}/es-ES.json',
+                },
+                responsive: true,
+
+            });
+        });
         var ruta_encontrar_licitacion = "{{route('licitacion.encontrar')}}";
         var ruta_editar_licitacion = "{{route('licitacion.actualizar')}}";
         var ruta_eliminar_licitacion = "{{route('licitacion.eliminar')}}";
