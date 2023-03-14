@@ -121,8 +121,6 @@
   const pond = FilePond.create(inputElement);
 
   pond.onprocessfile = (error, file) => {
-    console.log("ruta: ", file.serverId);
-    console.log("filename: ", file.filename);
     document.getElementById("id_formFile_logo").value = file.serverId;
     document.getElementById("nombre_archivo_logo").value = file.filename;
   };

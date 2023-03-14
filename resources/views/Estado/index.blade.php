@@ -59,7 +59,6 @@
             }
             postData('{{route("estado.guardar")}}', data)
             .then((data) => {
-                console.log(data);
                 alert("Estado creado exitosamente!");
             });
         }

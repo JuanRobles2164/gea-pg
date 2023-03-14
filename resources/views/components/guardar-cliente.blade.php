@@ -64,7 +64,6 @@
     var ruta_editar = '{{route("cliente.actualizar")}}';
 
     function {{$modal_id}}Crear(){
-        console.log(ruta_crear);
         let id = document.getElementById("id_cliente_modal_create_id").value;
         let razon_social = document.getElementById("rsocial_cliente_modal_create_id").value;
         let email = document.getElementById("email_cliente_modal_create_id").value;
@@ -88,7 +87,6 @@
             objeto.id = null;
             postData(ruta_crear, objeto)
                 .then((data) => {
-                    console.log(data);
                     if (data.errors != undefined) {
                         imprimirErrores(data);
                     } else {
@@ -108,7 +106,6 @@
             //Si viene con id, va a editar
             postData(ruta_editar, objeto)
                 .then((data) => {
-                    console.log(data);
                     swal({
                         title: "Cliente editado exitosamente!",
                         icon: "success",

@@ -72,7 +72,6 @@
         };
         dataToSet = obtenerDataCategoria(objeto);
         dataToSet.then((data) => {
-            console.log(data.categoria)
             let categoriaData = data.categoria;
             document.getElementById("id_tipo_documento_modal_create_id").value = categoriaData.id;
             document.getElementById("nombre_categoria_modal_create_id").value = categoriaData.nombre;
@@ -88,7 +87,6 @@
         }
         postData(ruta_eliminar_categoria, data)
             .then((data) => {
-                console.log(data);
                 alert("Periodo eliminada exitosamente!");
                 location.reload();
             });

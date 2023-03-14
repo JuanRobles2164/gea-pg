@@ -107,7 +107,6 @@
             }
             postData('{{route("licitacion.actualizar")}}', data)
             .then((data) => {
-                console.log(data);
                     swal({
                         title: "Licitacion editada exitosamente!",
                         icon: "success",

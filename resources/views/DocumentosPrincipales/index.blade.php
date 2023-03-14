@@ -148,7 +148,6 @@
 
             postData(ruta_alternar_estado_documento, objeto)
             .then((data) => {
-                console.log(data);
                 location.reload();
             });   
         }
@@ -171,7 +170,6 @@
                     .then((result) => {
                         postData(ruta_eliminar_documento, data)
                         .then((data) =>{
-                            console.log(data);
                             location.reload();
                         });
                     });
@@ -192,7 +190,6 @@
             };
             dataToSet = obtenerDataDocumento(objeto);
             dataToSet.then((data) => {
-                console.log(data);
 
                 let dataDoc = data;
 
@@ -230,16 +227,5 @@
             });
         }
 
-        var elInput = document.getElementById('criterio');
-        elInput.addEventListener('keyup', function(e) {
-            var keycode = e.keyCode || e.which;
-            if (keycode == 13) {
-                let href = `{{route('documento_principal.index')}}?criterio=:valor_cri`;
-                let criterio = elInput.value;
-                let final = ""+href;
-                final = final.replace(":valor_cri", criterio);
-                window.location.href = final;
-            }
-        });
     </script>
 @endpush

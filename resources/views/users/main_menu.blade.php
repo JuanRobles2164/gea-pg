@@ -151,8 +151,6 @@
             };
             dataToSet = obtenerDataUsuario(objeto);
             dataToSet.then((data) => {
-                console.log(data);
-
                 let userData = data.user;
                 let rolesData = data.roles;
 
@@ -172,7 +170,6 @@
                 });
 
                 data.roles.forEach(el => {
-                    console.log(el);
                     if (el.estado == 1) {
                         document.getElementById("rolView" + el.rol).checked = true;
                     }
@@ -197,7 +194,6 @@
                 document.getElementById("identificacion_user_modal_create_id").value = userData.identificacion;
 
                 data.roles.forEach(el => {
-                    console.log(el);
                     if (el.estado == 1) {
                         document.getElementById("rol" + el.rol).checked = true;
                     }
@@ -224,7 +220,6 @@
                     .then((result) => {
                         postData(ruta_eliminar_usuario, data)
                         .then((data) =>{
-                            console.log(data);
                             location.reload();
                         });
                     });
@@ -241,7 +236,6 @@
 
             postData(ruta_restaurar_password, objeto)
             .then((data) => {
-                console.log(data);
                 swal("Contraseña reestablecida satisfactoriamente", " ", "success");
             });   
         }
@@ -253,23 +247,9 @@
 
             postData(ruta_alternar_estado_usuario, objeto)
             .then((data) => {
-                console.log(data);
                 location.reload();
             });   
         }
-
-        var elInput = document.getElementById('criterio');
-        elInput.addEventListener('keyup', function(e) {
-            var keycode = e.keyCode || e.which;
-            if (keycode == 13) {
-                let href = `{{route('usuario.index')}}?criterio=:valor_cri`;
-                let criterio = elInput.value;
-                let final = ""+href;
-                final = final.replace(":valor_cri", criterio);
-                window.location.href = final;
-            }
-        });
-
 
     </script>
     @endpush

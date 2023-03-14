@@ -101,6 +101,17 @@
     var ruta_consultar_tDocs_asociados = "{{route('tipo_documento.encontrar_por_fase')}}";
     var ruta_alternar_estado_fase = "{{route('fase.toggle_fase_state')}}";
 
+    const tDocsGlobal = [];
+   
+    obtenerDatosGlobal();
+
+    async function obtenerDatosGlobal() {
+        const tDocs = await obtenerDataTDocs();
+        tDocs.map((data) => {
+            tDocsGlobal.push(data);
+        });
+    }
+
     async function obtenerDataFase(data) {
         const response = await fetch(ruta_encontrar_fase + "?id=" + data.id);
         return await response.json();
@@ -112,7 +123,6 @@
         };
         dataToSet = obtenerDataFase(objeto);
         dataToSet.then((data) => {
-            console.log(data);
 
             let faseData = data;
 
@@ -135,7 +145,6 @@
         };
         dataToSet = obtenerDataFase(objeto);
         dataToSet.then((data) => {
-            console.log(data);
             let FaseData = data;
             document.getElementById("id_fase_modal_create_id").value = FaseData.id;
             document.getElementById("nombre_fase_modal_create_id").value = FaseData.nombre;
@@ -165,7 +174,6 @@
                 .then((result) => {
                     postData(ruta_eliminar_fase, data)
                     .then((data) =>{
-                        console.log(data);
                         location.reload();
                     });
                 });
@@ -198,11 +206,8 @@
         try {
             let tDocs = [];
             let tDocsAsociadas  = [];
-            dataToSet = obtenerDataTDocs();
-            dataToSet.then((data) => {
-                console.log(data.data);
-                tDocs = data.data;
-                if(idObjeto == null){
+            tDocs = [...tDocsGlobal];
+            if(idObjeto == null){
                     listItems = [];
                     document.getElementById('label_tdocs').innerHTML = '';
                     document.getElementById('draggable-list').innerHTML = '';
@@ -216,14 +221,12 @@
                         option.text = el.nombre;
                         selectTDocs.appendChild(option);
                     });
-                }
-            });
-            if(idObjeto != null){
-                dataToSet = obtenerDataTDocsAsociados(idObjeto);
+                    console.log(tDocs, 'td');
+            }else{
+                let dataToSet = obtenerDataTDocsAsociados(idObjeto);
                 dataToSet.then((data) => {
-                    console.log(data);
                     tDocsAsociadas = data;
-
+                    console.log(tDocsAsociadas, 'asociado');
                     if(tDocs !=  null && tDocsAsociadas != null){
                         listItems = [];
                         document.getElementById('label_tdocs').innerHTML = '';
@@ -243,6 +246,7 @@
                         let option = document.getElementById("option_select");
                         selectTDocs.innerHTML = '';
                         selectTDocs.appendChild(option);     
+                        console.log(selectTDocs, 'select');
                         tDocs.forEach((el) => {
                             const option = document.createElement('option');
                             option.value = el.id;
@@ -250,8 +254,8 @@
                             selectTDocs.appendChild(option);
                         });
                         
-                        console.log(tDocs);
-                        console.log(tDocsAsociadas);
+                        console.log(tDocs, 'tipos documentos');
+                        console.log(tDocsAsociadas, 'tipo docs asociadas');
                     }
                     
                 });
@@ -308,22 +312,9 @@
 
         postData(ruta_alternar_estado_fase, objeto)
         .then((data) => {
-            console.log(data);
             location.reload();
         });   
     }
-
-    var elInput = document.getElementById('criterio');
-    elInput.addEventListener('keyup', function(e) {
-        var keycode = e.keyCode || e.which;
-        if (keycode == 13) {
-            let href = `{{route('fase.index')}}?criterio=:valor_cri`;
-            let criterio = elInput.value;
-            let final = ""+href;
-            final = final.replace(":valor_cri", criterio);
-            window.location.href = final;
-        }
-    });
 
 </script>
 @endpush

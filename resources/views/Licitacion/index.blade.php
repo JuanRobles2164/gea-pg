@@ -222,8 +222,6 @@ use App\Models\Rol;
             dataToSet.then((data) => {
                 let licData = data;
 
-                console.log(licData);
-
                 document.getElementById("numero_licitacion_view_modal_id").value = licData.numero;
                 document.getElementById("numero_licitacion_view_modal_id").readOnly = true;
 
@@ -259,7 +257,6 @@ use App\Models\Rol;
             dataToSet = obtenerDataLicitacion(objeto);
             dataToSet.then((data) => {
                 let licData = data;
-                console.log(data);
                 document.getElementById("numero_licitacion_crear_modal_id").value = licData.numero;
                 document.getElementById("categoria_licitacion_crear_modal_id").value = licData.categoria;
                 document.getElementById("nombre_licitacion_crear_modal_id").value = licData.nombre;
@@ -292,7 +289,6 @@ use App\Models\Rol;
                     .then((result) => {
                         postData(ruta_eliminar_licitacion, data)
                         .then((data) =>{
-                            console.log(data);
                             location.reload();
                         });
                     });
@@ -317,7 +313,6 @@ use App\Models\Rol;
                 if (result) {
                     postData(ruta_clonar_licitacion, data)
                     .then((data) =>{
-                        console.log(data);
                         location.reload();
                     });
                 } else {
@@ -326,17 +321,6 @@ use App\Models\Rol;
             });
             
         }
-        var elInput = document.getElementById('criterio');
-        elInput.addEventListener('keyup', function(e) {
-            var keycode = e.keyCode || e.which;
-            if (keycode == 13) {
-                let href = `{{route('licitacion.index')}}?criterio=:valor_cri`;
-                let criterio = elInput.value;
-                let final = ""+href;
-                final = final.replace(":valor_cri", criterio);
-                window.location.href = final;
-            }
-        });
 </script>
     
 @endpush

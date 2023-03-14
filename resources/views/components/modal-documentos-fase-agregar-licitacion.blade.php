@@ -78,11 +78,9 @@
 
         function retornarDocumentosFromModalSeleccionados(){
             let els = document.querySelectorAll("input[type=checkbox]:checked");
-            console.log(els);
             let valoresProcesados = [];
             els.forEach((e) => {
                 let valores = e.value.split(",,");
-                console.log(valores);
                 let objeto = {
                     id: valores[0],
                     id_tdoc: valores[1],

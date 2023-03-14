@@ -38,12 +38,10 @@
             css_style: color
         }
         if(id == undefined || id == null || id == ''){
-            console.log(ruta_crear, objeto)
             //si viene vacÃ­o, va a crear
             objeto.id = null;
             postData(ruta_crear, objeto)
             .then((data) => {
-                console.log(data);
                 alert("Tipo de documento creado exitosamente!");
                 location.reload();
             });
@@ -51,7 +49,6 @@
             //Si viene con id, va a editar
             postData(ruta_editar, objeto)
             .then((data) => {
-                console.log(data);
                 alert("Tipo de documento editado exitosamente!");
                 location.reload();
             });

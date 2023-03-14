@@ -88,7 +88,6 @@
             if (result) {
                 postData(ruta_cambiar_estado_fase_licitacion, data)
                 .then((data) =>{
-                    console.log(data);
                     location.reload();
                 });
             } else {

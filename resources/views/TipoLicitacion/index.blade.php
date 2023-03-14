@@ -115,7 +115,6 @@
         };
         dataToSet = obtenerDataTipoLicitacion(objeto);
         dataToSet.then((data) => {
-            console.log(data);
 
             let tipoLicitacionData = data;
 
@@ -137,12 +136,10 @@
         };
         dataToSet = obtenerDataTipoLicitacion(objeto);
         dataToSet.then((data) => {
-            console.log(data);
             let tipoLicitacionData = data;
             document.getElementById("id_tipo_licitacion_modal_create_id").value = tipoLicitacionData.id;
             document.getElementById("nombre_tipo_licitacion_modal_create_id").value = tipoLicitacionData.nombre;
             document.getElementById("descripcion_tipo_licitacion_modal_create_id").value = tipoLicitacionData.descripcion;
-            console.log(idObjeto);
             obtenerDatos(idObjeto, true);
 
             $('#id_modal_tipo_licitacion').modal('show');
@@ -167,7 +164,6 @@
                 .then((result) => {
                     postData(ruta_eliminar_tipo_licitacion, data)
                     .then((data) =>{
-                        console.log(data);
                         location.reload();
                     });
                 });
@@ -202,7 +198,6 @@
             let fasesAsociadas  = [];
             dataToSet = obtenerDataFase();
             dataToSet.then((data) => {
-                console.log(data.data);
                 fases = data.data;
                 if(idObjeto == null){
                     listItems = [];
@@ -223,7 +218,6 @@
             if(idObjeto != null){
                 dataToSet = obtenerDataFaseAsociadas(idObjeto);
                 dataToSet.then((data) => {
-                    console.log(data);
                     fasesAsociadas = data;
 
                     if(fases !=  null && fasesAsociadas != null){
@@ -311,21 +305,9 @@
 
         postData(ruta_alternar_estado_tipolic, objeto)
         .then((data) => {
-            console.log(data);
             location.reload();
         });   
     }
-    var elInput = document.getElementById('criterio');
-        elInput.addEventListener('keyup', function(e) {
-            var keycode = e.keyCode || e.which;
-            if (keycode == 13) {
-                let href = `{{route('tipo_licitacion.index')}}?criterio=:valor_cri`;
-                let criterio = elInput.value;
-                let final = ""+href;
-                final = final.replace(":valor_cri", criterio);
-                window.location.href = final;
-            }
-        });
 
 </script>
 @endpush

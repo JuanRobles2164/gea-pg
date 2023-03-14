@@ -138,7 +138,6 @@
             let dataToSet = obtenerDocumentosTipoLicitacion(idTipoLicitacionSelected);
             dataToSet
                 .then((data) => {
-                    console.log(data);
                     //Estructura de la data
                     /*0 => {
                         'fase' => obj,
@@ -154,7 +153,6 @@
         let response = obtenerDocumentosFase(idFase);
         response
             .then((data) => {
-                console.log(data);
                 let els = document.querySelectorAll("input[type=hidden]");
                 let elementosJson = [];
                 let elementos = data.filter((e) => {
@@ -181,7 +179,6 @@
                         return true;
                     }
                 });
-                console.log(nuevosElementos);
                 renderizarDocumentosFasesModal(nuevosElementos, "tbodyDocumentosFaseTipoLicitacion" + idFase);
                 $('#modalFases').modal('show');
             });
@@ -262,7 +259,6 @@
                 .replace(":id_tipo_licitacion", idTipoLicitacion);
             let htmlElementoTablaTemplate = "" + elementoDocumentoTabla;
             let documentos = data[elemento].documentos;
-            console.log(documentos);
             documentos.forEach((el) => {
                 htmlElementosTabla += htmlElementoTablaTemplate.replace(":doc_id", el.id)
                     .replace(":tdoc_id", el.id_tdoc)

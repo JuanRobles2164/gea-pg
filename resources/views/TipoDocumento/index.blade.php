@@ -146,8 +146,6 @@ use App\Enums\UnidadValidezEnum;
             };
             dataToSet = obtenerDataTipoDocumento(objeto);
             dataToSet.then((data) => {
-                console.log(data);
-
                 document.getElementById("nombre_tipo_documento_modal_view_id").value = data.nombre;
                 document.getElementById("nombre_tipo_documento_modal_view_id").readOnly = true;
                 document.getElementById("descripcion_tipo_documento_modal_view_id").value = data.descripcion;
@@ -164,7 +162,6 @@ use App\Enums\UnidadValidezEnum;
             };
             dataToSet = obtenerDataTipoDocumento(objeto);
             dataToSet.then((data) => {
-                console.log(data);
                 document.getElementById("id_tipo_documento_modal_create_id").value = data.id;
                 document.getElementById("nombre_tipo_documento_modal_create_id").value = data.nombre;
                 document.getElementById("descripcion_tipo_documento_modal_create_id").value = data.descripcion;
@@ -191,7 +188,6 @@ use App\Enums\UnidadValidezEnum;
                     .then((result) => {
                         postData(ruta_eliminar_tipo_documento, data)
                         .then((data) =>{
-                            console.log(data);
                             location.reload();
                         });
                     });
@@ -207,22 +203,9 @@ use App\Enums\UnidadValidezEnum;
             }
             postData(ruta_alternar_estado_tipodoc, objeto)
             .then((data) => {
-                console.log(data);
                 location.reload();
             });   
         }
-
-        var elInput = document.getElementById('criterio');
-        elInput.addEventListener('keyup', function(e) {
-            var keycode = e.keyCode || e.which;
-            if (keycode == 13) {
-                let href = `{{route('tipo_documento.index')}}?criterio=:valor_cri`;
-                let criterio = elInput.value;
-                let final = ""+href;
-                final = final.replace(":valor_cri", criterio);
-                window.location.href = final;
-            }
-        });
 
     </script>
 

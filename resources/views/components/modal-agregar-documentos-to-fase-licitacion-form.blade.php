@@ -58,7 +58,6 @@
             let response = obtenerDocumentosFase(idFase);
             response
                 .then((data) => {
-                    console.log(data);
                     let els = document.querySelectorAll("input[name='id_documento_asociado_fase[]']");
                     let elementosJson = [];
                     let elementos = data.filter((e) => {
