@@ -115,8 +115,6 @@
         };
         dataToSet = obtenerDataTipoLicitacion(objeto);
         dataToSet.then((data) => {
-            console.log(data);
-
             let tipoLicitacionData = data;
 
             document.getElementById("nombre_tipo_licitacion_modal_details_id").value = tipoLicitacionData.nombre;
@@ -137,12 +135,10 @@
         };
         dataToSet = obtenerDataTipoLicitacion(objeto);
         dataToSet.then((data) => {
-            console.log(data);
             let tipoLicitacionData = data;
             document.getElementById("id_tipo_licitacion_modal_create_id").value = tipoLicitacionData.id;
             document.getElementById("nombre_tipo_licitacion_modal_create_id").value = tipoLicitacionData.nombre;
             document.getElementById("descripcion_tipo_licitacion_modal_create_id").value = tipoLicitacionData.descripcion;
-            console.log(idObjeto);
             obtenerDatos(idObjeto, true);
 
             $('#id_modal_tipo_licitacion').modal('show');
@@ -167,7 +163,6 @@
                 .then((result) => {
                     postData(ruta_eliminar_tipo_licitacion, data)
                     .then((data) =>{
-                        console.log(data);
                         location.reload();
                     });
                 });
@@ -202,8 +197,7 @@
             let fasesAsociadas  = [];
             dataToSet = obtenerDataFase();
             dataToSet.then((data) => {
-                console.log(data.data);
-                fases = data.data;
+                fases = data;
                 if(idObjeto == null){
                     listItems = [];
                     document.getElementById('label_fases').innerHTML = '';
@@ -223,7 +217,6 @@
             if(idObjeto != null){
                 dataToSet = obtenerDataFaseAsociadas(idObjeto);
                 dataToSet.then((data) => {
-                    console.log(data);
                     fasesAsociadas = data;
 
                     if(fases !=  null && fasesAsociadas != null){
@@ -251,9 +244,6 @@
                             option.text = el.nombre;
                             selectFases.appendChild(option);
                         });
-                        
-                        console.log(fases);
-                        console.log(fasesAsociadas);
                     }
                     
                 });
@@ -311,7 +301,6 @@
 
         postData(ruta_alternar_estado_tipolic, objeto)
         .then((data) => {
-            console.log(data);
             location.reload();
         });   
     }

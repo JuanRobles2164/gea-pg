@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label for="nombre_fase_modal_details_id">Nombre:</label>
-                <input class="form-control form-control-alternative" id="nombre_fase_modal_details_id">{{isset($model->id) ? $model->nombre : '' }}</input>
+                <input class="form-control form-control-alternative" id="nombre_fase_modal_details_id" value="{{isset($model->id) ? $model->nombre : '' }}"/>
             </div>
         </div>
     </div>

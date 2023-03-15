@@ -84,6 +84,7 @@
 
 @push('js')
 <script>
+    var todoTdocs = [];
     $(document).ready(function () {
         $('#tableinclude').DataTable({
             language: {
@@ -112,7 +113,6 @@
         };
         dataToSet = obtenerDataFase(objeto);
         dataToSet.then((data) => {
-            console.log(data);
 
             let faseData = data;
 
@@ -133,9 +133,10 @@
         let objeto = {
             id: idObjeto
         };
+        //Limpiar todo el select
+        //document.getElementById("select_tdocs").length = 1;
         dataToSet = obtenerDataFase(objeto);
         dataToSet.then((data) => {
-            console.log(data);
             let FaseData = data;
             document.getElementById("id_fase_modal_create_id").value = FaseData.id;
             document.getElementById("nombre_fase_modal_create_id").value = FaseData.nombre;
@@ -165,7 +166,6 @@
                 .then((result) => {
                     postData(ruta_eliminar_fase, data)
                     .then((data) =>{
-                        console.log(data);
                         location.reload();
                     });
                 });
@@ -177,7 +177,7 @@
 
     async function obtenerDataTDocs(data) {
         const response = await fetch(ruta_consultar_tDocs);
-        return await response.json();
+        return response.json();
     }
 
     async function obtenerDataTDocsAsociados(data) {
@@ -200,8 +200,7 @@
             let tDocsAsociadas  = [];
             dataToSet = obtenerDataTDocs();
             dataToSet.then((data) => {
-                console.log(data.data);
-                tDocs = data.data;
+                tDocs = data;
                 if(idObjeto == null){
                     listItems = [];
                     document.getElementById('label_tdocs').innerHTML = '';
@@ -221,13 +220,16 @@
             if(idObjeto != null){
                 dataToSet = obtenerDataTDocsAsociados(idObjeto);
                 dataToSet.then((data) => {
-                    console.log(data);
                     tDocsAsociadas = data;
 
                     if(tDocs !=  null && tDocsAsociadas != null){
                         listItems = [];
                         document.getElementById('label_tdocs').innerHTML = '';
                         document.getElementById('draggable-list').innerHTML = '';
+
+                        draggable_list = document.getElementById('draggable-list-view');
+                        draggable_list.innerHTML = "";
+
                         tDocsAsociadas.forEach((el) => {
                             if(buscarTDocEntreTDocsAsociadas(el, tDocs)){
                                 let index = tDocs.findIndex(function(item){
@@ -237,6 +239,7 @@
                                     console.log('eliminado', tDocs.splice(index, 1), index);
                                 }
                             }
+
                             crearListaFase(el, isEditar);
                         });
                         let selectTDocs =  document.getElementById("select_tdocs");
@@ -249,15 +252,12 @@
                             option.text = el.nombre;
                             selectTDocs.appendChild(option);
                         });
-                        
-                        console.log(tDocs);
-                        console.log(tDocsAsociadas);
                     }
                     
                 });
             }
         }catch (err) {
-         console.error(err);
+            console.error(err);
         }
     }
 
@@ -273,6 +273,7 @@
             }
         }else{
             draggable_list = document.getElementById('draggable-list-view');
+
             select  = document.getElementById('select_tdocs-view');
             if(tDoc.id != 0){
                 document.getElementById('label_tdocs-view').innerHTML = lab_text;
@@ -308,7 +309,6 @@
 
         postData(ruta_alternar_estado_fase, objeto)
         .then((data) => {
-            console.log(data);
             location.reload();
         });   
     }
