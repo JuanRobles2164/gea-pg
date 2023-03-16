@@ -241,9 +241,9 @@
                                 let index = tDocs.findIndex(function(item){
                                     return item.id == el.id;
                                 });
-                                // if(index != -1){
-                                //     console.log('eliminado', tDocs.splice(index, 1), index);
-                                // }
+                                if(index != -1){
+                                    console.log('eliminado', tDocs.splice(index, 1), index);
+                                }
                             }
                             crearListaFase(el, true);
                         });
@@ -285,9 +285,9 @@
                             let index = tDocs.findIndex(function(item){
                                 return item.id == el.id;
                             });
-                            // if(index != -1){
-                            //     console.log('eliminado', tDocs.splice(index, 1), index);
-                            // }
+                            if(index != -1){
+                                console.log('eliminado', tDocs.splice(index, 1), index);
+                            }
                         }
                         crearListaFase(el, false);
                     });
