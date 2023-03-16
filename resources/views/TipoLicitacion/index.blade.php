@@ -223,7 +223,7 @@
                         selectFases.appendChild(option);
                     });
             }else{
-                dataToSet = obtenerDataFaseAsociadas(idObjeto);
+                let dataToSet = obtenerDataFaseAsociadas(idObjeto);
                 dataToSet.then((data) => {
                     fasesAsociadas = data;
 
@@ -231,6 +231,7 @@
                         listItems = [];
                         document.getElementById('label_fases').innerHTML = '';
                         document.getElementById('draggable-list').innerHTML = '';
+
                         fasesAsociadas.forEach((el) => {
                             if(buscarFaseEntreFasesAsociadas(el, fases)){
                                 let index = fases.findIndex(function(item){

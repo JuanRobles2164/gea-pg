@@ -233,9 +233,6 @@
                         document.getElementById('label_tdocs').innerHTML = '';
                         document.getElementById('draggable-list').innerHTML = '';
 
-                        draggable_list = document.getElementById('draggable-list-view');
-                        draggable_list.innerHTML = "";
-
                         tDocsAsociadas.forEach((el) => {
                             if(buscarTDocEntreTDocsAsociadas(el, tDocs)){
                                 let index = tDocs.findIndex(function(item){
@@ -250,7 +247,6 @@
                         let selectTDocs =  document.getElementById("select_tdocs");
                         let option = document.getElementById("option_select");
                         selectTDocs.innerHTML = '';
-                        console.log(selectTDocs, 'select');
                         selectTDocs.appendChild(option);         
                         tDocs.forEach((el) => {
                             const option = document.createElement('option');
@@ -310,7 +306,6 @@
             }
         }else{
             draggable_list = document.getElementById('draggable-list-view');
-
             select  = document.getElementById('select_tdocs-view');
             if(tDoc.id != 0){
                 document.getElementById('label_tdocs-view').innerHTML = lab_text;
@@ -325,16 +320,26 @@
             listItem.setAttribute('data-index', index);
             listItem.setAttribute('id-tdocs', tDoc.id);
             listItem.setAttribute('nombre-tdocs', nombreTDocs);
-            listItem.innerHTML = `
-                <div class="draggable" draggable="false">
-                    <p class="list-name justify-content-start" id="parrafo${index}">
-                        ${nombreTDocs} 
-                    </p>
-                    <a type="button" id="boton" class="btn btn-danger btn-sm justify-content-center" onclick="quitarDeLista(${index})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
-                        <i class="far fa-trash-alt" style="color: white;"></i>
-                    </a>
-                </div>
-            `;
+            if(isEditar){
+                listItem.innerHTML = `
+                    <div class="draggable" draggable="false">
+                        <p class="list-name justify-content-start" id="parrafo${index}">
+                            ${nombreTDocs} 
+                        </p>
+                        <a type="button" id="boton" class="btn btn-danger btn-sm justify-content-center" onclick="quitarDeLista(${index})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                            <i class="far fa-trash-alt" style="color: white;"></i>
+                        </a>
+                    </div>
+                `;
+            }else{
+                listItem.innerHTML = `
+                    <div class="draggable" draggable="false">
+                        <p class="list-name justify-content-start" id="parrafo${index}">
+                            ${nombreTDocs} 
+                        </p>
+                    </div>
+                `;
+            }
             listItems.push(listItem);
             draggable_list.appendChild(listItem);
         }
