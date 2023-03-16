@@ -64,7 +64,7 @@
                             <a href="{{route('archivos.ver_archivo', ['id' => $documento->id])}}" class="btn btn-default btn-sm" target="_blank" onclick="" title="Ver Documento" data-toggle="tooltip" data-placement="bottom">
                                  <i class="fas fa-file-import"></i>
                             </a>
-                            <a onclick="habilitarFilePond()" class="btn btn-default btn-sm" style="color: white;" title="Descargar" data-toggle="tooltip" data-placement="bottom">
+                            <a onclick="habilitarFilePond()" class="btn btn-default btn-sm" style="color: white;" title="Reemplazar" data-toggle="tooltip" data-placement="bottom">
                                 <i class="fas fa-sync-alt"></i>
                             </a>
                             <input type="hidden" id="carga" name="cargo_archivo" value="false">
@@ -76,7 +76,7 @@
 
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label class="form-label">?:</label>
+                                <label class="form-label">Tipo de recurso:</label>
                                 <div class="form-row form-control form-control-alternative">
                                     <div class="custom-control custom-control-alternative custom-radio mb-3">
                                         <input type="radio" name="recurrente_constante" class="custom-control-input" id="documento_recurrente_constante1" value="recurrente" {{ $documento->recurrente == 1 ? 'checked' : ''}}>

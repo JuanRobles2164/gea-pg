@@ -115,7 +115,6 @@
         };
         dataToSet = obtenerDataTipoLicitacion(objeto);
         dataToSet.then((data) => {
-
             let tipoLicitacionData = data;
 
             document.getElementById("nombre_tipo_licitacion_modal_details_id").value = tipoLicitacionData.nombre;
@@ -198,7 +197,7 @@
             let fasesAsociadas  = [];
             dataToSet = obtenerDataFase();
             dataToSet.then((data) => {
-                fases = data.data;
+                fases = data;
                 if(idObjeto == null){
                     listItems = [];
                     document.getElementById('label_fases').innerHTML = '';
@@ -245,9 +244,6 @@
                             option.text = el.nombre;
                             selectFases.appendChild(option);
                         });
-                        
-                        console.log(fases);
-                        console.log(fasesAsociadas);
                     }
                     
                 });

@@ -84,6 +84,7 @@
 
 @push('js')
 <script>
+    var todoTdocs = [];
     $(document).ready(function () {
         $('#tableinclude').DataTable({
             language: {
@@ -143,6 +144,8 @@
         let objeto = {
             id: idObjeto
         };
+        //Limpiar todo el select
+        //document.getElementById("select_tdocs").length = 1;
         dataToSet = obtenerDataFase(objeto);
         dataToSet.then((data) => {
             let FaseData = data;
@@ -185,7 +188,7 @@
 
     async function obtenerDataTDocs(data) {
         const response = await fetch(ruta_consultar_tDocs);
-        return await response.json();
+        return response.json();
     }
 
     async function obtenerDataTDocsAsociados(data) {
@@ -229,6 +232,10 @@
                     if(tDocs !=  null && tDocsAsociadas != null){
                         document.getElementById('label_tdocs').innerHTML = '';
                         document.getElementById('draggable-list').innerHTML = '';
+
+                        draggable_list = document.getElementById('draggable-list-view');
+                        draggable_list.innerHTML = "";
+
                         tDocsAsociadas.forEach((el) => {
                             if(buscarTDocEntreTDocsAsociadas(el, tDocs)){
                                 let index = tDocs.findIndex(function(item){
@@ -257,7 +264,7 @@
                 });
             }
         }catch (err) {
-         console.error(err);
+            console.error(err);
         }
     }
 
@@ -303,6 +310,7 @@
             }
         }else{
             draggable_list = document.getElementById('draggable-list-view');
+
             select  = document.getElementById('select_tdocs-view');
             if(tDoc.id != 0){
                 document.getElementById('label_tdocs-view').innerHTML = lab_text;
