@@ -14,7 +14,7 @@
                 <div class="col">
                     <div class="row align-items-center">
                         <div class="col justify-content-end text-right">
-                            <button onclick="obtenerDatos();" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_fases">
+                            <button onclick="obtenerDatosEdit();" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_fases">
                                 Crear <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -133,7 +133,7 @@
             document.getElementById("descripcion_fase_modal_details_id").readOnly = true;
 
            
-            obtenerDatos(idObjeto, false);
+            obtenerDatosView(idObjeto);
 
             $('#id_modal_view_fase').modal('show');
         });
@@ -150,7 +150,7 @@
             document.getElementById("nombre_fase_modal_create_id").value = FaseData.nombre;
             document.getElementById("descripcion_fase_modal_create_id").value = FaseData.descripcion;
 
-            obtenerDatos(idObjeto, true);
+            obtenerDatosEdit(idObjeto);
 
             $('#id_modal_fases').modal('show');
         });
@@ -202,7 +202,7 @@
         return objetoBusqueda != undefined;
     }
 
-    const  obtenerDatos = async (idObjeto = null, isEditar) => {
+    const  obtenerDatosEdit = async (idObjeto = null) => {
         try {
             let tDocs = [];
             let tDocsAsociadas  = [];
@@ -226,9 +226,7 @@
                 let dataToSet = obtenerDataTDocsAsociados(idObjeto);
                 dataToSet.then((data) => {
                     tDocsAsociadas = data;
-                    console.log(tDocsAsociadas, 'asociado');
                     if(tDocs !=  null && tDocsAsociadas != null){
-                        listItems = [];
                         document.getElementById('label_tdocs').innerHTML = '';
                         document.getElementById('draggable-list').innerHTML = '';
                         tDocsAsociadas.forEach((el) => {
@@ -236,30 +234,58 @@
                                 let index = tDocs.findIndex(function(item){
                                     return item.id == el.id;
                                 });
-                                if(index != -1){
-                                    console.log('eliminado', tDocs.splice(index, 1), index);
-                                }
+                                // if(index != -1){
+                                //     console.log('eliminado', tDocs.splice(index, 1), index);
+                                // }
                             }
-                            crearListaFase(el, isEditar);
+                            crearListaFase(el, true);
                         });
                         let selectTDocs =  document.getElementById("select_tdocs");
                         let option = document.getElementById("option_select");
                         selectTDocs.innerHTML = '';
-                        selectTDocs.appendChild(option);     
                         console.log(selectTDocs, 'select');
+                        selectTDocs.appendChild(option);         
                         tDocs.forEach((el) => {
                             const option = document.createElement('option');
                             option.value = el.id;
                             option.text = el.nombre;
                             selectTDocs.appendChild(option);
                         });
-                        
-                        console.log(tDocs, 'tipos documentos');
-                        console.log(tDocsAsociadas, 'tipo docs asociadas');
+                    
                     }
                     
                 });
             }
+        }catch (err) {
+         console.error(err);
+        }
+    }
+
+    const  obtenerDatosView = async (idObjeto) => {
+        try {
+            let tDocs = [];
+            let tDocsAsociadas  = [];
+            tDocs = [...tDocsGlobal];
+           
+            let dataToSet = obtenerDataTDocsAsociados(idObjeto);
+            dataToSet.then((data) => {
+                tDocsAsociadas = data;
+                if(tDocs !=  null && tDocsAsociadas != null){
+                    document.getElementById('label_tdocs-view').innerHTML = '';
+                    document.getElementById('draggable-list-view').innerHTML = '';
+                    tDocsAsociadas.forEach((el) => {
+                        if(buscarTDocEntreTDocsAsociadas(el, tDocs)){
+                            let index = tDocs.findIndex(function(item){
+                                return item.id == el.id;
+                            });
+                            // if(index != -1){
+                            //     console.log('eliminado', tDocs.splice(index, 1), index);
+                            // }
+                        }
+                        crearListaFase(el, false);
+                    });
+                }        
+            });
         }catch (err) {
          console.error(err);
         }
