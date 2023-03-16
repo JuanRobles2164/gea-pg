@@ -16,7 +16,7 @@
                 <div class="col">
                     <div class="row align-items-center">
                         <div class="col justify-content-end text-right">
-                            <button onclick="obtenerDatos();" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_tipo_licitacion">
+                            <button onclick="obtenerDatosEdit();" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_tipo_licitacion">
                                 Crear <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -97,12 +97,22 @@
             });
     });
     let listItems = [];
+    let dataGlobal = [];
     var ruta_encontrar_tipo_licitacion = "{{route('tipo_licitacion.encontrar')}}";
     var ruta_editar_tipo_licitacion = "{{route('tipo_licitacion.actualizar')}}";
     var ruta_eliminar_tipo_licitacion = "{{route('tipo_licitacion.eliminar')}}";
     var ruta_consultar_fases = "{{route('fase.listar')}}";
     var ruta_consultar_fases_asociadas = "{{route('fase.encontrar_por_tipolic')}}";
-    var ruta_alternar_estado_tipolic = "{{route('tipo_licitacion.toggle_tipo_licitacion_state')}}"
+    var ruta_alternar_estado_tipolic = "{{route('tipo_licitacion.toggle_tipo_licitacion_state')}}";
+
+    obtenerDatosGlobal();
+
+    async function obtenerDatosGlobal() {
+        const tDocs = await obtenerDataFase();
+        tDocs.map((data) => {
+            dataGlobal.push(data);
+        });
+    }
 
     async function obtenerDataTipoLicitacion(data) {
         const response = await fetch(ruta_encontrar_tipo_licitacion + "?id=" + data.id);
@@ -123,7 +133,7 @@
             document.getElementById("descripcion_tipo_licitacion_modal_details_id").value = tipoLicitacionData.descripcion;
             document.getElementById("descripcion_tipo_licitacion_modal_details_id").readOnly = true;
 
-            obtenerDatos(idObjeto, false);
+            obtenerDatosView(idObjeto);
 
             $('#id_modal_view_tipo_licitacion').modal('show');
         });
@@ -139,7 +149,7 @@
             document.getElementById("id_tipo_licitacion_modal_create_id").value = tipoLicitacionData.id;
             document.getElementById("nombre_tipo_licitacion_modal_create_id").value = tipoLicitacionData.nombre;
             document.getElementById("descripcion_tipo_licitacion_modal_create_id").value = tipoLicitacionData.descripcion;
-            obtenerDatos(idObjeto, true);
+            obtenerDatosEdit(idObjeto);
 
             $('#id_modal_tipo_licitacion').modal('show');
         });
@@ -191,14 +201,14 @@
         return objetoBusqueda != undefined;
     }
 
-    const  obtenerDatos = async (idObjeto = null, isEditar) => {
+    const  obtenerDatosEdit = async (idObjeto = null) => {
         try {
             let fases = [];
             let fasesAsociadas  = [];
-            dataToSet = obtenerDataFase();
-            dataToSet.then((data) => {
-                fases = data;
-                if(idObjeto == null){
+            
+            fases = [...dataGlobal];
+
+            if(idObjeto == null){
                     listItems = [];
                     document.getElementById('label_fases').innerHTML = '';
                     document.getElementById('draggable-list').innerHTML = '';
@@ -212,9 +222,7 @@
                         option.text = el.nombre;
                         selectFases.appendChild(option);
                     });
-                }
-            });
-            if(idObjeto != null){
+            }else{
                 dataToSet = obtenerDataFaseAsociadas(idObjeto);
                 dataToSet.then((data) => {
                     fasesAsociadas = data;
@@ -232,7 +240,7 @@
                                     console.log('eliminado', fases.splice(index, 1), index);
                                 }
                             }
-                            crearListaFase(el, isEditar);
+                            crearListaFase(el, true);
                         });
                         let selectFases =  document.getElementById("select_fases");
                         let option = document.getElementById("option_select");
@@ -252,6 +260,41 @@
          console.error(err);
         }
     }
+
+    const  obtenerDatosView = async (idObjeto) => {
+        try {
+            let fases = [];
+            let fasesAsociadas  = [];
+            
+            fases = [...dataGlobal];
+
+            dataToSet = obtenerDataFaseAsociadas(idObjeto);
+            dataToSet.then((data) => {
+                fasesAsociadas = data;
+                console.log(dataToSet, 'asociadas');
+                if(fases !=  null && fasesAsociadas != null){
+                    listItems = [];
+                    document.getElementById('label_fases-view').innerHTML = '';
+                    document.getElementById('draggable-list-view').innerHTML = '';
+                    fasesAsociadas.forEach((el) => {
+                        if(buscarFaseEntreFasesAsociadas(el, fases)){
+                            let index = fases.findIndex(function(item){
+                                return item.id == el.id;
+                            });
+                            if(index != -1){
+                                console.log('eliminado', fases.splice(index, 1), index);
+                            }
+                        }
+                        crearListaFase(el, false);
+                    });
+                }
+            });
+                
+        }catch (err) {
+         console.error(err);
+        }
+    }
+
 
     function crearListaFase(fase, isEditar){
         let draggable_list = null;
@@ -278,7 +321,8 @@
             listItem.setAttribute('data-index', index);
             listItem.setAttribute('id-fase', fase.id);
             listItem.setAttribute('nombre-fase', nombrefase);
-            listItem.innerHTML = `
+            if(isEditar){
+                listItem.innerHTML = `
                 <div class="draggable" draggable="true">
                     <p class="list-name justify-content-start" id="parrafo${index}">
                         ${nombrefase} 
@@ -289,6 +333,16 @@
                     </a>
                 </div>
             `;
+            }else{
+                listItem.innerHTML = `
+                <div class="draggable" draggable="true">
+                    <p class="list-name justify-content-start" id="parrafo${index}">
+                        ${nombrefase} 
+                    </p>
+                </div>
+            `;
+            }
+            
             listItems.push(listItem);
             draggable_list.appendChild(listItem);
             addEventListeners();
