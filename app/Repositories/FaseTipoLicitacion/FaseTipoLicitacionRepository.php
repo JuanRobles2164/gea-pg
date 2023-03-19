@@ -27,14 +27,14 @@ class FaseTipoLicitacionRepository extends BaseRepository{
     }
     
     public function obtenerFasesTLByTipoLicitacion($idTipoLicitacion, $estado = 3){
-        $fasestl = DB::table('fase_tipo_licitacion')
+        $fasestl = $this->getModel()
         ->where('fase_tipo_licitacion.tipo_licitacion', '=', $idTipoLicitacion)
         ->where('fase_tipo_licitacion.estado','<>', $estado)
         ->orderBy('fase_tipo_licitacion.orden', "asc")
-        ->select('fase_tipo_licitacion.*')
         ->get();
         return $fasestl;
     }
+
     public function updateftl($data){
         $parametros = null;
         if(array_key_exists('estado', $data)){

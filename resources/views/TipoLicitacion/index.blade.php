@@ -225,6 +225,20 @@
             }else{
                 let dataToSet = obtenerDataFaseAsociadas(idObjeto);
                 dataToSet.then((data) => {
+                    console.log("ANTES");
+                    console.log(data);
+                    data = data.sort((a, b) => {
+                        if(a.orden > b.orden){
+                            return 1;
+                        }
+                        if(a.orden < b.orden){
+                            return -1;
+                        }
+                        return 0;
+                    });
+                    //Este dejarlo xd
+                    console.log("DESPUES");
+                    console.log(data);
                     fasesAsociadas = data;
 
                     if(fases !=  null && fasesAsociadas != null){

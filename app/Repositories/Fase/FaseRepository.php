@@ -31,13 +31,14 @@ class FaseRepository extends BaseRepository{
        return $fases;
     }
 
-    public function obtenerFasesByTipoLicitacion($idTipoLicitacion,  $estado = 3){
+    public function obtenerFasesByTipoLicitacion($idTipoLicitacion, $estado = 3){
         $fases = DB::table('fase_tipo_licitacion')
         ->join('fase', 'fase.id', '=', 'fase_tipo_licitacion.fase')
         ->where('fase_tipo_licitacion.tipo_licitacion', '=', $idTipoLicitacion)
-        ->where('fase.estado',1)
-        ->where('fase_tipo_licitacion.estado','<>',$estado)
-        ->select('fase.*')
+        ->where('fase.estado', 1)
+        ->where('fase_tipo_licitacion.estado','<>', $estado)
+        ->select('fase.*', 'fase_tipo_licitacion.orden as orden')
+        ->orderBy('orden')
         ->get();
         return $fases;
     }

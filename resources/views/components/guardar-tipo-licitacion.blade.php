@@ -227,6 +227,7 @@
             postData(ruta_editar, objeto)
             .then((data) => {
                 objeto = data;
+                console.log(data);
                 swal({
                     title: "Tipo de licitacion editado exitosamente!",
                     icon: "success",
