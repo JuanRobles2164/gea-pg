@@ -70,6 +70,8 @@ Route::name("estado.")->group(function(){
 Route::name("empresa.")->group(function(){
     Route::controller(EmpresaController::class)->group(function(){
         Route::get('/empresa/index', 'index')->name("index");
+        Route::get('/empresa/index_representante', 'indexRepresentante')->name("index_representante");
+        
         Route::post('/empresa/update', 'update')->name("actualizar");
         Route::post('/empresa/crear', 'store')->name("crear");
     });

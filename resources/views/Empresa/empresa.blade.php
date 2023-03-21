@@ -45,31 +45,6 @@
                 </div>
               </div>
             </div>
-
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="form-control-label" for="input-nit">{{ __('NIT') }}</label>
-                  <input type="text" class="form-control form-control-alternative" name="nit" id="id_input_nit" required value="{{isset($empresa->id) ? $empresa->nit : ''}}">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="form-control-label" for="id_input_digito_verificacion">{{ __('Digito Verificación') }}</label>
-                  <input type="number" class="form-control form-control-alternative" name="digito_verificacion" id="id_input_digito_verificacion" value="{{isset($empresa->id) ? $empresa->digito_verificacion : ''}}">
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label class="form-control-label" for="id_input_representante_legal">{{ __('Representante legal') }}</label>
-                  <input type="text" class="form-control form-control-alternative" name="representante_legal" id="id_input_representante_legal" required value="{{isset($empresa->id) ? $empresa->representante_legal : ''}}">
-                </div>
-              </div>
-            </div>
-
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">

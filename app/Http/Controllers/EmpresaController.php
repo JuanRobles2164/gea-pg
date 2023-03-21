@@ -29,6 +29,24 @@ class EmpresaController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexRepresentante()
+    {
+        $this->repo = EmpresaRepository::GetInstance();
+        $empresa = $this->repo->firstRecord();
+        $this->repo = null;
+        $allData = [
+            "empresa" => $empresa
+        ];
+        return view('Empresa.representante_legal', $allData);
+    }
+
+    
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -96,10 +114,31 @@ class EmpresaController extends Controller
         $this->repo = EmpresaRepository::GetInstance();
         $data = $request->all();
         $empresa = $this->repo->find($data["id"]);
-        if($request->data_file != null && isset($request->data_file)){
+        
+        
+        //Si viene de la vista del representante legal
+        if($request->exists('nombre_archivo_representante_legal_firma')){
+            $path = $request->data_file;
+            $nombreOriginal = $request->nombre_archivo_representante_legal_firma;
+            $newPath = "";
+            //Si viene de la vista de la empresa (Nosotros)
+            try{
+                $newPath = "firmas/empresa/representante_legal/".$nombreOriginal;
+                Storage::disk('local')->move($path, $newPath);
+            }catch(Exception $e){
+
+            }
+            $empresa->representante_legal_firma = $newPath;
+            $data['representante_legal_firma'] = $newPath;
+            $data['logo'] = $empresa->logo;
+            unset($data['data_file']);
+            unset($data['nombre_archivo_representante_legal_firma']);
+
+        }else{
             $path = $request->data_file;
             $nombreOriginal = $request->file_name;
             $newPath = "";
+            //Si viene de la vista de la empresa (Nosotros)
             try{
                 $newPath = "logos/empresa/".$nombreOriginal;
                 Storage::disk('local')->move($path, $newPath);
@@ -108,9 +147,12 @@ class EmpresaController extends Controller
             }
             $empresa->logo = $newPath;
             $data['logo'] = $newPath;
+            $data['representante_legal_firma'] = $empresa->representante_legal_firma;
             unset($data['data_file']);
             unset($data['file_name']);
+            return "NOR";
         }
+        
         
         $this->repo->update($empresa, $data);
         $this->repo = null;

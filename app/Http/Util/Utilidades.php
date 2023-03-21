@@ -1,5 +1,8 @@
 <?php
 namespace App\Http\Util;
+
+use Exception;
+
 class Utilidades{
     public static function obtenerInicial($nombre){
         $iniciales = '';
@@ -12,13 +15,21 @@ class Utilidades{
 
     public static function verificarPermisos($roles_usuario, $roles_permisos_requeridos){
         $permiso = false;
-        foreach($roles_usuario as $ru){
-            if(in_array($ru, $roles_permisos_requeridos)){
-                $permiso = true;
-                break;
-            }
+        if(gettype($roles_usuario) != "array"){
+            return $permiso;
         }
-        return $permiso;
+        try{
+            //Intenta autorizarse, sino se puede, entonces no tiene permisos
+            foreach($roles_usuario as $ru){
+                if(in_array($ru, $roles_permisos_requeridos)){
+                    $permiso = true;
+                    break;
+                }
+            }
+            return $permiso;
+        }catch(Exception $e){
+            return false;
+        }
     }
     public static function obtenerIndicativo($nombre){
         $iniciales = '';

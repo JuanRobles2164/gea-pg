@@ -14,11 +14,11 @@ class UpdateEmpresas extends Migration
     public function up()
     {
         Schema::table('empresa', function (Blueprint $table) {
-            $table->string('representante_identificacion');
-            $table->string('digito_verificacion');
-            $table->string('representante_legal');
+            $table->string('representante_identificacion')->nullable();
+            $table->string('digito_verificacion')->nullable();
+            $table->string('representante_legal')->nullable();
             //La ruta, no el archivo
-            $table->string('representante_legal_firma');
+            $table->string('representante_legal_firma')->nullable();
         });
     }
 
