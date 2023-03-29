@@ -33,6 +33,11 @@ use App\Models\Rol;
                             <i class="ni ni-building"></i>
                             <span>{{ __('Nosotros') }}</span>
                         </a>
+
+                        <a href="{{ route('empresa.index_representante') }}" class="dropdown-item">
+                            <i class="ni ni-circle-08"></i>
+                            <span>{{ __('Representate legal') }}</span>
+                        </a>
                     @endif
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();

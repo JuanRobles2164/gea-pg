@@ -177,7 +177,7 @@ class LicitacionController extends Controller
         $data['numero'] = $tipoLic->valor_actual;
         $copiaDocsAsociados = [];
         foreach($data['documentosAsociadosFases'] as $doc){
-            array_push($copiaDocsAsociados, json_decode($doc));
+            array_push($copiaDocsAsociados, json_decode($doc, true));
         }
         $data['documentosAsociadosFases'] = $copiaDocsAsociados;
         $data['fecha_inicio'] = new Carbon ($data['fecha_inicio']);
@@ -242,12 +242,12 @@ class LicitacionController extends Controller
         foreach($documentosAsociadosFases as $daf){
             $documentoObjetoTemporal = null;
             //Si es un documento nuevo, debe crearlo
-            if(isset($daf->tipo_documento)){
+            if(isset($daf["tipo_documento"]) && $daf["id"] == ""){
                 $this->repo = TipoDocumentoRepository::GetInstance();
-                $tipoDoc = $this->repo->find($daf->tipo_documento);
+                $tipoDoc = $this->repo->find($daf["tipo_documento"]);
                 $valor = $tipoDoc->valor_actual;
                 $tipoDoc->valor_actual = $valor + 1;
-                $objeto = $this->repo->find($daf->tipo_documento);
+                $objeto = $this->repo->find($daf["tipo_documento"]);
                 $tipoDocArr = [
                     'valor_actual' => $tipoDoc->valor_actual,
                     'nombre' => $tipoDoc->nombre,
@@ -260,33 +260,33 @@ class LicitacionController extends Controller
                 $this->repo->update($objeto, $tipoDocArr);
                 $this->repo = null;
     
-                $daf->numero = $tipoDoc->valor_actual;
+                $daf["numero"] = $tipoDoc->valor_actual;
+                $cadenaBuscar = "documentos_temporales//";
+                $whatIWant = substr($daf["path_file"], strpos($daf["path_file"], $cadenaBuscar)+1);
+                $extension = substr(".", strpos($daf["path_file"], "."));
+                $newPathFile = "documentos_licitaciones/".now()->timestamp."".$whatIWant.$extension;
+                Storage::disk('local')->move($daf["path_file"], $newPathFile);
+                $daf["path_file"] = $newPathFile;
                 $arrayDatos = [
-                    'numero' => $daf->numero,
-                    'nombre' => $daf->documento_nombre,
-                    'nombre_archivo' => $daf->path_file,
-                    'path_file' => $daf->path_file,
+                    'numero' => $daf["numero"],
+                    'nombre' => $daf["documento_nombre"],
+                    'nombre_archivo' => $daf["path_file"],
+                    'path_file' => $daf["path_file"],
                     'estado' => 1,
-                    'tipo_documento' => $daf->tipo_documento,
+                    'tipo_documento' => $daf["tipo_documento"],
                     'created_at' => now(),
                     'updated_at' => now()
                 ];
-                $cadenaBuscar = "documentos_temporales//";
-                $whatIWant = substr($daf->path_file, strpos($daf->path_file, $cadenaBuscar)+1);
-                $extension = substr(".", strpos($daf->path_file, "."));
-                $newPathFile = "documentos_licitaciones/".now()->timestamp."".$whatIWant.$extension;
-                Storage::disk('local')->move($daf->path_file, $newPathFile);
-
                 $this->repo = DocumentoRepository::GetInstance();
                 $documentoObjetoTemporal = $this->repo->create($arrayDatos);
             }else{
                 $this->repo = DocumentoRepository::GetInstance();
-                $documentoObjetoTemporal = $this->repo->find($daf->id);
+                $documentoObjetoTemporal = $this->repo->find($daf["id"]);
             }
             //Construye los objetos de la tabla Documento_licitacion
             foreach($licitacionFases as $lf){
                 //Paso 4: Asociar todo, tanto los asociados como los recién creados.
-                if($lf->fase == $daf->fase){
+                if($lf->fase == $daf["fase"]){
                     $this->repo = DocumentoLicitacionRepository::GetInstance();
                     $dataDocLic = [
                         'documento' => $documentoObjetoTemporal->id,
