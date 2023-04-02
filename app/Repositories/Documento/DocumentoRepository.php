@@ -19,10 +19,11 @@ class DocumentoRepository extends BaseRepository{
         }
         return self::$instance;
     }
-    public function getModel()
-    {
+
+    public function getModel(){
         return new Document;
     }
+    
     public function findByParams($params){
         $paginado = 10;
         $acumulado = Document::where('nombre', '=', $params["nombre"]);

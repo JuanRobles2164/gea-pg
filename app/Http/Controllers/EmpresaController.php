@@ -150,7 +150,6 @@ class EmpresaController extends Controller
             $data['representante_legal_firma'] = $empresa->representante_legal_firma;
             unset($data['data_file']);
             unset($data['file_name']);
-            return "NOR";
         }
         
         

@@ -21,13 +21,13 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-razon_social">{{ __('Identificación representante legal') }}</label>
-                  <input type="text" class="form-control form-control-alternative" name="representante_identificacion" id="id_input_representante_identificacion" value="{{isset($empresa->id) ? $empresa->representante_identificacion : ''}}">
+                  <input type="number" class="form-control form-control-alternative" name="representante_identificacion" id="id_input_representante_identificacion" value="{{isset($empresa->id) ? $empresa->representante_identificacion : ''}}">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-control-label" for="id_digito_verificacion">{{ __('Digito de verificación') }}</label>
-                  <input type="text" class="form-control form-control-alternative" name="digito_verificacion" id="id_digito_verificacion" value="{{isset($empresa->id) ? $empresa->digito_verificacion : ''}}">
+                  <input type="number" class="form-control form-control-alternative" name="digito_verificacion" id="id_digito_verificacion" value="{{isset($empresa->id) ? $empresa->digito_verificacion : ''}}">
                 </div>
               </div>
             </div>
@@ -46,7 +46,7 @@
                 <div class="card mb-3" style="">
                   <div class="row no-gutters">
                     <div class="col-md-4">
-                      <img src="{{isset($empresa->id) ? route('archivos.ver_archivo_temporal', ['path_file' => $empresa->representante_legal_firma]) : ''}}" class="card-img-top" alt="logo">
+                      <img src="{{isset($empresa->id) ? route('archivos.ver_archivo_temporal', ['path_file' => $empresa->representante_legal_firma]) : ''}}" class="card-img-top" alt="Firma representante">
                     </div>
                     <div class="col-md-8">
                       <div class="card-body">
