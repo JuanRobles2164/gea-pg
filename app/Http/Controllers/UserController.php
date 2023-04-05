@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    private $repo;
     /**
      * Display a listing of the resource.
      *
@@ -80,7 +81,7 @@ class UserController extends Controller
             'name' => ['required', 'min:3'],
             'email' => ['required', 'email', 'unique:users'],
             'identificacion' => 'required',
-            'password' => ['required', 'confirmed']
+            'password' => ['required', 'confirmed', 'min:8', "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/"]
         ]);
         $this->repo = UserRepository::GetInstance();
         $data = $request->all();
@@ -108,7 +109,7 @@ class UserController extends Controller
             $data['password'] = $user->password;
         }else{
             $request->validate([
-                'password' => 'confirmed'
+                'password' => ['confirmed', 'min:8', "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/"]
             ]);
             $data['password'] = Hash::make($data['password']);
         }

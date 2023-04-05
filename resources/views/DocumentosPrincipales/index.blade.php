@@ -112,6 +112,9 @@
                             <a href="{{route('archivos.descargar_archivo', ['id' => $d->id])}}" class="btn btn-warning btn-sm" title="Descargar" data-toggle="tooltip" data-placement="bottom">
                                 <i class="fas fa-download"></i>
                             </a>
+                            <a href="#" onclick="anterioresVersionesDocumento('{{$d->id}}')" class="btn btn-outline-secondary btn-sm" title="Restaurar Version" data-toggle="tooltip" data-placement="bottom">
+                                <i class='fas fa-file-code'></i>
+                            </a>
                         </td>
                     </tr>
                     @endforeach
@@ -120,6 +123,26 @@
         </div>
     </div>
     <x-ver-documento-principal modalId="id_modal_view_documento" modalTitle="Ver documento" />
+
+    <!-- Modal -->
+<div class="modal fade" id="modalVersionesArchivo" tabindex="-1" role="dialog" aria-labelledby="modalVersionesArchivoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalVersionesArchivoLabel">Restaurar versión anterior:</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modalRestaurarVersionBody">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 @include('layouts.footers.auth')
     
@@ -140,6 +163,72 @@
         var ruta_encontrar_documento = "{{route('documento_principal.encontrar')}}";
         var ruta_alternar_estado_documento = "{{route('documento_principal.toggle_documento_state')}}";
         var ruta_eliminar_documento = "{{route('documento_principal.eliminar')}}";
+        var ruta_obtener_anteriores_versiones_documento = "{{route('documento_principal.obtener_anteriores_versiones')}}";
+        var ruta_reetablecer_anterior_version_documento = "{{route('documento_principal.reestablecer_anterior_version_documento')}}"
+
+        function anterioresVersionesDocumento(IdDocumento){
+            let modalElemento = $("#modalVersionesArchivo");
+            let params = {
+                IdDocumento: IdDocumento
+            };
+            postData(ruta_obtener_anteriores_versiones_documento, params)
+            .then((response) => {
+                let bodyModalElemento = $("#modalRestaurarVersionBody");
+                bodyModalElemento.html("");
+                console.log(response);
+                let padre = response.data.padre;
+                let hijos = response.data.hijos;
+
+                let htmlAdjuntarTabla = "";
+                let htmlRegistros = `
+                    <table class="table thead-dark">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            :documentos
+                        </tbody>
+                    </table>
+                `;
+                hijos.forEach(element => {
+                    let htmlDocumento = `<tr>
+                                            <td>${element.nombre}</td>
+                                            <td>
+                                                <a href="{{route('archivos.ver_archivo')}}?id=${element.id}" class="btn btn-outline-primary" target="_blank"
+                                                    title="Ver Documento" data-toggle="tooltip" data-placement="bottom">
+                                                    <i class="fas fa-file-import"></i>
+                                                </a>
+                                                <a href="#" onclick="reestablecerAViejaVersionDocumento('${element.id}')" class="btn btn-outline-danger"
+                                                    title="Restaurar version" data-toggle="tooltip" data-placement="bottom">
+                                                    <i class="fas fa-file-signature"></i>
+                                                </a>
+                                            </td>
+                                        </tr>`;
+
+                    htmlAdjuntarTabla += htmlDocumento;
+                });
+                htmlRegistros = htmlRegistros.replace(":documentos", htmlAdjuntarTabla);
+                bodyModalElemento.html(htmlRegistros);
+                modalElemento.modal();
+            });
+        }
+
+        function reestablecerAViejaVersionDocumento(IdDocumento){
+            console.log("DOC A REESTABLECER ->", IdDocumento);
+            let params = {
+                IdDocumento: IdDocumento
+            };
+            postData(ruta_reetablecer_anterior_version_documento, params)
+            .then((response) => {
+                if(response.status = "success"){
+                    alert("Documento reestablecido con éxito!");
+                    location.reload();
+                }
+            })
+        }
 
         function toggleStateDocumento(idDocumento){
             let objeto = {

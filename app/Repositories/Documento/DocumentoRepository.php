@@ -61,6 +61,21 @@ class DocumentoRepository extends BaseRepository{
         return $documentos;
     }
 
+    public function listarDocumentosMaestros(){
+        return $this->getModel()
+                    ->where("estado", "!=", 3)
+                    ->whereNull('padre')
+                    ->whereNotNull('recurrente')
+                    ->whereNotNull('constante')
+                    ->get();
+    }
+
+    public function listarDocumentosHijos($idPadre){
+        return $this->getModel()
+                    ->where('padre', $idPadre)
+                    ->get();
+    }
+
     public function toggleState($documentoId){
         $documento = $this->find($documentoId);
         $documento->estado = ($documento->estado - 3)*(-1);

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
+    private $repo;
     /**
      * Create a new controller instance.
      *

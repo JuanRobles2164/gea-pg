@@ -50,6 +50,12 @@ Route::name("documento_principal.")->group(function(){
         Route::post('/documento_principal/guardar_documento', 'guardarDocumento')->name("guardar_documento");
         Route::post('/documento_principal/toggle_documento_state', 'toggleDocumentoState')->name("toggle_documento_state");
         Route::post('/documento_principal/destroy', 'destroy')->name("eliminar");
+        Route::post('/documento_principal/obtener_anteriores_versiones', 
+            'obtenerDocumentosAnterioresVersiones')->name("obtener_anteriores_versiones");
+        Route::post('/documento_principal/reestablecer_anterior_version_documento', 
+            'reestablecerAnteriorVersionDocumento')->name("reestablecer_anterior_version_documento");
+            
+
     });
 });
 

@@ -11,7 +11,9 @@ class Document extends Model
     use HasFactory;
 
     protected $table = 'documento';
-    protected $fillable = ["numero", "nombre", "nombre_archivo", "descripcion", "recurrente", "constante", "fecha_vencimiento", "path_file", "data_file", "estado", "tipo_documento"];
+    protected $fillable = ["numero", "nombre", "nombre_archivo", "descripcion", "recurrente", 
+                        "constante", "fecha_vencimiento", "path_file", "data_file", "estado", 
+                        "tipo_documento", "padre"];
 
     public function tipo_documento(){
         $this->repo = TipoDocumentoRepository::GetInstance();

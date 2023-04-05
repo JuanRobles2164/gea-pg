@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class DocumentoPrincipalController extends Controller
 {
+    private $repo;
     private $validationRules = [
         'data_file' => 'required',
         'nombre' => 'required',
@@ -26,9 +27,9 @@ class DocumentoPrincipalController extends Controller
     ];
     public function index(Request $request){
         $this->repo = DocumentoRepository::GetInstance();
-        $documentos = $this->repo->getAllEstado();
+        $documentos = $this->repo->listarDocumentosMaestros();
         foreach($documentos as $doc){
-            $doc->numero = str_pad($doc->numero,6,"0",STR_PAD_LEFT); 
+            $doc->numero = str_pad($doc->numero, 6, "0", STR_PAD_LEFT); 
         }
         $allData = [
             'documentos' => $documentos,
@@ -112,23 +113,17 @@ class DocumentoPrincipalController extends Controller
 
         $this->repo = DocumentoRepository::GetInstance();
         $documento = $this->repo->find($data['id']);
-
+        //si tiene el atributo data_file, entonces va actualizar
         if(isset($data['data_file'])){
             $newPathFile = "documentos_principales/".now()->timestamp."".$request->cargo_archivo;
             Storage::disk('local')->move($data['data_file'], $newPathFile);
-
             $data['path_file'] = $newPathFile;
-
-
             unset($data['recurrente_constante']);
-
             if(isset($data['data_file'])){
                 unset($data['data_file']);
-            }
-            
+            }            
             $data['nombre_archivo'] = $request->cargo_archivo;
             $dataToSave = [
-                'id' => $data['id'],
                 'numero' => $documento['numero'],
                 'nombre' => $data['nombre'],
                 'nombre_archivo' => $data['nombre_archivo'],
@@ -143,10 +138,23 @@ class DocumentoPrincipalController extends Controller
                 'updated_at' => now()
             ];
 
+            //Crea una nueva instancia de documento, la deja como padre y actualiza los demás registros
+            $nuevoDocumento = $this->repo->create($dataToSave);
+            $dataToSave['id'] = $documento->id;
+            $dataToSave['padre'] = $nuevoDocumento->id;
+
+            $documentosHijos = $this->repo->listarDocumentosHijos($data['id']);
+            foreach($documentosHijos as $dh){
+                //actualiza los demás docs con el nuevo padre
+                $dh->padre = $nuevoDocumento->id;
+                $dh->save();
+            }
+
             $data = $this->repo->update($documento, $dataToSave);
             $this->repo = null;
             return redirect(route('documento_principal.index'));
         }else{
+            //Va a editar toda la data, menos el archivo
             $dataToSave = [
                 'numero' => $documento['numero'],
                 'nombre' => $data['nombre'],
@@ -247,5 +255,46 @@ class DocumentoPrincipalController extends Controller
         $this->repo->update($documento, $data);
         $this->repo = null;
         return json_encode($documento);
+    }
+
+    public function obtenerDocumentosAnterioresVersiones(Request $request){
+        $this->repo = DocumentoRepository::GetInstance();
+        $documento = $this->repo->find($request->IdDocumento);
+        $documentos = $this->repo->listarDocumentosHijos($documento->id);
+        $this->repo = null;
+        return json_encode([
+            'status' => "success",
+            "data" => [
+                'padre' => $documento,
+                'hijos' => $documentos
+            ]
+        ]);
+    }
+
+    //el IdDocumento que recibe es el que quiere restaurar
+    public function reestablecerAnteriorVersionDocumento(Request $request){
+        $this->repo = DocumentoRepository::GetInstance();
+        $nuevoDocumentoPadre = $this->repo->find($request->IdDocumento);
+        //Busca el que está actualmente
+        $actualDocumentoPadre = $this->repo->find($nuevoDocumentoPadre->padre);
+
+        //Busca las anteriores versiones del documento para actualizarles el padre
+        $docsAnterioresVersiones = $this->repo->listarDocumentosHijos($actualDocumentoPadre->id);
+
+        //Cambia el parentesco y lo guarda en la bd
+        $actualDocumentoPadre->padre = $nuevoDocumentoPadre->id;
+        $actualDocumentoPadre->save();
+
+        foreach($docsAnterioresVersiones as $dav){
+            $dav->padre = $nuevoDocumentoPadre->id;
+            $dav->save();
+        }
+
+        $nuevoDocumentoPadre->padre = null;
+        $nuevoDocumentoPadre->save();
+
+        return json_encode([
+            'status' => "success"
+        ]);
     }
 }
