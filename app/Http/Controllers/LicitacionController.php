@@ -20,7 +20,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Nette\Utils\DateTime;
-use ZipArchive;
 
 class LicitacionController extends Controller
 {
@@ -448,46 +447,7 @@ class LicitacionController extends Controller
                 array_push($documentos_descargar, $dl_ii->documento());
             }
         }
-
-        return json_encode($documentos_descargar);
-        //$licitacionFases = $licitacion->
         $this->repo = null;
-
-        /*$zip = new \ZipArchive();
-        $fileName = 'respaldo_'.$licitacion->nombre.'.zip';
-        $zip->open($fileName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-        $allFileNames = [];
-        foreach($documentos_descargar as $dd){
-
-            if(Storage::exists($dd->path_file)){
-                $charAEliminar = "//";
-                $path_original_limpio = str_replace($charAEliminar, "/", $dd->path_file);
-                $path_archivo = Storage::get($dd->path_file);
-                //$zip->addFile(storage_path($dd->path_file, basename($dd->path_file)));
-                array_push($allFileNames, [
-                    'file_path' => $path_archivo,
-                    'basename' => $dd->path_file
-                ]);
-            }
-        }*/
-        $zip = new ZipArchive();
-        $zipFile = Storage::disk('local')->put('temp/zip_temporal.zip', $zip);
-        $zip->open("temp/zip_temporal.zip", ZipArchive::CREATE | ZipArchive::OVERWRITE);
-        $response = [];
-        foreach ($documentos_descargar as $dd) {
-            $archivoPath = Storage::path($dd->path_file);
-            /*if (file_exists($archivoPath)) {
-                $zip->addFile($archivoPath, $dd->path_file);
-            }*/
-            array_push($response, redirect(route('archivos.descargar_archivo', ['id' => $dd->id]))); 
-        }
-
-        //$zip->close();
-        //return Back();
-        return response()->download($response)->deleteFileAfterSend();
-
-        /*$zip->close();
-        return json_encode($allFileNames);
-        return response()->download($fileName)->deleteFileAfterSend();*/
+        return json_encode($documentos_descargar);
     }
 }
