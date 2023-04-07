@@ -52,7 +52,7 @@ class LicitacionController extends Controller
                 $datetime1 = new DateTime($l->fecha_inicio);
                 $datetime2 = new DateTime($l->fecha_fin);
                 $interval = $datetime1->diff($datetime2);
-                $l->duracion = $interval->y . " años, " . $interval->m." meses y ".$interval->d." dias"; 
+                $l->duracion = $interval->y . " años, " . $interval->m." meses y ".$interval->d." dias";
             }
             $allData = ['licitaciones' => $lista, 'categoria' => $request->categoria];
         }else{

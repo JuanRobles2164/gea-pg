@@ -30,6 +30,11 @@ class LicitacionRepository extends BaseRepository{
         return $response->get();
     }
 
+    //Estado = 4. En desarrollo
+    public function getAllLicitacionesPorVencer($estado = 4){
+        return $this->getModel()->where('estado', 4)->get();
+    }
+
     public function getAllPersonalizado($paginate = 10, $estado = 3){
         $response = $this->getModel()->where("estado", "!=", $estado);
         return $response->get();

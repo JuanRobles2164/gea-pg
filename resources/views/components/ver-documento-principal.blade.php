@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label for="tipo_documento_modal_view">Tipo documento:</label>
-                <input class="form-control form-control-alternative" id="tipo_documento_modal_view"></input>
+                <input class="form-control form-control-alternative" id="tipo_documento_modal_view"/>
             </div>
         </div>
     </div>
@@ -15,13 +15,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="numero_modal_view">Numero:</label>
-                <input class="form-control form-control-alternative" id="numero_modal_view"></input>
+                <input class="form-control form-control-alternative" id="numero_modal_view"/>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="nombre_modal_view">Nombre:</label>
-                <input class="form-control form-control-alternative" id="nombre_modal_view"></input>
+                <input class="form-control form-control-alternative" id="nombre_modal_view"/>
             </div>
         </div>
     </div>
@@ -36,22 +36,22 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label for="nombre_archivo_modal_view">Nombre Archivo:</label>
-                <input class="form-control form-control-alternative" id="nombre_archivo_modal_view"></input>
+                <input class="form-control form-control-alternative" id="nombre_archivo_modal_view" />
             </div>
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-7">
-            <label class="form-label">?:</label>
+            <label class="form-label">Tipo de recurso:</label>
             <div class="form-row form-control form-control-alternative">
                 <div class="custom-control custom-control-alternative custom-radio mb-3">
                     <input type="radio" name="recurrente_constante" class="custom-control-input" id="documento_recurrente_constante1_modal_view" value="recurrente">
-                    <label class="custom-control-label" for="documento_recurrente_constante1_modal_view">Recurrente </label>
+                    <label class="custom-control-label" data-toggle="tooltip" title="Documentos que vencen y necesitan ser renovados" for="documento_recurrente_constante1_modal_view">Recurrente </label>
                 </div>
                 &nbsp;&nbsp;
                 <div class="custom-control custom-control-alternative custom-radio mb-3">
                     <input type="radio" name="recurrente_constante" class="custom-control-input" id="documento_recurrente_constante2_modal_view" value="constante">
-                    <label class="custom-control-label" for="documento_recurrente_constante2_modal_view">Constante </label>
+                    <label data-toggle="tooltip" title="Documentos que no vencen" class="custom-control-label" for="documento_recurrente_constante2_modal_view">Constante </label>
                 </div>
             </div>
         </div>

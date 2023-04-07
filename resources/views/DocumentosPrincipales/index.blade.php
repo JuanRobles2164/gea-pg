@@ -65,8 +65,8 @@
                         <th scope="col" style="display: none;">Id</th>
                         <th scope="col">Numero</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Recurrente</th>
-                        <th scope="col">Constante</th>
+                        <th scope="col" data-toggle="tooltip" title="Documentos que vencen y necesitan ser renovados">Recurrente</th>
+                        <th scope="col" data-toggle="tooltip" title="Documentos que no vencen">Constante</th>
                         <th scope="col">Fecha vencimiento</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Acciones</th>
