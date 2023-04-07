@@ -140,8 +140,12 @@ use App\Models\Rol;
                             <a href="#" class="btn btn-warning btn-sm" onclick="clonarLicitacion({{$lic->id}})" title="Clonar" data-toggle="tooltip" data-placement="bottom">
                                 <i class="fas fa-clone"></i>
                             </a>
-                            <a href="{{route('licitacion.gestion_documentos_index', ['id' => $lic->id])}}" class="btn btn-primary btn-sm" onclick="" title="asociar" data-toggle="tooltip" data-placement="bottom">
+                            <a href="{{route('licitacion.gestion_documentos_index', ['id' => $lic->id])}}" class="btn btn-primary btn-sm" title="Asociar" data-toggle="tooltip" data-placement="bottom">
                                 <i class="fas fa-link"></i>
+                            </a>
+                            <a href="#" onclick="descargarTodosLosArchivos('{{$lic->id}}')" 
+                                class="btn btn-danger btn-sm" title="Descargar respaldo" data-toggle="tooltip" data-placement="bottom">
+                                <i class="fas fa-download" aria-hidden="true"></i>
                             </a>
                         </td>
                     </tr>
@@ -149,6 +153,10 @@ use App\Models\Rol;
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <div id="campoOcultoUrls" style="display: hidden;">
+
     </div>
 
 <x-guardar-licitacion modalTitle="Formulario de Licitaciones" modalId="id_modal_create_licitacion" />
@@ -188,6 +196,28 @@ use App\Models\Rol;
 @endsection
 
 @push('js')
+
+    <script>
+        var archivos_asociados = [];
+        var ruta_obtener_todos_los_archivos = "{{route('licitacion.descargar_documentos_licitacion')}}";
+        var ruta_descargar_documentos = "{{route('archivos.descargar_archivo')}}";
+
+        async function descargarTodosLosArchivos(idLicitacion){
+            let params = {
+                id: idLicitacion
+            };
+            postData(ruta_obtener_todos_los_archivos, params)
+                        .then((response) => {
+                            //Itera sobre los archivos
+                            response.forEach(element => {
+                                let urlFinal = ruta_descargar_documentos + "?id=" + element.id;
+                                window.open(urlFinal, '_blank');
+                            });
+                        });
+                
+            }
+    </script>
+
     <script>
         $(document).ready(function () {
             $('#tableinclude').DataTable({

@@ -20,6 +20,11 @@ class Document extends Model
         return $this->repo->find($this->tipo_documento);
     }
 
+    public function tipoDocumento(){
+        $this->repo = TipoDocumentoRepository::GetInstance();
+        return $this->repo->find($this->tipo_documento);
+    }
+
     public function scopeNumero($query, $numero)
     {
         return $query->orWhere('numero','LIKE', "%$numero%");
@@ -28,6 +33,10 @@ class Document extends Model
     public function scopeNombre($query, $nombre)
     {
         return $query->orWhere('nombre','LIKE', "%$nombre%");
+    }
+
+    public function getNomenclaturaNombre(){
+        return str_pad($this->numero, 6, "0", STR_PAD_LEFT);
     }
 
 }

@@ -191,6 +191,7 @@ Route::name("licitacion.")->group(function(){
         Route::post('/licitacion/update', 'update')->name("actualizar");
         Route::post('/licitacion/destroy', 'destroy')->name("eliminar");
         Route::post('/licitacion/clonar', 'clonarLicitacion')->name("clonar");
+        Route::post('/licitacion/descargar_documentos', 'descargarDocumentosLicitacion')->name("descargar_documentos_licitacion");
     });
 });
 

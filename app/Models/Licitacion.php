@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Repositories\Categoria\CategoriaRepository;
 use App\Repositories\Cliente\ClienteRepository;
+use App\Repositories\LicitacionFase\LicitacionFaseRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,11 @@ class Licitacion extends Model
     public function tipo_licitacion(){
         $this->repo = TipoLicitacionRepository::GetInstance();
         return $this->repo->find($this->tipo_licitacion);
+    }
+
+    public function licitacionFases(){
+        $this->repo = LicitacionFaseRepository::GetInstance();
+        return $this->repo->findByLicitacion($this->id);
     }
 
     public function scopeNombre($query, $nombre)

@@ -3,6 +3,15 @@ use App\Http\Util\Utilidades;
 use App\Models\Rol;
 @endphp
 
+@foreach ($docs_necesita_asociar as $dna)
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>¡Falta subir un documento!</strong> <br/> El documento <strong>{{$dna->nombre}}</strong> de <strong>{{$modelo->fase()->nombre}} </strong>
+        {{--<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>--}}
+    </div>
+@endforeach
+
 <div class="card">
     <div class="card-header" id="headingOne{{$modelo->id}}">
         <h5 class="mb-0">
@@ -60,13 +69,13 @@ use App\Models\Rol;
                                     </td>
                                 @else
                                     <td scope="row">
-                                        <a href="{{route('documento.eliminar_documento_licitacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm" onclick="" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                        <button role="button" href="{{route('documento.eliminar_documento_licitacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm btn-danger-disabled" onclick="" title="No se puede eliminar este documento" data-toggle="tooltip" data-placement="bottom" disabled>
                                             <i class="far fa-trash-alt"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 @endif
                                 <td scope="row">{{$doc->tipo_documento()->nombre}}</td>
-                                <td scope="row">{{$doc->numero}}</td>
+                                <td scope="row">{{$doc->getNomenclaturaNombre()}}</td>
                                 <td scope="row">{{$doc->nombre}}</td>
                                 <td scope="row">
                                     <input type="hidden" name="id_documento_asociado_fase[]" value="{{json_encode(['licitacion_fase' => $modelo->id, 'documento' => $doc->id])}}">
@@ -77,14 +86,10 @@ use App\Models\Rol;
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <!-- Si es un documento recurrente -->
-                                    @if ($doc->recurrente != null && $doc->recurrente)
+                                    @if ($doc->recurrente)
                                         <button type="button" class="btn btn-default btn-sm" onclick="abrirModalReemplazarArchivos({{$doc->id}}, {{$modelo->id}})" title="Reemplazar" data-toggle="tooltip" data-placement="bottom">
                                             <i class="fa fa-upload" aria-hidden="true"></i>
                                         </button>
-                                    @endif
-                                    <!-- Si no un documento constante ni recurrente-->
-                                    @if ($doc->constante == null && $doc->recurrente == null)
-                                        
                                     @endif
 
                                     @if ($doc->recurrente != null || $doc->constante != null)
@@ -101,9 +106,7 @@ use App\Models\Rol;
                                             </button>
                                         @endif
                                     @else
-                                        <script>
-                                            console.log("No necesitas subir:  {{$doc->tipo_documento()->nombre}}");
-                                        </script>
+                                        
                                     @endif
                                 </td>
                             </tr>

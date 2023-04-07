@@ -54,6 +54,8 @@ class DocumentoRepository extends BaseRepository{
             $query->where('documento.fecha_vencimiento', '>=', now())
                   ->orWhereNull('documento.fecha_vencimiento');
         })
+        ->whereNull('padre')
+        ->whereNotNull(['recurrente', 'constante'])
         ->where('documento.estado', 1)
         ->select('tipo_documento.*','documento.*')
         ->get();

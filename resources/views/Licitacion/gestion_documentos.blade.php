@@ -54,11 +54,8 @@
 </div>
 
 <x-reemplazar-archivo-modal />
-
 <x-nuevo-archivo-fase-licitacion-modal />
-
 <x-modal-agregar-documentos-to-fase-licitacion-form />
-
 <x-modal-reabrir-fase/>
 
 
@@ -95,6 +92,10 @@
             }
         });       
     }
+</script>
+
+<script>
+    $('.alert').alert();
 </script>
 
 @endpush
