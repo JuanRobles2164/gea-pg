@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\MarcarDocumentosVencidos;
 use App\Jobs\MarcarLicitacionesVencidas;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -16,8 +17,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-        $schedule->dailyAt('04:00')->job(new MarcarLicitacionesVencidas());
+        $schedule->command('inspire')->hourly();
+        $schedule->dailyAt('00:00')->job(new MarcarLicitacionesVencidas());
+        $schedule->dailyAt('00:00')->job(new MarcarDocumentosVencidos());
     }
 
     /**

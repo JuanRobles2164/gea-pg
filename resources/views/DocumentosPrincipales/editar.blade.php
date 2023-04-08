@@ -4,6 +4,10 @@
 
 @include('layouts.headers.cards')
 
+@php
+    use Carbon\Carbon;
+@endphp
+
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -95,7 +99,11 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                     </div>
-                                    <input type="text" name="fecha_vencimiento" id="documento_principal_fecha_fin_create_id" class="form-control form-control-alternative datepicker" value="{{$documento->fecha_vencimiento}}">
+                                    @php
+                                        $fechaVencimiento = Carbon::parse($documento->fecha_vencimiento);
+                                        $fechaVencimiento = $fechaVencimiento->format('m/d/Y');
+                                    @endphp
+                                    <input type="text" name="fecha_vencimiento" id="documento_principal_fecha_fin_create_id" class="form-control form-control-alternative datepicker" value="{{$fechaVencimiento}}">
                                 </div>
                             </div>
                         </div>

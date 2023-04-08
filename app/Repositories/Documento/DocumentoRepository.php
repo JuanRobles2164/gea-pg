@@ -65,11 +65,22 @@ class DocumentoRepository extends BaseRepository{
 
     public function listarDocumentosMaestros(){
         return $this->getModel()
-                    ->where("estado", "!=", 3)
                     ->whereNull('padre')
                     ->whereNotNull('recurrente')
                     ->whereNotNull('constante')
                     ->get();
+    }
+
+    //Listará solo los recurrentes, que son los que vencen
+    public function listarDocumentosActivosVencidos(){
+        return $this->getModel()
+                ->where('estado', 1)
+                ->whereNull('padre')
+                ->where('recurrente', 1)
+                ->whereNotNull('fecha_vencimiento')
+                ->where('fecha_vencimiento', '<', Carbon::today())
+                ->get();
+
     }
 
     public function listarDocumentosHijos($idPadre){

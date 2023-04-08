@@ -3,7 +3,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalLabelReabrirFaseObservacion"></h5>
+          <h5 class="modal-title" id="modalLabelReabrirFaseObservacion">Abrir licitación</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -15,7 +15,7 @@
                     <input type="hidden" name="licitacion_fase" id="faseLicitacionReabrirModalId">
                     <div class="form-group">
                         <label for="nombreArchivoNuevoDocumentoModalId">Observación:</label>
-                        <textarea name="observacion" id="observacionLicitacionReabrirModalId" cols="30" rows="10"></textarea>
+                        <textarea name="observacion" class="form-control" id="observacionLicitacionReabrirModalId" cols="30" rows="10"></textarea>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ use App\Models\Document;
 use App\Repositories\Documento\DocumentoRepository;
 use App\Repositories\DocumentoLicitacion\DocumentoLicitacionRepository;
 use App\Repositories\LicitacionFase\LicitacionFaseRepository;
+use App\Repositories\TipoDocumento\TipoDocumentoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -114,9 +115,29 @@ class DocumentoController extends Controller
         //Mover el archivo
         $final_path = "documentos_licitaciones/".now()->timestamp.$request->nombre_archivo;
         Storage::disk('local')->move($request->data_file, $final_path);
+
+        $this->repo = TipoDocumentoRepository::GetInstance();
+        $tipoDoc = $this->repo->find($request->tipo_documento);
+        $valor = $tipoDoc->valor_actual;
+        $tipoDoc->valor_actual = $valor + 1;
+        $objeto = $this->repo->find($request->tipo_documento);
+        $tipoDocArr = [
+            'valor_actual' => $tipoDoc->valor_actual,
+            'nombre' => $tipoDoc->nombre,
+            'descripcion' => $tipoDoc->descripcion,
+            'indicativo' => $tipoDoc->indicativo,
+            "estado" => 1,
+            "updated_at" => now()
+        ];
+
+        $this->repo->update($objeto, $tipoDocArr);
+        $this->repo = null;
+
+        $numero_doc = $tipoDoc->valor_actual;
+
         //Crear el archivo
         $documentoData = [
-            'numero' => now()->timestamp,
+            'numero' => $numero_doc,
             'nombre' => $request->nombre,
             'nombre_archivo' => $request->nombre_archivo,
             'path_file' => $final_path,

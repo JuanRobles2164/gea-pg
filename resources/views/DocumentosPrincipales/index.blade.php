@@ -85,7 +85,7 @@
                         <td scope="row">{{$d->nombre}}</td>
                         <td scope="row">@if($d->recurrente == 1) Si @else  No @endif</td>
                         <td scope="row">@if($d->constante == 1) Si @else  No @endif</td>
-                        <td scope="row">{{$d->fecha_vencimiento}}</td>
+                        <td scope="row">{{$d->getFechaVencimientoFormatoLegible()}}</td>
                         @if($d->estado == 1)
                         <td scope="row">
                             <a class="btn btn-success  btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateDocumento({{$d->id}})">

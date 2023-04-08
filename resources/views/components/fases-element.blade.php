@@ -22,14 +22,16 @@ use App\Models\Rol;
             @if ($modelo->estado != 6)
                 <div class="float-right">
                     <button type="button" class="btn btn-danger btn-sm" onclick="completarFase({{$modelo->id}})" title="Concluir Fase">
-                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        <i class="fa fa-check" aria-hidden="true"></i>
                     </button>
 
-                    <button type="button" class="btn btn-primary btn-sm" onclick="mostrarModalDocumentosAsociadosFase({{$modelo->id}}, {{$modelo->fase}})">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="mostrarModalDocumentosAsociadosFase({{$modelo->id}}, {{$modelo->fase}})"
+                        title="Asociar documentos creados" data-toggle="tooltip" data-placement="bottom">
                         <i class="fa fa-file"></i>
                     </button>
 
-                    <button class="btn btn-primary btn-sm" type="button" onclick="abrirModalNuevoArchivo({{$modelo->id}}, {{$licitacion}})">
+                    <button class="btn btn-primary btn-sm" type="button" onclick="abrirModalNuevoArchivo({{$modelo->id}}, {{$licitacion}})"
+                        title="Agregar documentos únicos" data-toggle="tooltip" data-placement="bottom">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
@@ -69,13 +71,13 @@ use App\Models\Rol;
                                     </td>
                                 @else
                                     <td scope="row">
-                                        <button role="button" href="{{route('documento.eliminar_documento_licitacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm btn-danger-disabled" onclick="" title="No se puede eliminar este documento" data-toggle="tooltip" data-placement="bottom" disabled>
+                                        <button role="button" href="{{route('documento.eliminar_documento_licitacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm btn-danger-disabled" onclick="" title="Desasociar" data-toggle="tooltip" data-placement="bottom">
                                             <i class="far fa-trash-alt"></i>
                                         </button>
                                     </td>
                                 @endif
                                 <td scope="row">{{$doc->tipo_documento()->nombre}}</td>
-                                <td scope="row">{{$doc->getNomenclaturaNombre()}}</td>
+                                <td scope="row">{{$doc->tipo_documento()->indicativo.$doc->getNomenclaturaNombre()}}</td>
                                 <td scope="row">{{$doc->nombre}}</td>
                                 <td scope="row">
                                     <input type="hidden" name="id_documento_asociado_fase[]" value="{{json_encode(['licitacion_fase' => $modelo->id, 'documento' => $doc->id])}}">

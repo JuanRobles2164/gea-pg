@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Document;
 use App\Repositories\Documento\DocumentoRepository;
 use App\Repositories\TipoDocumento\TipoDocumentoRepository;
+use App\Rules\VerificarFechaMayorHoy;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,13 +18,13 @@ class DocumentoPrincipalController extends Controller
         'nombre' => 'required',
         'tipo_documento' => 'required|numeric|min:1',
         'recurrente_constante' => 'required',
-        'fecha_vencimiento' => 'exclude_unless:recurrente_constante,recurrente|required'
+        'fecha_vencimiento' => ['exclude_unless:recurrente_constante,recurrente|required|date|after_or_equal:tomorrow']
     ];
     private $validationRulesEdit = [
         'nombre' => 'required',
         'tipo_documento' => 'required|numeric|min:1',
         'recurrente_constante' => 'required',
-        'fecha_vencimiento' => ['exclude_unless:recurrente_constante,recurrente|required']
+        'fecha_vencimiento' => ['exclude_unless:recurrente_constante,recurrente|required|date|after_or_equal:tomorrow']
     ];
     public function index(Request $request){
         $this->repo = DocumentoRepository::GetInstance();
@@ -106,6 +107,8 @@ class DocumentoPrincipalController extends Controller
         if($data['recurrente_constante'] == 'constante'){
             $data['recurrente'] = false;
             $data['constante'] = true;
+            $data['fecha_vencimiento'] = null;
+            unset($data['fecha_vencimiento']);
         }else{
             $data['recurrente'] = true;
             $data['constante'] = false;

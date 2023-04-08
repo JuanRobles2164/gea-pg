@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Repositories\TipoDocumento\TipoDocumentoRepository;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,6 +38,15 @@ class Document extends Model
 
     public function getNomenclaturaNombre(){
         return str_pad($this->numero, 6, "0", STR_PAD_LEFT);
+    }
+
+    public function getFechaVencimientoFormatoLegible(){
+        setlocale(LC_TIME, 'es_ES.utf8');
+        if($this->fecha_vencimiento != null){
+            $fechaVencimiento = Carbon::parse($this->fecha_vencimiento);
+            return $fechaVencimiento->locale('es')->isoFormat('dddd, D [de] MMMM [de] YYYY');
+        }
+        return "NO VENCE";
     }
 
 }
