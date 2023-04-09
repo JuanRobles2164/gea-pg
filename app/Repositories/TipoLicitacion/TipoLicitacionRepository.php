@@ -42,4 +42,12 @@ class TipoLicitacionRepository extends BaseRepository{
         ->get();
         return $numeracion;
     }
+
+    public function obtenerNumeracionActualYActualizar($idTipoLic){
+        $tipoLic = $this->find($idTipoLic);
+        $tipoLic->valor_actual = $tipoLic->valor_actual + 1;
+        $tipoLic->updated_at = now();
+        $tipoLic->save();
+        return $tipoLic->valor_actual;
+    }
 }

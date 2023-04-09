@@ -200,7 +200,7 @@ use App\Models\Rol;
     <script>
         var archivos_asociados = [];
         var ruta_obtener_todos_los_archivos = "{{route('licitacion.descargar_documentos_licitacion')}}";
-        var ruta_descargar_documentos = "{{route('archivos.descargar_archivo')}}";
+        var ruta_descargar_documentos = "{{route('archivos.descargar_archivos_con_nombre_tipo_documento')}}";
 
         async function descargarTodosLosArchivos(idLicitacion){
             let params = {

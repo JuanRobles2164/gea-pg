@@ -14,7 +14,7 @@ class MarcarLicitacionesVencidas extends Command
      *
      * @var string
      */
-    protected $signature = 'gea:licitaciones_vencidas';
+    protected $signature = 'gea:marcar_licitaciones_vencidas';
 
     /**
      * The console command description.

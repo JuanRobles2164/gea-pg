@@ -379,7 +379,11 @@ class LicitacionController extends Controller
         $licitacion = $this->repo->find($request->id);
         $licitacion = $licitacion->toArray();
         unset($licitacion['id']);
+        $this->repo = TipoLicitacionRepository::GetInstance();
         $licitacion['nombre'] = "CLONADO_DE_".$licitacion['nombre'];
+        $licitacion['numero'] = $this->repo->obtenerNumeracionActualYActualizar($licitacion['tipo_licitacion']);
+
+        $this->repo = LicitacionRepository::GetInstance();
 
         //Crea la nueva licitacion
         $licitacion = $this->repo->create($licitacion);

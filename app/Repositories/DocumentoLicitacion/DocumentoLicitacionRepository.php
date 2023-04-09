@@ -49,6 +49,19 @@ class DocumentoLicitacionRepository extends BaseRepository{
         return $listado->get();
     }
 
+    public function createOrUpdate($params){
+        $this->getModel()->updateOrInsert(
+            [   'documento' => $params['documento_id'],
+                'licitacion_fase' => $params['licitacion_fase_id']
+            ], 
+            [
+                'estado' => 1,
+                'revisado' => true,
+                'updated_at' => now()
+            ]);
+            return true;
+    }
+
     public function getDocumentosAsociadosFasesPorLicitacionFase($idLicitacionFase){
         $results = DB::table('documento_licitacion')
                         ->join('documento', 'documento_licitacion.documento', 'documento.id')

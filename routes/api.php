@@ -40,6 +40,8 @@ Route::name("archivos.")->group(function(){
         Route::get('/archivos_temporales/descargar', 'descargarArchivos')->name("descargar_archivo");
         Route::get('/archivos_temporales/visualizar', 'verArchivoNavegador')->name("ver_archivo");
         Route::get('/archivos_temporales/visualizar_temporal', 'verArchivoTemporal')->name("ver_archivo_temporal");
+        Route::get('/archivos_temporales/descargar_nombre_tipo_documento', 'descargarArchivosConNombreTipoDocumento')
+                ->name("descargar_archivos_con_nombre_tipo_documento");
     });
 });
 

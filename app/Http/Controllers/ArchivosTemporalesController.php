@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Documento\DocumentoRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -62,6 +63,19 @@ class ArchivosTemporalesController extends Controller
         $this->repo = DocumentoRepository::GetInstance();
         $documentoInstance = $this->repo->find($request->id);
         return Storage::download($documentoInstance->path_file);
+    }
+
+    public function descargarArchivosConNombreTipoDocumento(Request $request){
+        $request->validate([
+            'id' => ['required', 'exists:documento']
+        ]);
+        $this->repo = DocumentoRepository::GetInstance();
+        $documentoInstance = $this->repo->find($request->id);
+        $documentoTipo = $documentoInstance->tipoDocumento()->nombre;
+        $filePath = storage_path("app/".$documentoInstance->path_file);
+        // Nombre personalizado para el archivo descargado
+        $newFileName = $documentoTipo.'.'.pathinfo($filePath)['extension'];
+        return Response::download($filePath, $newFileName);
     }
 
     public function verArchivoTemporal(Request $request){

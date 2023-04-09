@@ -71,9 +71,9 @@ use App\Models\Rol;
                                     </td>
                                 @else
                                     <td scope="row">
-                                        <button role="button" href="{{route('documento.eliminar_documento_licitacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm btn-danger-disabled" onclick="" title="Desasociar" data-toggle="tooltip" data-placement="bottom">
+                                        <a href="{{route('documento.eliminar_documento_licitacion_relacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm btn-danger-disabled" onclick="" title="Desasociar" data-toggle="tooltip" data-placement="bottom">
                                             <i class="far fa-trash-alt"></i>
-                                        </button>
+                                        </a>
                                     </td>
                                 @endif
                                 <td scope="row">{{$doc->tipo_documento()->nombre}}</td>
@@ -87,29 +87,6 @@ use App\Models\Rol;
                                     <a href="{{route('archivos.ver_archivo', ['id' => $doc->id])}}" target="_blank" class="btn btn-info btn-sm" onclick="" title="Visualizar" data-toggle="tooltip" data-placement="bottom">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <!-- Si es un documento recurrente -->
-                                    @if ($doc->recurrente)
-                                        <button type="button" class="btn btn-default btn-sm" onclick="abrirModalReemplazarArchivos({{$doc->id}}, {{$modelo->id}})" title="Reemplazar" data-toggle="tooltip" data-placement="bottom">
-                                            <i class="fa fa-upload" aria-hidden="true"></i>
-                                        </button>
-                                    @endif
-
-                                    @if ($doc->recurrente != null || $doc->constante != null)
-                                        @php
-                                            $doc_fue_subido = $documentos_licitacion->where('id', $doc->tipo_documento)->first();
-                                        @endphp
-                                        @if ($doc_fue_subido != null)
-                                            <script>
-                                                console.log("Ya subiste {{$doc_fue_subido->nombre}}");
-                                            </script>
-                                        @else
-                                            <button type="button" class="btn btn-default btn-sm" onclick="abrirModalReemplazarArchivos({{$doc->id}}, {{$modelo->id}})" title="Reemplazar" data-toggle="tooltip" data-placement="bottom">
-                                                <i class="fa fa-upload" aria-hidden="true"></i>
-                                            </button>
-                                        @endif
-                                    @else
-                                        
-                                    @endif
                                 </td>
                             </tr>
                             @endforeach

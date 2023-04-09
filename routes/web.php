@@ -72,6 +72,7 @@ Route::middleware('autenticado')->name("empresa.")->group(function(){
         Route::get('/empresa/index', 'index')->name("index");
         Route::get('/empresa/index_representante', 'indexRepresentante')->name("index_representante");
         
+        Route::post('/empresa/update_representante', 'updateRepresentante')->name('actualizar_representante');
         Route::post('/empresa/update', 'update')->name("actualizar");
         Route::post('/empresa/crear', 'store')->name("crear");
     });

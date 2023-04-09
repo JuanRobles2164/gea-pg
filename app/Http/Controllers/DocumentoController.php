@@ -228,10 +228,6 @@ class DocumentoController extends Controller
         ]);
         //Cambiar el estado a eliminado, pero sólo en la asociación del documento
         $documentoLicitacion->delete();
-        $this->repo = DocumentoRepository::GetInstance();
-        $documento = $this->repo->find($data['documento']);
-        $documento->estado = 3;
-        $documento->save();
         return Redirect::back();
     }
 

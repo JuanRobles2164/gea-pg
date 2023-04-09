@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="card-body">
-          <form action="{{isset($empresa->id) ? route('empresa.actualizar') : route('empresa.crear')}}" method="POST">
+          <form action="{{isset($empresa->id) ? route('empresa.actualizar_representante') : route('empresa.crear')}}" method="POST">
             @csrf
             <input type="hidden" name="id" id="idEmpresaInput" value="{{isset($empresa->id) ? $empresa->id : ''}}">
             <div class="row">

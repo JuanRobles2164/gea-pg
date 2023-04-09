@@ -70,7 +70,7 @@
 
     <div class="form-group">
         <label for="tipo_licitacion_licitacion_crear_modal_id">Seleccione el Tipo de licitación:</label>
-        <select name="tipo_licitacion_licitacion_crear" class="custom-select form-control-alternative" id="tipo_licitacion_licitacion_crear_modal_id">
+        <select name="tipo_licitacion_licitacion_crear" class="custom-select form-control-alternative" id="tipo_licitacion_licitacion_crear_modal_id" disabled>
             <option value="0">Seleccione un tipo de licitacion...</option>
             @foreach ($tipos_licitacion as $tl)
                 <option value="{{ $tl->id }}">{{ $tl->nombre }}</option>

@@ -8,6 +8,7 @@ use App\Repositories\RolUsuario\RolUsuarioRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -81,7 +82,7 @@ class UserController extends Controller
             'name' => ['required', 'min:3'],
             'email' => ['required', 'email', 'unique:users'],
             'identificacion' => 'required',
-            'password' => ['required', 'confirmed', 'min:8', "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/"]
+            'password' => ['required', 'confirmed', 'min:8', Password::min(8)->mixedCase()->numbers()->symbols()]
         ]);
         $this->repo = UserRepository::GetInstance();
         $data = $request->all();
@@ -109,7 +110,7 @@ class UserController extends Controller
             $data['password'] = $user->password;
         }else{
             $request->validate([
-                'password' => ['confirmed', 'min:8', "regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/"]
+                'password' => ['confirmed', 'min:8', Password::min(8)->mixedCase()->numbers()->symbols()]
             ]);
             $data['password'] = Hash::make($data['password']);
         }
