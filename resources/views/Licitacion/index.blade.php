@@ -287,12 +287,21 @@ use App\Models\Rol;
             dataToSet = obtenerDataLicitacion(objeto);
             dataToSet.then((data) => {
                 let licData = data;
+                console.log(data);
+                let fechaIni = licData.fecha_inicio;
+                let fechaIniArr = fechaIni.split("-");
+                let fechaIniCorregida = [fechaIniArr[1], fechaIniArr[2], fechaIniArr[0]].join("/");
+
+                let fechaFin = licData.fecha_fin;
+                let fechaFinArr = fechaFin.split("-");
+                let fechaFinCorregida = [fechaFinArr[1], fechaFinArr[2], fechaFinArr[0]].join("/");
+
                 document.getElementById("numero_licitacion_crear_modal_id").value = licData.numero;
                 document.getElementById("categoria_licitacion_crear_modal_id").value = licData.categoria;
                 document.getElementById("nombre_licitacion_crear_modal_id").value = licData.nombre;
                 document.getElementById("descripcion_licitacion_crear_modal_id").value = licData.descripcion;
-                document.getElementById("fecha_inicio_licitacion_crear_modal_id").value = licData.fecha_inicio;
-                document.getElementById("fecha_fin_licitacion_crear_modal_id").value = licData.fecha_fin;
+                document.getElementById("fecha_inicio_licitacion_crear_modal_id").value = fechaIni;
+                document.getElementById("fecha_fin_licitacion_crear_modal_id").value = fechaFin;
                 document.getElementById("cliente_licitacion_crear_modal_id").value = licData.cliente;
                 document.getElementById("tipo_licitacion_licitacion_crear_modal_id").value = licData.tipo_licitacion;
                 document.getElementById("id_licitacion_crear_modal_id").value = licData.id;
@@ -351,6 +360,10 @@ use App\Models\Rol;
             });
             
         }
+
+        $(".datepicker").datepicker({
+            dateFormat: "yyyy/mm/dd"
+        });
 </script>
     
 @endpush

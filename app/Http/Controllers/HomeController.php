@@ -7,6 +7,7 @@ use App\Models\Rol;
 use App\Repositories\Licitacion\LicitacionRepository;
 use App\Repositories\RolUsuario\RolUsuarioRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -47,6 +48,9 @@ class HomeController extends Controller
             Session::flush();
             return Redirect::route('errores.403');
         }
+        //Ejecuta los comandos para actualizar documentos y licitaciones
+        Artisan::call("gea:marcar_documentos_vencidos");
+        Artisan::call("gea:marcar_licitaciones_vencidas");
         //Asigna los roles al usuario, alv
         if(!$request->session()->has('roles_usuario')){
             $usuario = Auth::user();

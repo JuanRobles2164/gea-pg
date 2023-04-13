@@ -224,7 +224,7 @@ class LicitacionController extends Controller
                 $datosLicitacionFases = [
                     'fase' => $ftl->fase,
                     'licitacion' => $objetoLicitacion->id,
-                    //Estado -> En desarrollo
+                    //Estado -> Deshabilitado
                     'estado' => 6,
                     'created_at' => now(),
                     'updated_at' => now()

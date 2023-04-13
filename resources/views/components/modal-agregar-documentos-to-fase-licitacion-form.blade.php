@@ -86,7 +86,7 @@
                         }
                     });
                     console.log(nuevosElementos);
-                    renderizarDocumentosFasesModal(nuevosElementos, idFase);
+                    renderizarDocumentosFasesModal(nuevosElementos, idLicitacionFase);
                     $('#modalFasesAgregarDocumentosToFaseLicitacionForm').modal('show');
             });
         }
