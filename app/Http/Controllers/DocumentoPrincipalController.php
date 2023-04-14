@@ -115,6 +115,7 @@ class DocumentoPrincipalController extends Controller
         }
 
         $this->repo = DocumentoRepository::GetInstance();
+        //Este es el viejo documento
         $documento = $this->repo->find($data['id']);
         //si tiene el atributo data_file, entonces va actualizar
         if(isset($data['data_file'])){
@@ -143,17 +144,14 @@ class DocumentoPrincipalController extends Controller
 
             //Crea una nueva instancia de documento, la deja como padre y actualiza los demás registros
             $nuevoDocumento = $this->repo->create($dataToSave);
-            $dataToSave['id'] = $documento->id;
-            $dataToSave['padre'] = $nuevoDocumento->id;
-
-            $documentosHijos = $this->repo->listarDocumentosHijos($data['id']);
+            $documento->padre = $nuevoDocumento->id;
+            $documentosHijos = $this->repo->listarDocumentosHijos($documento->id);
             foreach($documentosHijos as $dh){
                 //actualiza los demás docs con el nuevo padre
                 $dh->padre = $nuevoDocumento->id;
                 $dh->save();
             }
-
-            $data = $this->repo->update($documento, $dataToSave);
+            $documento->save();
             $this->repo = null;
             return redirect(route('documento_principal.index'));
         }else{
@@ -177,8 +175,6 @@ class DocumentoPrincipalController extends Controller
             $this->repo = null;
             return redirect(route('documento_principal.index'));
         }
-        $this->repo = null;
-        return redirect(route('documento_principal.gestion'));
     }
 
     public function guardarDocumento(Request $request){

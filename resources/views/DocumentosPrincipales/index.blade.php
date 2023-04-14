@@ -112,7 +112,7 @@
                             <a href="{{route('archivos.descargar_archivo', ['id' => $d->id])}}" class="btn btn-warning btn-sm" title="Descargar" data-toggle="tooltip" data-placement="bottom">
                                 <i class="fas fa-download"></i>
                             </a>
-                            <a href="#" onclick="anterioresVersionesDocumento('{{$d->id}}')" class="btn btn-outline-secondary btn-sm" title="Restaurar Version" data-toggle="tooltip" data-placement="bottom">
+                            <a href="#" onclick="anterioresVersionesDocumento('{{$d->id}}')" class="btn btn-danger btn-sm" title="Restaurar Version" data-toggle="tooltip" data-placement="bottom">
                                 <i class='fas fa-file-code'></i>
                             </a>
                         </td>
