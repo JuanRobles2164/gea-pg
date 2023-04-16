@@ -154,6 +154,10 @@ class LicitacionController extends Controller
 
     public function storeInView(Request $request)
     {
+        $messages = ['documentosAsociadosFases.required' => 'Debe asociar al menos un documento a la configuración de las fases'];
+        $request->validate([
+            'documentosAsociadosFases' => 'required'
+        ], $messages);
         $data = $request->all();
         //consultar numero actual, sumarle uno y guardar en numeracion 
         $this->repo = TipoLicitacionRepository::GetInstance();
