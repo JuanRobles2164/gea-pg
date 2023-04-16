@@ -115,7 +115,7 @@ use App\Models\Rol;
                                 
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('documento_principal.index') }}">
-                                        {{ __('Cargar documentos') }}
+                                        {{ __('Documentos') }}
                                     </a>
                                 </li>
                                 <li class="nav-item">
