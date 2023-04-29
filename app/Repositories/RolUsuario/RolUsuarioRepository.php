@@ -106,4 +106,11 @@ class RolUsuarioRepository extends BaseRepository{
         ]);
         return $rol_usuario;
     }
+
+    public function obtenerRolesPorUsuario($usuarioId){
+        return DB::table('rol_usuario')
+                ->where('estado', 1)
+                ->where('usuario', '=', $usuarioId)
+                ->get('rol');
+    }
 }

@@ -17,6 +17,7 @@ use App\Repositories\TipoDocumento\TipoDocumentoRepository;
 use App\Repositories\TipoLicitacion\TipoLicitacionRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Nette\Utils\DateTime;
 
@@ -45,17 +46,17 @@ class LicitacionController extends Controller
         $criterio = $request->criterio;
         $allData = [];
         if(isset($request->categoria)){
-            $lista = $this->repo->getAllEstadosCategoria($request->categoria, $criterio);
+            $lista = $this->repo->getAllEstadosCategoria($request->categoria);
             foreach($lista as $l){
                 $l->numero = str_pad($l->numero,6,"0",STR_PAD_LEFT); 
                 $datetime1 = new DateTime($l->fecha_inicio);
                 $datetime2 = new DateTime($l->fecha_fin);
                 $interval = $datetime1->diff($datetime2);
-                $l->duracion = $interval->y . " años, " . $interval->m." meses y ".$interval->d." dias"; 
+                $l->duracion = $interval->y . " años, " . $interval->m." meses y ".$interval->d." dias";
             }
             $allData = ['licitaciones' => $lista, 'categoria' => $request->categoria];
         }else{
-            $lista = $this->repo->getAllPersonalizado($criterio);
+            $lista = $this->repo->getAllEstado();
             foreach($lista as $l){
                 $l->numero = str_pad($l->numero,6,"0",STR_PAD_LEFT); 
                 $datetime1 = new DateTime($l->fecha_inicio);
@@ -153,6 +154,10 @@ class LicitacionController extends Controller
 
     public function storeInView(Request $request)
     {
+        $messages = ['documentosAsociadosFases.required' => 'Debe asociar al menos un documento a la configuración de las fases'];
+        $request->validate([
+            'documentosAsociadosFases' => 'required'
+        ], $messages);
         $data = $request->all();
         //consultar numero actual, sumarle uno y guardar en numeracion 
         $this->repo = TipoLicitacionRepository::GetInstance();
@@ -176,7 +181,7 @@ class LicitacionController extends Controller
         $data['numero'] = $tipoLic->valor_actual;
         $copiaDocsAsociados = [];
         foreach($data['documentosAsociadosFases'] as $doc){
-            array_push($copiaDocsAsociados, json_decode($doc));
+            array_push($copiaDocsAsociados, json_decode($doc, true));
         }
         $data['documentosAsociadosFases'] = $copiaDocsAsociados;
         $data['fecha_inicio'] = new Carbon ($data['fecha_inicio']);
@@ -223,7 +228,7 @@ class LicitacionController extends Controller
                 $datosLicitacionFases = [
                     'fase' => $ftl->fase,
                     'licitacion' => $objetoLicitacion->id,
-                    //Estado -> En desarrollo
+                    //Estado -> Deshabilitado
                     'estado' => 6,
                     'created_at' => now(),
                     'updated_at' => now()
@@ -241,12 +246,12 @@ class LicitacionController extends Controller
         foreach($documentosAsociadosFases as $daf){
             $documentoObjetoTemporal = null;
             //Si es un documento nuevo, debe crearlo
-            if(isset($daf->tipo_documento)){
+            if(isset($daf["tipo_documento"]) && $daf["id"] == ""){
                 $this->repo = TipoDocumentoRepository::GetInstance();
-                $tipoDoc = $this->repo->find($daf->tipo_documento);
+                $tipoDoc = $this->repo->find($daf["tipo_documento"]);
                 $valor = $tipoDoc->valor_actual;
                 $tipoDoc->valor_actual = $valor + 1;
-                $objeto = $this->repo->find($daf->tipo_documento);
+                $objeto = $this->repo->find($daf["tipo_documento"]);
                 $tipoDocArr = [
                     'valor_actual' => $tipoDoc->valor_actual,
                     'nombre' => $tipoDoc->nombre,
@@ -259,33 +264,33 @@ class LicitacionController extends Controller
                 $this->repo->update($objeto, $tipoDocArr);
                 $this->repo = null;
     
-                $daf->numero = $tipoDoc->valor_actual;
+                $daf["numero"] = $tipoDoc->valor_actual;
+                $cadenaBuscar = "documentos_temporales//";
+                $whatIWant = substr($daf["path_file"], strpos($daf["path_file"], $cadenaBuscar)+1);
+                $extension = substr(".", strpos($daf["path_file"], "."));
+                $newPathFile = "documentos_licitaciones/".now()->timestamp."".$whatIWant.$extension;
+                Storage::disk('local')->move($daf["path_file"], $newPathFile);
+                $daf["path_file"] = $newPathFile;
                 $arrayDatos = [
-                    'numero' => $daf->numero,
-                    'nombre' => $daf->documento_nombre,
-                    'nombre_archivo' => $daf->path_file,
-                    'path_file' => $daf->path_file,
+                    'numero' => $daf["numero"],
+                    'nombre' => $daf["documento_nombre"],
+                    'nombre_archivo' => $daf["path_file"],
+                    'path_file' => $daf["path_file"],
                     'estado' => 1,
-                    'tipo_documento' => $daf->tipo_documento,
+                    'tipo_documento' => $daf["tipo_documento"],
                     'created_at' => now(),
                     'updated_at' => now()
                 ];
-                $cadenaBuscar = "documentos_temporales//";
-                $whatIWant = substr($daf->path_file, strpos($daf->path_file, $cadenaBuscar)+1);
-                $extension = substr(".", strpos($daf->path_file, "."));
-                $newPathFile = "documentos_licitaciones/".now()->timestamp."".$whatIWant.$extension;
-                Storage::disk('local')->move($daf->path_file, $newPathFile);
-
                 $this->repo = DocumentoRepository::GetInstance();
                 $documentoObjetoTemporal = $this->repo->create($arrayDatos);
             }else{
                 $this->repo = DocumentoRepository::GetInstance();
-                $documentoObjetoTemporal = $this->repo->find($daf->id);
+                $documentoObjetoTemporal = $this->repo->find($daf["id"]);
             }
             //Construye los objetos de la tabla Documento_licitacion
             foreach($licitacionFases as $lf){
                 //Paso 4: Asociar todo, tanto los asociados como los recién creados.
-                if($lf->fase == $daf->fase){
+                if($lf->fase == $daf["fase"]){
                     $this->repo = DocumentoLicitacionRepository::GetInstance();
                     $dataDocLic = [
                         'documento' => $documentoObjetoTemporal->id,
@@ -302,7 +307,7 @@ class LicitacionController extends Controller
             array_push($documentosAsociadosLicitacion, $documentoObjetoTemporal);
         }
         $this->repo = null;
-        return redirect(route('licitacion.create'));
+        return redirect(route('licitacion.index'));
     }
 
     /**
@@ -369,5 +374,88 @@ class LicitacionController extends Controller
         $this->repo->update($licitacion, $data);
         $this->repo = null;
         return json_encode($licitacion);
+    }
+
+    //licitacion -> licitacion_fase -> documento_licitacion -> documento.
+    public function clonarLicitacion(Request $request){
+        $this->repo = LicitacionRepository::GetInstance();
+        //Clonar la licitacion
+        $licitacion = $this->repo->find($request->id);
+        $licitacion = $licitacion->toArray();
+        unset($licitacion['id']);
+        $this->repo = TipoLicitacionRepository::GetInstance();
+        $licitacion['nombre'] = "CLONADO_DE_".$licitacion['nombre'];
+        $licitacion['numero'] = $this->repo->obtenerNumeracionActualYActualizar($licitacion['tipo_licitacion']);
+
+        $this->repo = LicitacionRepository::GetInstance();
+
+        //Crea la nueva licitacion
+        $licitacion = $this->repo->create($licitacion);
+        //Clonar las fases asociadas
+        $this->repo = LicitacionFaseRepository::GetInstance();
+        $iteradorFases = 0;
+        $licitacion_fases = $this->repo->findByParams(['licitacion' => $request->id]);
+        foreach($licitacion_fases as $lf){
+            $this->repo = LicitacionFaseRepository::GetInstance();
+            $idLicitacionFaseOriginal = $lf->id;
+            $lf->licitacion = $licitacion->id;
+            if($iteradorFases == 0){
+                $lf->estado = 4;
+            }else{
+                $lf->estado = 6;
+            }
+            $nuevoLF = $lf->toArray();
+            unset($nuevoLF['id']);
+            $licitacion_fase_nuevo = $this->repo->create($nuevoLF);
+
+            $this->repo = DocumentoLicitacionRepository::GetInstance();
+            //Obtiene los documentos asociados a esa fase
+            $documentos_licitacion = $this->repo->getDocumentosAsociadosFasesPorLicitacionFase($lf->id);
+            foreach($documentos_licitacion as $dl){
+                $idOriginalDL = $dl->id;
+                $dl->revisado = false;
+                $dl->licitacion_fase = $licitacion_fase_nuevo->id;
+                $doc_licitacion_nuevo_data = json_decode(json_encode($dl), true);
+                unset($doc_licitacion_nuevo_data['id']);
+                $doc_licitacion_nuevo = $this->repo->create($doc_licitacion_nuevo_data);
+            }
+            $iteradorFases++;
+        }
+        $this->repo = null;
+        return json_encode(['msg' => 'Operacion exitosa', 'status' => 200]);
+    }
+
+    public function reabrirLicitacion(Request $request){
+        $this->repo = LicitacionRepository::GetInstance();
+        $licitacion = $this->repo->find($request->licitacion);
+        $licitacion->estado = 4;
+        $licitacion->observacion = $request->observacion;
+        $licitacion->save();
+        return Redirect::back();
+    }
+
+    public function descargarDocumentosLicitacion(Request $request){
+        $data = $request->all();
+        $this->repo = LicitacionRepository::GetInstance();
+        $licitacion = $this->repo->find($data['id']);
+        //Debe buscar en este orden:
+        // Licitacion -> licitacion_fase -> documento_licitacion -> documento
+        // Para obtener todos los documentos asociados a una licitación y luego descargarlos
+        $licitacion_fases = $licitacion->licitacionFases();
+        $documentos_licitacion = [];
+        foreach($licitacion_fases as $lf){
+            array_push($documentos_licitacion, $lf->documentoLicitacion());
+        }
+        //ie -> Iterador Externo
+        //ii -> Iterador Interno
+        //Se hace así porque es un array de arrays
+        $documentos_descargar = [];
+        foreach($documentos_licitacion as $dl_ie){
+            foreach($dl_ie as $dl_ii){
+                array_push($documentos_descargar, $dl_ii->documento());
+            }
+        }
+        $this->repo = null;
+        return json_encode($documentos_descargar);
     }
 }

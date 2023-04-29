@@ -49,7 +49,7 @@
             </button>
         </div>
     </div>
-    <x-guardar-categoria modalId="id_modal_create_categoria" modalTitle="Formulario de categorias" />
+    <x-guardar-categoria modalId="id_modal_create_categoria" modalTitle="Formulario de periodos" />
 </div>
 
 @include('layouts.footers.auth')
@@ -72,7 +72,6 @@
         };
         dataToSet = obtenerDataCategoria(objeto);
         dataToSet.then((data) => {
-            console.log(data.categoria)
             let categoriaData = data.categoria;
             document.getElementById("id_tipo_documento_modal_create_id").value = categoriaData.id;
             document.getElementById("nombre_categoria_modal_create_id").value = categoriaData.nombre;
@@ -88,8 +87,7 @@
         }
         postData(ruta_eliminar_categoria, data)
             .then((data) => {
-                console.log(data);
-                alert("Categoria eliminada exitosamente!");
+                alert("Periodo eliminada exitosamente!");
                 location.reload();
             });
     }

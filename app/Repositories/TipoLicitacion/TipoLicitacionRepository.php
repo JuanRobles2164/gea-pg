@@ -31,13 +31,9 @@ class TipoLicitacionRepository extends BaseRepository{
         $tipoLic->save();
         return $tipoLic;
     }
-    public function getAllPersonalizado($criterio, $paginate = 10, $estado = 3){
-        return $this->getModel()
-        ->nombre($criterio)
-        ->descripcion($criterio)
-        ->indicativo($criterio)
-        ->where("estado", "!=", $estado)
-        ->paginate($paginate);
+    public function getAllPersonalizado($paginate = 10, $estado = 3){
+        $response = $this->getModel()->where("estado", "!=", $estado);
+        return $response->get();
     }
     public function obtenerNumeracionActual($idTipoLic){
         $numeracion = DB::table('tipo_licitacion')
@@ -45,5 +41,13 @@ class TipoLicitacionRepository extends BaseRepository{
         ->select('tipo_licitacion.valor_actual as valor')
         ->get();
         return $numeracion;
+    }
+
+    public function obtenerNumeracionActualYActualizar($idTipoLic){
+        $tipoLic = $this->find($idTipoLic);
+        $tipoLic->valor_actual = $tipoLic->valor_actual + 1;
+        $tipoLic->updated_at = now();
+        $tipoLic->save();
+        return $tipoLic->valor_actual;
     }
 }

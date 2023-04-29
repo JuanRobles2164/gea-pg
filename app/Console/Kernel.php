@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Jobs\MarcarDocumentosVencidos;
+use App\Jobs\MarcarLicitacionesVencidas;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,7 +17,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('inspire')->hourly();
+        $schedule->command('gea:marcar_documentos_vencidos')->daily();
+        $schedule->command('gea:marcar_licitaciones_vencidas')->daily();
+        $schedule->job(MarcarDocumentosVencidos::class)->dailyAt('00:00');
+        $schedule->job(MarcarLicitacionesVencidas::class)->dailyAt('00:00');
+        
     }
 
     /**

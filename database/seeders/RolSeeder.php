@@ -17,14 +17,20 @@ class RolSeeder extends Seeder
         DB::table('rol')
         ->insert([[
             'id' => 1,
-            'nombre' => 'Gerente',
-            'descripcion' => 'Rol de gerente',
+            'nombre' => 'ADMIN',
+            'descripcion' => 'Rol de Admin',
             'estado' => '1'
         ],
         [
             'id' => 2,
+            'nombre' => 'Gerente',
+            'descripcion' => 'Rol de gerente', 
+            'estado' => '1'
+        ],
+        [
+            'id' => 3,
             'nombre' => 'Operario',
-            'descripcion' => 'Rol de operario', 
+            'descripcion' => 'Rol de operario',
             'estado' => '1'
         ]]);
     }

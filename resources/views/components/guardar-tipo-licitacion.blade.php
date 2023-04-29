@@ -1,4 +1,4 @@
-@extends('templates.templateComponentes')
+@extends('Templates.templateComponentes')
 
 @section('modal-content')
 <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
@@ -202,13 +202,11 @@
             descripcion: descripcion, 
             fases: fases
         }
-        console.log(objeto);
         if(id == undefined || id == null || id == ''){
             //si viene vacío, va a crear
             objeto.id = null;
             postData(ruta_crear, objeto)
             .then((data) => {
-                console.log(data);
                 if (data.errors != undefined) {
                     imprimirErrores(data);
                 } else {
@@ -228,8 +226,8 @@
             //Si viene con id, va a editar
             postData(ruta_editar, objeto)
             .then((data) => {
-                console.log(data);
                 objeto = data;
+                console.log(data);
                 swal({
                     title: "Tipo de licitacion editado exitosamente!",
                     icon: "success",

@@ -1,4 +1,4 @@
-@extends('templates.templateComponentes')
+@extends('Templates.templateComponentes')
 
 @section('modal-content')
 <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
@@ -38,7 +38,6 @@
                 objeto.id = null;
                 postData(ruta_crear, objeto)
                 .then((data) => {
-                    console.log(data);
                     if (data.errors != undefined) {
                         imprimirErrores(data);
                     } else {
@@ -58,7 +57,6 @@
                 //Si viene con id, va a editar
                 postData(ruta_editar, objeto)
                 .then((data) => {
-                    console.log(data);
                     swal({
                         title: "Tipo de documento editado exitosamente!",
                         icon: "success",

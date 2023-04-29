@@ -16,7 +16,7 @@ class CreateTipoLicitacionsTable extends Migration
         Schema::create('tipo_licitacion', function (Blueprint $table) {
             $table->id();
             $table->string("nombre");
-            $table->string("descripcion");
+            $table->longText("descripcion");
             $table->integer("valor_actual")->default(0);
             $table->string("indicativo");
             $table->unsignedBigInteger('estado')->default(1);

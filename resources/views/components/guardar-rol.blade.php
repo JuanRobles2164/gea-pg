@@ -1,4 +1,4 @@
-@extends('templates.templateComponentes')
+@extends('Templates.templateComponentes')
 
 @section('modal-content')    
 
@@ -44,14 +44,12 @@
                 //si viene vacío, va a crear
                 postData(ruta_crear, objeto)
                 .then((data) => {
-                    console.log(data);
                     alert("Rol creado exitosamente!");
                 });
             }else{
                 //Si viene con id, va a editar
                 postData(ruta_editar, objeto)
                 .then((data) => {
-                    console.log(data);
                     alert("Rol editado exitosamente!");
                 });
             }

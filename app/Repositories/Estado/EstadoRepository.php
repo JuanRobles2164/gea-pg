@@ -23,7 +23,7 @@ class EstadoRepository extends BaseRepository{
         return new Estado;
     }
     public function getAll($paginate = 10){
-        return $this->getModel()->paginate($paginate);
+        return $this->getModel()->get();
     }
     public function findByParams($params){
         

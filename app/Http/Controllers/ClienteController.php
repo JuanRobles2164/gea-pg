@@ -18,11 +18,9 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
-        $criterio = $request->criterio;
         $this->repo = ClienteRepository::GetInstance();
-        $lista = $this->repo->getAllPersonalizado($criterio);
+        $lista = $this->repo->getAllEstado();
         $this->repo = null;
-        
         $allData = ['clientes' => $lista];
         return view('Cliente.index', $allData);
     }

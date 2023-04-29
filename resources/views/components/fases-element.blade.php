@@ -1,13 +1,49 @@
+@php
+use App\Http\Util\Utilidades;
+use App\Models\Rol;
+@endphp
+
+@foreach ($docs_necesita_asociar as $dna)
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>¡Falta subir un documento!</strong> <br/> El documento <strong>{{$dna->nombre}}</strong> de <strong>{{$modelo->fase()->nombre}} </strong>
+        {{--<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>--}}
+    </div>
+@endforeach
+
 <div class="card">
     <div class="card-header" id="headingOne{{$modelo->id}}">
         <h5 class="mb-0">
             <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$modelo->id}}" aria-expanded="true" aria-controls="collapse{{$modelo->id}}">
-                {{$modelo->nombre}}
+                {{$modelo->fase()->nombre}}
             </button>
 
-            <button class="btn btn-primary" type="button" onclick="abrirModalNuevoArchivo({{$modelo->id}}, {{$licitacion}})">
-                +
-            </button>
+            @if ($modelo->estado != 6)
+                <div class="float-right">
+                    <button type="button" class="btn btn-danger btn-sm" onclick="completarFase({{$modelo->id}})" title="Concluir Fase">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-primary btn-sm" onclick="mostrarModalDocumentosAsociadosFase({{$modelo->id}}, {{$modelo->fase}})"
+                        title="Asociar documentos creados" data-toggle="tooltip" data-placement="bottom">
+                        <i class="fa fa-file"></i>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm" type="button" onclick="abrirModalNuevoArchivo({{$modelo->id}}, {{$licitacion}})"
+                        title="Agregar documentos únicos" data-toggle="tooltip" data-placement="bottom">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            @else
+                @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE]))
+                    <div class="float-right">
+                        <button class="btn btn-warning btn-sm" type="button" onclick="abrirModalReabrirFase({{$modelo->id}})" title="Abrir fase">
+                            <i class="fa fa-bolt" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                @endif
+            @endif
         </h5>
     </div>
 
@@ -27,30 +63,30 @@
                         <tbody>
                             @foreach ($documentos as $doc)
                             <tr>
-                                <td scope="row">
-                                    <a href="{{route('documento.eliminar_documento_licitacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm" onclick="" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>
-                                </td>
-                                <td scope="row">{{$doc->id}}</td>
-                                <td scope="row">{{$doc->numero}}</td>
+                                @if ($doc->constante == null && $doc->recurrente == null)
+                                    <td scope="row">
+                                        <a href="{{route('documento.eliminar_documento_licitacion_relacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm" onclick="" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                @else
+                                    <td scope="row">
+                                        <a href="{{route('documento.eliminar_documento_licitacion_relacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm btn-danger-disabled" onclick="" title="Desasociar" data-toggle="tooltip" data-placement="bottom">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                @endif
+                                <td scope="row">{{$doc->tipo_documento()->nombre}}</td>
+                                <td scope="row">{{$doc->tipo_documento()->indicativo.$doc->getNomenclaturaNombre()}}</td>
                                 <td scope="row">{{$doc->nombre}}</td>
                                 <td scope="row">
-                                    @if ($doc->path_file != null || $doc->data_file != null) 
-                                        <a href="{{route('archivos.descargar_archivo', ['id' => $doc->id])}}" class="btn btn-primary btn-sm" title="Descargar" data-toggle="tooltip" data-placement="bottom">
-                                            <i class="fas fa-sync-alt"></i>
-                                        </a>
-                                        <a href="{{route('archivos.ver_archivo', ['id' => $doc->id])}}" target="_blank" class="btn btn-info btn-sm" onclick="" title="Visualizar" data-toggle="tooltip" data-placement="bottom">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-default btn-sm" onclick="abrirModalReemplazarArchivos({{$doc->id}}, {{$modelo->id}})" title="Reemplazar" data-toggle="tooltip" data-placement="bottom">
-                                            <i class="fas fa-user-edit"></i>
-                                        </a>
-                                    @else
-                                        <a href="#" class="btn btn-default btn-sm" onclick="" title="Subir" data-toggle="tooltip" data-placement="bottom">
-                                            <i class="fas fa-user-edit"></i>
-                                        </a>
-                                    @endif
+                                    <input type="hidden" name="id_documento_asociado_fase[]" value="{{json_encode(['licitacion_fase' => $modelo->id, 'documento' => $doc->id])}}">
+                                    <a href="{{route('archivos.descargar_archivo', ['id' => $doc->id])}}" class="btn btn-primary btn-sm" title="Descargar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="{{route('archivos.ver_archivo', ['id' => $doc->id])}}" target="_blank" class="btn btn-info btn-sm" onclick="" title="Visualizar" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach
@@ -61,6 +97,6 @@
         </div>
     </div>
 
-<script>
-
-</script>
+@push('js')
+    
+@endpush

@@ -32,7 +32,10 @@ class CategoriaRepository extends BaseRepository{
         if(!empty($params["nombre"])){
             $consulta->where("nombre", 'LIKE', "%".$params["nombre"]."%");
         }
-        $consulta->paginate($paginado);
+        if(!empty($params['unico_registro'])){
+            $consulta->first();
+            return $consulta->get();
+        }
         return $consulta;
     }
 }

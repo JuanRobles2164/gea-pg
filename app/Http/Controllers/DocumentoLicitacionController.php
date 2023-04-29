@@ -7,7 +7,7 @@ use App\Http\Requests\StoreDocumentoLicitacionRequest;
 use App\Http\Requests\UpdateDocumentoLicitacionRequest;
 use App\Repositories\DocumentoLicitacion\DocumentoLicitacionRepository;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Redirect;
 
 class DocumentoLicitacionController extends Controller
 {
@@ -109,12 +109,7 @@ class DocumentoLicitacionController extends Controller
         return json_encode($documentoLicitacion);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\DocumentoLicitacion  $documentoLicitacion
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(Request $documentoLicitacion)
     {
         $objeto = new DocumentoLicitacion($documentoLicitacion->all());
@@ -124,6 +119,21 @@ class DocumentoLicitacionController extends Controller
         $this->repo->delete($objeto);
         $this->repo = null;
         return json_encode($objeto);
+    }
+
+    public function asociarDocumentosFromComponent(Request $request){
+        $data = $request->all();
+        $this->repo = DocumentoLicitacionRepository::GetInstance();
+        foreach($data['documentoFromModalFases'] as $dfmf){
+            //El objetoJson es una entidad de tipo Documento
+            $objetoJson = json_decode($dfmf);
+            $this->repo->createOrUpdate([
+                'documento_id' => $objetoJson->id,
+                'licitacion_fase_id' => $data['licitacion_fase']
+            ]);
+        }
+        $this->repo = null;
+        return Redirect::back();
     }
     
 }

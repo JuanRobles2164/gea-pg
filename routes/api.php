@@ -40,8 +40,11 @@ Route::name("archivos.")->group(function(){
         Route::get('/archivos_temporales/descargar', 'descargarArchivos')->name("descargar_archivo");
         Route::get('/archivos_temporales/visualizar', 'verArchivoNavegador')->name("ver_archivo");
         Route::get('/archivos_temporales/visualizar_temporal', 'verArchivoTemporal')->name("ver_archivo_temporal");
+        Route::get('/archivos_temporales/descargar_nombre_tipo_documento', 'descargarArchivosConNombreTipoDocumento')
+                ->name("descargar_archivos_con_nombre_tipo_documento");
     });
 });
+
 
 Route::name("documento_principal.")->group(function(){
     Route::controller(DocumentoPrincipalController::class)->group(function(){
@@ -49,6 +52,12 @@ Route::name("documento_principal.")->group(function(){
         Route::post('/documento_principal/guardar_documento', 'guardarDocumento')->name("guardar_documento");
         Route::post('/documento_principal/toggle_documento_state', 'toggleDocumentoState')->name("toggle_documento_state");
         Route::post('/documento_principal/destroy', 'destroy')->name("eliminar");
+        Route::post('/documento_principal/obtener_anteriores_versiones', 
+            'obtenerDocumentosAnterioresVersiones')->name("obtener_anteriores_versiones");
+        Route::post('/documento_principal/reestablecer_anterior_version_documento', 
+            'reestablecerAnteriorVersionDocumento')->name("reestablecer_anterior_version_documento");
+            
+
     });
 });
 
@@ -183,15 +192,19 @@ Route::name("licitacion.")->group(function(){
         Route::post('/licitacion/store', 'store')->name("guardar");
         Route::post('/licitacion/update', 'update')->name("actualizar");
         Route::post('/licitacion/destroy', 'destroy')->name("eliminar");
+        Route::post('/licitacion/clonar', 'clonarLicitacion')->name("clonar");
+        Route::post('/licitacion/descargar_documentos', 'descargarDocumentosLicitacion')->name("descargar_documentos_licitacion");
     });
 });
 
 Route::name("licitacion_fase.")->group(function(){
     Route::controller(LicitacionFaseController::class)->group(function(){
         Route::get('/licitacion_fase/listar', 'listar')->name("listar");
+        Route::post('/licitacion_fase/cambiar_estado', 'cambiarEstado')->name("cambiar_estado");
         Route::post('/licitacion_fase/store', 'store')->name("guardar");
         Route::post('/licitacion_fase/update', 'update')->name("actualizar");
         Route::post('/licitacion_fase/destroy', 'destroy')->name("eliminar");
+
     });
 });
 

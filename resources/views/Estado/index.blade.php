@@ -40,8 +40,6 @@
                 @endforeach
             </tbody>
         </table>
-
-        {{ $estados->links('components.paginador') }}
     </div>
 
 @endsection
@@ -61,7 +59,6 @@
             }
             postData('{{route("estado.guardar")}}', data)
             .then((data) => {
-                console.log(data);
                 alert("Estado creado exitosamente!");
             });
         }

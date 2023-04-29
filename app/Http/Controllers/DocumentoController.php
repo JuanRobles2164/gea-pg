@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Documento;
-use App\Http\Requests\StoreDocumentoRequest;
-use App\Http\Requests\UpdateDocumentoRequest;
+use App\Models\Document;
 use App\Repositories\Documento\DocumentoRepository;
 use App\Repositories\DocumentoLicitacion\DocumentoLicitacionRepository;
 use App\Repositories\LicitacionFase\LicitacionFaseRepository;
+use App\Repositories\TipoDocumento\TipoDocumentoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
 
 class DocumentoController extends Controller
 {
@@ -72,27 +70,6 @@ class DocumentoController extends Controller
         return json_encode($data);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Documento  $documento
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Documento $documento)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Documento  $documento
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Documento $documento)
-    {
-       //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -101,7 +78,7 @@ class DocumentoController extends Controller
      * @param  \App\Models\Documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Documento $documento)
+    public function update(Request $request, Document $documento)
     {
         $this->repo = DocumentoRepository::GetInstance();
         $data = $request->all();
@@ -119,7 +96,7 @@ class DocumentoController extends Controller
      */
     public function destroy(Request $documento)
     {
-        $objeto = new Documento($documento->all());
+        $objeto = new Document($documento->all());
         $objeto->id = $documento->id;
         $this->repo = DocumentoRepository::GetInstance();
         $objeto = $this->repo->find($objeto->id);
@@ -138,9 +115,29 @@ class DocumentoController extends Controller
         //Mover el archivo
         $final_path = "documentos_licitaciones/".now()->timestamp.$request->nombre_archivo;
         Storage::disk('local')->move($request->data_file, $final_path);
+
+        $this->repo = TipoDocumentoRepository::GetInstance();
+        $tipoDoc = $this->repo->find($request->tipo_documento);
+        $valor = $tipoDoc->valor_actual;
+        $tipoDoc->valor_actual = $valor + 1;
+        $objeto = $this->repo->find($request->tipo_documento);
+        $tipoDocArr = [
+            'valor_actual' => $tipoDoc->valor_actual,
+            'nombre' => $tipoDoc->nombre,
+            'descripcion' => $tipoDoc->descripcion,
+            'indicativo' => $tipoDoc->indicativo,
+            "estado" => 1,
+            "updated_at" => now()
+        ];
+
+        $this->repo->update($objeto, $tipoDocArr);
+        $this->repo = null;
+
+        $numero_doc = $tipoDoc->valor_actual;
+
         //Crear el archivo
         $documentoData = [
-            'numero' => now()->timestamp,
+            'numero' => $numero_doc,
             'nombre' => $request->nombre,
             'nombre_archivo' => $request->nombre_archivo,
             'path_file' => $final_path,
@@ -218,5 +215,38 @@ class DocumentoController extends Controller
         $documentoLicitacion->estado = 3;
         $documentoLicitacion->save();
         return Redirect::back();
+    }
+
+    //Elimina el documento asociado a una licitación (Relacion), y deja en estado 3 el documento
+    public function eliminarDocumentoLicitacionRelacion(Request $request){
+        $data = $request->all();
+        $this->repo = DocumentoLicitacionRepository::GetInstance();
+        $documentoLicitacion = $this->repo->findByParams([
+            'registro_unico' => true,
+            'licitacion_fase' => $data['fase_licitacion'],
+            'documento' => $data['documento']
+        ]);
+        //Cambiar el estado a eliminado, pero sólo en la asociación del documento
+        $documentoLicitacion->delete();
+        return Redirect::back();
+    }
+
+    /**
+     * Requiere:
+     * documento -> id del documento a reemplazar
+     * file_name -> nombre del archivo 
+     * data_file -> ruta del archivo temporal
+     */
+    public function reemplazarDocumentoPlantilla(Request $request){
+        $data = $request->all();
+        $this->repo = DocumentoRepository::GetInstance();
+        //Obtengo la instancia original
+        $documento = $this->repo->find($data['documento']);
+
+        $newPathFile = "documentos_principales/".now()->timestamp.$data['file_name'];
+        Storage::disk('local')->move($data['data_file'], $newPathFile);
+
+        $documento->path_file = $newPathFile;
+        $documento->save();
     }
 }

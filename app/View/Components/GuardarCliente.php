@@ -22,7 +22,13 @@ class GuardarCliente extends Component
     {
         $this->modal_title = $modalTitle;
         $this->modal_id = $modalId;
-        $this->tipo_ident = TipoIdentificacionEnum::getEnum();
+        $content = [];
+        array_push($content, "Seleccione un tipo de identificacion...");
+        array_push($content, "CC");
+        array_push($content, "NIT");
+        array_push($content, "TI");
+        array_push($content, "CE");
+        $this->tipo_ident = $content;
 
         if($modelId != -1 || $modelId != '-1'){
             $this->repo = ClienteRepository::GetInstance();

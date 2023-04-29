@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fase;
-use App\Http\Requests\StorefaseRequest;
-use App\Http\Requests\UpdatefaseRequest;
-use App\Models\FaseTipoDocumento;
 use App\Repositories\Documento\DocumentoRepository;
 use App\Repositories\Fase\FaseRepository;
 use App\Repositories\FaseTipoDocumento\FaseTipoDocumentoRepository;
@@ -26,13 +23,11 @@ class FaseController extends Controller
      */
     public function index(Request $request)
     {
-        $criterio = $request->criterio;
         $this->repo = FaseRepository::GetInstance();
-        $lista = $this->repo->getAllPersonalizado($criterio);
+        $lista = $this->repo->getAllEstado();
         $this->repo = null;
 
-        $allData = ['fases' => $lista
-        ];
+        $allData = ['fases' => $lista];
         return view('Fase.index', $allData);
     }
 
@@ -231,11 +226,11 @@ class FaseController extends Controller
         foreach($documentos as $doc){
             $this->repo = TipoDocumentoRepository::GetInstance();
             $tipoDoc = $this->repo->find($doc->tipo_documento);
-            $this->repo =  null;
-            $doc->numero = $tipoDoc->indicativo . '' . str_pad($doc->numero,6,"0",STR_PAD_LEFT); 
+            $doc->numero = $tipoDoc->indicativo . '' . str_pad($doc->numero, 6, "0", STR_PAD_LEFT); 
             $doc->nombre_tipdoc = $tipoDoc->nombre;
             $doc->id_tdoc = $tipoDoc->id;
         }
+        $this->repo =  null;
         return json_encode($documentos);
     }
 

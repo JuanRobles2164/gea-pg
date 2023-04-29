@@ -1,4 +1,4 @@
-@extends('templates.templateComponentes')
+@extends('Templates.templateComponentes')
 
 @section('modal-content')
 <form>
@@ -107,7 +107,6 @@
                 objeto.id = null;
                 postData(ruta_crear, objeto)
                 .then((data) => {
-                    console.log(data);
                     if (data.errors != undefined){
                         imprimirErrores(data);
                     } else{
@@ -123,7 +122,6 @@
                                 email: data.email,
                                 roles: roles
                             };
-                            console.log(nuevoObjetoUsuario, roles);
                             guardarRoles{{$modal_id}}(data, roles);
                         });
                     }
@@ -132,7 +130,6 @@
                 //Si viene con id, va a editar
                 postData(ruta_editar, objeto)
                 .then((data) => {
-                    console.log(data);
                     swal({
                         title: "Cliente editado exitosamente!",
                         icon: "success",
@@ -155,7 +152,6 @@
         nuevoObjetoUsuario.roles = roles;
         postData(ruta_editar_roles_usuario, nuevoObjetoUsuario)
         .then((data) => {
-            console.log(data);
             swal({
                 title: "Roles editados satisfactoriamente",
                 icon: "success",
@@ -172,7 +168,6 @@
         nuevoObjetoUsuario.roles = roles;
         postData(ruta_crear_roles_usuario, nuevoObjetoUsuario)
         .then((data) => {
-            console.log(data);
             swal({
                 title: "Roles asignados satisfactoriamente",
                 icon: "success",

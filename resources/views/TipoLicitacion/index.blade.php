@@ -5,89 +5,77 @@
 @include('layouts.headers.cards')
 
 <div class="container-fluid mt-0">
-    <div class="row">
-        <div class="col">
-            <div class="card shadow">
-                <div class="card-header border-0">
+    <!-- <div class="row">
+        <div class="col"> -->
+    <div class="card shadow">
+        <div class="card-header border-1">
+            <div class="row align-items-center">
+                <div class="col-8">
+                    <h3 class="mb-0">Tipo Licitación</h3>
+                </div>
+                <div class="col">
                     <div class="row align-items-center">
-                        <div class="col-8">
-                            <h3 class="mb-0">Tipo Licitación</h3>
-                        </div>
-                        <div class="col">
-                            <div class="row align-items-center">
-                                <div class="col">
-
-                                </div>
-                                <div class="col-6 justify-content-end text-right">
-                                    <input class="form-control form-control-sm" type="search" name="criterio" id="criterio" placeholder="Buscar..." aria-label="Search">
-                                </div>
-                                <div class="col justify-content-end text-right">
-                                    <button onclick="obtenerDatos();" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_tipo_licitacion">
-                                        Crear <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="col justify-content-end text-right">
+                            <button onclick="obtenerDatosEdit();" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#id_modal_tipo_licitacion">
+                                Crear <i class="fas fa-plus"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table align-items-center">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col" style="display: none;">Id</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Descripción</th>
-                                <th scope="col">Indicativo</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($tipos_licitacion as $tl)
-                            <tr>
-                                <td>
-                                    <a type="button" class="btn btn-danger btn-sm" onclick="eliminarObjetoTipoLicitacionModal({{$tl->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="far fa-trash-alt" style="color: white;"></i>
-                                    </a>
-                                </td>
-                                <td style="display: none;">{{$tl->id}}</td>
-                                <td>{{$tl->nombre}}</td>
-                                <td> {{$tl->descripcion}}</td>
-                                <td> {{$tl->indicativo}}</td>
-                                @if($tl->estado == 1)
-                                <td>
-                                    <a type="button" style="color: white;" class="btn btn-success  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoLic({{$tl->id}})">
-                                        Activo
-                                    </a>
-                                </td>
-                                @else
-                                <td>
-                                    <a type="button" style="color: white;" class="btn btn-warning  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoLic({{$tl->id}})">
-                                        Inactivo
-                                    </a>
-                                </td>
-                                @endif
-                                <td>
-                                    <!-- Aquí van los botones para editar-visualizar y eso xd -->
-                                    <a type="button" class="btn btn-info btn-sm" onclick="setDataToTipoLicitacionModal({{$tl->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-eye" style="color: white;"></i>
-                                    </a>
-                                    <a type="button"class="btn btn-default btn-sm" onclick="setDataToTipoLicitacionModalEdit({{$tl->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="fas fa-pencil-alt" style="color: white;"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer py-3">
-                    {{ $tipos_licitacion->links('components.paginador') }}
-                </div>
             </div>
         </div>
-    </div>
+        <div class="card-body table-responsive">
+            <table class="table align-items-center" id="tableinclude">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col" style="display: none;">Id</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Indicativo</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($tipos_licitacion as $tl)
+                    <tr>
+                        <td>
+                            <a type="button" class="btn btn-danger btn-sm" onclick="eliminarObjetoTipoLicitacionModal({{$tl->id}})" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                <i class="far fa-trash-alt" style="color: white;"></i>
+                            </a>
+                        </td>
+                        <td style="display: none;">{{$tl->id}}</td>
+                        <td>{{$tl->nombre}}</td>
+                        <td> {{$tl->descripcion}}</td>
+                        <td> {{$tl->indicativo}}</td>
+                        @if($tl->estado == 1)
+                        <td>
+                            <a type="button" style="color: white;" class="btn btn-success  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoLic({{$tl->id}})">
+                                Activo
+                            </a>
+                        </td>
+                        @else
+                        <td>
+                            <a type="button" style="color: white;" class="btn btn-warning  btn-sm" data-toggle="tooltip" data-placement="bottom" title="Cambiar estado" onclick="toggleStateTipoLic({{$tl->id}})">
+                                Inactivo
+                            </a>
+                        </td>
+                        @endif
+                        <td>
+                            <!-- Aquí van los botones para editar-visualizar y eso xd -->
+                            <a type="button" class="btn btn-info btn-sm" onclick="setDataToTipoLicitacionModal({{$tl->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
+                                <i class="fas fa-eye" style="color: white;"></i>
+                            </a>
+                            <a type="button"class="btn btn-default btn-sm" onclick="setDataToTipoLicitacionModalEdit({{$tl->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                <i class="fas fa-pencil-alt" style="color: white;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 </div>
 
 <x-ver-tipo-licitacion modalId="id_modal_view_tipo_licitacion" modalTitle="Ver cliente" />
@@ -99,13 +87,32 @@
 
 @push('js')
 <script>
+     $(document).ready(function () {
+            $('#tableinclude').DataTable({
+                language: {
+                    url: '{{ asset('argon') }}/es-ES.json',
+                },
+                responsive: true,
+
+            });
+    });
     let listItems = [];
+    let dataGlobal = [];
     var ruta_encontrar_tipo_licitacion = "{{route('tipo_licitacion.encontrar')}}";
     var ruta_editar_tipo_licitacion = "{{route('tipo_licitacion.actualizar')}}";
     var ruta_eliminar_tipo_licitacion = "{{route('tipo_licitacion.eliminar')}}";
     var ruta_consultar_fases = "{{route('fase.listar')}}";
     var ruta_consultar_fases_asociadas = "{{route('fase.encontrar_por_tipolic')}}";
-    var ruta_alternar_estado_tipolic = "{{route('tipo_licitacion.toggle_tipo_licitacion_state')}}"
+    var ruta_alternar_estado_tipolic = "{{route('tipo_licitacion.toggle_tipo_licitacion_state')}}";
+
+    obtenerDatosGlobal();
+
+    async function obtenerDatosGlobal() {
+        const tDocs = await obtenerDataFase();
+        tDocs.map((data) => {
+            dataGlobal.push(data);
+        });
+    }
 
     async function obtenerDataTipoLicitacion(data) {
         const response = await fetch(ruta_encontrar_tipo_licitacion + "?id=" + data.id);
@@ -118,8 +125,6 @@
         };
         dataToSet = obtenerDataTipoLicitacion(objeto);
         dataToSet.then((data) => {
-            console.log(data);
-
             let tipoLicitacionData = data;
 
             document.getElementById("nombre_tipo_licitacion_modal_details_id").value = tipoLicitacionData.nombre;
@@ -128,7 +133,7 @@
             document.getElementById("descripcion_tipo_licitacion_modal_details_id").value = tipoLicitacionData.descripcion;
             document.getElementById("descripcion_tipo_licitacion_modal_details_id").readOnly = true;
 
-            obtenerDatos(idObjeto, false);
+            obtenerDatosView(idObjeto);
 
             $('#id_modal_view_tipo_licitacion').modal('show');
         });
@@ -140,13 +145,11 @@
         };
         dataToSet = obtenerDataTipoLicitacion(objeto);
         dataToSet.then((data) => {
-            console.log(data);
             let tipoLicitacionData = data;
             document.getElementById("id_tipo_licitacion_modal_create_id").value = tipoLicitacionData.id;
             document.getElementById("nombre_tipo_licitacion_modal_create_id").value = tipoLicitacionData.nombre;
             document.getElementById("descripcion_tipo_licitacion_modal_create_id").value = tipoLicitacionData.descripcion;
-            console.log(idObjeto);
-            obtenerDatos(idObjeto, true);
+            obtenerDatosEdit(idObjeto);
 
             $('#id_modal_tipo_licitacion').modal('show');
         });
@@ -170,7 +173,6 @@
                 .then((result) => {
                     postData(ruta_eliminar_tipo_licitacion, data)
                     .then((data) =>{
-                        console.log(data);
                         location.reload();
                     });
                 });
@@ -199,15 +201,14 @@
         return objetoBusqueda != undefined;
     }
 
-    const  obtenerDatos = async (idObjeto = null, isEditar) => {
+    const  obtenerDatosEdit = async (idObjeto = null) => {
         try {
             let fases = [];
             let fasesAsociadas  = [];
-            dataToSet = obtenerDataFase();
-            dataToSet.then((data) => {
-                console.log(data.data);
-                fases = data.data;
-                if(idObjeto == null){
+            
+            fases = [...dataGlobal];
+
+            if(idObjeto == null){
                     listItems = [];
                     document.getElementById('label_fases').innerHTML = '';
                     document.getElementById('draggable-list').innerHTML = '';
@@ -221,11 +222,22 @@
                         option.text = el.nombre;
                         selectFases.appendChild(option);
                     });
-                }
-            });
-            if(idObjeto != null){
-                dataToSet = obtenerDataFaseAsociadas(idObjeto);
+            }else{
+                let dataToSet = obtenerDataFaseAsociadas(idObjeto);
                 dataToSet.then((data) => {
+                    console.log("ANTES");
+                    console.log(data);
+                    data = data.sort((a, b) => {
+                        if(a.orden > b.orden){
+                            return 1;
+                        }
+                        if(a.orden < b.orden){
+                            return -1;
+                        }
+                        return 0;
+                    });
+                    //Este dejarlo xd
+                    console.log("DESPUES");
                     console.log(data);
                     fasesAsociadas = data;
 
@@ -233,6 +245,7 @@
                         listItems = [];
                         document.getElementById('label_fases').innerHTML = '';
                         document.getElementById('draggable-list').innerHTML = '';
+
                         fasesAsociadas.forEach((el) => {
                             if(buscarFaseEntreFasesAsociadas(el, fases)){
                                 let index = fases.findIndex(function(item){
@@ -242,7 +255,7 @@
                                     console.log('eliminado', fases.splice(index, 1), index);
                                 }
                             }
-                            crearListaFase(el, isEditar);
+                            crearListaFase(el, true);
                         });
                         let selectFases =  document.getElementById("select_fases");
                         let option = document.getElementById("option_select");
@@ -254,9 +267,6 @@
                             option.text = el.nombre;
                             selectFases.appendChild(option);
                         });
-                        
-                        console.log(fases);
-                        console.log(fasesAsociadas);
                     }
                     
                 });
@@ -265,6 +275,41 @@
          console.error(err);
         }
     }
+
+    const  obtenerDatosView = async (idObjeto) => {
+        try {
+            let fases = [];
+            let fasesAsociadas  = [];
+            
+            fases = [...dataGlobal];
+
+            dataToSet = obtenerDataFaseAsociadas(idObjeto);
+            dataToSet.then((data) => {
+                fasesAsociadas = data;
+                console.log(dataToSet, 'asociadas');
+                if(fases !=  null && fasesAsociadas != null){
+                    listItems = [];
+                    document.getElementById('label_fases-view').innerHTML = '';
+                    document.getElementById('draggable-list-view').innerHTML = '';
+                    fasesAsociadas.forEach((el) => {
+                        if(buscarFaseEntreFasesAsociadas(el, fases)){
+                            let index = fases.findIndex(function(item){
+                                return item.id == el.id;
+                            });
+                            if(index != -1){
+                                console.log('eliminado', fases.splice(index, 1), index);
+                            }
+                        }
+                        crearListaFase(el, false);
+                    });
+                }
+            });
+                
+        }catch (err) {
+         console.error(err);
+        }
+    }
+
 
     function crearListaFase(fase, isEditar){
         let draggable_list = null;
@@ -291,7 +336,8 @@
             listItem.setAttribute('data-index', index);
             listItem.setAttribute('id-fase', fase.id);
             listItem.setAttribute('nombre-fase', nombrefase);
-            listItem.innerHTML = `
+            if(isEditar){
+                listItem.innerHTML = `
                 <div class="draggable" draggable="true">
                     <p class="list-name justify-content-start" id="parrafo${index}">
                         ${nombrefase} 
@@ -302,6 +348,16 @@
                     </a>
                 </div>
             `;
+            }else{
+                listItem.innerHTML = `
+                <div class="draggable" draggable="true">
+                    <p class="list-name justify-content-start" id="parrafo${index}">
+                        ${nombrefase} 
+                    </p>
+                </div>
+            `;
+            }
+            
             listItems.push(listItem);
             draggable_list.appendChild(listItem);
             addEventListeners();
@@ -314,21 +370,9 @@
 
         postData(ruta_alternar_estado_tipolic, objeto)
         .then((data) => {
-            console.log(data);
             location.reload();
         });   
     }
-    var elInput = document.getElementById('criterio');
-        elInput.addEventListener('keyup', function(e) {
-            var keycode = e.keyCode || e.which;
-            if (keycode == 13) {
-                let href = `{{route('tipo_licitacion.index')}}?criterio=:valor_cri`;
-                let criterio = elInput.value;
-                let final = ""+href;
-                final = final.replace(":valor_cri", criterio);
-                window.location.href = final;
-            }
-        });
 
 </script>
 @endpush

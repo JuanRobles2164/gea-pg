@@ -49,7 +49,23 @@ class RolUsuarioSeeder extends Seeder
         [
             'id' => 5,
             'usuario' => 5,
+            'rol' => 3,
+            'estado' => '1',
+            'created_at' => now(),
+            'updated_at' => now()
+        ],
+        [
+            'id' => 6,
+            'usuario' => 2,
             'rol' => 2,
+            'estado' => '1',
+            'created_at' => now(),
+            'updated_at' => now()
+        ],
+        [
+            'id' => 7,
+            'usuario' => 2,
+            'rol' => 3,
             'estado' => '1',
             'created_at' => now(),
             'updated_at' => now()

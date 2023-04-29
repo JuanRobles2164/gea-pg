@@ -26,9 +26,8 @@ class TipoLicitacionController extends Controller
      */
     public function index(Request $request)
     {
-        $criterio = $request->criterio;
         $this->repo = TipoLicitacionRepository::GetInstance();
-        $lista = $this->repo->getAllPersonalizado($criterio);
+        $lista = $this->repo->getAllEstado();
         $this->repo = null;
 
         $allData = ['tipos_licitacion' => $lista,
@@ -158,53 +157,66 @@ class TipoLicitacionController extends Controller
      * @param  \App\Models\TipoLicitacion  $tipoLicitacion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TipoLicitacion $tipoLicitacion)
+    public function update(Request $request)
     {
+        $tipoLicitacion = new TipoLicitacion;
+
         $request->validate($this->validationRules);
         $this->repo = TipoLicitacionRepository::GetInstance();
         $data = $request->all();
-        $dataTipoLicitacion = [];
-        $dataTipoLicitacion['nombre'] = $data['nombre'];
-        $dataTipoLicitacion['descripcion'] = $data['descripcion'];
-        $dataTipoLicitacion['indicativo'] = Utilidades::obtenerIndicativo(strtoupper($data['nombre']));
+        $dataTipoLicitacion = [
+            'nombre' => $data['nombre'],
+            'descripcion' => $data['descripcion'],
+            'indicativo' => Utilidades::obtenerIndicativo($data['nombre'])
+        ];
         $tipoLicitacion = $this->repo->find($data["id"]);
         $entidad = $this->repo->update($tipoLicitacion, $dataTipoLicitacion);
+
         $retorno['tipo_licitacion'] = $entidad;
         $retorno['fase_tipo_licitacion'] = [];
         $this->repo = null;
-
         $this->repo = FaseTipoLicitacionRepository::GetInstance();
-        $fasestl = $this->repo->obtenerFasesTLByTipoLicitacion($data["id"]);
+        //Obtiene todas las fases asociadas 
+        $fasestl = $this->repo->obtenerFasesTLByTipoLicitacion($data['id']);
         $array_num = count($data['fases']);
         $fasesModificadas = [];
-        for ($i = 0; $i < $array_num; ++$i){          
-            $dataFaseTipoLicitacion['orden'] = $data['fases'][$i]['index'];
-            $dataFaseTipoLicitacion['fase'] = $data['fases'][$i]['idFase'];
-            $dataFaseTipoLicitacion['tipo_licitacion'] = $entidad->id;    
-            if($fasestl != null){
-                foreach($fasestl as $ftl){
-                    if($ftl->fase == $data['fases'][$i]['idFase']){     
-                        array_push($fasesModificadas,$ftl->id);            
-                        break;
-                    }
-                }
-            }
-            array_push($retorno['fase_tipo_licitacion'],  $this->repo->updateftl($dataFaseTipoLicitacion));
+        
+        $dataResultArray = [];
+        //Sea nuevo o antiguo, procesará todas las solicitudes y deberá crearlas o actualizarlas, según corresponda
+        //Si viene de front->back no importa si están creadas o no, deberá iterar sobre todas y actualizarlas
+        foreach($data['fases'] as $i){
+            $data_tl = [
+                'orden' => $i['index'],
+                'fase' => $i['idFase'],
+                'estado' => 1,
+                'tipo_licitacion' => $entidad->id
+            ];
+            array_push($dataResultArray, $this->repo->updateftl($data_tl));
         }
 
-        if(count($fasesModificadas) != 0 || $array_num == 0){
-            foreach($fasestl as $ftl){
-                if(!(in_array($ftl->id,$fasesModificadas))){
-                    $dataFaseTipoLicitacion['fase'] = $ftl->fase;
-                    $dataFaseTipoLicitacion['tipo_licitacion'] = $entidad->id;    
-                    $dataFaseTipoLicitacion['estado'] = '3';
+        //Ahora, para saber cuáles eliminar, deberá verificar back->front
+        //Si el registro no se encuentra en el front, lo marcará como estado = 3 (Inactivo)
+        foreach($fasestl as $i){
+            $encontrada = false;
+            foreach($data['fases'] as $j){
+                //Si lo encuentra, no la elimina
+                if($j['idFase'] == $i->fase){
+                    $encontrada = true;
+                    break;
                 }
-                array_push($retorno['fase_tipo_licitacion'],  $this->repo->updateftl($dataFaseTipoLicitacion));
+            }
+            //si no lo encuentra, deberá eliminarla
+            if($encontrada == false){
+                $dataFTL = [
+                    'estado' => 3,
+                    'fase' => $i->fase,
+                    'tipo_licitacion' => $i->tipo_licitacion
+                ];
+                array_push($dataResultArray, $this->repo->updateftl($dataFTL));
             }
         }
-
         $this->repo = null;
-        return json_encode($retorno);
+        return json_encode($dataResultArray);
     }
 
     /**

@@ -23,9 +23,8 @@ class TipoDocumentoController extends Controller
      */
     public function index(Request $request)
     {
-        $criterio = $request->criterio;
         $this->repo = TipoDocumentoRepository::GetInstance();
-        $lista = $this->repo->getAllPersonalizado($criterio);
+        $lista = $this->repo->getAllEstado();
         $this->repo = null;
         $allData = ['tipos_documento' => $lista];
         return view('TipoDocumento.index', $allData);

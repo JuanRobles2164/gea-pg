@@ -55,16 +55,16 @@
 
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label class="form-label">?:</label>
+                                <label class="form-label">Tipo de recurso:</label>
                                 <div class="form-row form-control form-control-alternative" onclick="mostrarFecha()">
                                     <div class="custom-control custom-control-alternative custom-radio mb-3">
                                         <input type="radio" name="recurrente_constante" class="custom-control-input" id="documento_recurrente_constante1" value="recurrente">
-                                        <label class="custom-control-label" for="documento_recurrente_constante1">Recurrente </label>
+                                        <label class="custom-control-label" data-toggle="tooltip" title="Documentos que vencen y necesitan ser renovados" for="documento_recurrente_constante1">Recurrente </label>
                                     </div>
                                     &nbsp;&nbsp;
                                     <div class="custom-control custom-control-alternative custom-radio mb-3">
                                         <input type="radio" name="recurrente_constante" class="custom-control-input" id="documento_recurrente_constante2" value="constante">
-                                        <label class="custom-control-label" for="documento_recurrente_constante2">Constante </label>
+                                        <label class="custom-control-label" data-toggle="tooltip" title="Documentos que no vencen" for="documento_recurrente_constante2">Constante </label>
                                     </div>
                                 </div>
                             </div>

@@ -8,9 +8,11 @@ use App\Repositories\RolUsuario\RolUsuarioRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
+    private $repo;
     /**
      * Display a listing of the resource.
      *
@@ -18,9 +20,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $criterio = $request->criterio;
         $this->repo = UserRepository::GetInstance();
-        $lista = $this->repo->getAllPersonalizado($criterio);
+        $lista = $this->repo->getAllEstado();
         $this->repo = null;
         $allData = ['users' => $lista];
         return view('users.main_menu', $allData);
@@ -81,7 +82,7 @@ class UserController extends Controller
             'name' => ['required', 'min:3'],
             'email' => ['required', 'email', 'unique:users'],
             'identificacion' => 'required',
-            'password' => ['required', 'confirmed']
+            'password' => ['required', 'confirmed', 'min:8', Password::min(8)->mixedCase()->numbers()->symbols()]
         ]);
         $this->repo = UserRepository::GetInstance();
         $data = $request->all();
@@ -109,7 +110,7 @@ class UserController extends Controller
             $data['password'] = $user->password;
         }else{
             $request->validate([
-                'password' => 'confirmed'
+                'password' => ['confirmed', 'min:8', Password::min(8)->mixedCase()->numbers()->symbols()]
             ]);
             $data['password'] = Hash::make($data['password']);
         }
