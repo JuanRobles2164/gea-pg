@@ -165,6 +165,7 @@
         var ruta_eliminar_documento = "{{route('documento_principal.eliminar')}}";
         var ruta_obtener_anteriores_versiones_documento = "{{route('documento_principal.obtener_anteriores_versiones')}}";
         var ruta_reetablecer_anterior_version_documento = "{{route('documento_principal.reestablecer_anterior_version_documento')}}"
+        var ruta_eliminar_doc = "{{route('documento_principal.eliminar_vieja_version')}}";
 
         function anterioresVersionesDocumento(IdDocumento){
             let modalElemento = $("#modalVersionesArchivo");
@@ -184,6 +185,7 @@
                     <table class="table thead-dark">
                         <thead>
                             <tr>
+                                <th>¿Eliminar?</th>
                                 <th>Nombre</th>
                                 <th>Acciones</th>
                             </tr>
@@ -195,6 +197,14 @@
                 `;
                 hijos.forEach(element => {
                     let htmlDocumento = `<tr>
+                                            <td>
+                                                <a href="${ruta_eliminar_doc}?id=${element.id}"
+                                                    class="btn btn-danger"
+                                                    title="Eliminar version" data-toggle="tooltip" data-placement="bottom"
+                                                    >
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </td>
                                             <td>${element.nombre}</td>
                                             <td>
                                                 <a href="{{route('archivos.ver_archivo')}}?id=${element.id}" class="btn btn-outline-primary" target="_blank"

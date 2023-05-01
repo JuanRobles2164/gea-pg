@@ -86,7 +86,15 @@ class DocumentoRepository extends BaseRepository{
     public function listarDocumentosHijos($idPadre){
         return $this->getModel()
                     ->where('padre', $idPadre)
+                    ->where('estado', '!=', 3)
                     ->get();
+    }
+
+    public function eliminarDocumentoVersion($idDoc){
+        $doc = $this->find($idDoc);
+        $doc->estado = 3;
+        $doc->save();
+        return $doc;
     }
 
     public function toggleState($documentoId){

@@ -83,6 +83,8 @@ Route::middleware('autenticado')->name("documento_principal.")->group(function()
         Route::get('/documento_principal/index', 'index')->name("index");
         Route::get('/documento_principal/gestion', 'gestion')->name("gestion");
         Route::get('/documento_principal/editar', 'editar')->name("editar");
+        Route::get("/documento_principal/eliminar_vieja_version", "eliminarDocumentoViejaVersion")->name("eliminar_vieja_version");
+
 
         Route::post('/documento_principal/guardar_documento/sube_doc_temporal', 'subirDocTemporal')->name('doc_temporal');
         Route::post('/documento_principal/guardar_documento', 'guardarDocumento')->name("guardar_documento_no_api");

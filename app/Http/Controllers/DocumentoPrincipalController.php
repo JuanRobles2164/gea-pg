@@ -296,4 +296,10 @@ class DocumentoPrincipalController extends Controller
             'status' => "success"
         ]);
     }
+
+    public function eliminarDocumentoViejaVersion(Request $request){
+        $this->repo = DocumentoRepository::GetInstance();
+        $this->repo->eliminarDocumentoVersion($request->id);
+        return back();
+    }
 }
