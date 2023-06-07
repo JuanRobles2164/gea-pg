@@ -15,6 +15,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LicitacionFaseController;
 use App\Http\Controllers\UserController;
 use App\Repositories\Estado\EstadoRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -51,9 +52,16 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
+Route::get('token', function(Request $request){
+    return json_encode(csrf_token());
+});
+
+Route::post('token', function(Request $request){
+    return json_encode(csrf_token());
+});
 
 
-Route::middleware('autenticado')->name('errores.')->group(function(){
+Route::name('errores.')->group(function(){
     Route::controller(HomeController::class)->group(function(){
         Route::get('/error/403', 'forbiddenPage')->name('403');
     });
@@ -61,13 +69,13 @@ Route::middleware('autenticado')->name('errores.')->group(function(){
 
 //Como seguiremos usando sólo la API, entonces dejaremos sólo las rutas que devuelvan las vistas en este archivo
 
-Route::middleware('autenticado')->name("estado.")->group(function(){
+Route::middleware('auth')->name("estado.")->group(function(){
     Route::controller(EstadoController::class)->group(function(){
         Route::get('/estado/index', 'index')->name("index");
     });
 });
 
-Route::middleware('autenticado')->name("empresa.")->group(function(){
+Route::middleware('auth')->name("empresa.")->group(function(){
     Route::controller(EmpresaController::class)->group(function(){
         Route::get('/empresa/index', 'index')->name("index");
         Route::get('/empresa/index_representante', 'indexRepresentante')->name("index_representante");
@@ -78,7 +86,7 @@ Route::middleware('autenticado')->name("empresa.")->group(function(){
     });
 });
 
-Route::middleware('autenticado')->name("documento_principal.")->group(function(){
+Route::middleware('auth')->name("documento_principal.")->group(function(){
     Route::controller(DocumentoPrincipalController::class)->group(function(){
         Route::get('/documento_principal/index', 'index')->name("index");
         Route::get('/documento_principal/gestion', 'gestion')->name("gestion");
@@ -93,37 +101,37 @@ Route::middleware('autenticado')->name("documento_principal.")->group(function()
 });
 
 
-Route::middleware('autenticado')->name("usuario.")->group(function(){
+Route::middleware('auth')->name("usuario.")->group(function(){
     Route::controller(UserController::class)->group(function(){
         Route::get('/usuario/index', 'index')->name("index");
     });
 });
 
-Route::middleware('autenticado')->name("cliente.")->group(function(){
+Route::middleware('auth')->name("cliente.")->group(function(){
     Route::controller(ClienteController::class)->group(function(){
         Route::get('/cliente/index', 'index')->name("index");
     });
 });
 
-Route::middleware('autenticado')->name("fase.")->group(function(){
+Route::middleware('auth')->name("fase.")->group(function(){
     Route::controller(FaseController::class)->group(function(){
         Route::get('/fase/index', 'index')->name("index");
     });
 });
 
-Route::middleware('autenticado')->name("tipo_documento.")->group(function(){
+Route::middleware('auth')->name("tipo_documento.")->group(function(){
     Route::controller(TipoDocumentoController::class)->group(function(){
         Route::get('/tipo_documento/index', 'index')->name("index");
     });
 });
 
-Route::middleware('autenticado')->name("licitacion_fase.")->group(function(){
+Route::middleware('auth')->name("licitacion_fase.")->group(function(){
     Route::controller(LicitacionFaseController::class)->group(function(){
         Route::post('/licitacion_fase/reabrirFase', 'reabrirFase')->name("reabrir_fase");
     });
 });
 
-Route::middleware('autenticado')->name("documento.")->group(function(){
+Route::middleware('auth')->name("documento.")->group(function(){
     Route::controller(DocumentoController::class)->group(function(){
         Route::get('/documento/index', 'index')->name("index");
         Route::post('/documento/store_in_component', 'storeInComponent')->name("guardar_en_componente");
@@ -133,25 +141,25 @@ Route::middleware('autenticado')->name("documento.")->group(function(){
     });
 });
 
-Route::middleware('autenticado')->name("documento_licitacion.")->group(function(){
+Route::middleware('auth')->name("documento_licitacion.")->group(function(){
     Route::controller(DocumentoLicitacionController::class)->group(function(){
         Route::post('/documento_licitacion/asociar_documentos_from_component', 'asociarDocumentosFromComponent')->name("asociar_documentos_from_component");
     });
 });
 
-Route::middleware('autenticado')->name("tipo_licitacion.")->group(function(){
+Route::middleware('auth')->name("tipo_licitacion.")->group(function(){
     Route::controller(TipoLicitacionController::class)->group(function(){
         Route::get('/tipo_licitacion/index', 'index')->name("index");
     });
 });
 
-Route::middleware('autenticado')->name("categoria.")->group(function(){
+Route::middleware('auth')->name("categoria.")->group(function(){
     Route::controller(CategoriaController::class)->group(function(){
         Route::get('/categoria/index', 'index')->name("index");
     });
 });
 
-Route::middleware('autenticado')->name("licitacion.")->group(function(){
+Route::middleware('auth')->name("licitacion.")->group(function(){
     Route::controller(LicitacionController::class)->group(function(){
         Route::get('/licitacion/index', 'index')->name("index");
         Route::get('/licitacion/gestionar_documentos_licitacion', 'gestionDocumentosIndex')->name("gestion_documentos_index");

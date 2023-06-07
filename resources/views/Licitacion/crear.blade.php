@@ -75,9 +75,8 @@
                         <div class="form-group col-md-6">
                             <label for="nombre">Cliente*:</label>
                             <select class="form-control form-control-alternative" value="{{old('cliente')}}" name="cliente">
-                                <option value="-1">Seleccione un cliente...</option>
                                 @foreach ($clientes as $cli)
-                                <option value="{{$cli->id}}">{{$cli->identificacion}} - {{$cli->razon_social}} </option>
+                                    <option value="{{$cli->id}}">{{$cli->identificacion}} - {{$cli->razon_social}} </option>
                                 @endforeach
                             </select>
                         </div>
