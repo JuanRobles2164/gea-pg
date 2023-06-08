@@ -64,17 +64,25 @@ use App\Models\Rol;
                             @foreach ($documentos as $doc)
                             <tr>
                                 @if ($doc->constante == null && $doc->recurrente == null)
-                                    <td scope="row">
-                                        <a href="{{route('documento.eliminar_documento_licitacion_relacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm" onclick="" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
-                                    </td>
+                                    @if ($modelo->estado != 6)
+                                        <td scope="row">
+                                            <a href="{{route('documento.eliminar_documento_licitacion_relacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm" onclick="" title="Eliminar" data-toggle="tooltip" data-placement="bottom">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    @else
+                                        <td></td>
+                                    @endif
                                 @else
-                                    <td scope="row">
-                                        <a href="{{route('documento.eliminar_documento_licitacion_relacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm btn-danger-disabled" onclick="" title="Desasociar" data-toggle="tooltip" data-placement="bottom">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
-                                    </td>
+                                    @if ($modelo->estado != 6)
+                                        <td scope="row">
+                                            <a href="{{route('documento.eliminar_documento_licitacion_relacion', ['fase_licitacion' => $modelo->id, 'documento' => $doc->id])}}" class="btn btn-danger btn-sm btn-danger-disabled" onclick="" title="Desasociar" data-toggle="tooltip" data-placement="bottom">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    @else
+                                        <td></td>
+                                    @endif
                                 @endif
                                 <td scope="row">{{$doc->tipo_documento()->nombre}}</td>
                                 <td scope="row">{{$doc->tipo_documento()->indicativo.$doc->getNomenclaturaNombre()}}</td>

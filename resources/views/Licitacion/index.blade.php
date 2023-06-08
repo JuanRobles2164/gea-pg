@@ -124,25 +124,29 @@ use App\Models\Rol;
                         </td>
                         @endif
                         <td scope="row">
-                            <a href="#" class="btn btn-info btn-sm" onclick="setDataToLicitacionModal({{$lic->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                            <a href="#" class="btn btn-default btn-sm" onclick="setDataToLicitacionModalEdit({{$lic->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>
+                            @if (!in_array($lic->estado, [9]))
+                                <a href="#" class="btn btn-info btn-sm" onclick="setDataToLicitacionModal({{$lic->id}})" title="Ver" data-toggle="tooltip" data-placement="bottom">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="#" class="btn btn-default btn-sm" onclick="setDataToLicitacionModalEdit({{$lic->id}})" title="Editar" data-toggle="tooltip" data-placement="bottom">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                            @endif
                             @if (Utilidades::verificarPermisos(session()->get('roles_usuario'), [Rol::IS_GERENTE]))
-                                @if ($lic->estado == 9)
+                                @if (in_array($lic->estado, [9]))
                                 <a href="#" class="btn btn-outline-warning btn-sm" onclick="abrirModalReabrirLicitacion({{$lic->id}})" title="Reabrir licitacion" data-toggle="tooltip" data-placement="bottom">
                                     <i class="fa fa-bolt" aria-hidden="true"></i>
                                 </a>
                                 @endif
                             @endif
-                            <a href="#" class="btn btn-warning btn-sm" onclick="clonarLicitacion({{$lic->id}})" title="Clonar" data-toggle="tooltip" data-placement="bottom">
-                                <i class="fas fa-clone"></i>
-                            </a>
-                            <a href="{{route('licitacion.gestion_documentos_index', ['id' => $lic->id])}}" class="btn btn-primary btn-sm" title="Asociar" data-toggle="tooltip" data-placement="bottom">
-                                <i class="fas fa-link"></i>
-                            </a>
+                            @if (!in_array($lic->estado, [9]))
+                                <a href="#" class="btn btn-warning btn-sm" onclick="clonarLicitacion({{$lic->id}})" title="Clonar" data-toggle="tooltip" data-placement="bottom">
+                                    <i class="fas fa-clone"></i>
+                                </a>
+                                <a href="{{route('licitacion.gestion_documentos_index', ['id' => $lic->id])}}" class="btn btn-primary btn-sm" title="Asociar" data-toggle="tooltip" data-placement="bottom">
+                                    <i class="fas fa-link"></i>
+                                </a>
+                            @endif
                             <a href="#" onclick="descargarTodosLosArchivos('{{$lic->id}}')" 
                                 class="btn btn-danger btn-sm" title="Descargar respaldo" data-toggle="tooltip" data-placement="bottom">
                                 <i class="fas fa-download" aria-hidden="true"></i>

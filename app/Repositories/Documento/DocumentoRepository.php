@@ -66,6 +66,7 @@ class DocumentoRepository extends BaseRepository{
     public function listarDocumentosMaestros(){
         return $this->getModel()
                     ->whereNull('padre')
+                    ->where('estado', '!=', 3)
                     ->whereNotNull('recurrente')
                     ->whereNotNull('constante')
                     ->get();

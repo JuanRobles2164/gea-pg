@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 class DocumentoPrincipalController extends Controller
 {
     private $repo;
+    
     private $validationRules = [
         'data_file' => 'required',
         'nombre' => 'required',
@@ -249,10 +250,9 @@ class DocumentoPrincipalController extends Controller
     {
         $this->repo = DocumentoRepository::GetInstance();
         $data = $request->all();
-        $data["estado"] = '3';
         $documento = $this->repo->find($data["id"]);
-        $this->repo->update($documento, $data);
-        $this->repo = null;
+        $documento->estado = 3;
+        $documento->save();
         return json_encode($documento);
     }
 
